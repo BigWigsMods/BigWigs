@@ -13,7 +13,7 @@
 ## Title-zhTW: BigWigs [|cffeda55f至暗之夜世界首領|r]
 ## Notes: BigWigs Midnight World Boss Modules
 ## Notes-deDE: BigWigs Midnight Weltboss Module
-## Notes-esES: BigWigs Midnight World Boss Modules
+## Notes-esES: BigWigs Módulos de BigWigs para los jefes de mundo de Midnight
 ## Notes-esMX: BigWigs Midnight World Boss Modules
 ## Notes-frFR: BigWigs Midnight World Boss Modules
 ## Notes-itIT: BigWigs Midnight World Boss Modules
