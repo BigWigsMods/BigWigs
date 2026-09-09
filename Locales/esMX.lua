@@ -192,8 +192,6 @@ L.auraMechanic_taunted = "Provocado"
 --L.onApplied = "On Applied"
 --L.onDose = "On Dose"
 --L.onRemoved = "On Removed"
-L.privateAuraSounds = "Sonidos de aura privada"
-L.privateAuraSounds_desc = "Las auras privadas no se pueden rastrear de forma normal, pero puedes configurar un sonido para que se reproduzca cuando el perjuicio de la habilidad se te aplique."
 L.listAbilities = "Listar las habilidades en el chat"
 L.parenthesesID = "%s |cffA5A5A5(ID: %s)|r"
 
@@ -337,12 +335,11 @@ L.mythicplus_settings_export_desc = "Exporta todas las configuraciones de Mític
 L.imported_battleres_settings = "Configuración de Resurrección en combate"
 L.battleres_settings_import_desc = "Importa toda la configuración de Resurrección en combate."
 L.battleres_settings_export_desc = "Exporta toda la configuración de Resurrección en combate."
-L.imported_privateAuras_settings = "Configuración de Auras privadas"
-L.privateAuras_settings_import_desc = "Importa toda la configuración de Auras privadas."
-L.privateAuras_settings_export_desc = "Exporta toda la configuración de Auras privadas."
 L.imported_combattimer_settings = "Configuración de Temporizador de combate"
 L.combattimer_settings_import_desc = "Importa toda la configuración de Temporizador de combate"
 L.combattimer_settings_export_desc = "Exporta toda la configuración de Temporizador de combate"
+--L.confirm_export_disabled_plugin = "You have |cFF33FF99\"%s\"|r disabled.\n\nExporting it will force-disable this feature for anyone importing this string, |cffff8000even if they want to use it|r.\n\nAre you sure you want to do this?"
+--L.confirm_import_disabled_plugin = "The settings you are about to import for |cFF33FF99\"%s\"|r have it disabled.\n\nImporting them will disable it for you as well.\n\nAre you sure you want to do this?"
 L.export_bosses = "Exportar jefes"
 L.export_bosses_info = "Se exportará la configuración de todos los jefes de las zonas seleccionadas a continuación."
 L.raids_section = "Bandas"
@@ -783,9 +780,6 @@ L.disableAltPowerDesc = "Desactiva la pantalla de Poder Alternativo, nunca se mo
 --
 
 --L.auras = "Auras" -- Buffs/Debuffs
-L.privateAuras = "Auras privadas"
-L.privateAurasDesc1 = "'Auras privadas' son un tipo especial de perjuicio que los addons no pueden detectar ni automatizar. Estos perjuicios se utilizan ahora en todos los encuentros modernos de jefes.\n\n"
-L.privateAurasDesc2 = "BigWigs puede ayudarte a hacer seguimiento cuando se te aplican mostrándolos como íconos. |cFF33FF99Esto puede ayudarte a ver los perjuicios críticos separados de tus perjuicios normales.|r\n\n"
 --L.aurasDesc = "BigWigs can help you keep track of when boss debuffs are applied to you by displaying them as icons.\n|cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
 --L.disabledDuringTrash = "Disabled During Trash"
 
@@ -813,7 +807,6 @@ L.playerInYourGroup = "Un jugador de tu grupo"
 --L.tankIndicator = "Tank Indicator"
 L.maxIcons = "Máximo de íconos"
 L.maxIconsDesc = "La cantidad máxima de íconos que se mostrarán."
-L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Ahora puedes ver tus perjuicios de auras privadas como íconos, o incluso las auras privadas de otro jugador (por ejemplo, un tanque)."
 --L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your boss debuffs as icons, or even the boss debuffs of another player (e.g. a tank)."
 
 --L.aurasTestAnchorText = "Player\nAuras"

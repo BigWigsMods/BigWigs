@@ -314,15 +314,6 @@ local battleResSettingsToExport = {
 	"chargesCustomText",
 }
 
--- PrivateAuras
-local privateAurasSettingsToExport = {
-	"showDispelType",
-	"player",
-	"other",
-	"otherPlayerType",
-	"onlyWhenYouAreTank",
-}
-
 -- CombatTimer
 local combatTimerSettingsToExport = {
 	-- Any Combat
@@ -420,9 +411,8 @@ local sharingExportOptionsSettings = {
 	exportCountdownColors = true,
 	exportNameplateSettings = true,
 	exportMythicPlusSettings = true,
-	exportBattleResSettings = true,
-	exportPrivateAurasSettings = true,
-	exportCombatTimerSettings = true,
+	-- BattleRes, CombatTimer are deliberately left out: their default depends on whether
+	-- the plugin is currently switched off. See IsExportSectionSelected().
 }
 
 local sharingImportOptionsSettings = {}
@@ -471,6 +461,33 @@ local function exportProfileSettings(argsToExport, pluginProfile)
 		export[argsToExport[i]] = pluginProfile[argsToExport[i]]
 	end
 	return export
+end
+
+-- A plugin can be switched off in its own settings whilst still being loaded.
+local function isBattleResDisabled()
+	local plugin = BigWigs:GetPlugin("BattleRes", true)
+	return plugin and plugin.db.profile.disabled and true or false
+end
+
+local function isCombatTimerDisabled()
+	local db = BigWigsLoader.db:GetNamespace("CombatTimer", true)
+	return db and db.profile.anyCombatDisabled and db.profile.bossCombatDisabled and db.profile.bossStagesDisabled and true or false
+end
+
+local pluginDisabledChecks = {
+	exportBattleResSettings = isBattleResDisabled,
+	exportCombatTimerSettings = isCombatTimerDisabled,
+}
+
+-- Exporting the settings of a switched off plugin also shares its disabled state, so those
+-- sections start unticked and have to be ticked on purpose. Everything else starts ticked.
+local function IsExportSectionSelected(key)
+	local value = sharingExportOptionsSettings[key]
+	if value == nil then
+		local isDisabled = pluginDisabledChecks[key]
+		return not (isDisabled and isDisabled())
+	end
+	return value
 end
 
 do
@@ -533,21 +550,14 @@ do
 			end
 		end
 
-		if requestAll or sharingExportOptionsSettings.exportBattleResSettings then
+		if requestAll or IsExportSectionSelected("exportBattleResSettings") then
 			local plugin = BigWigs:GetPlugin("BattleRes", true)
 			if plugin then
 				exportOptions["battleResSettings"] = exportProfileSettings(battleResSettingsToExport, plugin.db.profile)
 			end
 		end
 
-		if requestAll or sharingExportOptionsSettings.exportPrivateAurasSettings then
-			local plugin = BigWigs:GetPlugin("PrivateAuras", true)
-			if plugin then
-				exportOptions["privateAurasSettings"] = exportProfileSettings(privateAurasSettingsToExport, plugin.db.profile)
-			end
-		end
-
-		if requestAll or sharingExportOptionsSettings.exportCombatTimerSettings then
+		if requestAll or IsExportSectionSelected("exportCombatTimerSettings") then
 			local db = BigWigsLoader.db:GetNamespace("CombatTimer", true)
 			if db then
 				exportOptions["combatTimerSettings"] = exportProfileSettings(combatTimerSettingsToExport, db.profile)
@@ -735,8 +745,8 @@ local function IsOptionGroupAvailable(group)
 		end
 	end
 	if group == "other" then
-		if IsOptionInString("nameplateSettings") or IsOptionInString("mythicPlusSettings") or IsOptionInString("battleResSettings") or
-		IsOptionInString("privateAurasSettings") or IsOptionInString("combatTimerSettings") then
+		if IsOptionInString("nameplateSettings") or IsOptionInString("mythicPlusSettings")
+		or IsOptionInString("battleResSettings") or IsOptionInString("combatTimerSettings") then
 			return true
 		end
 	end
@@ -752,8 +762,6 @@ do
 	local _, addonTable = ...
 
 	local function setupBossOptions(exportOptions)
-		sharingImportOptionsSettings = {}
-
 		local instances = {}
 		for instanceID, modules in pairs(exportOptions.exportTable) do
 			instances[instanceID] = getInstanceLabel(instanceID)
@@ -820,6 +828,7 @@ do
 		if type(string) ~= "string" then return end
 		importStringOptions = {}
 		importedTableData = nil
+		sharingImportOptionsSettings = {}
 
 		local versionPlain, importData = string:match("^(%w+):(.+)$")
 		if (versionPlain ~= sharingVersion and versionPlain ~= bossSharingVersion) then return end
@@ -900,12 +909,6 @@ do
 			local plugin = BigWigs:GetPlugin("BattleRes", true)
 			if plugin then
 				importSettings("importBattleResSettings", "battleResSettings", battleResSettingsToExport, plugin, L.imported_battleres_settings)
-			end
-		end
-		do
-			local plugin = BigWigs:GetPlugin("PrivateAuras", true)
-			if plugin then
-				importSettings("importPrivateAurasSettings", "privateAurasSettings", privateAurasSettingsToExport, plugin, L.imported_privateAuras_settings)
 			end
 		end
 		do
@@ -1122,9 +1125,6 @@ do
 		if IsOptionInString("battleResSettings") then
 			sharingImportOptionsSettings.importBattleResSettings = true
 		end
-		if IsOptionInString("privateAurasSettings") then
-			sharingImportOptionsSettings.importPrivateAurasSettings = true
-		end
 		if IsOptionInString("combatTimerSettings") then
 			sharingImportOptionsSettings.importCombatTimerSettings = true
 		end
@@ -1147,6 +1147,29 @@ local addonTable
 do
 	local _
 	_, addonTable = ...
+end
+
+local function colourDisabled(name, isDisabled)
+	if isDisabled then
+		return "|cFFFF0000" .. name .. "|r"
+	end
+	return name
+end
+
+local function confirmDisabled(warning, name, isDisabled, value)
+	if value and isDisabled then
+		return warning:format(name)
+	end
+end
+
+local function willImportDisableBattleRes()
+	local data = importedTableData and importedTableData.battleResSettings
+	return data and data.disabled and true or false
+end
+
+local function willImportDisableCombatTimer()
+	local data = importedTableData and importedTableData.combatTimerSettings
+	return data and data.anyCombatDisabled and data.bossCombatDisabled and data.bossStagesDisabled and true or false
 end
 
 local sharingOptions = {
@@ -1297,6 +1320,7 @@ local sharingOptions = {
 						order = 1,
 						width = 1,
 						disabled = function() return not IsOptionInString("nameplateSettings") or not BigWigs:GetPlugin("Nameplates", true) end,
+						hidden = function() return not BigWigs:GetPlugin("Nameplates", true) end,
 					},
 					importMythicPlusSettings = {
 						type = "toggle",
@@ -1308,27 +1332,21 @@ local sharingOptions = {
 					},
 					importBattleResSettings = {
 						type = "toggle",
-						name = L.battleResTitle,
+						name = function() return colourDisabled(L.battleResTitle, willImportDisableBattleRes()) end,
 						desc = L.battleres_settings_import_desc,
 						order = 3,
 						width = 1,
 						disabled = function() return not IsOptionInString("battleResSettings") or not BigWigs:GetPlugin("BattleRes", true) end,
-					},
-					importPrivateAurasSettings = {
-						type = "toggle",
-						name = L.privateAuras,
-						desc = L.privateAuras_settings_import_desc,
-						order = 4,
-						width = 1,
-						disabled = function() return not IsOptionInString("privateAurasSettings") or not BigWigs:GetPlugin("PrivateAuras", true) end,
+						confirm = function(_, value) return confirmDisabled(L.confirm_import_disabled_plugin, L.battleResTitle, willImportDisableBattleRes(), value) end,
 					},
 					importCombatTimerSettings = {
 						type = "toggle",
-						name = L.combatTimerTitle,
+						name = function() return colourDisabled(L.combatTimerTitle, willImportDisableCombatTimer()) end,
 						desc = L.combattimer_settings_import_desc,
 						order = 5,
 						width = 1,
 						disabled = function() return not IsOptionInString("combatTimerSettings") or not BigWigsLoader.db:GetNamespace("CombatTimer", true) end,
+						confirm = function(_, value) return confirmDisabled(L.confirm_import_disabled_plugin, L.combatTimerTitle, willImportDisableCombatTimer(), value) end,
 					},
 				},
 			},
@@ -1486,7 +1504,6 @@ local sharingOptions = {
 						desc = L.nameplate_settings_export_desc,
 						order = 1,
 						width = 1,
-						get = function(i) return BigWigs:GetPlugin("Nameplates", true) and sharingExportOptionsSettings[i[#i]] end,
 						hidden = function() return not BigWigs:GetPlugin("Nameplates", true) end,
 					},
 					exportMythicPlusSettings = {
@@ -1495,68 +1512,27 @@ local sharingOptions = {
 						desc = L.mythicplus_settings_export_desc,
 						order = 2,
 						width = 1,
-						get = function(i) return BigWigsLoader.db:GetNamespace("MythicPlus", true) and sharingExportOptionsSettings[i[#i]] end,
 						hidden = function() return not BigWigsLoader.db:GetNamespace("MythicPlus", true) end,
 					},
 					exportBattleResSettings = {
 						type = "toggle",
-						name = L.battleResTitle,
+						name = function() return colourDisabled(L.battleResTitle, isBattleResDisabled()) end,
 						desc = L.battleres_settings_export_desc,
 						order = 3,
 						width = 1,
-						get = function(i)
-							local plugin = BigWigs:GetPlugin("BattleRes", true)
-							if plugin and not plugin.db.profile.disabled then
-								return sharingExportOptionsSettings[i[#i]]
-							end
-						end,
-						disabled = function()
-							local plugin = BigWigs:GetPlugin("BattleRes", true)
-							if not plugin or plugin.db.profile.disabled then
-								return true
-							end
-						end,
+						get = function(i) return IsExportSectionSelected(i[#i]) end,
 						hidden = function() return not BigWigs:GetPlugin("BattleRes", true) end,
-					},
-					exportPrivateAurasSettings = {
-						type = "toggle",
-						name = L.privateAuras,
-						desc = L.privateAuras_settings_export_desc,
-						order = 4,
-						width = 1,
-						get = function(i)
-							local plugin = BigWigs:GetPlugin("PrivateAuras", true)
-							if plugin and (not plugin.db.profile.player.disabled or not plugin.db.profile.other.disabled) then
-								return sharingExportOptionsSettings[i[#i]]
-							end
-						end,
-						disabled = function()
-							local plugin = BigWigs:GetPlugin("PrivateAuras", true)
-							if not plugin or (plugin.db.profile.player.disabled and plugin.db.profile.other.disabled) then
-								return true
-							end
-						end,
-						hidden = function() return not BigWigs:GetPlugin("PrivateAuras", true) end,
+						confirm = function(_, value) return confirmDisabled(L.confirm_export_disabled_plugin, L.battleResTitle, isBattleResDisabled(), value) end,
 					},
 					exportCombatTimerSettings = {
 						type = "toggle",
-						name = L.combatTimerTitle,
+						name = function() return colourDisabled(L.combatTimerTitle, isCombatTimerDisabled()) end,
 						desc = L.combattimer_settings_export_desc,
 						order = 5,
 						width = 1,
-						get = function(i)
-							local db = BigWigsLoader.db:GetNamespace("CombatTimer", true)
-							if db and (not db.profile.anyCombatDisabled or not db.profile.bossCombatDisabled or not db.profile.bossStagesDisabled) then
-								return sharingExportOptionsSettings[i[#i]]
-							end
-						end,
-						disabled = function()
-							local db = BigWigsLoader.db:GetNamespace("CombatTimer", true)
-							if not db or (db.profile.anyCombatDisabled and db.profile.bossCombatDisabled and db.profile.bossStagesDisabled) then
-								return true
-							end
-						end,
+						get = function(i) return IsExportSectionSelected(i[#i]) end,
 						hidden = function() return not BigWigsLoader.db:GetNamespace("CombatTimer", true) end,
+						confirm = function(_, value) return confirmDisabled(L.confirm_export_disabled_plugin, L.combatTimerTitle, isCombatTimerDisabled(), value) end,
 					},
 				},
 			},
