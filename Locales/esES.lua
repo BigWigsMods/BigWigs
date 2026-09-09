@@ -779,7 +779,6 @@ L.disableAltPowerDesc = "Desactiva globalmente el marco de Poder alternativo, nu
 -- Auras.lua
 --
 
---L.auras = "Auras" -- Buffs/Debuffs
 L.auras = "Auras" -- Buffs/Debuffs
 L.aurasDesc = "BigWigs puede ayudarte a ver cuando un jefe te aplica perjuicios mostrándotelos como iconos.\n|cFF33FF99Esto te puede ayudar a mostrar por separado los perjuicios más importantes de los comunes.|r\n\n"
 L.disabledDuringTrash = "Deshabilitado en los esbirros entre jefe y jefe"
