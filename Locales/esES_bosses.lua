@@ -87,9 +87,9 @@ BigWigsAPI.SetBossModuleLocale("Nek'zali the Soulcoiler", {
 })
 
 BigWigsAPI.SetBossModuleLocale("The Lost Explorers", {
-	--trader_gebbo = "Gebbo",
-	--first_mate_nama = "Nama",
-	--scrollsage_iku = "Iku",
+	trader_gebbo = "Gebbo",
+	first_mate_nama = "Nama",
+	scrollsage_iku = "Iku",
 })
 
 BigWigsAPI.SetBossModuleLocale("Vashnik the Malignant", {
@@ -105,23 +105,23 @@ BigWigsAPI.SetBossModuleLocale("Ula'tek", {
 	mephitic_thrash = "Barrido",
 	call_of_the_serpent = "Huevos",
 	gore_rattle = "Cola",
-	--grasping_fangs = "Tethers",
+	grasping_fangs = "Ataduras",
 	circling_prey = "Ruptura de plataforma",
-	--p3_knock_up = "Knock Up",
+	p3_knock_up = "Lanzar al aire",
 
-	--toxic_womb = "Wretch Spawn",
-	--fester_burst = "Wretch Bubble",
-	--toxic_incubation = "Wretch Waves",
+	toxic_womb = "Aparecen engendros",
+	fester_burst = "Membrana del engendro",
+	toxic_incubation = "Olas del engendro",
 
-	--count_amount_side = "%s (%d/%d) %s",
-	--count_side = "%s (%d) %s",
-	--fester_burst_count = "%s (%d-%d)",
+	count_amount_side = "%s (%d/%d) %s",
+	count_side = "%s (%d) %s",
+	fester_burst_count = "%s (%d-%d)",
 
-	--custom_select_limit_warnings = "Spectral Coils Group",
-	--custom_select_limit_warnings_desc = "Only show bars for your soak group (left or right).  Right side is first in stage one, left side is first in intermission.",
-	--custom_select_limit_warnings_value1 = "Show warnings for both sides.",
-	--custom_select_limit_warnings_value2 = "Show warnings for left side only.",
-	--custom_select_limit_warnings_value3 = "Show warnings for right side only.",
-	--custom_select_limit_warnings_value4 = "Odd groups left, even groups right.",
-	--custom_select_limit_warnings_value5 = "Mythic: Groups 1 & 2 go left, groups 3 & 4 go right. Others: Groups 1/2/3 go left, groups 4/5/6 go right.",
+	custom_select_limit_warnings = "Grupo de espirales espectrales",
+	custom_select_limit_warnings_desc = "Mostrar solo las barras de tu grupo de soak (izquierda o derecha). El lado derecho primero en fase 1, el lado izquierdo primero en interfase.",
+	custom_select_limit_warnings_value1 = "Mostrar alertas para ambos lados.",
+	custom_select_limit_warnings_value2 = "Mostrar alertas para el lado izquierdo solo.",
+	custom_select_limit_warnings_value3 = "Mostrar alertas para el lado derecho solo.",
+	custom_select_limit_warnings_value4 = "Grupos impares izquierda, grupos pares derecha.",
+	custom_select_limit_warnings_value5 = "Mítico: Grupos 1 y 2 izquierda, grupos 3 y 4 derecha. Otros: Grupos 1/2/3 izquierda, grupos 4/5/6 derecha.",
 })

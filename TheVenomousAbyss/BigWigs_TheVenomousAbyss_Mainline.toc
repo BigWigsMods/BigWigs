@@ -1,19 +1,19 @@
 ## Interface: 120100, 120105, 120007
 
 ## Title: BigWigs [|cffeda55fThe Venomous Abyss|r]
-## Title-deDE: BigWigs [|cffeda55fThe Venomous Abyss|r]
-## Title-esES: BigWigs [|cffeda55fThe Venomous Abyss|r]
-## Title-esMX: BigWigs [|cffeda55fThe Venomous Abyss|r]
-## Title-frFR: BigWigs [|cffeda55fThe Venomous Abyss|r]
-## Title-itIT: BigWigs [|cffeda55fThe Venomous Abyss|r]
+## Title-deDE: BigWigs [|cffeda55fDer Giftige Abgrund|r]
+## Title-esES: BigWigs [|cffeda55fAbismo Venenoso|r]
+## Title-esMX: BigWigs [|cffeda55fEl Abismo Venenoso|r]
+## Title-frFR: BigWigs [|cffeda55fL’abîme Venimeux|r]
+## Title-itIT: BigWigs [|cffeda55fAbissi Velenosi|r]
 ## Title-koKR: BigWigs [|cffeda55f맹독 심연|r]
-## Title-ptBR: BigWigs [|cffeda55fThe Venomous Abyss|r]
-## Title-ruRU: BigWigs [|cffeda55fThe Venomous Abyss|r]
+## Title-ptBR: BigWigs [|cffeda55fAbismo Peçonhento|r]
+## Title-ruRU: BigWigs [|cffeda55fОтравленная бездна|r]
 ## Title-zhCN: BigWigs [|cffeda55f烈毒之渊|r]
 ## Title-zhTW: BigWigs [|cffeda55f劇毒深淵|r]
 ## Notes: BigWigs The Venomous Abyss Modules
 ## Notes-deDE: BigWigs The Venomous Abyss Module
-## Notes-esES: BigWigs The Venomous Abyss Modules
+## Notes-esES: Módulos de BigWigs para el Abismo Venenoso
 ## Notes-esMX: BigWigs The Venomous Abyss Modules
 ## Notes-frFR: BigWigs The Venomous Abyss Modules
 ## Notes-itIT: BigWigs The Venomous Abyss Modules

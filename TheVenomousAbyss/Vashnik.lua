@@ -95,7 +95,7 @@ mod:SetRenames({
 --
 
 mod:SetAuraData({
-	{1295173, soundOnApplied = "warning", soundOnAppliedDose = "none", header = CL.important, note = CL.dispel}, -- Exploding Infection
+	{1295173, soundOnApplied = "warning", soundOnAppliedDose = "none", dispel = "magic", header = CL.important, note = CL.dispel}, -- Exploding Infection
 	{1281908, 1281913, soundOnApplied = "warning", duration = 6}, -- Plague Froth (Heroic & Mythic)
 	{1295224, soundOnApplied = "warning"}, -- Siphoning Infection (Main debuff)
 	{1280934, soundOnApplied = "none", soundOnAppliedDose = "none", header = CL.general, note = CL.tank_debuff}, -- Dripping Fangs
@@ -107,7 +107,7 @@ mod:SetAuraData({
 	{1291461, soundOnApplied = "underyou"}, -- Virulent Fumes
 	{1285979, soundOnApplied = "none", soundOnAppliedDose = "none", header = CL.adds}, -- Caustic Surge
 	{1280189, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Malignant Burst
-	{1305833, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Congealing Bolt
+	{1305833, soundOnApplied = "none", soundOnAppliedDose = "none", dispel = "magic", mechanic = "snared"}, -- Congealing Bolt
 })
 
 

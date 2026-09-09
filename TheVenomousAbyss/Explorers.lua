@@ -117,9 +117,9 @@ mod:SetAuraData({
 	{1295952, soundOnApplied = "none"}, -- Elemental Explosion
 	{1297649, soundOnApplied = "none"}, -- Fire Patch (Standing in ice)
 	{1297648, soundOnApplied = "none"}, -- Frost Patch (Standing in fire)
-	{1286922, soundOnApplied = "alarm"}, -- Icebound Flames
+	{1286922, soundOnApplied = "alarm", dispel = "magic"}, -- Icebound Flames
 	{1291918, soundOnApplied = "underyou"}, -- Shell Spin (Stunned)
-	{1308853, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Splinters (Junk stacks)
+	{1308853, soundOnApplied = "none", soundOnAppliedDose = "none", dispel = "bleed"}, -- Splinters (Junk stacks)
 	{1297650, soundOnApplied = "none"}, -- Spreading Flames
 	{1291929, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Steady Strikes
 })
