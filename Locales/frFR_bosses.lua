@@ -87,9 +87,9 @@ BigWigsAPI.SetBossModuleLocale("Nek'zali the Soulcoiler", {
 })
 
 BigWigsAPI.SetBossModuleLocale("The Lost Explorers", {
-	--trader_gebbo = "Gebbo",
-	--first_mate_nama = "Nama",
-	--scrollsage_iku = "Iku",
+	trader_gebbo = "Gebbo",
+	first_mate_nama = "Nama",
+	scrollsage_iku = "Iku",
 })
 
 BigWigsAPI.SetBossModuleLocale("Vashnik the Malignant", {
@@ -105,23 +105,23 @@ BigWigsAPI.SetBossModuleLocale("Ula'tek", {
 	mephitic_thrash = "Balayage",
 	call_of_the_serpent = "Œufs",
 	gore_rattle = "Queue",
-	--grasping_fangs = "Tethers",
+	grasping_fangs = "Liens",
 	circling_prey = "Destruction de plateforme",
 	p3_knock_up = "Envoi en l'air",
 
-	--toxic_womb = "Wretch Spawn",
-	--fester_burst = "Wretch Bubble",
-	--toxic_incubation = "Wretch Waves",
+	toxic_womb = "Apparition d'avortons",
+	fester_burst = "Bulle d'avortons",
+	toxic_incubation = "Vagues d'avortons",
 
-	--count_amount_side = "%s (%d/%d) %s",
-	--count_side = "%s (%d) %s",
-	--fester_burst_count = "%s (%d-%d)",
+	count_amount_side = "%s (%d/%d) %s",
+	count_side = "%s (%d) %s",
+	fester_burst_count = "%s (%d-%d)",
 
-	--custom_select_limit_warnings = "Spectral Coils Group",
-	--custom_select_limit_warnings_desc = "Only show bars for your soak group (left or right).  Right side is first in stage one, left side is first in intermission.",
-	--custom_select_limit_warnings_value1 = "Show warnings for both sides.",
-	--custom_select_limit_warnings_value2 = "Show warnings for left side only.",
-	--custom_select_limit_warnings_value3 = "Show warnings for right side only.",
-	--custom_select_limit_warnings_value4 = "Odd groups left, even groups right.",
-	--custom_select_limit_warnings_value5 = "Mythic: Groups 1 & 2 go left, groups 3 & 4 go right. Others: Groups 1/2/3 go left, groups 4/5/6 go right.",
+	custom_select_limit_warnings = "Groupe d'anneaux spectraux",
+	custom_select_limit_warnings_desc = "N'afficher que les barres de votre groupe de soak (gauche ou droite). Le côté droit est le premier dans la P1, le côté gauche est le premier dans l'Intervalle.",
+	custom_select_limit_warnings_value1 = "Afficher les avertissements des deux côtés.",
+	custom_select_limit_warnings_value2 = "Afficher les avertissements du côté gauche uniquement.",
+	custom_select_limit_warnings_value3 = "Afficher les avertissements du côté droit uniquement.",
+	custom_select_limit_warnings_value4 = "Groupes impaires gauche, groupes pairs droits.",
+	custom_select_limit_warnings_value5 = "Mythique : grp. 1 & 2 gauche, grp. 3 & 4 droite. Autre diff. : grp. 1/2/3 gauche, grp. 4/5/6 droite.",
 })
