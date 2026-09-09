@@ -153,8 +153,6 @@ L.secondary_aura_spellIds = "|cFFFFFF99Вторичное/ые заклинан�
 L.onApplied = "Когда аура применяется"
 L.onDose = "Когда аура получает стак"
 L.onRemoved = "Когда аура пропадает"
-L.privateAuraSounds = "Приватные Ауры - Звуки"
-L.privateAuraSounds_desc = "Приватные ауры нельзя отслеживать обычным способом, но вы можете установить звук который будет воспроизводиться при наложении на вас дебаффа от этой способности."
 L.listAbilities = "Вывести способности в групповой чат"
 L.parenthesesID = "%s |cffA5A5A5(ID: %s)|r"
 
@@ -298,12 +296,11 @@ L.mythicplus_settings_export_desc = "Экспортировать все нас�
 L.imported_battleres_settings = "Настройки боевого воскрешения"
 L.battleres_settings_import_desc = "Импортировать все настройки боевого воскрешения."
 L.battleres_settings_export_desc = "Экспортировать все настройки боевого воскрешения."
-L.imported_privateAuras_settings = "Настройки приватных аур"
-L.privateAuras_settings_import_desc = "Импортировать все настройки приватных аур."
-L.privateAuras_settings_export_desc = "Экспортировать все настройки приватных аур."
 L.imported_combattimer_settings = "Настройки таймера боя"
 L.combattimer_settings_import_desc = "Импортировать все настройки таймера боя."
 L.combattimer_settings_export_desc = "Экспортировать все настройки таймера боя."
+--L.confirm_export_disabled_plugin = "You have |cFF33FF99\"%s\"|r disabled.\n\nExporting it will force-disable this feature for anyone importing this string, |cffff8000even if they want to use it|r.\n\nAre you sure you want to do this?"
+--L.confirm_import_disabled_plugin = "The settings you are about to import for |cFF33FF99\"%s\"|r have it disabled.\n\nImporting them will disable it for you as well.\n\nAre you sure you want to do this?"
 L.export_bosses = "Экспорт Боссов"
 L.export_bosses_info = "Настройки по выбранным Вами боссов из списка ниже будут экспортированы."
 L.raids_section = "Рейды"
@@ -1012,13 +1009,10 @@ L.messagesOptInTitle = "Режим ручного включения сообщ�
 L.messagesOptInWarning = "|cffff4411ВНИМАНИЕ!|r\n\nВключение режима ручного включения отключит сообщения во ВСЕХ ваших модулях боссов. Вам нужно будет пройтись по каждому модулю и вручную включить нужные сообщения.\n\nИнтерфейс сейчас будет перезагружен, вы уверены?"
 
 -----------------------------------------------------------------------
--- PrivateAuras.lua / Auras.lua
+-- Auras.lua
 --
 
 L.auras = "Ауры" -- Buffs/Debuffs
-L.privateAuras = "Приватные ауры"
-L.privateAurasDesc1 = "'Приватные ауры' — это особый тип отрицательных эффектов, которые аддоны не могут обнаруживать или автоматически обрабатывать. Сейчас такие эффекты используются во всех современных схватках с боссами.\n\n"
-L.privateAurasDesc2 = "BigWigs может помочь отслеживать, когда они применяются к вам, показывая их в виде иконок. |cFF33FF99Это помогает отображать критические отрицательные эффекты отдельно от обычных.|r\n\n"
 L.aurasDesc = "BigWigs может помочь Вам отслеживать дебаффы босса, если они будут наложены на Вас, отображая их как иконки.\n|cFF33FF99Это может помочь Вам с отображением важных дебаффов отдельно от обычных.|r\n\n"
 L.disabledDuringTrash = "Отключить на трэше"
 
@@ -1046,7 +1040,6 @@ L.playerInYourGroup = "Игрок в вашей группе"
 L.tankIndicator = "Индикатор танка"
 L.maxIcons = "Максимум иконок"
 L.maxIconsDesc = "Максимальное количество отображаемых иконок."
-L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Теперь Вы можете видеть свои приватные ауры в виде иконок, а также приватные ауры другого игрока, например танка."
 L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: Теперь Вы можете видеть наложенные на Вас дебаффы босса в виде иконок, а также дебаффы босса на другом игроке, например на танке."
 
 L.aurasTestAnchorText = "Ауры\nИгрока"
