@@ -1026,28 +1026,34 @@ function mod:SubmergeP1()
 	}
 end
 
-function mod:RageOfTheShackled()
-	local barText = CL.count:format(self:GetRename(1286860), rageCount)
-	rageCount = rageCount + 1
-	return {
-		msg = barText,
-		key = 1286860,
-		offset = 6.5, -- 6.5s for cast
-		onFinished = function()
-			self:Message(1286860, "green", barText)
-			self:PlaySound(1286860, "long")
-			self:CastBar(1286860, 20, 2)
-			self:ScheduleTimer(function()
-				if not self:IsWiping() then
-					self:Message(1286860, "green", self:GetRename(1286860, 3))
-					self:PlaySound(1286860, "info")
+do
+	function mod:UNIT_SPELLCAST_CHANNEL_STOP(event, unit)
+		self:UnregisterUnitEvent(event, unit)
+		self:StopBar(self:GetRename(1286860, 2))
+		if not self:IsWiping() then
+			self:Message(1286860, "green", self:GetRename(1286860, 3))
+			self:PlaySound(1286860, "info")
+		end
+	end
+
+	function mod:RageOfTheShackled()
+		local barText = CL.count:format(self:GetRename(1286860), rageCount)
+		rageCount = rageCount + 1
+		return {
+			msg = barText,
+			key = 1286860,
+			offset = 6.5, -- 6.5s cast
+			onFinished = function()
+				self:Message(1286860, "green", barText)
+				self:PlaySound(1286860, "long")
+				self:CastBar(1286860, 20, 2)
+				self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_STOP", nil, "boss1")
+				if self:GetStage() == 1 then
+					checkStage = true
 				end
-			end, 20)
-			if self:GetStage() == 1 then
-				checkStage = true
-			end
-		end,
-	}
+			end,
+		}
+	end
 end
 
 -- Mythic
