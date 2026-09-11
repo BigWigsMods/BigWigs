@@ -66,7 +66,7 @@ local function UpdateFont()
 	elseif plugin.db.profile.outline ~= "NONE" then
 		flags = plugin.db.profile.outline
 	end
-	countdownText:SetFont(LibSharedMedia:Fetch(FONT, plugin.db.profile.fontName), plugin.db.profile.fontSize, flags)
+	countdownText:SetFont(plugin:FetchMedia(FONT, plugin.db.profile.fontName, plugin.defaultDB.fontName), plugin.db.profile.fontSize, flags)
 	countdownText:SetTextColor(plugin.db.profile.fontColor.r, plugin.db.profile.fontColor.g, plugin.db.profile.fontColor.b)
 end
 
@@ -82,9 +82,6 @@ local function updateProfile()
 		end
 	end
 
-	if not LibSharedMedia:IsValid(FONT, db.fontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.fontName)) then
-		db.fontName = plugin.defaultDB.fontName
-	end
 	if db.outline ~= "NONE" and db.outline ~= "OUTLINE" and db.outline ~= "THICKOUTLINE" then
 		db.outline = plugin.defaultDB.outline
 	end

@@ -283,6 +283,15 @@ do
 			return fontName
 		end
 	end
+
+	-- Missing media can return after its addon is reinstalled; keep the saved selection.
+	function plugin:FetchMedia(mediaType, key, defaultKey)
+		local path = media:Fetch(mediaType, key, true)
+		if (mediaType == "border" and key == "None") or type(path) == "number" or (path and BigWigsAPI.IsValidMediaPath(path)) then
+			return path
+		end
+		return defaultKey and media:Fetch(mediaType, defaultKey)
+	end
 end
 
 --- Create a log entry in the Transcriptor addon if it is running

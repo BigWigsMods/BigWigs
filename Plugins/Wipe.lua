@@ -83,10 +83,6 @@ do
 				db[k] = plugin.defaultDB[k]
 			end
 		end
-
-		if not LibSharedMedia:IsValid("sound", db.wipeSound) then
-			db.wipeSound = plugin.defaultDB.wipeSound
-		end
 	end
 
 	function plugin:OnPluginEnable()
@@ -111,7 +107,7 @@ function plugin:BigWigs_EncounterEnd(_, module, _, _, _, _, status)
 		if module:GetJournalID() or module:GetAllowWin() then
 			local soundName = self.db.profile.wipeSound
 			if soundName ~= "None" then
-				local sound = LibSharedMedia:Fetch(SOUND, soundName, true)
+				local sound = plugin:FetchMedia(SOUND, soundName, plugin.defaultDB.wipeSound)
 				if sound then
 					self:PlaySoundFile(sound)
 				end

@@ -256,9 +256,6 @@ do
 		if db.iconOffsetYTarget < -100 or db.iconOffsetYTarget > 100 then
 			db.iconOffsetYTarget = plugin.defaultDB.iconOffsetYTarget
 		end
-		if not LibSharedMedia:IsValid(FONT, db.iconFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.iconFontName)) then
-			db.iconFontName = plugin.defaultDB.iconFontName
-		end
 		if db.iconFontSize < 6 or db.iconFontSize > 200 then
 			db.iconFontSize = plugin.defaultDB.iconFontSize
 		end
@@ -304,11 +301,6 @@ do
 		end
 		ValidateColor(db.iconColor, plugin.defaultDB.iconColor, 0.3)
 		ValidateColor(db.iconGlowColor, plugin.defaultDB.iconGlowColor, 0)
-		if not LibSharedMedia:IsValid("border", db.iconBorderName) or (db.iconBorderName ~= "None" and not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("border", db.iconBorderName))) then
-			db.iconBorderName = plugin.defaultDB.iconBorderName
-			db.iconBorderSize = plugin.defaultDB.iconBorderSize
-			db.iconBorderOffset = plugin.defaultDB.iconBorderOffset
-		end
 		if db.iconBorderSize < 1 or db.iconBorderSize > 32 then
 			db.iconBorderSize = plugin.defaultDB.iconBorderSize
 		end
@@ -342,9 +334,6 @@ do
 		if db.textOffsetY < -150 or db.textOffsetY > 150 then
 			db.textOffsetY = plugin.defaultDB.textOffsetY
 		end
-		if not LibSharedMedia:IsValid(FONT, db.textFontName) or not BigWigsAPI.IsValidMediaPath(db.textFontName) then
-			db.textFontName = plugin.defaultDB.textFontName
-		end
 		if db.textFontSize < 10 or db.textFontSize > 200 then
 			db.textFontSize = plugin.defaultDB.textFontSize
 		end
@@ -354,7 +343,7 @@ do
 		end
 
 		iconBorderTable = {
-			edgeFile = LibSharedMedia:Fetch("border", db.iconBorderName),
+			edgeFile = plugin:FetchMedia("border", db.iconBorderName, plugin.defaultDB.iconBorderName),
 			edgeSize = db.iconBorderSize,
 		}
 	end
@@ -406,7 +395,7 @@ local function getTextFrame()
 		elseif db.textOutline ~= "NONE" then
 			flags = db.textOutline
 		end
-		self.fontString:SetFont(LibSharedMedia:Fetch(FONT, db.textFontName), db.textFontSize, flags)
+		self.fontString:SetFont(plugin:FetchMedia(FONT, db.textFontName, plugin.defaultDB.textFontName), db.textFontSize, flags)
 		self.fontString:SetTextColor(db.textFontColor[1], db.textFontColor[2], db.textFontColor[3], db.textFontColor[4])
 		local w, h = self.fontString:GetWidth(), self.fontString:GetHeight()
 		self:SetSize(w, h)
@@ -475,7 +464,7 @@ local function iconLoop(updater)
 			elseif db.iconFontOutline ~= "NONE" then
 				flags = db.iconFontOutline
 			end
-			iconFrame.countdownNumber:SetFont(LibSharedMedia:Fetch(FONT, db.iconFontName), db.iconEmphasizeFontSize, flags)
+			iconFrame.countdownNumber:SetFont(plugin:FetchMedia(FONT, db.iconFontName, plugin.defaultDB.iconFontName), db.iconEmphasizeFontSize, flags)
 			iconFrame.countdownNumber:SetTextColor(db.iconEmphasizeFontColor[1], db.iconEmphasizeFontColor[2], db.iconEmphasizeFontColor[3], db.iconEmphasizeFontColor[4])
 		end
 		if db.iconCooldownNumbers then
@@ -587,10 +576,10 @@ local function getIconFrame()
 
 				local timeToDisplay = math.ceil(remaining)
 				if timeToDisplay <= db.iconEmphasizeTime then
-					self.countdownNumber:SetFont(LibSharedMedia:Fetch(FONT, db.iconFontName), db.iconEmphasizeFontSize, flags)
+					self.countdownNumber:SetFont(plugin:FetchMedia(FONT, db.iconFontName, plugin.defaultDB.iconFontName), db.iconEmphasizeFontSize, flags)
 					self.countdownNumber:SetTextColor(db.iconEmphasizeFontColor[1], db.iconEmphasizeFontColor[2], db.iconEmphasizeFontColor[3], db.iconEmphasizeFontColor[4])
 				else
-					self.countdownNumber:SetFont(LibSharedMedia:Fetch(FONT, db.iconFontName), db.iconFontSize, flags)
+					self.countdownNumber:SetFont(plugin:FetchMedia(FONT, db.iconFontName, plugin.defaultDB.iconFontName), db.iconFontSize, flags)
 					self.countdownNumber:SetTextColor(db.iconFontColor[1], db.iconFontColor[2], db.iconFontColor[3], db.iconFontColor[4])
 				end
 
@@ -1070,7 +1059,7 @@ do
 								set = function(_, value)
 									db.iconBorderSize = value
 									iconBorderTable = {
-										edgeFile = LibSharedMedia:Fetch("border", db.iconBorderName),
+										edgeFile = plugin:FetchMedia("border", db.iconBorderName, plugin.defaultDB.iconBorderName),
 										edgeSize = value,
 									}
 									resetNameplates()
@@ -1101,7 +1090,7 @@ do
 									local list = LibSharedMedia:List("border")
 									db.iconBorderName = list[value]
 									iconBorderTable = {
-										edgeFile = LibSharedMedia:Fetch("border", db.iconBorderName),
+										edgeFile = plugin:FetchMedia("border", db.iconBorderName, plugin.defaultDB.iconBorderName),
 										edgeSize = db.iconBorderSize,
 									}
 									resetNameplates()

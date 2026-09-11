@@ -63,7 +63,6 @@ plugin.defaultDB = {
 
 local function updateProfile()
 	db = plugin.db.profile
-	local printTbl, blockedFromPrints = {}, {}
 	for k, v in next, db do
 		local defaultType = type(plugin.defaultDB[k])
 		if defaultType == "nil" then
@@ -73,17 +72,12 @@ local function updateProfile()
 		elseif sounds[k] then
 			for bossModuleName, soundTbl in next, v do
 				for optionKey, soundName in next, soundTbl do
-					if not LibSharedMedia:IsValid("sound", soundName) then
-						soundTbl[optionKey] = nil -- Invalid sound, remove
-						if not blockedFromPrints[soundName] then
-							blockedFromPrints[soundName] = true
-							local moduleName = bossModuleName:sub(16) -- Remove "BigWigs_Bosses_" text
-							printTbl[#printTbl+1] = L.soundResetPrint:format(moduleName, soundName)
-						end
+					if type(soundName) ~= "string" then
+						soundTbl[optionKey] = nil
 					end
 				end
 				if not next(soundTbl) then
-					db[k][bossModuleName] = nil -- Sounds list for this boss module is an empty table, remove it
+					db[k][bossModuleName] = nil
 				end
 			end
 		end
@@ -95,21 +89,7 @@ local function updateProfile()
 			db.media[k] = nil
 		elseif type(v) ~= defaultType then
 			db.media[k] = plugin.defaultDB.media[k] -- Invalid type, reset
-		elseif not LibSharedMedia:IsValid("sound", v) then
-			db.media[k] = plugin.defaultDB.media[k] -- Invalid sound, reset
-			if not blockedFromPrints[v] then
-				blockedFromPrints[v] = true
-				printTbl[#printTbl+1] = L.soundResetPrint:format(plugin.moduleName, v)
-			end
 		end
-	end
-
-	if printTbl[1] then
-		plugin:SimpleTimer(function()
-			for i = 1, #printTbl do
-				plugin:Print(printTbl[i])
-			end
-		end, 0)
 	end
 end
 
@@ -602,14 +582,12 @@ do
 	function plugin:GetSoundFile(module, key, soundName)
 		soundName = tmp[soundName] or soundName
 		local sDb = db[soundName]
-		if not module or not key or not sDb or not sDb[module.name] or not sDb[module.name][key] then
-			local path = db.media[soundName] and LibSharedMedia:Fetch(SOUND, db.media[soundName], true) or LibSharedMedia:Fetch(SOUND, soundName, true)
-			return path
-		else
-			local newSound = sDb[module.name][key]
-			local path = db.media[newSound] and LibSharedMedia:Fetch(SOUND, db.media[newSound], true) or LibSharedMedia:Fetch(SOUND, newSound, true)
-			return path
+		if module and key and sDb and sDb[module.name] and sDb[module.name][key] then
+			local custom = sDb[module.name][key]
+			local path = self:FetchMedia(SOUND, db.media[custom] or custom, sounds[custom])
+			if path then return path end
 		end
+		return self:FetchMedia(SOUND, db.media[soundName] or soundName, sounds[soundName])
 	end
 
 	function plugin:GetDefaultSound(soundName)
@@ -628,7 +606,7 @@ do
 
 	function plugin:GetDefaultSoundFile(soundName)
 		local defaultSound = self:GetDefaultSound(soundName)
-		return defaultSound and LibSharedMedia:Fetch(SOUND, defaultSound, true)
+		return defaultSound and self:FetchMedia(SOUND, defaultSound, sounds[tmp[soundName] or soundName])
 	end
 end
 

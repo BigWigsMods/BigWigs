@@ -100,12 +100,6 @@ local function updateProfile()
 	if db.fadetime < 1 or db.fadetime > 10 then
 		db.fadetime = plugin.defaultDB.fadetime
 	end
-	if not LibSharedMedia:IsValid(FONT, db.fontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.fontName)) then
-		db.fontName = plugin.defaultDB.fontName
-	end
-	if not LibSharedMedia:IsValid(FONT, db.emphFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.emphFontName)) then
-		db.emphFontName = plugin.defaultDB.emphFontName
-	end
 	if type(db.normalPosition[1]) ~= "string" or type(db.normalPosition[2]) ~= "string"
 	or type(db.normalPosition[3]) ~= "number" or type(db.normalPosition[4]) ~= "number"
 	or not BigWigsAPI.IsValidFramePoint(db.normalPosition[1]) or not BigWigsAPI.IsValidFramePoint(db.normalPosition[2]) then
@@ -156,7 +150,7 @@ local function updateProfile()
 			emphFlags = emphFlags .. ",SLUG"
 		end
 	end
-	emphMessageText:SetFont(LibSharedMedia:Fetch(FONT, db.emphFontName), db.emphFontSize, emphFlags)
+	emphMessageText:SetFont(plugin:FetchMedia(FONT, db.emphFontName, plugin.defaultDB.emphFontName), db.emphFontSize, emphFlags)
 
 	normalMessageAnchor:RefixPosition()
 	emphMessageAnchor:RefixPosition()
@@ -192,7 +186,7 @@ local function updateProfile()
 		font.icon.animFade:SetDuration(db.fadetime)
 		font.icon:SetSize(db.fontSize, db.fontSize)
 		font:SetHeight(db.fontSize)
-		font:SetFont(LibSharedMedia:Fetch(FONT, db.fontName), db.fontSize, flags)
+		font:SetFont(plugin:FetchMedia(FONT, db.fontName, plugin.defaultDB.fontName), db.fontSize, flags)
 	end
 end
 

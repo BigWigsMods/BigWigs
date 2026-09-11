@@ -115,12 +115,6 @@ do
 
 		SetBarStyle(db.barStyle)
 
-		if not LibSharedMedia:IsValid(FONT, db.fontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.fontName)) then
-			db.fontName = plugin.defaultDB.fontName
-		end
-		if not LibSharedMedia:IsValid(STATUSBAR, db.texture) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(STATUSBAR, db.texture)) then
-			db.texture = plugin.defaultDB.texture
-		end
 		if db.fontSize < 10 or db.fontSize > 200 then
 			db.fontSize = plugin.defaultDB.fontSize
 		end
@@ -303,8 +297,8 @@ do
 		elseif db.outline ~= "NONE" then
 			flags = db.outline
 		end
-		local font = LibSharedMedia:Fetch(FONT, db.fontName)
-		local texture = LibSharedMedia:Fetch(STATUSBAR, db.texture)
+		local font = plugin:FetchMedia(FONT, db.fontName, plugin.defaultDB.fontName)
+		local texture = plugin:FetchMedia(STATUSBAR, db.texture, plugin.defaultDB.texture)
 
 		local lastIndicatorFrame = nil
 		for bar in next, normalAnchor.bars do
@@ -1819,7 +1813,7 @@ do
 		local width, height
 		width = db.normalWidth
 		height = db.normalHeight
-		local bar = candy:New(LibSharedMedia:Fetch(STATUSBAR, db.texture), width, height)
+		local bar = candy:New(plugin:FetchMedia(STATUSBAR, db.texture, plugin.defaultDB.texture), width, height)
 		bar:SetDuration(time, not eventId and isApprox) -- isApprox is maxQueueDuration for timeline bars
 		local flags = nil
 		if db.monochrome and db.outline ~= "NONE" then
@@ -1829,7 +1823,7 @@ do
 		elseif db.outline ~= "NONE" then
 			flags = db.outline
 		end
-		local f = LibSharedMedia:Fetch(FONT, db.fontName)
+		local f = plugin:FetchMedia(FONT, db.fontName, plugin.defaultDB.fontName)
 		bar:SetFont(f, db.fontSize, flags)
 		bar:Set("bigwigs:module", module)
 		bar:Set("bigwigs:option", key)
@@ -1972,7 +1966,7 @@ function plugin:EmphasizeBar(bar, freshBar)
 	elseif db.outline ~= "NONE" then
 		flags = db.outline
 	end
-	local f = LibSharedMedia:Fetch(FONT, db.fontName)
+	local f = plugin:FetchMedia(FONT, db.fontName, plugin.defaultDB.fontName)
 	bar:SetFont(f, db.fontSizeEmph, flags)
 
 	bar:SetColor(colors:GetColor("barEmphasized", module, key))

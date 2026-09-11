@@ -277,15 +277,6 @@ do
 		if not BigWigsAPI:HasCountdown(db.voice) then
 			db.voice = plugin.defaultDB.voice
 		end
-		if not LibSharedMedia:IsValid(SOUND, db.engageSound) then
-			db.engageSound = plugin.defaultDB.engageSound
-		end
-		if not LibSharedMedia:IsValid(SOUND, db.startPullSound) then
-			db.startPullSound = plugin.defaultDB.startPullSound
-		end
-		if not LibSharedMedia:IsValid(SOUND, db.endPullSound) then
-			db.endPullSound = plugin.defaultDB.endPullSound
-		end
 
 		if not InCombatLockdown() then
 			ClearOverrideBindings(BWPull)
@@ -374,7 +365,7 @@ do
 			end
 			local soundName = plugin.db.profile.endPullSound
 			if soundName ~= "None" then
-				local sound = LibSharedMedia:Fetch(SOUND, soundName, true)
+				local sound = plugin:FetchMedia(SOUND, soundName, plugin.defaultDB.endPullSound)
 				if sound then
 					plugin:PlaySoundFile(sound)
 				end
@@ -430,7 +421,7 @@ do
 		self:SendMessage("BigWigs_StartPull", self, timeSeconds, name, L.pull, 132337)
 		local soundName = self.db.profile.startPullSound
 		if soundName ~= "None" then
-			local sound = LibSharedMedia:Fetch(SOUND, soundName, true)
+			local sound = plugin:FetchMedia(SOUND, soundName, plugin.defaultDB.startPullSound)
 			if sound then
 				self:PlaySoundFile(sound)
 			end
@@ -496,7 +487,7 @@ function plugin:BigWigs_OnBossEngage(_, module)
 	if module and (module:GetJournalID() or module:GetAllowWin()) then
 		local soundName = self.db.profile.engageSound
 		if soundName ~= "None" then
-			local sound = LibSharedMedia:Fetch(SOUND, soundName, true)
+			local sound = plugin:FetchMedia(SOUND, soundName, plugin.defaultDB.engageSound)
 			if sound then
 				self:PlaySoundFile(sound)
 			end

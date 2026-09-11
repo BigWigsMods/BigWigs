@@ -114,10 +114,6 @@ do
 			end
 		end
 
-		if not LibSharedMedia:IsValid("sound", db.soundName) then
-			db.soundName = plugin.defaultDB.soundName
-		end
-
 		if not db.blizzVictory and type(BossBanner) == "table" and BossBanner:IsEventRegistered("BOSS_KILL") then
 			shouldRestoreBanner = true
 			BossBanner:UnregisterEvent("BOSS_KILL")
@@ -127,7 +123,7 @@ do
 	function plugin:OnPluginEnable()
 		updateProfile()
 		if self.db.profile.soundName ~= "None" then
-			self:SimpleTimer(function() local played, id = self:PlaySoundFile(LibSharedMedia:Fetch(SOUND, self.db.profile.soundName)) if played then StopSound(id) end end, 0)
+			self:SimpleTimer(function() local played, id = self:PlaySoundFile(self:FetchMedia(SOUND, self.db.profile.soundName, self.defaultDB.soundName)) if played then StopSound(id) end end, 0)
 		end
 
 		self:RegisterMessage("BigWigs_OnBossWin")
@@ -163,7 +159,7 @@ do
 			prev = t
 			local soundName = self.db.profile.soundName
 			if soundName ~= "None" then
-				local sound = LibSharedMedia:Fetch(SOUND, soundName, true)
+				local sound = plugin:FetchMedia(SOUND, soundName, plugin.defaultDB.soundName)
 				if sound then
 					self:PlaySoundFile(sound)
 				end

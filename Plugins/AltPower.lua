@@ -68,7 +68,7 @@ function plugin:RestyleWindow()
 		display:SetMovable(true)
 	end
 
-	local font = LibSharedMedia:Fetch(FONT, db.fontName)
+	local font = plugin:FetchMedia(FONT, db.fontName, plugin.defaultDB.fontName)
 	local flags = nil
 	if db.monochrome and db.outline ~= "NONE" then
 		flags = "MONOCHROME," .. db.outline
@@ -180,9 +180,6 @@ do
 			end
 		end
 
-		if not LibSharedMedia:IsValid("font", plugin.db.profile.fontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", plugin.db.profile.fontName)) then
-			plugin.db.profile.fontName = plugin.defaultDB.fontName
-		end
 		if db.fontSize < 10 or db.fontSize > 200 then
 			db.fontSize = plugin.defaultDB.fontSize
 		end

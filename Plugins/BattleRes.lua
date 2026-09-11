@@ -268,17 +268,6 @@ do
 		if plugin.db.profile.iconDesaturate < 1 or plugin.db.profile.iconDesaturate > 3 then
 			plugin.db.profile.iconDesaturate = defaultDB.iconDesaturate
 		end
-		if not LibSharedMedia:IsValid("font", plugin.db.profile.fontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", plugin.db.profile.fontName)) then
-			plugin.db.profile.fontName = defaultDB.fontName
-		end
-		if not LibSharedMedia:IsValid("border", plugin.db.profile.borderName) or (plugin.db.profile.borderName ~= "None" and not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("border", plugin.db.profile.borderName))) then
-			plugin.db.profile.borderName = defaultDB.borderName -- If the border is suddenly invalid then reset the size and offset also
-			plugin.db.profile.borderSize = defaultDB.borderSize
-			plugin.db.profile.borderOffset = defaultDB.borderOffset
-		end
-		if not LibSharedMedia:IsValid("sound", plugin.db.profile.newResAvailableSound) then
-			plugin.db.profile.newResAvailableSound = defaultDB.newResAvailableSound
-		end
 	end
 	ProfileUtils.SetPreset = function(mode)
 		if mode == "icon" then
@@ -423,10 +412,10 @@ do
 		cdTextFormat = plugin.db.profile.durationCustomText:format("%d:%02d")
 		local currentCDText = battleResFrame.cdTextRaw or 0
 		if plugin.db.profile.durationEmphasizeTime > 0 and currentCDText <= plugin.db.profile.durationEmphasizeTime then
-			battleResFrame.cdText:SetFont(LibSharedMedia:Fetch("font", plugin.db.profile.fontName), plugin.db.profile.durationEmphasizeFontSize, fontFlags)
+			battleResFrame.cdText:SetFont(plugin:FetchMedia("font", plugin.db.profile.fontName, plugin.defaultDB.fontName), plugin.db.profile.durationEmphasizeFontSize, fontFlags)
 			battleResFrame.cdText:SetTextColor(plugin.db.profile.durationEmphasizeColor[1], plugin.db.profile.durationEmphasizeColor[2], plugin.db.profile.durationEmphasizeColor[3], plugin.db.profile.durationEmphasizeColor[4])
 		else
-			battleResFrame.cdText:SetFont(LibSharedMedia:Fetch("font", plugin.db.profile.fontName), plugin.db.profile.durationFontSize, fontFlags)
+			battleResFrame.cdText:SetFont(plugin:FetchMedia("font", plugin.db.profile.fontName, plugin.defaultDB.fontName), plugin.db.profile.durationFontSize, fontFlags)
 			battleResFrame.cdText:SetTextColor(plugin.db.profile.durationColor[1], plugin.db.profile.durationColor[2], plugin.db.profile.durationColor[3], plugin.db.profile.durationColor[4])
 		end
 		battleResFrame.cdText:SetText("")
@@ -448,10 +437,10 @@ do
 		chargesTextFormat = plugin.db.profile.chargesCustomText:format("%d")
 		local currentChargesText = battleResFrame.chargesTextRaw or 0
 		if currentChargesText == 0 then
-			battleResFrame.chargesText:SetFont(LibSharedMedia:Fetch("font", plugin.db.profile.fontName), plugin.db.profile.chargesNoneFontSize, fontFlags)
+			battleResFrame.chargesText:SetFont(plugin:FetchMedia("font", plugin.db.profile.fontName, plugin.defaultDB.fontName), plugin.db.profile.chargesNoneFontSize, fontFlags)
 			battleResFrame.chargesText:SetTextColor(plugin.db.profile.chargesNoneColor[1], plugin.db.profile.chargesNoneColor[2], plugin.db.profile.chargesNoneColor[3], plugin.db.profile.chargesNoneColor[4])
 		else
-			battleResFrame.chargesText:SetFont(LibSharedMedia:Fetch("font", plugin.db.profile.fontName), plugin.db.profile.chargesAvailableFontSize, fontFlags)
+			battleResFrame.chargesText:SetFont(plugin:FetchMedia("font", plugin.db.profile.fontName, plugin.defaultDB.fontName), plugin.db.profile.chargesAvailableFontSize, fontFlags)
 			battleResFrame.chargesText:SetTextColor(plugin.db.profile.chargesAvailableColor[1], plugin.db.profile.chargesAvailableColor[2], plugin.db.profile.chargesAvailableColor[3], plugin.db.profile.chargesAvailableColor[4])
 		end
 		battleResFrame.chargesText:SetText("")
@@ -462,7 +451,7 @@ do
 		battleResFrame.cooldown:SetReverse(plugin.db.profile.cooldownInverse)
 
 		battleResFrame.border:SetBackdrop({
-			edgeFile = LibSharedMedia:Fetch("border", plugin.db.profile.borderName),
+			edgeFile = plugin:FetchMedia("border", plugin.db.profile.borderName, plugin.defaultDB.borderName),
 			edgeSize = plugin.db.profile.borderSize,
 		})
 		battleResFrame.border:ClearAllPoints()
@@ -1368,7 +1357,7 @@ do
 			if currentCharges > previousCharges and previousCharges >= 0 then
 				local soundName = plugin.db.profile.newResAvailableSound
 				if soundName ~= "None" then
-					local sound = LibSharedMedia:Fetch("sound", soundName, true)
+					local sound = plugin:FetchMedia("sound", soundName, plugin.defaultDB.newResAvailableSound)
 					if sound then
 						plugin:PlaySoundFile(sound)
 					end
@@ -1551,7 +1540,7 @@ do
 		ProfileUtils.ValidateMainSettings()
 		ProfileUtils.UpdateWidgets()
 		if self.db.profile.newResAvailableSound ~= "None" then
-			local path = LibSharedMedia:Fetch("sound", self.db.profile.newResAvailableSound)
+			local path = self:FetchMedia("sound", self.db.profile.newResAvailableSound, self.defaultDB.newResAvailableSound)
 			self:SimpleTimer(function() local played, id = self:PlaySoundFile(path) if played then StopSound(id) end end, 0)
 		end
 		if not self.db.profile.disabled then
