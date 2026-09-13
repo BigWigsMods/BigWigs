@@ -670,12 +670,13 @@ do
 					tbl.title = nil
 					tbl.bwDuration = 3
 					printMessage(self, tbl)
-				elseif tbl.eventToastID == 337 or tbl.eventToastID == 338 or tbl.eventToastID == 371 or tbl.eventToastID == 372 or tbl.eventToastID == 483 then -- Delve Spoils Found
+				elseif tbl.eventToastID == 337 or tbl.eventToastID == 338 or tbl.eventToastID == 371 or tbl.eventToastID == 372 or tbl.eventToastID == 483 or tbl.eventToastID == 482 then -- Delve Spoils Found
 					-- 337: Flickering Spoils Will Manifest Upon Delve Completion
 					-- 338: Shadowed Flickering Spoils Will Manifest Upon Delve Completion
 					-- 371: Grand Sanctified Spoils Will Manifest Upon Delve Completion
 					-- 372: Sanctified Spoils Will Manifest Upon Delve Completion
 					-- 483: Dundun Hides Within. Can You Find Him?
+					-- 482: Additional Bountiful Rewards Will Manifest Upon Delve Completion
 					tbl.subtitle = tbl.title
 					tbl.title = nil
 					tbl.bwDuration = 3
