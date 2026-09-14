@@ -537,9 +537,9 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 	if barInfo and barInfo.key == 1282487 and state == 3 then -- Fangs of the Coiled Altar (Canceled)
 		-- Normally canceled after the next set of timers are added, but can rarely happen before
 		-- Just run next frame so we're always after
+		self:StopBar(barInfo.msg)
 		self:SimpleTimer(function()
 			-- Check Axegrinder (1283832), a once per Fangs ability, since Fangs _ADDED is after the rest of the timers
-			self:StopBar(barInfo.msg)
 			if spellCount[1283832] > barInfo.count then
 				-- next bar started, so it finished
 				barInfo:onFinished()
@@ -548,7 +548,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 				self:StartPhaseTwo()
 			end
 			activeBars[eventID] = nil
-		end, 0.1)
+		end, 0.2)
 		return
 	end
 
