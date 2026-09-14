@@ -25,7 +25,7 @@ local activeBars = {}
 local backupBars = {}
 
 local durationEventCount = {}
-local checkStage = nil
+local checkStage = false
 local playerSide = nil
 
 local rageCount = 1
@@ -34,6 +34,7 @@ local wavesCount = 1
 local wrathCount = 1
 local coilsCount = 1
 local thrashCount = 1
+local wretchCount = 0
 local wombCount = 1
 local incubationCount = 1
 
@@ -110,7 +111,7 @@ mod:SetRenames({
 	[1301117] = {L.grasping_fangs}, -- Grasping Fangs
 	[1290779] = {1290779}, -- Malice
 	[1301213] = {CL.teleport}, -- Shadow Molt
-	[1290990] = {1290990}, -- Writhing Gestation
+	-- [1290990] = {1290990}, -- Writhing Gestation
 
 	[1295905] = {CL.soaks}, -- Serpent's Bite
 	[1300635] = {1300635}, -- Submerge
@@ -188,9 +189,9 @@ function mod:GetOptions()
 		1302982, -- Virulent Spit
 		-- Rage of the Shackled
 		-- Doomscale Warden
-			-- 1301117, -- Grasping Fangs
-			-- 1290779, -- Malice
-			-- 1301213, -- Shadow Molt
+			1301117, -- Grasping Fangs
+			1290779, -- Malice
+			1301213, -- Shadow Molt
 			-- 1290990, -- Writhing Gestation
 
 		-- Intermission: The Shattering
@@ -252,10 +253,13 @@ function mod:OnEncounterStart()
 	self:SetStage(1)
 	self:SetPlayerSide()
 	self:ResetCounts()
-	checkStage = nil
+	checkStage = false
 	rageCount = 1
 
 	self:RegisterUnitEvent("UNIT_TARGETABLE_CHANGED", nil, "boss1")
+	if self:Mythic() then
+		self:RegisterWretchEvents()
+	end
 end
 
 function mod:ResetCounts()
@@ -371,7 +375,7 @@ function mod:MythicTimeline(_, eventInfo)
 				barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, barInfo.duration)
 			elseif count == 2 then
 				local wombCD = duration + 2.1
-				local wombBarInfo = self:ToxicWomb(wombCD)
+				local wombBarInfo = self:ToxicWomb()
 				self:HandleBar(wombBarInfo, {duration = wombCD})
 				wombBarInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(wombBarInfo, true) end, wombCD)
 
@@ -394,7 +398,7 @@ function mod:MythicTimeline(_, eventInfo)
 			local count = durationEventCount[rounded]
 			if count == 1 then
 				local wombCD = duration + 1.3
-				local wombBarInfo = self:ToxicWomb(wombCD)
+				local wombBarInfo = self:ToxicWomb()
 				self:HandleBar(wombBarInfo, {duration = wombCD})
 				wombBarInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(wombBarInfo, true) end, wombCD)
 
@@ -434,7 +438,7 @@ function mod:MythicTimeline(_, eventInfo)
 		elseif rounded == 5 or rounded == 30 or rounded == 98 then
 			if rounded == 5 then
 				local wombCD = 57
-				local wombBarInfo = self:ToxicWomb(wombCD)
+				local wombBarInfo = self:ToxicWomb()
 				self:HandleBar(wombBarInfo, {duration = wombCD})
 				wombBarInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(wombBarInfo, true) end, wombCD)
 			end
@@ -838,6 +842,267 @@ end
 -- Event Handlers
 --
 
+-- Doomscale Warden Cast Tracking
+do
+	local wardenAliveCount = 0
+	local castTracker = {}
+	local castCounts = {}
+	local rotation = nil
+	local sawMalice = false
+
+	local function isWardenInRange(unit)
+		if mod:UnitLevel(unit) ~= 92 then  -- Doomscale Warden only
+			return false
+		end
+		if unit == "target" or unit == "focus" then -- Always assume this is on your side.
+			return true
+		end
+		if mod:UnitWithinRange(unit, 60) then
+			return true
+		end
+	end
+
+	function mod:RegisterWardenEvents()
+		wardenAliveCount = 0
+		castTracker = {}
+		castCounts = {}
+		rotation = nil
+		sawMalice = false
+
+		--  XXX force our range check toy into the item cache
+		C_Item.RequestLoadItemDataByID(32825) -- luacheck: ignore
+
+		if not self:Mythic() then
+			self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+		end
+		self:RegisterEvent("UNIT_SPELLCAST_START", "WardenCasts")
+		self:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED", "WardenCastInterrupt")
+		self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED", "WardenCasts")
+		self:RegisterEvent("UNIT_DIED")
+	end
+
+	function mod:UnregisterWardenEvents()
+		self:StopBar(1301117) -- Grasping Fangs
+		self:StopBar(1301213) -- Shadow Molt
+		self:StopBar(1290779) -- Malice
+
+		if not self:Mythic() then
+			self:UnregisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+		end
+		self:UnregisterEvent("UNIT_SPELLCAST_START")
+		self:UnregisterEvent("UNIT_SPELLCAST_INTERRUPTED")
+		self:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+		self:UnregisterEvent("UNIT_DIED")
+	end
+
+	function mod:WardenCastInterrupt(_, unit, _, _, _, castBarID)
+		local castStartTime = castTracker[castBarID]
+		if not castStartTime or not isWardenInRange(unit) then return end
+
+		local threeSecondCastCount = castCounts[3]
+		local nextMalice = 27.7 -- default CD
+		if rotation == "tp_before_malice" and threeSecondCastCount == 2 then
+			nextMalice = 47.4
+		elseif rotation == "tp_before_fang" and threeSecondCastCount == 2 then
+			nextMalice = 41.5
+		end
+
+		nextMalice = nextMalice - (GetTime() - castStartTime)
+		self:Bar(1290779, nextMalice) -- Malice
+
+		castTracker[castBarID] = nil
+		sawMalice = true
+	end
+
+	function mod:WardenCasts(event, unit, _, _, castBarID)
+		if not isWardenInRange(unit) then return end
+
+		if event == "UNIT_SPELLCAST_START" then
+			castTracker[castBarID] = GetTime()
+			return
+		end
+
+		local castStart = castTracker[castBarID]
+		if not castStart then return end
+		local castTime = GetTime() - castStart
+		castTime = self:RoundNumber(castTime, 1)
+		castCounts[castTime] = (castCounts[castTime] or 0) + 1
+		castTracker[castBarID] = nil
+		if castTime == 3 then -- Shadow Molt or Writhing Gestation
+			local count = castCounts[castTime]
+			if count % 2 == 1 then -- Shadow Molt
+				if not rotation then
+					rotation = sawMalice and "tp_before_fang" or "tp_before_malice"
+				end
+				if rotation == "tp_before_malice" and count == 1 then
+					self:Bar(1290779, 3.8) -- Malice
+					self:Bar(1301213, 41.5) -- Shadow Molt
+				elseif rotation == "tp_before_fang" and count == 1 then
+					self:Bar(1301213, 41.5) -- Shadow Molt
+				else
+					self:Bar(1301213, 25) -- Shadow Molt
+				end
+			end
+		elseif castTime == 2 then -- Grasping Fangs
+			local count = castCounts[castTime]
+			if not rotation then
+				rotation = "normal"
+			end
+			if rotation == "tp_before_malice" and count == 1 then
+				self:Bar(1301117, 46.0) -- Grasping Fangs
+			elseif rotation == "tp_before_fang" and count == 1 then
+				self:Bar(1301117, 58.5) -- Grasping Fangs
+			else
+				self:Bar(1301117, 25) -- Grasping Fangs
+			end
+		end
+	end
+
+	function mod:WardenCheck()
+		-- Check for active Wardens.
+		local warden, wardenFound = nil, 0
+		for _, unit in ipairs({ "boss4", "boss5" }) do
+			if self:UnitGUID(unit) then
+				warden = unit
+				wardenFound = wardenFound + 1
+			end
+		end
+
+		if wardenAliveCount == 2 and wardenFound == 1 then
+			-- One Warden is dead, stop bars if we aren't in range of the survivor.
+			if not isWardenInRange(warden, 60) then
+				self:UnregisterWardenEvents()
+			end
+		elseif wardenAliveCount == 1 and wardenFound == 0 then
+			-- Both Wardens are dead, stop bars.
+			self:UnregisterWardenEvents()
+		end
+
+		wardenAliveCount = wardenFound
+	end
+
+	local unitTable = {
+		"boss1", "boss2", "boss3", "boss4", "boss5",
+		"softenemy", "target", "mouseover", "focus",
+		"nameplate1", "nameplate2", "nameplate3", "nameplate4", "nameplate5", "nameplate6", "nameplate7", "nameplate8", "nameplate9", "nameplate10",
+		"nameplate11", "nameplate12", "nameplate13", "nameplate14", "nameplate15", "nameplate16", "nameplate17", "nameplate18", "nameplate19", "nameplate20",
+		"nameplate21", "nameplate22", "nameplate23", "nameplate24", "nameplate25", "nameplate26", "nameplate27", "nameplate28", "nameplate29", "nameplate30",
+		"nameplate31", "nameplate32", "nameplate33", "nameplate34", "nameplate35", "nameplate36", "nameplate37", "nameplate38", "nameplate39", "nameplate40",
+
+		"targettarget", "mouseovertarget", "focustarget",
+		"party1target", "party2target", "party3target", "party4target",
+		"raid1target", "raid2target", "raid3target", "raid4target", "raid5target",
+		"raid6target", "raid7target", "raid8target", "raid9target", "raid10target",
+		"raid11target", "raid12target", "raid13target", "raid14target", "raid15target",
+		"raid16target", "raid17target", "raid18target", "raid19target", "raid20target",
+		"raid21target", "raid22target", "raid23target", "raid24target", "raid25target",
+		"raid26target", "raid27target", "raid28target", "raid29target", "raid30target",
+		"raid31target", "raid32target", "raid33target", "raid34target", "raid35target",
+		"raid36target", "raid37target", "raid38target", "raid39target", "raid40target",
+	}
+	local unitTableCount = #unitTable
+
+	function mod:UNIT_DIED()
+		for i = 1, unitTableCount do
+			local unit = unitTable[i]
+			if self:UnitGUID(unit) and self:UnitLevel(unit) == 92 and not self:UnitIsDeadOrGhost(unit) then
+				return -- a warden is found, bail
+			end
+		end
+		self:UnregisterWardenEvents()
+	end
+end
+
+-- Blightscale Wretch Cast Tracking
+do
+	local FESTER_BURST_ID = 1310763
+	local wretchesAlive = 0
+
+	function mod:RegisterWretchEvents()
+		wretchCount = 0
+		wretchesAlive = 0
+		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+		self:RegisterUnitEvent("UNIT_SPELLCAST_START", "WretchCast", "boss2", "boss3", "boss4")
+	end
+
+	function mod:UnregisterWretchEvents()
+		-- just in case.
+		for i = 1, 2 do
+			for j = 1, 4 do
+				self:StopBar(L.fester_burst_count:format(self:GetRename(1310763), i, j))
+			end
+		end
+		self:UnregisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+		self:UnregisterUnitEvent("UNIT_SPELLCAST_START", "boss2", "boss3", "boss4")
+	end
+
+	local function cmp(a, b)
+		local a_wretch, a_count = a and a.wretch or 100, a and a.count or 100
+		local b_wretch, b_count = b and b.wretch or 100, b and b.count or 100
+		if a_wretch == b_wretch then
+			return a_count < b_count
+		end
+		return a_wretch < b_wretch
+	end
+
+	function mod:WretchCast(_, unit)
+		if self:UnitLevel(unit) == 92 then -- Blightscale Wretch
+			local bars = {}
+			for _, barInfo in next, activeBars do
+				if barInfo.key == FESTER_BURST_ID then -- Fester Burst
+					bars[#bars + 1] = barInfo
+				end
+			end
+			if #bars > 0 then
+				table.sort(bars, cmp) -- XXX should probably have just used the fake eventID >.>
+				-- finish the oldest bar and start the next cast for that wretch
+				self:StopTimelineBar(bars[1], true)
+			end
+		end
+	end
+
+	function mod:WretchCheck()
+		local wretchesFound = 0
+		for _, unit in ipairs({ "boss2", "boss3", "boss4" }) do
+			if self:UnitGUID(unit) and self:UnitLevel(unit) == 92 then
+				wretchesFound = wretchesFound + 1
+			end
+		end
+
+		if wretchesAlive > 0 and wretchesFound == 0 then
+			for _, barInfo in next, activeBars do
+				if barInfo.key == FESTER_BURST_ID then
+					self:StopTimelineBar(barInfo)
+				end
+			end
+			if self:GetStage() == 3 or wretchCount == 2 then
+				self:UnregisterWretchEvents()
+			end
+		elseif wretchesFound < wretchesAlive then -- first died after second spawned
+			for _, barInfo in next, activeBars do
+				if barInfo.key == FESTER_BURST_ID and barInfo.wretch == 1 then
+					self:StopTimelineBar(barInfo)
+				end
+			end
+		end
+
+		wretchesAlive = wretchesFound
+	end
+end
+
+--------------------------------------------------------------------------------
+-- Phasing
+--
+
+function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+	local stage = self:GetStage()
+	if (stage == 1 or stage == 3) and self:Mythic() then -- Blightscale Wretch handler
+		self:WretchCheck()
+	elseif stage == 2 and not self:Mythic() then -- Doomscale Warden handler
+		self:WardenCheck()
+	end
+end
+
 function mod:UNIT_TARGETABLE_CHANGED(_, unit)
 	if checkStage and not UnitCanAttack("player", unit) and not self:IsWiping() then
 		self:PhaseTwoStart()
@@ -845,7 +1110,6 @@ function mod:UNIT_TARGETABLE_CHANGED(_, unit)
 end
 
 function mod:PhaseTwoStart(isTimelineEvent)
-	self:UnregisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:UnregisterUnitEvent("UNIT_TARGETABLE_CHANGED", "boss1")
 	checkStage = false
 
@@ -858,10 +1122,16 @@ function mod:PhaseTwoStart(isTimelineEvent)
 
 		local barrierCD = isTimelineEvent and 4.1 or 8.1
 		self:Bar("stages", barrierCD, self:GetRename("stages", 4), 1313355) -- 1313355 = Doomscale Cauldron
+
+		self:RegisterWardenEvents()
+		if self:Mythic() then
+			self:ScheduleTimer("UnregisterWardenEvents", barrierCD + 110) -- just in-case.
+		end
 	end
 end
 
 function mod:IntermissionStart()
+	self:UnregisterWardenEvents()
 	self:SetStage(2.5)
 	self:ResetCounts()
 
@@ -882,6 +1152,10 @@ function mod:PhaseThreeStart()
 	if self:ShouldShowBars() then
 		self:Message("stages", "cyan", self:GetRename("stages", 3), false)
 		self:PlaySound("stages", "long")
+	end
+
+	if self:Mythic() then
+		self:RegisterWretchEvents()
 	end
 end
 
@@ -1058,28 +1332,40 @@ end
 
 -- Mythic
 
-function mod:ToxicWomb(duration)
+function mod:ToxicWomb()
 	local barText = CL.count:format(self:GetRename(1310738), wombCount)
 	wombCount = wombCount + 1
 	return {
 		msg = barText,
 		key = 1310738,
-		onFinished = function()
-			-- local wretchesAlive = wretchesAlive + 1
+		onFinished = function(this)
 			self:Message(1310738, "cyan", barText)
 			self:PlaySound(1310738, "info")
+
+			-- Fester Burst
+			wretchCount = wretchCount + 1
+			local burstCD = 32.5 -- 32.3~32.8
+			local burstBarInfo = self:FesterBurst(wretchCount, 1)
+			self:HandleBar(burstBarInfo, {duration = burstCD, id = -1310738})
 		end,
 	}
 end
 
-function mod:FesterBurst(wretchCount, count)
-	local barText = L.fester_burst_count:format(self:GetRename(1310763), wretchCount, count)
+function mod:FesterBurst(wretch, count)
+	local barText = L.fester_burst_count:format(self:GetRename(1310763), wretch, count)
 	return {
 		msg = barText,
 		key = 1310763,
-		onFinished = function()
+		wretch = wretch,
+		count = count,
+		onFinished = function(this)
 			self:Message(1310763, "green", barText)
 			self:PlaySound(1310763, "info")
+
+			local castCount = this.count + 1
+			local burstCD = castCount % 2 == 0 and 34.5 or 32.5 -- 34.0~35.2, 32.3~32.8
+			local burstBarInfo = self:FesterBurst(this.wretch, castCount)
+			self:HandleBar(burstBarInfo, {duration = burstCD, id = -1310738 - castCount})
 		end,
 	}
 end
