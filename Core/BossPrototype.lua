@@ -39,6 +39,8 @@ end or isRetail and C_EncounterJournal.GetSectionInfo or function(key)
 end
 local UnitPosition, UnitIsConnected, UnitInPartyIsAI, UnitClass, UnitTokenFromGUID = UnitPosition, UnitIsConnected, UnitInPartyIsAI, UnitClass, loader.UnitTokenFromGUID
 local GetSpellName, GetSpellTexture, GetTime = loader.GetSpellName, loader.GetSpellTexture, GetTime
+local GetClassColor = C_ClassColor and C_ClassColor.GetClassColor -- XXX [Mainline:✓ MoP:✗ Wrath:✗ Vanilla:✗]
+local UnitSpellTargetName, UnitSpellTargetClass = UnitSpellTargetName, UnitSpellTargetClass
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local EJ_GetEncounterInfo = (isCata or isMists) and function(key)
 	return EJ_GetEncounterInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
@@ -4239,7 +4241,6 @@ end
 
 do
 	local GetPlayerInfoByGUID = GetPlayerInfoByGUID
-	local GetClassColor = C_ClassColor and C_ClassColor.GetClassColor -- XXX [Mainline:✓ MoP:✗ Wrath:✗ Vanilla:✗]
 	--- Temporarily replace the next Blizzard boss message with a TargetMessage
 	-- @param key the option key
 	-- @number duration the duration the block should last
@@ -4369,11 +4370,24 @@ end
 --- Show a message for a secret spellId.
 -- @param key the option key
 -- @string color the message color category
--- @number spellId the secret spellId from which the icon and text are derived.
-function boss:SecretMessage(key, color, spellId)
+-- @number spellId the secret spellId from which the icon and text are derived
+-- @param[opt] unit the casting unit, used to add its target to the message
+function boss:SecretMessage(key, color, spellId, unit)
 	local isEmphasized = self:CheckFlag(key, C.EMPHASIZE)
 	if self:CheckFlag(key, C.MESSAGE) or isEmphasized then
-		self:SendMessage("BigWigs_Message", self, key, GetSpellName(spellId), color, GetSpellTexture(spellId), isEmphasized)
+		local text = GetSpellName(spellId)
+		if unit then
+			local targetName = UnitSpellTargetName(unit)
+			if targetName then
+				local class = classColorMessages and UnitSpellTargetClass(unit)
+				local classColor = class and GetClassColor(class)
+				if classColor then
+					targetName = classColor:WrapTextInColorCode(targetName)
+				end
+				text = CL.other:format(text, targetName)
+			end
+		end
+		self:SendMessage("BigWigs_Message", self, key, text, color, GetSpellTexture(spellId), isEmphasized)
 	end
 end
 
