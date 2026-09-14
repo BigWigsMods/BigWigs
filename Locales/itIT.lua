@@ -192,8 +192,6 @@ L.auraMechanic_taunted = "Provocato"
 --L.onApplied = "On Applied"
 --L.onDose = "On Dose"
 --L.onRemoved = "On Removed"
-L.privateAuraSounds = "Suoni per le Aura Private"
---L.privateAuraSounds_desc = "Private auras can't be tracked normally, but you can set a sound to be played when the ability debuff is applied to you."
 L.listAbilities = "Elenca le Abilità nella Chat"
 L.parenthesesID = "%s |cffA5A5A5(ID: %s)|r"
 
@@ -337,12 +335,11 @@ L.mythicplus_settings_export_desc = "esportare tutte le impostazzioni Mythic+."
 L.imported_battleres_settings = "impostazzioni Battle Res"
 L.battleres_settings_import_desc = "Importare tutte le impostazzioni Battle Res."
 L.battleres_settings_export_desc = "esportare tutte le impostazzioni Battle Res."
---L.imported_privateAuras_settings = "Private Auras Settings"
---L.privateAuras_settings_import_desc = "Import all Private Auras settings."
---L.privateAuras_settings_export_desc = "Export all Private Auras settings."
 --L.imported_combattimer_settings = "Combat Timer Settings"
 --L.combattimer_settings_import_desc = "Import all Combat Timer settings."
 --L.combattimer_settings_export_desc = "Export all Combat Timer settings."
+--L.confirm_export_disabled_plugin = "You have |cFF33FF99\"%s\"|r disabled.\n\nExporting it will force-disable this feature for anyone importing this string, |cffff8000even if they want to use it|r.\n\nAre you sure you want to do this?"
+--L.confirm_import_disabled_plugin = "The settings you are about to import for |cFF33FF99\"%s\"|r have it disabled.\n\nImporting them will disable it for you as well.\n\nAre you sure you want to do this?"
 --L.export_bosses = "Export Bosses"
 --L.export_bosses_info = "The configuration of all bosses in the zones selected below will be exported."
 --L.raids_section = "Raids"
@@ -783,9 +780,6 @@ L.disableAltPowerDesc = "Disabilita totalmente il display del Potere Alternativo
 --
 
 --L.auras = "Auras" -- Buffs/Debuffs
---L.privateAuras = "Private Auras"
---L.privateAurasDesc1 = "'Private Auras' are a special type of debuff that addons cannot detect or perform any automation on. These debuffs are used by all modern boss encounters now.\n\n"
---L.privateAurasDesc2 = "BigWigs can help you keep track of when they are applied to you by displaying them as icons. |cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
 --L.aurasDesc = "BigWigs can help you keep track of when boss debuffs are applied to you by displaying them as icons.\n|cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
 --L.disabledDuringTrash = "Disabled During Trash"
 
@@ -813,7 +807,6 @@ L.disableAltPowerDesc = "Disabilita totalmente il display del Potere Alternativo
 --L.tankIndicator = "Tank Indicator"
 --L.maxIcons = "Max Icons"
 --L.maxIconsDesc = "The maximum amount of icons to be displayed."
---L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your private aura debuffs as icons, or even the private auras of another player (e.g. a tank)."
 --L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: You can now see your boss debuffs as icons, or even the boss debuffs of another player (e.g. a tank)."
 
 --L.aurasTestAnchorText = "Player\nAuras"
