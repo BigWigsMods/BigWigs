@@ -84,7 +84,7 @@ timerBar:SetScript("OnUpdate", function(f)
 end)
 
 local L = tbl.API:GetLocale("BigWigs")
-tbl.API.RegisterToolOptions("LFGTimer", {
+tbl.API.RegisterToolOptions("LFGTimer", function() return {
 	type = "group",
 	name = L.lfgTimerTitle,
 	order = 6,
@@ -111,4 +111,4 @@ tbl.API.RegisterToolOptions("LFGTimer", {
 			width = "full",
 		},
 	},
-})
+} end)

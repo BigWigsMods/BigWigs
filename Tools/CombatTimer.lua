@@ -1717,7 +1717,7 @@ do
 	--	return db.profile.instanceTimerDisabled or db.profile.instanceTimerPosition[5] == "UIParent"
 	--end
 
-	BigWigsAPI.RegisterToolOptions("CombatTimer", {
+	BigWigsAPI.RegisterToolOptions("CombatTimer", function() return {
 		type = "group",
 		childGroups = "tab",
 		name = L.combatTimerTitle,
@@ -3611,7 +3611,7 @@ do
 				},
 			},]]
 		},
-	})
+	} end)
 end
 
 --------------------------------------------------------------------------------

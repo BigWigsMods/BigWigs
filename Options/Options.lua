@@ -13,8 +13,6 @@ local ldbi = LibStub("LibDBIcon-1.0")
 local acr = LibStub("AceConfigRegistry-3.0")
 local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
-local adbo = LibStub("AceDBOptions-3.0")
-local lds = LibStub("LibDualSpec-1.0", true)
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 
 options.SendMessage = loader.SendMessage
@@ -67,263 +65,239 @@ local C_EncounterJournal_GetSectionInfo = loader.isClassic and function(key)
 	end
 end or C_EncounterJournal.GetSectionInfo
 
-local aceConfigTableMainBigWigsTab = {
-	type = "group",
-	name = "BigWigs",
-	get = function(info)
-		return loader.db.profile[info[#info]]
-	end,
-	set = function(info, value)
-		local key = info[#info]
-		loader.db.profile[key] = value
-	end,
-	args = {
-		general = {
-			order = 0,
-			type = "group",
-			name = "BigWigs",
-			args = {
-				introduction = {
-					type = "description",
-					name = L.introduction,
-					order = 12,
-					fontSize = "medium",
-					width = "full",
-				},
-				minimap = {
-					type = "toggle",
-					name = L.minimapIcon,
-					desc = L.minimapToggle,
-					order = 13,
-					get = function() return not BigWigsIconDB.hide end,
-					set = function(_, v)
-						if v then
-							BigWigsIconDB.hide = nil
-							ldbi:Show("BigWigs")
-						else
-							BigWigsIconDB.hide = true
-							ldbi:Hide("BigWigs")
-						end
-					end,
-					width = 1.5,
-				},
-				compartment = {
-					type = "toggle",
-					name = L.compartmentMenu,
-					desc = L.compartmentMenu_desc,
-					order = 14,
-					get = function() return not ldbi:IsButtonInCompartment("BigWigs") end,
-					set = function(_, v)
-						if v then
-							ldbi:RemoveButtonFromCompartment("BigWigs")
-						else
-							ldbi:AddButtonToCompartment("BigWigs")
-						end
-					end,
-					hidden = not ldbi:IsButtonCompartmentAvailable(),
-				},
-				separator3 = {
-					type = "description",
-					name = " ",
-					order = 30,
-					width = "full",
-				},
-				showZoneMessages = {
-					type = "toggle",
-					name = L.zoneMessages,
-					desc = L.zoneMessagesDesc,
-					order = 32,
-					width = "full",
-				},
-				fakeDBMVersion = {
-					type = "toggle",
-					name = L.dbmFaker,
-					desc = L.dbmFakerDesc,
-					order = 33,
-					width = "full",
-				},
-				separator4 = {
-					type = "description",
-					name = " ",
-					order = 40,
-					width = "full",
-				},
-				englishSayMessages = {
-					type = "toggle",
-					name = L.englishSayMessages,
-					desc = L.englishSayMessagesDesc,
-					order = 41,
-					width = "full",
-					disabled = function()
-						local myLocale = GetLocale()
-						return myLocale == "enUS" or myLocale == "enGB"
-					end,
-				},
-				slashDescTitle = {
-					type = "description",
-					name = "\n".. L.slashDescTitle,
-					fontSize = "large",
-					order = 43,
-					width = "full",
-				},
-				slashDescPull = {
-					type = "description",
-					name = "  ".. L.slashDescPull,
-					fontSize = "medium",
-					order = 44,
-					width = "full",
-				},
-				slashDescBreak = {
-					type = "description",
-					name = "  ".. L.slashDescBreak,
-					fontSize = "medium",
-					order = 45,
-					width = "full",
-				},
-				slashDescBar = {
-					type = "description",
-					name = "  ".. L.slashDescRaidBar,
-					fontSize = "medium",
-					order = 46,
-					width = "full",
-				},
-				slashDescLocalBar = {
-					type = "description",
-					name = "  ".. L.slashDescLocalBar,
-					fontSize = "medium",
-					order = 47,
-					width = "full",
-				},
-				slashDescRange = {
-					type = "description",
-					name = "  ".. L.slashDescRange,
-					fontSize = "medium",
-					order = 48,
-					width = "full",
-				},
-				slashDescVersion = {
-					type = "description",
-					name = "  ".. L.slashDescVersion,
-					fontSize = "medium",
-					order = 49,
-					width = "full",
-				},
-				slashDescConfig = {
-					type = "description",
-					name = "  ".. L.slashDescConfig,
-					fontSize = "medium",
-					order = 50,
-					width = "full",
-				},
-				gitHubDesc = {
-					type = "description",
-					name = "\n".. L.gitHubDesc .."\n",
-					fontSize = "medium",
-					order = 51,
-					width = "full",
-				},
-				discord = {
-					type = "input",
-					get = function() return "discord.gg/jGveg85" end,
-					set = function() end,
-					name = "Discord",
-					order = 52,
-					width = 0.75,
-				},
-				github = {
-					type = "input",
-					get = function() return "github.com/BigWigsMods" end,
-					set = function() end,
-					name = "GitHub",
-					order = 53,
-					width = 0.95,
-				},
-				curseforge = {
-					type = "input",
-					get = function() return "curseforge.com/wow/addons/big-wigs" end,
-					set = function() end,
-					name = "CurseForge",
-					order = 54,
-					width = 1.32,
-				},
-			},
-		},
-	},
+local allowedDirectOpens = {
+	["Auras"] = {tab = "options", path = {"general", "Auras"}},
 }
 
-local ConstructMainBigWigsTab
 do
-	local ConstructToolsTab
+	local addonTable
 	do
-		local aceConfigTableToolsTab = {
-			type = "group",
-			name = L.tools,
-			get = function(info)
-				return loader.db.profile[info[#info]]
-			end,
-			set = function(info, value)
-				local key = info[#info]
-				loader.db.profile[key] = value
-			end,
-			args = {
-				tools = {
-					order = 1,
-					type = "group",
-					name = L.tools,
-					args = {
-						toolsDesc = {
-							type = "description",
-							name = L.toolsDesc,
-							fontSize = "large",
-							order = 0,
-							width = "full",
+		local _
+		_, addonTable = ...
+	end
+
+	--[[ Construct Main BigWigs Tab ]]--
+	local aceConfigTableMainBigWigsTab = {
+		type = "group",
+		name = "BigWigs",
+		get = function(info)
+			return loader.db.profile[info[#info]]
+		end,
+		set = function(info, value)
+			local key = info[#info]
+			loader.db.profile[key] = value
+		end,
+		args = {
+			general = {
+				order = 0,
+				type = "group",
+				name = "BigWigs",
+				args = {
+					introduction = {
+						type = "description",
+						name = L.introduction,
+						order = 12,
+						fontSize = "medium",
+						width = "full",
+					},
+					minimap = {
+						type = "toggle",
+						name = L.minimapIcon,
+						desc = L.minimapToggle,
+						order = 13,
+						get = function() return not BigWigsIconDB.hide end,
+						set = function(_, v)
+							if v then
+								BigWigsIconDB.hide = nil
+								ldbi:Show("BigWigs")
+							else
+								BigWigsIconDB.hide = true
+								ldbi:Hide("BigWigs")
+							end
+						end,
+						width = 1.5,
+					},
+					compartment = {
+						type = "toggle",
+						name = L.compartmentMenu,
+						desc = L.compartmentMenu_desc,
+						order = 14,
+						get = function() return not ldbi:IsButtonInCompartment("BigWigs") end,
+						set = function(_, v)
+							if v then
+								ldbi:RemoveButtonFromCompartment("BigWigs")
+							else
+								ldbi:AddButtonToCompartment("BigWigs")
+							end
+						end,
+						hidden = not ldbi:IsButtonCompartmentAvailable(),
+					},
+					separator3 = {
+						type = "description",
+						name = " ",
+						order = 30,
+						width = "full",
+					},
+					showZoneMessages = {
+						type = "toggle",
+						name = L.zoneMessages,
+						desc = L.zoneMessagesDesc,
+						order = 32,
+						width = "full",
+					},
+					fakeDBMVersion = {
+						type = "toggle",
+						name = L.dbmFaker,
+						desc = L.dbmFakerDesc,
+						order = 33,
+						width = "full",
+					},
+					separator4 = {
+						type = "description",
+						name = " ",
+						order = 40,
+						width = "full",
+					},
+					englishSayMessages = {
+						type = "toggle",
+						name = L.englishSayMessages,
+						desc = L.englishSayMessagesDesc,
+						order = 41,
+						width = "full",
+						disabled = function()
+							local myLocale = GetLocale()
+							return myLocale == "enUS" or myLocale == "enGB"
+						end,
+					},
+					slashDescTitle = {
+						type = "description",
+						name = "\n".. L.slashDescTitle,
+						fontSize = "large",
+						order = 43,
+						width = "full",
+					},
+					slashDescPull = {
+						type = "description",
+						name = "  ".. L.slashDescPull,
+						fontSize = "medium",
+						order = 44,
+						width = "full",
+					},
+					slashDescBreak = {
+						type = "description",
+						name = "  ".. L.slashDescBreak,
+						fontSize = "medium",
+						order = 45,
+						width = "full",
+					},
+					slashDescBar = {
+						type = "description",
+						name = "  ".. L.slashDescRaidBar,
+						fontSize = "medium",
+						order = 46,
+						width = "full",
+					},
+					slashDescLocalBar = {
+						type = "description",
+						name = "  ".. L.slashDescLocalBar,
+						fontSize = "medium",
+						order = 47,
+						width = "full",
+					},
+					slashDescRange = {
+						type = "description",
+						name = "  ".. L.slashDescRange,
+						fontSize = "medium",
+						order = 48,
+						width = "full",
+					},
+					slashDescVersion = {
+						type = "description",
+						name = "  ".. L.slashDescVersion,
+						fontSize = "medium",
+						order = 49,
+						width = "full",
+					},
+					slashDescConfig = {
+						type = "description",
+						name = "  ".. L.slashDescConfig,
+						fontSize = "medium",
+						order = 50,
+						width = "full",
+					},
+					gitHubDesc = {
+						type = "description",
+						name = "\n".. L.gitHubDesc .."\n",
+						fontSize = "medium",
+						order = 51,
+						width = "full",
+					},
+					discord = {
+						type = "input",
+						get = function() return "discord.gg/jGveg85" end,
+						set = function() end,
+						name = "Discord",
+						order = 52,
+						width = 0.75,
+					},
+					github = {
+						type = "input",
+						get = function() return "github.com/BigWigsMods" end,
+						set = function() end,
+						name = "GitHub",
+						order = 53,
+						width = 0.95,
+					},
+					curseforge = {
+						type = "input",
+						get = function() return "curseforge.com/wow/addons/big-wigs" end,
+						set = function() end,
+						name = "CurseForge",
+						order = 54,
+						width = 1.32,
+					},
+					profileOptions = {
+						type = "group",
+						childGroups = "tab",
+						order = 100,
+						args = {
+							profile = LibStub("AceDBOptions-3.0"):GetOptionsTable(loader.db),
+							import = addonTable.sharingOptions.importSection,
+							exportCore = addonTable.sharingOptions.exportCoreSection,
+							exportBosses = addonTable.sharingOptions.exportBossSection,
 						},
 					},
 				},
 			},
-		}
-		function ConstructToolsTab()
-			for key, optionsTable in next, API.GetToolOptions() do
-				aceConfigTableToolsTab.args.tools.args[key] = optionsTable
+		},
+	}
+	aceConfigTableMainBigWigsTab.args.general.args.profileOptions.name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Profile:20|t " .. aceConfigTableMainBigWigsTab.args.general.args.profileOptions.args.profile.name
+	aceConfigTableMainBigWigsTab.args.general.args.profileOptions.args.profile.order = 1
+
+	do
+		local registered, subPanelRegistry = {}, {}
+		function options:BigWigs_PluginOptionsReady(_, pluginName, pluginOptions, subPanelOptions)
+			if not registered[pluginName] then
+				if type(pluginOptions) == "table" then
+					registered[pluginName] = true
+					aceConfigTableMainBigWigsTab.args.general.args[pluginName] = pluginOptions
+				elseif type(subPanelOptions) == "table" then
+					registered[pluginName] = true
+					local key = subPanelOptions.key
+					local opts = subPanelOptions.options
+					if allowedDirectOpens[subPanelOptions.name] then
+						BigWigs:Error(("Panel %q with key %q already exists in allowedDirectOpens."):format(tostring(subPanelOptions.name), tostring(key)))
+					else
+						allowedDirectOpens[subPanelOptions.name] = {tab = "options", path = {key}}
+					end
+					if type(opts) == "function" then
+						subPanelRegistry[key] = opts
+					else
+						aceConfigTableMainBigWigsTab.args[key] = opts
+					end
+				end
 			end
-			return aceConfigTableToolsTab
 		end
-	end
-
-	local addonName, addonTable = ...
-	local f = CreateFrame("Frame")
-	f:RegisterEvent("ADDON_LOADED")
-	local function Initialize(_, _, addon)
-		if addon ~= addonName then return end
-		f:UnregisterEvent("ADDON_LOADED")
-
-		aceConfigTableMainBigWigsTab.args.general.args.profileOptions = {
-			type = "group",
-			childGroups = "tab",
-			order = 100,
-			args = {
-				profile = adbo:GetOptionsTable(loader.db),
-				import = addonTable.sharingOptions.importSection,
-				exportCore = addonTable.sharingOptions.exportCoreSection,
-				exportBosses = addonTable.sharingOptions.exportBossSection,
-			},
-		}
-		aceConfigTableMainBigWigsTab.args.general.args.profileOptions.name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Profile:20|t " .. aceConfigTableMainBigWigsTab.args.general.args.profileOptions.args.profile.name
-		aceConfigTableMainBigWigsTab.args.general.args.profileOptions.args.profile.order = 1
-
-		if lds then
-			lds:EnhanceOptions(aceConfigTableMainBigWigsTab.args.general.args.profileOptions.args.profile, loader.db)
-		end
-
-		acr:RegisterOptionsTable("BigWigs", ConstructMainBigWigsTab, true)
-		acr:RegisterOptionsTable("BigWigsTools", ConstructToolsTab, true)
-		acd:SetDefaultSize("BigWigs", 858, 660)
-		acd:SetDefaultSize("BigWigsTools", 858, 660)
-
-		colorModule = BigWigs:GetPlugin("Colors")
-		soundModule = BigWigs:GetPlugin("Sounds")
-		acr:RegisterOptionsTable("BigWigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
-		acr:RegisterOptionsTable("BigWigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
 
 		loader.RegisterMessage(options, "BigWigs_PluginOptionsReady")
 		local pluginOptions = BigWigs:GetPluginOptions()
@@ -331,10 +305,67 @@ do
 			options:BigWigs_PluginOptionsReady(nil, pluginName, optionsTbl[1], optionsTbl[2])
 		end
 
-		-- Wait with nilling, we don't know how many addons will load during this same execution.
-		loader.CTimerAfter(5, function() f:SetScript("OnEvent", nil) end)
+		for key, optionsTableFunction in next, subPanelRegistry do
+			local optionsTable = securecallfunction(optionsTableFunction)
+			if type(optionsTable) == "table" and xpcall(acr.ValidateOptionsTable, CallErrorHandler, acr, optionsTable, optionsTable.name) then
+				aceConfigTableMainBigWigsTab.args[key] = optionsTable
+			end
+		end
+		for key, optionsTable in next, API.GetPluginOptions() do
+			aceConfigTableMainBigWigsTab.args[key] = optionsTable
+		end
+		for pluginName, dataTable in next, API.GetPluginOptionsCustomTabs() do
+			if registered[pluginName] then
+				local tabTableKey, settingsTable = dataTable[1], dataTable[2]
+				aceConfigTableMainBigWigsTab.args.general.args[pluginName].args[tabTableKey] = settingsTable
+			end
+		end
+
+		local lds = LibStub("LibDualSpec-1.0", true)
+		if lds then
+			lds:EnhanceOptions(aceConfigTableMainBigWigsTab.args.general.args.profileOptions.args.profile, loader.db)
+		end
 	end
-	f:SetScript("OnEvent", Initialize)
+
+	--[[ Construct Tools Tab ]]--
+	local aceConfigTableToolsTab = {
+		type = "group",
+		name = L.tools,
+		get = function(info)
+			return loader.db.profile[info[#info]]
+		end,
+		set = function(info, value)
+			local key = info[#info]
+			loader.db.profile[key] = value
+		end,
+		args = {
+			tools = {
+				order = 1,
+				type = "group",
+				name = L.tools,
+				args = {
+					toolsDesc = {
+						type = "description",
+						name = L.toolsDesc,
+						fontSize = "large",
+						order = 0,
+						width = "full",
+					},
+				},
+			},
+		},
+	}
+	aceConfigTableToolsTab.args.tools.args = API.GetToolOptionsTable()
+
+	acr:RegisterOptionsTable("BigWigs", aceConfigTableMainBigWigsTab, true)
+	acr:RegisterOptionsTable("BigWigsTools", aceConfigTableToolsTab, true)
+	acd:SetDefaultSize("BigWigs", 858, 660)
+	acd:SetDefaultSize("BigWigsTools", 858, 660)
+
+	colorModule = BigWigs:GetPlugin("Colors")
+	soundModule = BigWigs:GetPlugin("Sounds")
+	acr:RegisterOptionsTable("BigWigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
+	acr:RegisterOptionsTable("BigWigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
 end
 
 local spellDescriptionUpdater = CreateFrame("Frame")
@@ -1837,7 +1868,6 @@ local function onZoneShow(treeWidget, instanceIdOrMapId)
 	innerContainer:DoLayout() -- One last refresh to adjust height
 end
 
-local AddToDirectOpens
 do
 	local expansionHeader
 	if loader.isVanilla then
@@ -2198,16 +2228,6 @@ do
 	end
 	acr.RegisterCallback(options, "ConfigTableChange")
 
-	local allowedDirectOpens = {
-		["Auras"] = {tab = "options", path = {"general", "Auras"}},
-	}
-	function AddToDirectOpens(name, key)
-		if allowedDirectOpens[name] then
-			error(format("Panel %q with key %q already exists in allowedDirectOpens.", tostring(name), tostring(key)))
-			return
-		end
-		allowedDirectOpens[name] = {tab = "options", path = {key}}
-	end
 	function OpenConfig(specificPanel)
 		if allowedDirectOpens[specificPanel] then
 			lastTabSelected = allowedDirectOpens[specificPanel].tab
@@ -2256,47 +2276,6 @@ do
 
 		bw:Show()
 		options:SendMessage("BigWigs_OpenGUI")
-	end
-end
-
-do
-	local registered, subPanelRegistry = {}, {}
-	function options:BigWigs_PluginOptionsReady(_, pluginName, pluginOptions, subPanelOptions)
-		if not registered[pluginName] then
-			if type(pluginOptions) == "table" then
-				registered[pluginName] = true
-				aceConfigTableMainBigWigsTab.args.general.args[pluginName] = pluginOptions
-			elseif type(subPanelOptions) == "table" then
-				registered[pluginName] = true
-				local key = subPanelOptions.key
-				local opts = subPanelOptions.options
-				AddToDirectOpens(subPanelOptions.name, subPanelOptions.key)
-				if type(opts) == "function" then
-					subPanelRegistry[key] = opts
-				else
-					aceConfigTableMainBigWigsTab.args[key] = opts
-				end
-			end
-		end
-	end
-
-	function ConstructMainBigWigsTab()
-		for key, optionsTableFunction in next, subPanelRegistry do
-			local optionsTable = securecallfunction(optionsTableFunction)
-			if type(optionsTable) == "table" and xpcall(acr.ValidateOptionsTable, CallErrorHandler, acr, optionsTable, optionsTable.name) then
-				aceConfigTableMainBigWigsTab.args[key] = optionsTable
-			end
-		end
-		for key, optionsTable in next, API.GetPluginOptions() do
-			aceConfigTableMainBigWigsTab.args[key] = optionsTable
-		end
-		for pluginName, dataTable in next, API.GetPluginOptionsCustomTabs() do
-			if registered[pluginName] then
-				local tabTableKey, settingsTable = dataTable[1], dataTable[2]
-				aceConfigTableMainBigWigsTab.args.general.args[pluginName].args[tabTableKey] = settingsTable
-			end
-		end
-		return aceConfigTableMainBigWigsTab
 	end
 end
 

@@ -432,14 +432,18 @@ end
 do -- Tools
 	local tbl = {}
 	-- Get all AceGUI option tables under the "Tools" category
-	function API.GetToolOptions()
-		return CopyTable(tbl)
+	function API.GetToolOptionsTable()
+		local tableToFill = {}
+		for key, func in next, tbl do
+			tableToFill[key] = func()
+		end
+		return tableToFill
 	end
 	-- Register an AceGUI options table for a module under the "Tools" category
-	function API.RegisterToolOptions(key, settingsTable)
+	function API.RegisterToolOptions(key, settingsFunc)
 		if type(key) ~= "string" then error("The key needs to be a string.") return end
-		if type(settingsTable) ~= "table" then error("The settings table needs to be a table.") return end
-		tbl[key] = settingsTable
+		if type(settingsFunc) ~= "function" then error("The settings table needs to be returned by a function.") return end
+		tbl[key] = settingsFunc
 	end
 end
 

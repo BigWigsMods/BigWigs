@@ -58,6 +58,6 @@ Libs\AceConfigDialog-3.0\AceConfigDialog-3.0.lua
 Libs\AceDBOptions-3.0\AceDBOptions-3.0.lua
 Libs\LibDDI-1.0\lib.lua
 
-Options.lua
 Sharing.lua
 InstanceSharing.lua
+Options.lua

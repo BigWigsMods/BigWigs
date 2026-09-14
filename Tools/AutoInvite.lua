@@ -275,7 +275,7 @@ local function UpdateWidgets()
 	end
 end
 
-BigWigsAPI.RegisterToolOptions("AutoInvite", {
+BigWigsAPI.RegisterToolOptions("AutoInvite", function() return {
 	type = "group",
 	childGroups = "tab",
 	order = 5,
@@ -377,7 +377,7 @@ BigWigsAPI.RegisterToolOptions("AutoInvite", {
 			},
 		},
 	},
-})
+} end)
 
 --------------------------------------------------------------------------------
 -- Login

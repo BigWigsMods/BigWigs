@@ -92,7 +92,7 @@ Plugins\Wipe.lua
 Plugins\BattleRes.lua
 Plugins\Timeline.lua
 Plugins\Auras.lua
-Options\Options.lua
 Options\Sharing.lua
 Options\InstanceSharing.lua
+Options\Options.lua
 #@end-do-not-package@

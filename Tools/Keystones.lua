@@ -2772,7 +2772,7 @@ do
 	local function DisabledWhenNameplatePercentDisabled()
 		return not db.profile.progressNameplate
 	end
-	BigWigsAPI.RegisterToolOptions("MythicPlus", {
+	BigWigsAPI.RegisterToolOptions("MythicPlus", function() return {
 		type = "group",
 		childGroups = "tab",
 		name = L.keystoneModuleName,
@@ -3478,7 +3478,7 @@ do
 				},
 			},
 		},
-	})
+	} end)
 end
 
 --------------------------------------------------------------------------------
