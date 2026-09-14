@@ -1049,7 +1049,7 @@ do
 		if self:UnitLevel(unit) == 92 then -- Blightscale Wretch
 			local bars = {}
 			for _, barInfo in next, activeBars do
-				if barInfo.key == FESTER_BURST_ID then -- Fester Burst
+				if barInfo.key == FESTER_BURST_ID then
 					bars[#bars + 1] = barInfo
 				end
 			end
@@ -1321,8 +1321,12 @@ do
 				self:Message(1286860, "green", barText)
 				self:PlaySound(1286860, "long")
 				self:CastBar(1286860, 20, 2)
+
+				-- catch early stop if hp threshold is hit
 				self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_STOP", nil, "boss1")
+
 				if self:GetStage() == 1 then
+					-- next UNIT_TARGETABLE_CHANGED/ENCOUNTER_TIMELINE_EVENT_ADDED starts p2
 					checkStage = true
 				end
 			end,
@@ -1437,6 +1441,7 @@ function mod:SpectralCoilsIntermission()
 			self:Message(1300530, "orange", barText)
 			self:PlaySound(1300530, "alert")
 
+			-- next ENCOUNTER_TIMELINE_EVENT_ADDED starts p3
 			checkStage = true
 
 			local name = self:GetRename(1300530)
@@ -1471,6 +1476,7 @@ function mod:SpectralCoilsIntermissionMythic(duration)
 			self:Message(1300530, "orange", barText)
 			self:PlaySound(1300530, "alert")
 
+			-- next ENCOUNTER_TIMELINE_EVENT_ADDED starts p3
 			checkStage = true
 		end,
 	}
