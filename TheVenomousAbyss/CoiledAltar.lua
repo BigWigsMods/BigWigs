@@ -225,8 +225,13 @@ function mod:OnEncounterStart()
 	-- Starts the encounter by casting Fangs of the Coiled Altar
 	self:Message(1282487, "red")
 
-	-- self:RegisterEvent("ENCOUNTER_WARNING")
+	self:SendMessage("BigWigs_BlockBlizzMessages")
+	self:RegisterEvent("ENCOUNTER_WARNING")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_STOP", nil, "boss2")
+end
+
+function mod:OnBossDisable()
+	self:SendMessage("BigWigs_AllowBlizzMessages")
 end
 
  function mod:ResetCounts()
@@ -590,14 +595,23 @@ end
 -- Event Handlers
 --
 
--- function mod:ENCOUNTER_WARNING(_, info)
--- 	if self:IsStoppingBlizzMessages() or self:GetStage() == 1 then return end
-
--- 	if info.severity == 1 and info.duration == 4 then
--- 		-- Dreadmarch and Unnerving Fixation are 4s, but Dreadmarch should be caught
--- 		self:UnnervingFixationMessage()
--- 	end
--- end
+function mod:ENCOUNTER_WARNING(_, info)
+	local severity, duration = info.severity, info.duration
+	if severity == 0 and duration == 3 then
+		self:GloombombMessage()
+	elseif severity == 1 and duration == 3 then
+		local stage = self:GetStage()
+		if stage == 1 then
+			self:SeverMessage()
+		elseif stage == 2 then
+			self:SoulSeverMessage()
+		elseif stage == 3 then
+			self:BlightedSeverMessage()
+		end
+	elseif severity == 1 and duration == 4 then
+		self:DreadmarchMessage()
+	end
+end
 
 function mod:StartPhaseTwo()
 	-- Fangs was canceled early
@@ -665,7 +679,7 @@ function mod:ToxicDeluge()
 		msg = barText,
 		key = 1299960,
 		onFinished = function()
-			self:StopBlizzMessages(2) -- The crucible begins to spew a [Toxic Deluge]!
+			-- self:StopBlizzMessages(1) -- The crucible begins to spew a [Toxic Deluge]!
 			self:Message(1299960, "yellow", barText)
 			self:PlaySound(1299960, "info")
 		end,
@@ -708,26 +722,42 @@ function mod:Guillotine()
 		msg = barText,
 		key = 1283489,
 		onFinished = function()
-			self:StopBlizzMessages(1) -- Zul'jan begins to cast [Guillotine]!
+			-- self:StopBlizzMessages(1) -- Zul'jan begins to cast [Guillotine]!
 			self:Message(1283489, "orange", barText)
 			self:PlaySound(1283489, "alert")
 		end,
 	}
 end
 
-function mod:Sever()
-	local barText = CL.count:format(self:GetRename(1299680), spellCount[1299680])
-	spellCount[1299680] = spellCount[1299680] + 1
+do
+	local severOnMe = false
+	function mod:SeverMessage()
+		-- Malacrass begins to cast [Sever]!
+		severOnMe = true
+		self:PersonalMessage(1299680, false, self:GetRename(1299680, 2))
+		self:PlaySound(1299680, "warning")
+	end
 
-	return {
-		msg = barText,
-		key = 1299680,
-		skipGapTimer = spellCount[1299680] % 4 ~= 1, -- 4 casts per cycle, only gap after the last
-		onFinished = function()
-			self:Message(1299680, "purple", barText)
-			self:PlaySound(1299680, "alert")
-		end,
-	}
+	function mod:Sever()
+		severOnMe = false
+		local barText = CL.count:format(self:GetRename(1299680), spellCount[1299680])
+		spellCount[1299680] = spellCount[1299680] + 1
+
+		return {
+			msg = barText,
+			key = 1299680,
+			skipGapTimer = spellCount[1299680] % 4 ~= 1, -- 4 casts per cycle, only gap after the last
+			onFinished = function()
+				-- self:StopBlizzMessages(1) -- Malacrass begins to cast [Sever]!
+				self:ScheduleTimer(function()
+					if not severOnMe then
+						self:Message(1299680, "purple", barText)
+						self:PlaySound(1299680, "alert")
+					end
+				end, 0.3)
+			end,
+		}
+	end
 end
 
 function mod:FangsOfTheCoiledAltar()
@@ -763,98 +793,184 @@ function mod:Spiritcackle()
 	}
 end
 
-function mod:EternalNightfall()
-	local barText = CL.count:format(self:GetRename(1286918), spellCount[1286918])
-	spellCount[1286918] = spellCount[1286918] + 1
+do
+	local eternalNightfallStart = 0
 
-	if self:GetStage() == 2 then
-		self:UnregisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", "boss2")
+	function mod:EternalNightfall()
+		local barText = CL.count:format(self:GetRename(1286918), spellCount[1286918])
+		spellCount[1286918] = spellCount[1286918] + 1
+
+		if self:GetStage() == 2 then
+			self:UnregisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", "boss2")
+		end
+
+		return {
+			msg = barText,
+			key = 1286918,
+			onFinished = function()
+				-- self:StopBlizzMessages(1) -- Malacrass begins to bring forth an [Eternal Nightfall]!
+				self:Message(1286918, "red", barText)
+				self:PlaySound(1286918, "alarm")
+
+				if self:GetStage() == 2 then
+					-- 5s gap until the phase resets, so listen for intermission channel until the next timer
+					self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", "StartIntermission", "boss2")
+				elseif self:GetStage() == 3 then
+					-- Dreadmarch in p3 is anchored to Eternal Nightfall, see UNIT_SPELLCAST_STOP
+					eternalNightfallStart = GetTime()
+					self:RegisterUnitEvent("UNIT_SPELLCAST_STOP", nil, "boss2")
+				end
+			end,
+			onCanceled = function()
+				if mod:GetStage() == 2 then
+					-- if this cancels, it means the phase is over
+					mod:StartIntermission()
+				end
+			end,
+		}
 	end
 
-	return {
-		msg = barText,
-		key = 1286918,
-		onFinished = function()
-			self:StopBlizzMessages(1) -- Malacrass begins to bring forth an [Eternal Nightfall]!
-			self:Message(1286918, "red", barText)
-			self:PlaySound(1286918, "alarm")
+	local dreadmarchAboutToCast = false
+	local dreadmarchOnMe = false
+	local dreadmarchMessageTimer = nil
 
-			if self:GetStage() == 2 then
-				-- 5s gap until the phase resets, so listen for intermission channel until the next timer
-				self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", "StartIntermission", "boss2")
+	function mod:UNIT_SPELLCAST_STOP()
+		-- Dreadmarch casts 3.5s after Eternal Nightfall ends, but its timeline event always
+		-- fires 17.22s after Eternal Nightfall started, however early the kick was. A late (or
+		-- no) kick pushes the cast past its own event, so the offset has to make up the gap.
+		local toEvent = 17.22 - (GetTime() - eternalNightfallStart)
+		if toEvent < 3.5 then
+			if dreadmarchMessageTimer then
+				self:CancelTimer(dreadmarchMessageTimer)
+				dreadmarchMessageTimer = nil
 			end
-		end,
-		onCanceled = function()
-			if mod:GetStage() == 2 then
-				-- if this cancels, it means the phase is over
-				mod:StartIntermission()
+			if not dreadmarchOnMe then -- the warning can land before the kick does
+				dreadmarchAboutToCast = true
 			end
-		end,
-	}
-end
+			--[[
+			local barInfo = self:UpdateTimelineBar(1289900, nil, toEvent) -- Dreadmarch
+			if barInfo then
+				barInfo.offset = 6 - toEvent -- 3.5s until the cast + 2.5s until the debuffs apply
+				self:TimelineBar(barInfo, barInfo.eventInfo)
+			end
+			--]]
+		end
+	end
 
-do
-	local isOnMe = false
+	function mod:DreadmarchMessage()
+		-- Dreadmarch and Unnerving Fixation are both 4s Medium
+		if dreadmarchAboutToCast then
+			-- Malacrass is about to afflict you with [Dreadmarch]!
+			dreadmarchAboutToCast = false -- only the first warning in the window is Dreadmarch
+			dreadmarchOnMe = true
+			self:PersonalMessage(1289900, false, self:GetRename(1289900, 2))
+			self:PlaySound(1289900, "warning")
+		else
+			-- A Manifestation of Dread sets its gaze upon you with an [Unnerving Fixation]!
+			self:PersonalMessage(1285911, false)
+		end
+	end
+
 	function mod:Dreadmarch(duration)
+		dreadmarchAboutToCast = false
+		dreadmarchOnMe = false
+
 		local barText = CL.count:format(self:GetRename(1289900), spellCount[1289900])
 		spellCount[1289900] = spellCount[1289900] + 1
-		isOnMe = false
 
 		local barInfo = {
 			msg = barText,
 			key = 1289900,
+			-- offset = 2.5, -- 2s cast + ~0.5s delay before debuffs activate
 			onFinished = function()
 				self:Message(1289900, "orange", barText)
-				if not isOnMe then
+				if not dreadmarchOnMe then
 					self:PlaySound(1289900, "alert")
 				end
 			end,
 			onCanceled = function(this)
-				self:CancelTimer(this.timer)
+				if dreadmarchMessageTimer then
+					self:CancelTimer(dreadmarchMessageTimer)
+					dreadmarchMessageTimer = nil
+				end
+				dreadmarchAboutToCast = false
 			end,
 		}
-		-- The target message happens ~3 before the bar ends
-		barInfo.timer = self:ScheduleTimer(function()
-			-- self:StopBlizzMessages(1) -- Malacrass if about to afflict you with [Dreadmarch]
-			self:PersonalMessageFromBlizzMessage(1289900, 1, false, self:GetRename(1289900, 2), nil, nil, function() isOnMe = true end)
-		end, duration - 3.5)
+		-- Unnerving Fixation can land at any point in the phase, so keep the window to catch
+		-- the target message as narrow as possible.
+		local lead = 3.6
+		if self:GetStage() == 2 and duration > 10 then -- the second cast warning is closer to the cast
+			lead = self:Easy() and 2.5 or 1
+		end
+		dreadmarchMessageTimer = self:ScheduleTimer(function()
+			dreadmarchAboutToCast = true
+			dreadmarchMessageTimer = nil
+		end, duration - lead)
 
 		return barInfo
 	end
 end
 
-function mod:UnnervingFixationMessage()
-	-- A Manifestation of Dread sets its gaze upon you with an [Unnerving Fixation]!
-	self:PersonalMessage(1285911, false)
+do
+	local gloombombOnMe = false
+	function mod:GloombombMessage()
+		-- Malacrass targets you with [Gloombomb]!
+		self:PersonalMessage(1286895, false, self:GetRename(1286895, 2))
+		self:PlaySound(1286895, "warning")
+		gloombombOnMe = true
+	end
+
+	function mod:Gloombomb()
+		gloombombOnMe = false
+		local barText = CL.count:format(self:GetRename(1286895), spellCount[1286895])
+		spellCount[1286895] = spellCount[1286895] + 1
+
+		return {
+			-- offset = 2,
+			msg = barText,
+			key = 1286895,
+			onFinished = function()
+				-- self:StopBlizzMessages(1) -- Malacrass targets you with [Gloombomb]!
+				-- self:ScheduleTimer(function()
+				-- 	if not gloombombOnMe then
+				-- 		self:Message(1286895, "yellow", barText)
+				-- 	end
+				-- end, 0.3)
+				-- debuff/target message goes out at the end of the cast
+				self:Message(1286895, "yellow", barText)
+			end,
+		}
+	end
 end
 
-function mod:Gloombomb()
-	local barText = CL.count:format(self:GetRename(1286895), spellCount[1286895])
-	spellCount[1286895] = spellCount[1286895] + 1
+do
+	local severOnMe = false
+	function mod:SoulSeverMessage()
+		-- Malacrass begins to cast [Soul Sever]!
+		severOnMe = true
+		self:PersonalMessage(1286573, false, self:GetRename(1286573, 2))
+		self:PlaySound(1286573, "warning")
+	end
 
-	return {
-		msg = barText,
-		key = 1286895,
-		onFinished = function()
-			-- self:StopBlizzMessages(3) -- Malacrass targets you with [Gloombomb]!
-			local timer = self:ScheduleTimer(function() self:Message(1286895, "yellow", barText) end, 3)
-			self:PersonalMessageFromBlizzMessage(1286895, 3, false, self:GetRename(1286895, 2), nil, nil, function() self:CancelTimer(timer) end)
-		end,
-	}
-end
+	function mod:SoulSever()
+		severOnMe = false
+		local barText = CL.count:format(self:GetRename(1286573), spellCount[1286573])
+		spellCount[1286573] = spellCount[1286573] + 1
 
-function mod:SoulSever()
-	local barText = CL.count:format(self:GetRename(1286573), spellCount[1286573])
-	spellCount[1286573] = spellCount[1286573] + 1
-
-	return {
-		msg = barText,
-		key = 1286573,
-		onFinished = function()
-			self:Message(1286573, "purple", barText)
-			self:PlaySound(1286573, "alert")
-		end,
-	}
+		return {
+			msg = barText,
+			key = 1286573,
+			onFinished = function()
+				-- self:StopBlizzMessages(1) -- Malacrass begins to cast [Soul Sever]!
+				self:ScheduleTimer(function()
+					if not severOnMe then
+						self:Message(1286573, "purple", barText)
+						self:PlaySound(1286573, "alert")
+					end
+				end, 0.3)
+			end,
+		}
+	end
 end
 
 -- Stage 3
@@ -879,22 +995,38 @@ function mod:GrimGuillotine()
 		msg = barText,
 		key = 1299266,
 		onFinished = function()
-			self:StopBlizzMessages(1) -- Zul'jan begins to cast [Grim Guillotine]!
+			-- self:StopBlizzMessages(1) -- Zul'jan begins to cast [Grim Guillotine]!
 			self:Message(1299266, "orange", barText)
 			self:PlaySound(1299266, "alert")
 		end,
 	}
 end
 
-function mod:BlightedSever()
-	local barText = CL.count:format(self:GetRename(1307279), spellCount[1307279])
-	spellCount[1307279] = spellCount[1307279] + 1
-	return {
-		msg = barText,
-		key = 1307279,
-		onFinished = function()
-			self:Message(1307279, "purple", barText)
-			self:PlaySound(1307279, "alert")
-		end,
-	}
+do
+	local severOnMe = false
+	function mod:BlightedSeverMessage()
+		-- Malacrass begins to cast [Blighted Sever]!
+		severOnMe = true
+		self:PersonalMessage(1307279, false, self:GetRename(1307279, 2))
+		self:PlaySound(1307279, "warning")
+	end
+
+	function mod:BlightedSever()
+		severOnMe = false
+		local barText = CL.count:format(self:GetRename(1307279), spellCount[1307279])
+		spellCount[1307279] = spellCount[1307279] + 1
+		return {
+			msg = barText,
+			key = 1307279,
+			onFinished = function()
+				-- self:StopBlizzMessages(1) -- Malacrass begins to cast [Blighted Sever]!
+				self:ScheduleTimer(function()
+					if not severOnMe then
+						self:Message(1307279, "purple", barText)
+						self:PlaySound(1307279, "alert")
+					end
+				end, 0.3)
+			end,
+		}
+	end
 end
