@@ -292,7 +292,7 @@ function mod:MythicTimeline(_, eventInfo)
 			end
 		elseif rounded == 20 or rounded == 17 then
 			barInfo = self:Sever()
-		elseif rounded == 85 or rounded == 84 then
+		elseif rounded == 85 then
 			barInfo = self:FangsOfTheCoiledAltar()
 		end
 
@@ -369,7 +369,8 @@ function mod:OtherTimeline(_, eventInfo)
 	local barInfo = nil
 
 	local duration = eventInfo.duration
-	local rounded = self:RoundNumber(self:RoundNumber(duration, 1), 0)
+	local rounded1 = self:RoundNumber(duration, 1)
+	local rounded = self:RoundNumber(rounded1, 0)
 
 	if warnStageThree then
 		warnStageThree = false
@@ -440,17 +441,16 @@ function mod:OtherTimeline(_, eventInfo)
 		end
 
 	elseif stage == 3 then
-		local rounded1 = self:RoundNumber(duration, 1)
 		if self:Heroic() then
-			if rounded == 61 or rounded == 101 or rounded == 44 or rounded == 108 then -- 61.49, 101.15, 43.68, 108.05
+			if rounded == 61 or rounded == 101 or rounded == 44 or rounded == 108 then
 				barInfo = self:Dreadmarch(duration)
 			elseif rounded == 39 or rounded == 100 then
 				barInfo = self:EternalNightfall()
 			elseif rounded == 26 or rounded == 51 or rounded == 67 or rounded == 86 then
 				barInfo = self:Gloombomb()
-			elseif rounded == 2 or rounded == 47 or rounded == 57 or rounded == 43 or rounded == 62 then
+			elseif rounded == 2 or rounded == 47 or rounded == 57 or rounded1 == 57.5 or rounded == 43 or rounded == 62 then -- XXX 57.471
 				barInfo = self:ToxicDeluge()
-			elseif rounded == 32 or rounded == 34 or rounded == 38 then
+			elseif rounded == 32 or rounded == 34 or rounded1 == 34.5 or rounded == 38 or rounded == 25 then -- XXX 34.482
 				barInfo = self:BlightedSever()
 			elseif rounded == 17 or rounded == 170 then
 				barInfo = self:GrimGuillotine()
@@ -466,7 +466,7 @@ function mod:OtherTimeline(_, eventInfo)
 				elseif count == 3 then
 					barInfo = self:BlightedSever()
 				end
-			elseif rounded == 60 then -- 59.77
+			elseif rounded == 60 then
 				durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
 				local count = durationEventCount[rounded]
 				if count == 1 then
@@ -478,7 +478,7 @@ function mod:OtherTimeline(_, eventInfo)
 		else
 			if rounded == 87 or rounded == 66 then
 				barInfo = self:EternalNightfall()
-			elseif rounded1 == 53.5 or rounded == 88 or rounded == 38 or rounded == 49 or rounded == 43 then -- 53.5
+			elseif rounded1 == 53.5 or rounded == 88 or rounded == 38 or rounded == 49 or rounded == 43 then
 				barInfo = self:Dreadmarch(duration)
 			elseif rounded == 2 or rounded == 41 or rounded == 50 or rounded == 37 or rounded == 54 then
 				barInfo = self:ToxicDeluge()
