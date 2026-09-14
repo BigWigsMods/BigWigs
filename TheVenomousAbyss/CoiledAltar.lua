@@ -912,16 +912,16 @@ do
 end
 
 do
-	local gloombombOnMe = false
+	-- local gloombombOnMe = false
 	function mod:GloombombMessage()
 		-- Malacrass targets you with [Gloombomb]!
 		self:PersonalMessage(1286895, false, self:GetRename(1286895, 2))
 		self:PlaySound(1286895, "warning")
-		gloombombOnMe = true
+		-- gloombombOnMe = true
 	end
 
 	function mod:Gloombomb()
-		gloombombOnMe = false
+		-- gloombombOnMe = false
 		local barText = CL.count:format(self:GetRename(1286895), spellCount[1286895])
 		spellCount[1286895] = spellCount[1286895] + 1
 
