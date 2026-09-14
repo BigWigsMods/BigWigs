@@ -10,7 +10,6 @@ local L = API:GetLocale("BigWigs")
 local CL = API:GetLocale("BigWigs: Common")
 
 local ldbi = LibStub("LibDBIcon-1.0")
-local acr = LibStub("AceConfigRegistry-3.0")
 local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
@@ -274,26 +273,44 @@ do
 	aceConfigTableMainBigWigsTab.args.general.args.profileOptions.name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Profile:20|t " .. aceConfigTableMainBigWigsTab.args.general.args.profileOptions.args.profile.name
 	aceConfigTableMainBigWigsTab.args.general.args.profileOptions.args.profile.order = 1
 
+	local acr = LibStub("AceConfigRegistry-3.0")
 	do
-		local registered, subPanelRegistry = {}, {}
+		local registeredPlugins = {}
+		local delayedAdditions = {}
 		function options:BigWigs_PluginOptionsReady(_, pluginName, pluginOptions, subPanelOptions)
-			if not registered[pluginName] then
+			if not registeredPlugins[pluginName] then
 				if type(pluginOptions) == "table" then
-					registered[pluginName] = true
+					registeredPlugins[pluginName] = true
 					aceConfigTableMainBigWigsTab.args.general.args[pluginName] = pluginOptions
 				elseif type(subPanelOptions) == "table" then
-					registered[pluginName] = true
-					local key = subPanelOptions.key
-					local opts = subPanelOptions.options
+					registeredPlugins[pluginName] = true
 					if allowedDirectOpens[subPanelOptions.name] then
-						BigWigs:Error(("Panel %q with key %q already exists in allowedDirectOpens."):format(tostring(subPanelOptions.name), tostring(key)))
+						BigWigs:Error(("Panel %q with key %q already exists in allowedDirectOpens."):format(tostring(subPanelOptions.name), tostring(subPanelOptions.key)))
 					else
-						allowedDirectOpens[subPanelOptions.name] = {tab = "options", path = {key}}
+						allowedDirectOpens[subPanelOptions.name] = {tab = "options", path = {subPanelOptions.key}}
 					end
-					if type(opts) == "function" then
-						subPanelRegistry[key] = opts
+					if type(subPanelOptions.options) == "function" then
+						if not next(delayedAdditions) then
+							local timer
+							local function Loop()
+								local optionsKey, optionsTableFunction = next(delayedAdditions)
+								if not optionsKey then
+									timer:Cancel()
+									delayedAdditions = {}
+									acr:NotifyChange("BigWigs")
+									return
+								end
+								delayedAdditions[optionsKey] = nil
+								local optionsTable = securecallfunction(optionsTableFunction)
+								if type(optionsTable) == "table" and xpcall(acr.ValidateOptionsTable, CallErrorHandler, acr, optionsTable, optionsTable.name) then
+									aceConfigTableMainBigWigsTab.args[optionsKey] = optionsTable
+								end
+							end
+							timer = loader.CTimerNewTicker(0, Loop)
+						end
+						delayedAdditions[subPanelOptions.key] = subPanelOptions.options
 					else
-						aceConfigTableMainBigWigsTab.args[key] = opts
+						aceConfigTableMainBigWigsTab.args[subPanelOptions.key] = subPanelOptions.options
 					end
 				end
 			end
@@ -304,18 +321,11 @@ do
 		for pluginName, optionsTbl in next, pluginOptions do
 			options:BigWigs_PluginOptionsReady(nil, pluginName, optionsTbl[1], optionsTbl[2])
 		end
-
-		for key, optionsTableFunction in next, subPanelRegistry do
-			local optionsTable = securecallfunction(optionsTableFunction)
-			if type(optionsTable) == "table" and xpcall(acr.ValidateOptionsTable, CallErrorHandler, acr, optionsTable, optionsTable.name) then
-				aceConfigTableMainBigWigsTab.args[key] = optionsTable
-			end
-		end
 		for key, optionsTable in next, API.GetPluginOptions() do
 			aceConfigTableMainBigWigsTab.args[key] = optionsTable
 		end
 		for pluginName, dataTable in next, API.GetPluginOptionsCustomTabs() do
-			if registered[pluginName] then
+			if registeredPlugins[pluginName] then
 				local tabTableKey, settingsTable = dataTable[1], dataTable[2]
 				aceConfigTableMainBigWigsTab.args.general.args[pluginName].args[tabTableKey] = settingsTable
 			end
@@ -2226,7 +2236,7 @@ do
 			acd:Open(appName, currentlyOpenContainer)
 		end
 	end
-	acr.RegisterCallback(options, "ConfigTableChange")
+	LibStub("AceConfigRegistry-3.0").RegisterCallback(options, "ConfigTableChange")
 
 	function OpenConfig(specificPanel)
 		if allowedDirectOpens[specificPanel] then
