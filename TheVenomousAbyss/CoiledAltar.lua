@@ -540,20 +540,26 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 	local barInfo = activeBars[eventID]
 
 	if barInfo and barInfo.key == 1282487 and state == 3 then -- Fangs of the Coiled Altar (Canceled)
-		-- Normally canceled after the next set of timers are added, but can rarely happen before
-		-- Just run next frame so we're always after
 		self:StopBar(barInfo.msg)
-		self:SimpleTimer(function()
-			-- Check Axegrinder (1283832), a once per Fangs ability, since Fangs _ADDED is after the rest of the timers
-			if spellCount[1283832] > barInfo.count then
-				-- next bar started, so it finished
-				barInfo:onFinished()
-			else
-				-- actually ended early, so trigger next phase
-				self:StartPhaseTwo()
-			end
-			activeBars[eventID] = nil
-		end, 0.2)
+		activeBars[eventID] = nil
+
+		-- mythic typically fires the next event before canceling
+		if spellCount[1282487] > barInfo.count then
+			-- next bar started, so it finished
+			barInfo:onFinished()
+		else
+			-- normal and heroic typically cancel and delay the next event
+			self:SimpleTimer(function()
+				if spellCount[1282487] > barInfo.count then
+					-- next bar started, so it finished
+					barInfo:onFinished()
+				else
+					-- actually ended early, so trigger next phase
+					self:StartPhaseTwo()
+				end
+			end, 0.1)
+		end
+
 		return
 	end
 
@@ -561,7 +567,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 		self:Bar(barInfo.key, barInfo.gapTimer, CL.count:format(self:GetRename(barInfo.key, barInfo.renamePosition), spellCount[barInfo.key]), nil, eventID)
 	end
 
-	if barInfo and not barInfo.skipState then
+	if barInfo and not barInfo.ignoreState then
 		if state == 2 then -- Finished
 			activeBars[eventID] = nil
 			self:StopBar(barInfo.msg)
@@ -936,6 +942,7 @@ do
 				-- 		self:Message(1286895, "yellow", barText)
 				-- 	end
 				-- end, 0.3)
+
 				-- debuff/target message goes out at the end of the cast
 				self:Message(1286895, "yellow", barText)
 			end,
