@@ -2,15 +2,15 @@
 
 ## Title: BigWigs [|cffeda55fSporefall|r]
 ## Title-deDE: BigWigs [|cffeda55fSporenfall|r]
-## Title-esES: BigWigs [|cffeda55fSporefall|r]
-## Title-esMX: BigWigs [|cffeda55fSporefall|r]
-## Title-frFR: BigWigs [|cffeda55fSporefall|r]
-## Title-itIT: BigWigs [|cffeda55fSporefall|r]
+## Title-esES: BigWigs [|cffeda55fMicosis|r]
+## Title-esMX: BigWigs [|cffeda55fEsporalia|r]
+## Title-frFR: BigWigs [|cffeda55fChute-des-Spores|r]
+## Title-itIT: BigWigs [|cffeda55fSporandia|r]
 ## Title-koKR: BigWigs [|cffeda55f진균나락|r]
-## Title-ptBR: BigWigs [|cffeda55fSporefall|r]
-## Title-ruRU: BigWigs [|cffeda55fSporefall|r]
+## Title-ptBR: BigWigs [|cffeda55fEsporasca|r]
+## Title-ruRU: BigWigs [|cffeda55fСпоропад|r]
 ## Title-zhCN: BigWigs [|cffeda55f孢陨幽境|r]
-## Title-zhTW: BigWigs [|cffeda55fSporefall|r]
+## Title-zhTW: BigWigs [|cffeda55f孢子之殞|r]
 ## Notes: BigWigs Sporefall Modules
 ## Notes-deDE: BigWigs Sporenfall Module
 ## Notes-esES: Módulos de BigWigs para Sporefall
