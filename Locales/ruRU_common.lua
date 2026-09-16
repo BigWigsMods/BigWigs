@@ -211,6 +211,11 @@ L.autotalk_boss_desc = "Автоматический выбирать вариа
 L.autotalk_generic_desc = "Автоматический выбирать вариант диалога с НИП для продвижения по подземелью."
 L.autotalk_notice = "Произведено автоматическое взаидействовие с НИП %s."
 
+-- Auto Player Choice
+--L.autoPlayerChoice = "Automatic Player Choice"
+--L.autoPlayerChoice_delve_power_desc = "Automatically select player powerups when they are dropped by creatures in the Delve."
+--L.autoPlayerChoice_notice = "Automatically selecting: %s"
+
 -- GUI notes
 L.intermissionOnly = "Только Перерыв"
 L.stage1Only = "Только 1 этап"

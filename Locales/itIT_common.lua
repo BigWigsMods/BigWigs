@@ -211,6 +211,11 @@ L.autotalk_boss_desc = "Automaticamente selezione l'opzione di dialogo NPC che f
 L.autotalk_generic_desc = "Automaticamente selezione l'opzione di dialogo NPC che fanno iniziare la prossima fase della spedizione."
 --L.autotalk_notice = "Automatically interacting with NPC %s."
 
+-- Auto Player Choice
+--L.autoPlayerChoice = "Automatic Player Choice"
+--L.autoPlayerChoice_delve_power_desc = "Automatically select player powerups when they are dropped by creatures in the Delve."
+--L.autoPlayerChoice_notice = "Automatically selecting: %s"
+
 -- GUI notes
 --L.intermissionOnly = "Intermission Only"
 --L.stage1Only = "Stage 1 Only"

@@ -211,6 +211,11 @@ L.autotalk_boss_desc = "Seleciona automaticamente as opções de diálogo do NPC
 L.autotalk_generic_desc = "Seleciona automaticamente as opções de diálogo do NPC que permitem você progredir para o próximo estágio da masmorra."
 L.autotalk_notice = "Interagindo automaticamente com NPC %s."
 
+-- Auto Player Choice
+--L.autoPlayerChoice = "Automatic Player Choice"
+--L.autoPlayerChoice_delve_power_desc = "Automatically select player powerups when they are dropped by creatures in the Delve."
+--L.autoPlayerChoice_notice = "Automatically selecting: %s"
+
 -- GUI notes
 L.intermissionOnly = "Somente no Intervalo"
 L.stage1Only = "Somente no Estágio 1"

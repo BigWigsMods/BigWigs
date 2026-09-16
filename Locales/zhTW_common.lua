@@ -211,6 +211,11 @@ L.autotalk_boss_desc = "自動選擇開始首領戰鬥的對話選項。"
 L.autotalk_generic_desc = "自動選擇使地城進入下一階段的對話選項。"
 L.autotalk_notice = "自動與 NPC %s互動。"
 
+-- Auto Player Choice
+--L.autoPlayerChoice = "Automatic Player Choice"
+--L.autoPlayerChoice_delve_power_desc = "Automatically select player powerups when they are dropped by creatures in the Delve."
+--L.autoPlayerChoice_notice = "Automatically selecting: %s"
+
 -- GUI notes
 L.intermissionOnly = "僅限階段轉換"
 L.stage1Only = "僅限第一階段"

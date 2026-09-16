@@ -211,6 +211,11 @@ L.autotalk_boss_desc = "Automatisch die NPC Dialogoptionen wählen, welche den B
 L.autotalk_generic_desc = "Automatisch die NPC Dialogoptionen wählen, welche die nächste Phase des Dungeons einleiten."
 L.autotalk_notice = "Automatisch mit NPC %s interagiert."
 
+-- Auto Player Choice
+--L.autoPlayerChoice = "Automatic Player Choice"
+--L.autoPlayerChoice_delve_power_desc = "Automatically select player powerups when they are dropped by creatures in the Delve."
+--L.autoPlayerChoice_notice = "Automatically selecting: %s"
+
 -- GUI notes
 L.intermissionOnly = "Nur Zwischenphase" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
 L.stage1Only = "Nur Phase 1" -- A note to explain that a specific ability only happens during stage 1 of a boss fight

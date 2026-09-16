@@ -212,6 +212,11 @@ L.autotalk_boss_desc = "Sélectionne automatiquement le dialogue avec le PNJ qui
 L.autotalk_generic_desc = "Sélectionne automatiquement le dialogue avec le PNJ qui vous fait progresser à la prochaine étape du donjon."
 L.autotalk_notice = "Interaction automatique avec le PNJ %s."
 
+-- Auto Player Choice
+--L.autoPlayerChoice = "Automatic Player Choice"
+--L.autoPlayerChoice_delve_power_desc = "Automatically select player powerups when they are dropped by creatures in the Delve."
+--L.autoPlayerChoice_notice = "Automatically selecting: %s"
+
 -- GUI notes
 L.intermissionOnly = "Seulement l'intervalle"
 L.stage1Only = "Seulement la phase 1"

@@ -870,6 +870,30 @@ do
 		end
 		return option
 	end
+
+	--- Create a custom auto player choice option
+	-- @bool state Boolean value to represent default state
+	-- @string[opt] choiceType The type of description to use (e.g. "delve_power")
+	-- @string[opt] name A unique name the option should have if you want to create multiple options in one module
+	-- @return an option string to be used in conjunction with :GetOption
+	function boss:AddAutoPlayerChoiceOption(state, choiceType, name)
+		if name and type(name) ~= "string" then
+			core:Error("Invalid auto player choice name: ".. tostring(name))
+		elseif name then
+			name = "_".. name
+		end
+
+		local moduleLocale = moduleLocaleList[self] or self:GetLocale()
+		local option = format(state and "custom_on_autoplayerchoice%s" or "custom_off_autoplayerchoice%s", name or "")
+		if choiceType == "delve_power" then
+			moduleLocale[option] = CL.autoPlayerChoice
+			moduleLocale[option.."_desc"] = CL.autoPlayerChoice_delve_power_desc
+			--moduleLocale[option.."_icon"] = self:GetMenuIcon("SAY")
+		else
+			core:Error("Invalid auto player choice type: ".. tostring(choiceType))
+		end
+		return option
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -2900,6 +2924,75 @@ do
 			core:Print(format(autotalk_notice, npc), self.isLittleWigs)
 		end
 		SelectOption(id, "", skipConfirmDialogBox) -- Don't think the text arg is something we will ever need
+	end
+end
+
+-------------------------------------------------------------------------------
+-- Player Choice API
+-- @section player_choice_api
+--
+
+do
+	local GetCurrentPlayerChoiceInfo = C_PlayerChoice.GetCurrentPlayerChoiceInfo
+	--- Request the currently available choice options
+	-- @return table All the choice info in a table
+	function boss:GetPlayerChoiceOptions()
+		local choiceInfo = GetCurrentPlayerChoiceInfo()
+		return choiceInfo
+	end
+
+	local SendPlayerChoiceResponse, OnUIClosed = C_PlayerChoice.SendPlayerChoiceResponse, C_PlayerChoice.OnUIClosed
+	--- Select a specific player choice entry by ID
+	-- @number choiceID The ID of the specific choice you want
+	-- @number buttonID The ID of the specific button within the choice you want
+	function boss:SelectPlayerChoice(choiceID, buttonID)
+		local choiceInfo = GetCurrentPlayerChoiceInfo()
+		if choiceInfo and choiceInfo.options and choiceInfo.options[choiceID] and choiceInfo.options[choiceID].buttons and choiceInfo.options[choiceID].buttons[buttonID] then
+			local spellID = choiceInfo.options[choiceID].spellID
+			if spellID then
+				local spellLink = loader.GetSpellLink(spellID)
+				local linkToUse
+				if type(spellLink) == "string" and spellLink:find("Hspell", nil, true) then
+					linkToUse = spellLink -- Use Blizz link if valid...
+				else -- ...or make our own
+					local spellName = GetSpellName(spellID)
+					linkToUse = ("\124cff71d5ff\124Hspell:%d:0\124h[%s]\124h\124r"):format(spellID, spellName)
+				end
+				core:Print(format(CL.autoPlayerChoice_notice, linkToUse), self.isLittleWigs)
+			else
+				core:Print(format(CL.autoPlayerChoice_notice, choiceInfo.options[choiceID].header), self.isLittleWigs)
+			end
+			self:SendMessage("BigWigs_Message", self, nil, choiceInfo.options[choiceID].header, "cyan", choiceInfo.options[choiceID].choiceArtID, nil, 4)
+			SendPlayerChoiceResponse(buttonID)
+			OnUIClosed()
+		end
+	end
+end
+
+--- Get the current count of player choices
+-- @param choiceInfo The table provided by :GetPlayerChoiceOptions()
+function boss:GetPlayerChoiceCount(choiceInfo)
+	if choiceInfo and choiceInfo.options then
+		return #choiceInfo.options
+	end
+end
+
+--- Get the current amount of buttons a specific choice has available
+-- @param choiceInfo The table provided by :GetPlayerChoiceOptions()
+-- @number choiceID The ID of the specific choice you want
+function boss:GetPlayerChoiceButtonCount(choiceInfo, choiceID)
+	if choiceInfo and choiceInfo.options and choiceInfo.options[choiceID] and choiceInfo.options[choiceID].buttons then
+		return #choiceInfo.options[choiceID].buttons
+	end
+end
+
+--- Get the ID of a specific button for a specific choice
+-- @param choiceInfo The table provided by :GetPlayerChoiceOptions()
+-- @number choiceID The ID of the specific choice you want
+-- @number buttonNumber Which specific button you want to fetch the ID of
+function boss:GetPlayerChoiceButtonID(choiceInfo, choiceID, buttonNumber)
+	if choiceInfo and choiceInfo.options and choiceInfo.options[choiceID] and choiceInfo.options[choiceID].buttons and choiceInfo.options[choiceID].buttons[buttonNumber] then
+		return choiceInfo.options[choiceID].buttons[buttonNumber].id
 	end
 end
 

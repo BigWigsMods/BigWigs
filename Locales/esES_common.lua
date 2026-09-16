@@ -211,6 +211,11 @@ L.autotalk_boss_desc = "Seleccionar automáticamente las opciones de diálogo de
 L.autotalk_generic_desc = "Seleccionar automáticamente las opciones de diálogo del NPC que te permiten avanzar a la siguiente etapa de la mazmorra."
 L.autotalk_notice = "Interactuando automáticamente con el NPC %s."
 
+-- Auto Player Choice
+--L.autoPlayerChoice = "Automatic Player Choice"
+--L.autoPlayerChoice_delve_power_desc = "Automatically select player powerups when they are dropped by creatures in the Delve."
+--L.autoPlayerChoice_notice = "Automatically selecting: %s"
+
 -- GUI notes
 L.intermissionOnly = "Solo Intermedio" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
 L.stage1Only = "Solo Etapa 1" -- A note to explain that a specific ability only happens during stage 1 of a boss fight
