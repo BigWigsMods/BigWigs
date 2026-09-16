@@ -9,6 +9,9 @@ on:
       - Core/BossPrototype.lua
       - Core/PluginPrototype.lua
 
+concurrency:
+  group: wiki
+
 jobs:
   ldoc:
     if: github.repository == 'BigWigsMods/BigWigs'

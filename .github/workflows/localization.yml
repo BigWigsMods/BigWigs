@@ -8,6 +8,9 @@ on:
       - dump_missing_localization.lua
       - Locales/*.lua
 
+concurrency:
+  group: wiki
+
 jobs:
   missing-localization:
     if: github.repository == 'BigWigsMods/BigWigs'
