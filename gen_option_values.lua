@@ -1163,6 +1163,10 @@ local function parseLua(file)
 			if var then
 				special_options[var] = true
 			end
+			var = line:match("(%w+) = .*:AddAutoPlayerChoiceOption%(")
+			if var then
+				special_options[var] = true
+			end
 		end
 
 		-- locale checking
