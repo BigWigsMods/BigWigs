@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     concurrency:
         group: packager
+        queue: max
 
     steps:
       - name: Checkout addon
