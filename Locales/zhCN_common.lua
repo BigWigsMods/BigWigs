@@ -212,9 +212,9 @@ L.autotalk_generic_desc = "自动选择NPC对话选项以进入下一阶段。"
 L.autotalk_notice = "自动与NPC %s 交互。"
 
 -- Auto Player Choice
---L.autoPlayerChoice = "Automatic Player Choice"
---L.autoPlayerChoice_delve_power_desc = "Automatically select player powerups when they are dropped by creatures in the Delve."
---L.autoPlayerChoice_notice = "Automatically selecting: %s"
+L.autoPlayerChoice = "玩家自动选择"
+L.autoPlayerChoice_delve_power_desc = "当地下堡中的生物掉落玩家强化道具时，自动进行选择。"
+L.autoPlayerChoice_notice = "自动选择：%s"
 
 -- GUI notes
 L.intermissionOnly = "仅转阶段" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
