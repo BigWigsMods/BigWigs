@@ -2940,15 +2940,19 @@ do
 		local choiceInfo = GetCurrentPlayerChoiceInfo()
 		return choiceInfo
 	end
+end
 
+do
 	local SendPlayerChoiceResponse, OnUIClosed = C_PlayerChoice.SendPlayerChoiceResponse, C_PlayerChoice.OnUIClosed
-	--- Select a specific player choice entry by ID
-	-- @number choiceID The ID of the specific choice you want
-	-- @number buttonID The ID of the specific button within the choice you want
-	function boss:SelectPlayerChoice(choiceID, buttonID)
-		local choiceInfo = GetCurrentPlayerChoiceInfo()
-		if choiceInfo and choiceInfo.options and choiceInfo.options[choiceID] and choiceInfo.options[choiceID].buttons and choiceInfo.options[choiceID].buttons[buttonID] then
-			local spellID = choiceInfo.options[choiceID].spellID
+	--- Select a specific player choice button
+	-- @param choiceInfo The table provided by :GetPlayerChoiceOptions()
+	-- @number choiceNumber The number of the specific choice you want
+	-- @number buttonNumber Which specific button (within the choice you want) should be selected
+	function boss:SelectPlayerChoiceButton(choiceInfo, choiceNumber, buttonNumber)
+		local button = choiceInfo and choiceInfo.options and choiceInfo.options[choiceNumber] and choiceInfo.options[choiceNumber].buttons and choiceInfo.options[choiceNumber].buttons[buttonNumber]
+		local buttonID = button and button.id
+		if buttonID then
+			local spellID = choiceInfo.options[choiceNumber].spellID
 			if spellID then
 				local spellLink = loader.GetSpellLink(spellID)
 				local linkToUse
@@ -2960,9 +2964,9 @@ do
 				end
 				core:Print(format(CL.autoPlayerChoice_notice, linkToUse), self.isLittleWigs)
 			else
-				core:Print(format(CL.autoPlayerChoice_notice, choiceInfo.options[choiceID].header), self.isLittleWigs)
+				core:Print(format(CL.autoPlayerChoice_notice, choiceInfo.options[choiceNumber].header), self.isLittleWigs)
 			end
-			self:SendMessage("BigWigs_Message", self, nil, choiceInfo.options[choiceID].header, "cyan", choiceInfo.options[choiceID].choiceArtID, nil, 4)
+			self:SendMessage("BigWigs_Message", self, nil, choiceInfo.options[choiceNumber].header, "cyan", choiceInfo.options[choiceNumber].choiceArtID, nil, 4)
 			SendPlayerChoiceResponse(buttonID)
 			OnUIClosed()
 		end
@@ -2971,6 +2975,7 @@ end
 
 --- Get the current count of player choices
 -- @param choiceInfo The table provided by :GetPlayerChoiceOptions()
+-- @return number The amount of choices that are available to the user
 function boss:GetPlayerChoiceCount(choiceInfo)
 	if choiceInfo and choiceInfo.options then
 		return #choiceInfo.options
@@ -2979,20 +2984,11 @@ end
 
 --- Get the current amount of buttons a specific choice has available
 -- @param choiceInfo The table provided by :GetPlayerChoiceOptions()
--- @number choiceID The ID of the specific choice you want
-function boss:GetPlayerChoiceButtonCount(choiceInfo, choiceID)
-	if choiceInfo and choiceInfo.options and choiceInfo.options[choiceID] and choiceInfo.options[choiceID].buttons then
-		return #choiceInfo.options[choiceID].buttons
-	end
-end
-
---- Get the ID of a specific button for a specific choice
--- @param choiceInfo The table provided by :GetPlayerChoiceOptions()
--- @number choiceID The ID of the specific choice you want
--- @number buttonNumber Which specific button you want to fetch the ID of
-function boss:GetPlayerChoiceButtonID(choiceInfo, choiceID, buttonNumber)
-	if choiceInfo and choiceInfo.options and choiceInfo.options[choiceID] and choiceInfo.options[choiceID].buttons and choiceInfo.options[choiceID].buttons[buttonNumber] then
-		return choiceInfo.options[choiceID].buttons[buttonNumber].id
+-- @number choiceNumber The number of the specific choice you want
+-- @return number The amount of clickable buttons this specific choice has
+function boss:GetPlayerChoiceButtonCount(choiceInfo, choiceNumber)
+	if choiceInfo and choiceInfo.options and choiceInfo.options[choiceNumber] and choiceInfo.options[choiceNumber].buttons then
+		return #choiceInfo.options[choiceNumber].buttons
 	end
 end
 
