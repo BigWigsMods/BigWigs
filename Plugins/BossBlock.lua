@@ -520,6 +520,20 @@ do
 		[352]=true,[353]=true,[354]=true,[355]=true,[356]=true,[357]=true,[358]=true,[359]=true,[360]=true,
 		[361]=true,[362]=true,[363]=true,[364]=true,[365]=true,[366]=true,[367]=true,[368]=true,[369]=true,
 	}
+	local basicWarnings = {
+		[337] = true, -- Flickering Spoils Will Manifest Upon Delve Completion
+		[338] = true, -- Shadowed Flickering Spoils Will Manifest Upon Delve Completion
+		[339] = true, -- A Flickergate Has Manifested Within
+		[370] = true, -- A Sanctified Banner Has Manifested Within
+		[371] = true, -- Grand Sanctified Spoils Will Manifest Upon Delve Completion
+		[372] = true, -- Sanctified Spoils Will Manifest Upon Delve Completion
+		[482] = true, -- Additional Bountiful Rewards Will Manifest Upon Delve Completion
+		[483] = true, -- Dundun Hides Within. Can You Find Him?
+		[490] = true, -- Additional Undercoin Reward Will Manifest Upon Delve Completion
+		[491] = true, -- Additional Voidlight Marl Reward Will Manifest Upon Delve Completion
+		[492] = true, -- Additional Decor Reward Will Manifest Upon Delve Completion
+		[493] = true, -- Additional Companion Experience Reward Will Manifest Upon Delve Completion
+	}
 	local nemesisBoxCounts = {0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4}
 	local GetNextToastToDisplay = C_EventToastManager and C_EventToastManager.GetNextToastToDisplay
 	local RemoveCurrentToast = C_EventToastManager and C_EventToastManager.RemoveCurrentToast
@@ -663,20 +677,7 @@ do
 						tbl.subtitle = CL.other:format(L.newRespawnPoint, latestKill[3]) -- New Respawn Point: Boss Name
 						self:SimpleTimer(function() printMessage(self, tbl) end, 3) -- Delay a little after the boss kill
 					end
-				elseif tbl.eventToastID == 339 or tbl.eventToastID == 370 then -- Delve Spoils Within
-					-- 339: A Flickergate Has Manifested Within
-					-- 370: A Sanctified Banner Has Manifested Within
-					tbl.subtitle = tbl.title
-					tbl.title = nil
-					tbl.bwDuration = 3
-					printMessage(self, tbl)
-				elseif tbl.eventToastID == 337 or tbl.eventToastID == 338 or tbl.eventToastID == 371 or tbl.eventToastID == 372 or tbl.eventToastID == 483 or tbl.eventToastID == 482 then -- Delve Spoils Found
-					-- 337: Flickering Spoils Will Manifest Upon Delve Completion
-					-- 338: Shadowed Flickering Spoils Will Manifest Upon Delve Completion
-					-- 371: Grand Sanctified Spoils Will Manifest Upon Delve Completion
-					-- 372: Sanctified Spoils Will Manifest Upon Delve Completion
-					-- 483: Dundun Hides Within. Can You Find Him?
-					-- 482: Additional Bountiful Rewards Will Manifest Upon Delve Completion
+				elseif basicWarnings[tbl.eventToastID] then -- Basic warnings with no customization
 					tbl.subtitle = tbl.title
 					tbl.title = nil
 					tbl.bwDuration = 3
