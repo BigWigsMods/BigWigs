@@ -327,6 +327,7 @@ do
 				[1592] = "BigWigs_Sporefall",
 				[2987] = "BigWigs_MidnightLairs",
 				[3004] = "BigWigs_TheVenomousAbyss",
+				[3095] = public.isNext and "BigWigs_TheUnbindingOfKithix" or nil,
 			}
 		}
 	else -- Retail
@@ -363,6 +364,7 @@ do
 				[1592] = "BigWigs_Sporefall",
 				[2987] = "BigWigs_MidnightLairs",
 				[3004] = "BigWigs_TheVenomousAbyss",
+				[3095] = public.isNext and "BigWigs_TheUnbindingOfKithix" or nil,
 			}
 		}
 	end
@@ -462,6 +464,7 @@ do
 		[1592] = mn, -- Sporefall
 		[2987] = mn, -- The Tidebound Grotto
 		[3004] = mn, -- The Venomous Abyss
+		[3095] = public.isNext and mn or nil, -- The Unbinding of Kith'ix
 
 
 		--[[ LittleWigs: Classic ]]--
