@@ -28,9 +28,8 @@ jobs:
           repository: BigWigsMods/BigWigs.wiki
           path: wiki
 
-      - uses: leafo/gh-actions-lua@v13
-        with:
-          luaVersion: 5.1
+      - name: Install Lua
+        run: sudo apt install lua5.1 -y
 
       - name: Output
         run: lua BigWigs/dump_missing_localization.lua BigWigs/BigWigs.toc && cp -av Missing-Localization.md wiki/
