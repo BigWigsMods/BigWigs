@@ -1,16 +1,16 @@
 ## Interface: 120105
 
 ## Title: BigWigs [|cffeda55fThe Unbinding of Kith'ix|r]
-## Title-deDE: BigWigs [|cffeda55fThe Unbinding of Kith'ix|r]
-## Title-esES: BigWigs [|cffeda55fThe Unbinding of Kith'ix|r]
-## Title-esMX: BigWigs [|cffeda55fThe Unbinding of Kith'ix|r]
-## Title-frFR: BigWigs [|cffeda55fThe Unbinding of Kith'ix|r]
-## Title-itIT: BigWigs [|cffeda55fThe Unbinding of Kith'ix|r]
-## Title-koKR: BigWigs [|cffeda55fThe Unbinding of Kith'ix|r]
-## Title-ptBR: BigWigs [|cffeda55fThe Unbinding of Kith'ix|r]
-## Title-ruRU: BigWigs [|cffeda55fThe Unbinding of Kith'ix|r]
-## Title-zhCN: BigWigs [|cffeda55fThe Unbinding of Kith'ix|r]
-## Title-zhTW: BigWigs [|cffeda55fThe Unbinding of Kith'ix|r]
+## Title-deDE: BigWigs [|cffeda55fDie Entfesslung von Kith'ix|r]
+## Title-esES: BigWigs [|cffeda55fLa liberación de Kith'ix|r]
+## Title-esMX: BigWigs [|cffeda55fLa Liberación de Kith'ix|r]
+## Title-frFR: BigWigs [|cffeda55fLe Déliement de Kith’ix|r]
+## Title-itIT: BigWigs [|cffeda55fLiberazione di Kith'ix|r]
+## Title-koKR: BigWigs [|cffeda55f키식스 해방|r]
+## Title-ptBR: BigWigs [|cffeda55fA Libertação de Kith'ix|r]
+## Title-ruRU: BigWigs [|cffeda55fОсвобождение Кит'икса|r]
+## Title-zhCN: BigWigs [|cffeda55f基希克斯破封|r]
+## Title-zhTW: BigWigs [|cffeda55f克希斯的解放|r]
 ## Notes: BigWigs The Unbinding of Kith'ix Modules
 ## Notes-deDE: BigWigs The Unbinding of Kith'ix Modules
 ## Notes-esES: BigWigs The Unbinding of Kith'ix Modules
