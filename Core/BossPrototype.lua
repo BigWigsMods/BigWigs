@@ -2945,7 +2945,7 @@ end
 --
 
 do
-	local GetCurrentPlayerChoiceInfo = C_PlayerChoice.GetCurrentPlayerChoiceInfo
+	local GetCurrentPlayerChoiceInfo = C_PlayerChoice and C_PlayerChoice.GetCurrentPlayerChoiceInfo -- XXX [Mainline:✓ MoP:✗ Wrath:✗ Vanilla:✗]
 	--- Request the currently available choice options
 	-- @return table All the choice info in a table
 	function boss:GetPlayerChoiceOptions()
@@ -2955,7 +2955,8 @@ do
 end
 
 do
-	local SendPlayerChoiceResponse, OnUIClosed = C_PlayerChoice.SendPlayerChoiceResponse, C_PlayerChoice.OnUIClosed
+	local SendPlayerChoiceResponse = C_PlayerChoice and C_PlayerChoice.SendPlayerChoiceResponse -- XXX [Mainline:✓ MoP:✗ Wrath:✗ Vanilla:✗]
+	local OnUIClosed = C_PlayerChoice and C_PlayerChoice.OnUIClosed
 	--- Select a specific player choice button
 	-- @param choiceInfo The table provided by :GetPlayerChoiceOptions()
 	-- @number choiceNumber The number of the specific choice you want
