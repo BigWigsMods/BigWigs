@@ -1171,6 +1171,18 @@ do
 		return soundName or "None"
 	end
 
+	--- Get the aura sound throttle in seconds, which controls how often the sounds for this aura can play.
+	-- @return number or nil
+	function boss:GetAuraSoundThrottle(spellID)
+		local index = moduleAurasList[self] and moduleAurasList[self].spellIDToIndex[spellID]
+		if not index then
+			error(("Module %q has no aura data for spell ID %q."):format(self.moduleName, tostring(spellID)))
+			return
+		end
+
+		return moduleAurasList[self][index].throttle
+	end
+
 	--- Get the aura duration.
 	-- @return number or nil
 	function boss:GetAuraDuration(spellID)

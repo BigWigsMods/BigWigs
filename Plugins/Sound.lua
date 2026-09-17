@@ -549,11 +549,13 @@ do
 					soundsToRegister.onCountdown = getCountdownSoundFile(bossModule:GetAuraDuration(spellId))
 				end
 
+				local throttle = bossModule:GetAuraSoundThrottle(spellId) or 1
 				for event, sound in next, soundsToRegister do
 					local auraSoundInfoTable = {
 						spellID = spellId,
 						unitToken = "player",
 						outputChannel = "master",
+						throttleSeconds = event == "onRemoved" and 0 or throttle
 					}
 					if type(sound) == "string" then
 						auraSoundInfoTable.soundFileName = sound
