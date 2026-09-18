@@ -1,4 +1,4 @@
-## Interface: 120105
+## Interface: 120100, 120105, 120007
 ## AllowLoadGameType: standard
 
 ## Title: BigWigs [|cffeda55fThe Unbinding of Kith'ix|r]
