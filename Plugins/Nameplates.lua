@@ -1,10 +1,8 @@
-if BigWigsLoader.isRetail then return end -- Classic only module
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
-local plugin, L = BigWigs:NewPlugin("Nameplates")
+local plugin, L = BigWigs:NewPlugin("Nameplates") -- Classic only module
 if not plugin then return end
 
 --------------------------------------------------------------------------------

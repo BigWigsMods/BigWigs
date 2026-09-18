@@ -1,12 +1,8 @@
-if BigWigsLoader.isRetail then return end -- XXX needs updating for 12.0
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
-if BigWigsLoader.isVanilla or BigWigsLoader.isTBC or BigWigsLoader.isWrath then return end -- Cataclysm+
-
-local plugin, L = BigWigs:NewPlugin("AltPower")
+local plugin, L = BigWigs:NewPlugin("AltPower") -- Cataclysm & Mists only module
 if not plugin then return end
 
 --------------------------------------------------------------------------------

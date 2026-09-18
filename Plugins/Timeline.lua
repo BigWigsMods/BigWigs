@@ -1,9 +1,8 @@
-if not BigWigsLoader.isRetail then return end -- Retail only module
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
-local plugin, L = BigWigs:NewPlugin("Timeline")
+local plugin, L = BigWigs:NewPlugin("Timeline") -- Retail only module
 if not plugin then return end
 
 --------------------------------------------------------------------------------

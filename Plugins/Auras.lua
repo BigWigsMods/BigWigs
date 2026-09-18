@@ -1,10 +1,8 @@
-if not BigWigsLoader.isRetail then return end -- 12.1+ only module
-
 -------------------------------------------------------------------------------
 -- Module Declaration
 --
 
-local plugin, L = BigWigs:NewPlugin("Auras")
+local plugin, L = BigWigs:NewPlugin("Auras") -- Retail & Forever only module
 if not plugin then return end
 
 --------------------------------------------------------------------------------

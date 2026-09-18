@@ -1,4 +1,4 @@
-## Interface: 120100, 120105, 120007
+## Interface: 11508, 11509, 16001, 20505, 20506, 30405, 38002, 40402, 50503, 50504, 120100, 120105, 120007
 
 ## Title: BigWigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.
@@ -17,7 +17,7 @@
 ## Version: @project-version@
 ## LoadSavedVariablesFirst: 1
 
-## X-Credits: Ammo, Elvador, Vhaarr
+## X-Credits: Ammo, Caleb, Elvador, Vhaarr
 ## X-Category: Raid
 ## X-License: All Rights Reserved: You are free to fork and modify on GitHub, please ask us about anything else.
 ## X-Website: https://github.com/BigWigsMods
@@ -35,7 +35,7 @@ Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 # Libs\AceDB-3.0\AceDB-3.0.lua
 # Libs\LibDualSpec-1.0\LibDualSpec-1.0.lua
 # Libs\LibSpecialization\LibSpecialization.lua
-# Libs\LibKeystone\LibKeystone.lua
+# Libs\LibKeystone\LibKeystone.lua [AllowLoadGameType standard]
 # Libs\LibLatency\LibLatency.lua
 # Libs\LibDurability\LibDurability.lua
 # Libs\LibSharedMedia-3.0\LibSharedMedia-3.0.lua
@@ -45,41 +45,46 @@ Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 Options\Libs\AceGUIWidget-BigWigsSharedDropdown.lua
 #@end-do-not-package@
 
-Init.lua
+Init_[Game].lua
 API.lua
 
+Locales\Encounters_Classic\encounter.enUS.lua [ExcludeLoadGameType standard]
+Locales\Encounters_Classic\encounterInfo.enUS.lua [ExcludeLoadGameType standard]
 Locales\enUS.lua
 Locales\enUS_common.lua
+Locales\Encounters_Classic\encounter.[TextLocale].lua [ExcludeLoadGameType standard][AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+Locales\Encounters_Classic\encounterInfo.[TextLocale].lua [ExcludeLoadGameType standard][AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
 Locales\[TextLocale].lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
 Locales\[TextLocale]_common.lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
-Locales\[TextLocale]_bosses.lua [AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
+Locales\[TextLocale]_bosses.lua [AllowLoadGameType standard][AllowLoadTextLocale deDE, esES, esMX, frFR, itIT, koKR, ptBR, ruRU, zhCN, zhTW]
 
 Media\Media.lua
 GuildVersion.lua
 Loader.lua
-Tools\Keystones.lua
+Tools\Keystones.lua [AllowLoadGameType standard]
 Tools\CombatTimer.lua
 Tools\AutoInvite.lua
-Tools\LFGTimer.lua
-Tools\AutoRole.lua
+Tools\LFGTimer.lua [AllowLoadGameType standard, wrath, cata, mists]
+Tools\AutoRole.lua [AllowLoadGameType standard, cata, mists]
 
 #@do-not-package@
 Core\Constants.lua
-Core\BossPrototype.lua
+Core\BossPrototype.lua [ExcludeLoadGameType vanilla, tbc, wrath]
+Core\BossPrototype_Classic.lua [AllowLoadGameType vanilla, tbc, wrath]
 Core\PluginPrototype.lua
 Core\Core.lua
-Plugins\AltPower.lua
-Plugins\AutoReply.lua
+Plugins\AltPower.lua [AllowLoadGameType cata, mists]
+Plugins\AutoReply.lua [AllowLoadGameType classic]
 Plugins\Colors.lua
 Plugins\Sound.lua
 Plugins\Messages.lua
 Plugins\BarStyles.lua
 Plugins\Bars.lua
-Plugins\Nameplates.lua
+Plugins\Nameplates.lua [AllowLoadGameType classic]
 Plugins\BossBlock.lua
 Plugins\InfoBox.lua
-Plugins\RaidIcon.lua
-Plugins\Proximity.lua
+Plugins\RaidIcon.lua [AllowLoadGameType classic]
+Plugins\Proximity.lua [AllowLoadGameType classic]
 Plugins\Flash.lua
 Plugins\Countdown.lua
 Plugins\Pull.lua
@@ -87,9 +92,9 @@ Plugins\Break.lua
 Plugins\Statistics.lua
 Plugins\Victory.lua
 Plugins\Wipe.lua
-Plugins\BattleRes.lua
-Plugins\Timeline.lua
-Plugins\Auras.lua
+Plugins\BattleRes.lua [AllowLoadGameType standard, mists]
+Plugins\Timeline.lua [AllowLoadGameType standard]
+Plugins\Auras.lua [AllowLoadGameType mainline]
 Options\Sharing.lua
 Options\InstanceSharing.lua
 Options\Options.lua

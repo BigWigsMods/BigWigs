@@ -1,10 +1,8 @@
-if BigWigsLoader.isRetail then return end -- XXX needs updating for 12.0
-
 -------------------------------------------------------------------------------
 -- Module Declaration
 --
 
-local plugin, L = BigWigs:NewPlugin("Proximity")
+local plugin, L = BigWigs:NewPlugin("Proximity") -- Classic only module
 if not plugin then return end
 
 plugin.defaultDB = {

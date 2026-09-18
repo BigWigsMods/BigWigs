@@ -1,6 +1,4 @@
 
--- GLOBALS: UIParent, GameFontNormal, BigWigs
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
