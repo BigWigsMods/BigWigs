@@ -1,4 +1,5 @@
 ## Interface: 120105
+## AllowLoadGameType: standard
 
 ## Title: BigWigs [|cffeda55fThe Unbinding of Kith'ix|r]
 ## Title-deDE: BigWigs [|cffeda55fDie Entfesslung von Kith'ix|r]

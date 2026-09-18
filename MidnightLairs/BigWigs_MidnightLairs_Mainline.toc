@@ -1,4 +1,5 @@
 ## Interface: 120100
+## AllowLoadGameType: standard
 
 ## Title: BigWigs [|cffeda55fMidnight Lair Bosses|r]
 ## Title-deDE: BigWigs [|cffeda55fMidnight Lair Bosses|r]

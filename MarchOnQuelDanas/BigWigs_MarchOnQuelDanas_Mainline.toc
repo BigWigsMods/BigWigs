@@ -1,4 +1,5 @@
 ## Interface: 120100, 120105, 120007
+## AllowLoadGameType: standard
 
 ## Title: BigWigs [|cffeda55fMarch on Quel'Danas|r]
 ## Title-deDE: BigWigs [|cffeda55fMarsch auf Quel'Danas|r]

@@ -1,4 +1,5 @@
 ## Interface: 120100, 120105, 120007
+## AllowLoadGameType: standard
 
 ## Title: BigWigs [|cffeda55fThe Venomous Abyss|r]
 ## Title-deDE: BigWigs [|cffeda55fDer Giftige Abgrund|r]

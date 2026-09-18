@@ -1,4 +1,5 @@
 ## Interface: 120100, 120105, 120007
+## AllowLoadGameType: standard
 
 ## Title: BigWigs [|cffeda55fMidnight World Bosses|r]
 ## Title-deDE: BigWigs [|cffeda55fMidnight Weltbosse|r]

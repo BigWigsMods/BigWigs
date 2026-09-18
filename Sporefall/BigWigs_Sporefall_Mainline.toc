@@ -1,4 +1,5 @@
 ## Interface: 120100, 120105, 120007
+## AllowLoadGameType: standard
 
 ## Title: BigWigs [|cffeda55fSporefall|r]
 ## Title-deDE: BigWigs [|cffeda55fSporenfall|r]
