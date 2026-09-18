@@ -28,6 +28,16 @@ local all_locales = {
 	"zhCN",
 	"zhTW",
 }
+local all_game_types = {
+	"Standard",
+	"Vanilla",
+	"Camelot",
+	"TBC",
+	"Wrath",
+	"Cata",
+	"Mists",
+}
+
 local default_options = {
 	altpower = {ALTPOWER = true},
 	infobox = {INFOBOX = true},
@@ -1861,7 +1871,7 @@ local function parse(file, relative_path)
 			elseif string.find(file_name, "[TextLocale]", nil, true) then
 				-- if the file path contains [TextLocale] then we have to figure out what to replace it with
 				-- first look for [AllowLoadTextLocale ...]
-				local allowed_locales = string.match(condition, "^%[AllowLoadTextLocale (.+)%]$")
+				local allowed_locales = string.match(condition, "%[AllowLoadTextLocale (.+)%]")
 				if not allowed_locales then
 					-- if [AllowLoadTextLocale ...] isn't found then substitute all locales
 					allowed_locales = all_locales
@@ -1871,6 +1881,19 @@ local function parse(file, relative_path)
 				for _, locale in next, allowed_locales do
 					-- shortcut to parseLocale, assuming any path with [TextLocale] is directly pointing to a locale file
 					parseLocale(file_path:gsub("%[TextLocale%]", locale))
+				end
+			elseif string.find(file_name, "[Game]", nil, true) then
+				-- if the file path contains [Game] then we have to figure out what to replace it with
+				-- first look for [AllowLoadGameType ...]
+				local allowed_game_types = string.match(condition, "%[AllowLoadGameType (.+)%]")
+				if not allowed_game_types then
+					-- if [AllowLoadGameType ...] isn't found then substitute all game types
+					allowed_game_types = all_game_types
+				else
+					allowed_game_types = strsplit(allowed_game_types)
+				end
+				for _, game_type in next, allowed_game_types do
+					parseLua(file_path:gsub("%[Game%]", game_type))
 				end
 			else
 				-- We have an actual lua file so parse it!
