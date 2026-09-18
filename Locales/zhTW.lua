@@ -192,8 +192,6 @@ L.auraMechanic_taunted = "嘲諷"
 L.onApplied = "獲得時" -- 光環的獲得/生效和施放不是完全一樣的
 L.onDose = "疊加時"
 L.onRemoved = "移除時"
-L.privateAuraSounds = "私有光環音效"
-L.privateAuraSounds_desc = "插件無法追蹤私有光環的具體內容，但你可以設定獲得私有光環的減益效果時播放指定音效。"
 L.listAbilities = "將技能列表發送到團隊聊天頻道"
 L.parenthesesID = "%s|cffA5A5A5（ID: %s）|r"
 
@@ -337,12 +335,11 @@ L.mythicplus_settings_export_desc = "匯出傳奇+ 設定。"
 L.imported_battleres_settings = "戰復設定"
 L.battleres_settings_import_desc = "匯入戰復設定。"
 L.battleres_settings_export_desc = "匯出戰復設定。"
-L.imported_privateAuras_settings = "私有光環設定"
-L.privateAuras_settings_import_desc = "匯入私有光環設定。"
-L.privateAuras_settings_export_desc = "匯出私有光環設定。"
 L.imported_combattimer_settings = "戰鬥計時設定"
 L.combattimer_settings_import_desc = "匯入戰鬥計時設定。"
 L.combattimer_settings_export_desc = "匯出戰鬥計時設定。"
+--L.confirm_export_disabled_plugin = "You have |cFF33FF99\"%s\"|r disabled.\n\nExporting it will force-disable this feature for anyone importing this string, |cffff8000even if they want to use it|r.\n\nAre you sure you want to do this?"
+--L.confirm_import_disabled_plugin = "The settings you are about to import for |cFF33FF99\"%s\"|r have it disabled.\n\nImporting them will disable it for you as well.\n\nAre you sure you want to do this?"
 L.export_bosses = "匯出首領設定"
 L.export_bosses_info = "匯出下方所選區域中所有首領的設定。"
 L.raids_section = "團隊副本"
@@ -783,9 +780,6 @@ L.disableAltPowerDesc = "全局停用替代能量框架，啟用此選項將使�
 --
 
 L.auras = "光環" -- Buffs/Debuffs
-L.privateAuras = "私有光環"
-L.privateAurasDesc1 = "「私有光環」是一種特殊的減益光環，插件無法直接取得光環的詳細資訊，也無法對其進行任何自動化操作。目前，魔獸世界正式版（主時間線）的首領戰鬥普遍採用了這種機制。\n\n" -- retail 正式版 mainline 主時間線
-L.privateAurasDesc2 = "BigWigs 會將這些特殊光環以獨立且醒目的大圖示顯示在畫面中；|cFF33FF99這能將關鍵的減益狀態與一般的負面效果區分開來，讓你迅速掌握自身狀況。|r\n\n"
 L.aurasDesc = "BigWigs 使用獨立且醒目的大圖示來追蹤首領對你施放的減益效果。\n|cFF33FF99這能將關鍵的減益狀態與一般的負面效果區分開來，讓你迅速掌握自身狀況。|r\n\n"
 L.disabledDuringTrash = "小怪戰鬥期間停用"
 
@@ -813,7 +807,6 @@ L.playerInYourGroup = "隊伍中的玩家"
 --L.tankIndicator = "Tank Indicator"
 L.maxIcons = "圖示最大數量"
 L.maxIconsDesc = "最多顯示幾個圖示。"
-L.privateAurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs: 現在，你可以在受到私有光環減益效果時，獲得大圖示提示；並且，你可以設定是否要監視其他隊友（例如坦克）的狀態。"
 L.aurasHelpTip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBigWigs：這個大圖示可以提示你或其他玩家（例如坦克）獲得的首領減益效果。"
 
 L.aurasTestAnchorText = "玩家\n光環"
