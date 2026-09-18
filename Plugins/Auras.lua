@@ -2475,7 +2475,7 @@ end
 
 do
 	local dispelTypeList = { "Magic", "Curse", "Disease", "Poison", "Enrage", "Bleed", "None" }
-	local privateAuraSpellList = { 407221, 418720, 421828, 428970, 406317 }
+	local testSpellTextures = { 4914668, 4048815, 4914673, 4914674, 4630415 }
 
 	local methods = { -- pretty annoying
 		GetApplicationBar = false,
@@ -2566,10 +2566,8 @@ do
 		local aura = pool:Acquire()
 
 		-- Setup test aura info
-		local spellId = privateAuraSpellList[math.random(#privateAuraSpellList)]
+		local icon = testSpellTextures[math.random(#testSpellTextures)]
 		local dispelType = dispelTypeList[math.random(#dispelTypeList)]
-
-		local icon = C_Spell.GetSpellTexture(spellId)
 		local applications = math.random(0, 5)
 
 		local duration = C_DurationUtil.CreateDuration()
