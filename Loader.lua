@@ -41,6 +41,7 @@ do
 	tbl.loaderPrivate = mod
 	tbl.version = BIGWIGS_VERSION
 	public.isRetail = tbl.isRetail
+	public.isForever = tbl.isForever
 	public.isClassic = tbl.isClassic
 	public.isVanilla = tbl.isVanilla
 	public.season = tbl.season
@@ -243,7 +244,17 @@ do
 	local lw_delves = "LittleWigs_Delves"
 	local lw_cs = "LittleWigs_CurrentSeason"
 
-	if public.isVanilla then
+	if public.isForever then
+		public.currentExpansion = {
+			name = c,
+			bigWigsBundled = {},
+			littleWigsName = lw_c,
+			littleWigsDefault = lw_c,
+			littleWigsBundled = {},
+			currentSeason = {},
+			zones = {},
+		}
+	elseif public.isVanilla then
 		public.currentExpansion = {
 			name = c,
 			bigWigsBundled = {},
