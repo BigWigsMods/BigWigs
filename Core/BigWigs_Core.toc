@@ -1,4 +1,4 @@
-## Interface: 40402, 50503, 50504, 120100, 120105, 120007
+## Interface: 11508, 11509, 16001, 20505, 20506, 30405, 38002, 40402, 50503, 50504, 120100, 120105, 120007
 
 ## Title: BigWigs [|cffeda55fCore|r]
 ## Title-zhCN: BigWigs [|cffeda55f核心|r]
@@ -29,6 +29,7 @@
 ## Dependencies: BigWigs
 
 Constants.lua
-BossPrototype.lua
+BossPrototype.lua [ExcludeLoadGameType vanilla, tbc, wrath]
+BossPrototype_Classic.lua [AllowLoadGameType vanilla, tbc, wrath]
 PluginPrototype.lua
 Core.lua

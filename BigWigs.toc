@@ -94,35 +94,35 @@ Options\Sharing.lua
 Options\InstanceSharing.lua
 Options\Options.lua
 
-MarchOnQuelDanas\Beloren.lua
-MarchOnQuelDanas\MidnightFalls.lua
-MarchOnQuelDanas\!Options.lua
-TheDreamrift\Chimaerus.lua
-TheDreamrift\!Options.lua
-TheVoidspire\Averzian.lua
-TheVoidspire\Vorasius.lua
-TheVoidspire\Salhadaar.lua
-TheVoidspire\VaelgorAndEzzorak.lua
-TheVoidspire\Vanguard.lua
-TheVoidspire\Crown.lua
-TheVoidspire\!Options.lua
-MidnightWorld\Luashal.lua
-MidnightWorld\Cragpine.lua
-MidnightWorld\Thormbelan.lua
-MidnightWorld\!Options.lua
-Sporefall\Rotmire.lua
-Sporefall\!Options.lua
-TheVenomousAbyss\Nekzali.lua
-TheVenomousAbyss\Sentinels.lua
-TheVenomousAbyss\Explorers.lua
-TheVenomousAbyss\Vashnik.lua
-TheVenomousAbyss\Sszorak.lua
-TheVenomousAbyss\TwinFangs.lua
-TheVenomousAbyss\CoiledAltar.lua
-TheVenomousAbyss\Ulatek.lua
-TheVenomousAbyss\!Options.lua
-MidnightLairs\Nymrissa.lua
-MidnightLairs\!Options.lua
-TheUnbindingOfKithix\Kithix.lua
-TheUnbindingOfKithix\!Options.lua
+MarchOnQuelDanas\Beloren.lua [AllowLoadGameType standard]
+MarchOnQuelDanas\MidnightFalls.lua [AllowLoadGameType standard]
+MarchOnQuelDanas\!Options.lua [AllowLoadGameType standard]
+TheDreamrift\Chimaerus.lua [AllowLoadGameType standard]
+TheDreamrift\!Options.lua [AllowLoadGameType standard]
+TheVoidspire\Averzian.lua [AllowLoadGameType standard]
+TheVoidspire\Vorasius.lua [AllowLoadGameType standard]
+TheVoidspire\Salhadaar.lua [AllowLoadGameType standard]
+TheVoidspire\VaelgorAndEzzorak.lua [AllowLoadGameType standard]
+TheVoidspire\Vanguard.lua [AllowLoadGameType standard]
+TheVoidspire\Crown.lua [AllowLoadGameType standard]
+TheVoidspire\!Options.lua [AllowLoadGameType standard]
+MidnightWorld\Luashal.lua [AllowLoadGameType standard]
+MidnightWorld\Cragpine.lua [AllowLoadGameType standard]
+MidnightWorld\Thormbelan.lua [AllowLoadGameType standard]
+MidnightWorld\!Options.lua [AllowLoadGameType standard]
+Sporefall\Rotmire.lua [AllowLoadGameType standard]
+Sporefall\!Options.lua [AllowLoadGameType standard]
+TheVenomousAbyss\Nekzali.lua [AllowLoadGameType standard]
+TheVenomousAbyss\Sentinels.lua [AllowLoadGameType standard]
+TheVenomousAbyss\Explorers.lua [AllowLoadGameType standard]
+TheVenomousAbyss\Vashnik.lua [AllowLoadGameType standard]
+TheVenomousAbyss\Sszorak.lua [AllowLoadGameType standard]
+TheVenomousAbyss\TwinFangs.lua [AllowLoadGameType standard]
+TheVenomousAbyss\CoiledAltar.lua [AllowLoadGameType standard]
+TheVenomousAbyss\Ulatek.lua [AllowLoadGameType standard]
+TheVenomousAbyss\!Options.lua [AllowLoadGameType standard]
+MidnightLairs\Nymrissa.lua [AllowLoadGameType standard]
+MidnightLairs\!Options.lua [AllowLoadGameType standard]
+TheUnbindingOfKithix\Kithix.lua [AllowLoadGameType standard]
+TheUnbindingOfKithix\!Options.lua [AllowLoadGameType standard]
 #@end-do-not-package@
