@@ -50,6 +50,8 @@ local zoneList = loader.zoneTbl
 local isTestBuild = loader.isTestBuild
 local isClassic = loader.isClassic
 local isVanilla = loader.isVanilla
+local isTBC = loader.isTBC
+local isForever = loader.isForever
 local GetSubZoneText = GetSubZoneText
 local IsEncounterInProgress = BigWigsLoader.IsEncounterInProgress
 local SetCVar = C_CVar.SetCVar
@@ -109,7 +111,7 @@ plugin.pluginOptions = {
 					desc = L.blockMoviesDesc,
 					width = "full",
 					order = 2,
-					hidden = isVanilla,
+					hidden = isVanilla or isTBC,
 				},
 				blockGarrison = {
 					type = "toggle",
@@ -117,7 +119,7 @@ plugin.pluginOptions = {
 					desc = L.blockFollowerMissionDesc,
 					width = "full",
 					order = 3,
-					hidden = isClassic,
+					hidden = isClassic or isForever,
 				},
 				blockGuildChallenge = {
 					type = "toggle",
@@ -125,7 +127,7 @@ plugin.pluginOptions = {
 					desc = L.blockGuildChallengeDesc,
 					width = "full",
 					order = 4,
-					hidden = isClassic,
+					hidden = isClassic or isForever,
 				},
 				blockSpellErrors = {
 					type = "toggle",
@@ -176,7 +178,7 @@ plugin.pluginOptions = {
 					end,
 					width = 2,
 					order = 9,
-					hidden = isClassic,
+					hidden = isClassic or isForever,
 				},
 				blockZoneInToasts = {
 					type = "toggle",
@@ -447,7 +449,9 @@ do
 					bbFrame.RegisterEvent(registeredToasts[i], "DISPLAY_EVENT_TOASTS")
 				end
 			end
-			self:RegisterEvent("TALKINGHEAD_REQUESTED")
+			if not isForever then
+				self:RegisterEvent("TALKINGHEAD_REQUESTED")
+			end
 		end
 
 		MuteSoundFile(567394) -- SOUNDKIT.RAID_BOSS_EMOTE_WARNING
@@ -794,13 +798,13 @@ do
 					KillEvent(RaidWarningFrame, "RAID_BOSS_WHISPER")
 				end
 			end
-			if self.db.profile.blockGarrison and not isClassic then
+			if self.db.profile.blockGarrison and not (isClassic or isForever) then
 				KillEvent(AlertFrame, "GARRISON_MISSION_FINISHED")
 				KillEvent(AlertFrame, "GARRISON_BUILDING_ACTIVATABLE")
 				KillEvent(AlertFrame, "GARRISON_FOLLOWER_ADDED")
 				KillEvent(AlertFrame, "GARRISON_RANDOM_MISSION_ADDED")
 			end
-			if self.db.profile.blockGuildChallenge and not isClassic then
+			if self.db.profile.blockGuildChallenge and not (isClassic or isForever) then
 				KillEvent(AlertFrame, "GUILD_CHALLENGE_COMPLETED")
 			end
 			if self.db.profile.blockSpellErrors then
