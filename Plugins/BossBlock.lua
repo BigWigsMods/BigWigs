@@ -1117,7 +1117,7 @@ do
 		-- Midnight/Altar of Fangs [Dungeon]
 		[345108]=true,[344783]=true,[345112]=true,[344971]=true,[344862]=true,[344910]=true,[344908]=true,[344609]=true,[344660]=true,
 		[344969]=true,[344967]=true,[344998]=true,[345031]=true,[344973]=true,[344615]=true,[344896]=true,[345003]=true,[344719]=true,
-		[344808]=true,[345109]=true,[345100]=true,[344840]=true,
+		[344808]=true,[345109]=true,[345100]=true,[344840]=true,[344970]=true,
 		-- Midnight/The Voidspire [Raid]
 		[316005]=true,[316006]=true,[316007]=true,[316008]=true,[316009]=true,[316010]=true,[303419]=true,[303420]=true,[303421]=true,
 		-- Midnight/The Dreamrift [Raid]
