@@ -31,8 +31,6 @@ mod:UseCustomTimers(true)
 --
 
 local pullTime = 0
-local activeBars = {}
-local backupBars = {}
 local durationEventCount = {}
 local timelineEventCount = 0
 local storedTimelineEvents = {}
@@ -141,20 +139,16 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	backupBars = {}
 	if self:Mythic() then
-		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "TimersMythic")
+		self:SetTimelineHandler("TimersMythic")
 	elseif self:Heroic() then
-		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "TimersHeroic")
+		self:SetTimelineHandler("TimersHeroic")
 	else
-		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "TimerOther")
+		self:SetTimelineHandler("TimerOther")
 	end
-	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
-	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
 end
 
 function mod:OnEncounterStart()
-	activeBars = {}
 	durationEventCount = {}
 	timelineEventCount = 0
 	storedTimelineEvents = {}
@@ -174,74 +168,96 @@ function mod:OnEncounterStart()
 	pullTime = GetTime()
 end
 
-function mod:OnBossDisable()
-	for eventID in next, backupBars do
-		self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
-		backupBars[eventID] = nil
-	end
-end
-
 --------------------------------------------------------------------------------
 -- Timeline Event Handlers
 --
 
-function mod:StartBackupBar(eventInfo, delayedStart)
-	if not eventInfo then return end -- if we started our own bar this will be nil
+-- Several abilities can only be told apart once an earlier one finishes, so an event we
+-- can't identify yet is stored. Finishing a bar claims the oldest stored event, and
+-- anything still stored half a second later was never claimed, so it falls back to a
+-- backup bar the way an unrecognised event would.
+local ClaimNextStoredEvent
 
-	self:ErrorForTimelineEvent(eventInfo)
-	backupBars[eventInfo.id] = true
-	local timer = eventInfo.duration
-	if delayedStart then
-		timer = timer - (GetTime() - eventInfo.timestamp)
+-- Chains claiming onto whatever the ability already does when it finishes.
+local function TrackStored(barInfo)
+	if not barInfo then return barInfo end
+	local onFinished = barInfo.onFinished
+	barInfo.onFinished = function(info, eventId, module)
+		if onFinished then
+			onFinished(info, eventId, module)
+		end
+		ClaimNextStoredEvent(info)
 	end
-	self:SendMessage("BigWigs_StartBar", nil, nil, ("[B] %s"):format(eventInfo.spellName), timer, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
+	return barInfo
+end
 
-	local state = C_EncounterTimeline.GetEventState(eventInfo.id)
-	if state == 1 then -- Enum.EncounterTimelineEventState.Paused = 1
-		self:SendMessage("BigWigs_PauseBar", nil, nil, eventInfo.id)
+function ClaimNextStoredEvent(barInfo)
+	-- skipTracking is set per bar, a missing `this` means the ability never claims at all
+	if barInfo.skipTracking or not barInfo.this then return end
+	local storedEventInfo = table.remove(storedTimelineEvents, 1)
+	if storedEventInfo then
+		mod:HandleTimelineEvent(storedEventInfo, TrackStored(barInfo.this(mod, storedEventInfo, barInfo.empowered)))
 	end
 end
 
-function mod:TimersMythic(_, eventInfo)
-	if eventInfo.source ~= 0 then return end
+-- Returns false so the prototype leaves the event alone instead of reporting it as one we
+-- failed to recognise, because it may still be claimed.
+function mod:StoreEvent(eventInfo)
+	eventInfo.timestamp = GetTime()
+	table.insert(storedTimelineEvents, eventInfo)
+	if scheduleBackups then
+		self:CancelTimer(scheduleBackups)
+	end
+	scheduleBackups = self:ScheduleTimer(function()
+		scheduleBackups = nil
+		for _, event in next, storedTimelineEvents do
+			if not self:IsWiping() then
+				event.duration = event.duration - (GetTime() - event.timestamp)
+				self:HandleTimelineEvent(event, nil) -- Never claimed, so a backup bar and an error
+			end
+		end
+		table.wipe(storedTimelineEvents)
+	end, 0.5)
+	return false
+end
+
+function mod:TimersMythic(eventInfo)
 	timelineEventCount = timelineEventCount + 1
-	local duration = eventInfo.duration
-	local durationRounded = self:RoundNumber(duration, 2)
-	eventInfo.durationRounded = durationRounded
+	local durationRounded = self:RoundNumber(eventInfo.duration, 2)
 	local barInfo = nil
 	if timelineEventCount <= 19 then -- Pull Bars
 		if durationRounded == 29 then -- Divine Toll
-			barInfo = self:DivineToll(eventInfo)
+			barInfo = self:DivineToll()
 			barInfo.skipTracking = true
 		elseif durationRounded == 26 then -- Aura of Devotion
-			barInfo = self:AuraOfDevotion(eventInfo)
+			barInfo = self:AuraOfDevotion()
 		elseif durationRounded == 66 or durationRounded == 12 then -- Avenger's Shield
-			barInfo = self:AvengersShield(eventInfo, durationRounded == 66)
+			barInfo = self:AvengersShield(nil, durationRounded == 66)
 		elseif durationRounded == 4 or durationRounded == 57 or durationRounded == 110 then -- Zealous Spirit
-			barInfo = self:ZealousSpirit(eventInfo)
+			barInfo = self:ZealousSpirit(durationRounded)
 			barInfo.skipTracking = true
 		elseif durationRounded == 62 then -- Judgement (Red)
-			barInfo = self:JudgementRed(eventInfo)
+			barInfo = self:JudgementRed()
 		elseif durationRounded == 58 then -- Judgement (Blue)
-			barInfo = self:JudgementBlue(eventInfo)
+			barInfo = self:JudgementBlue()
 		elseif durationRounded == 132 then -- Aura of Peace
 			barInfo = self:AuraOfPeace(eventInfo)
 		elseif durationRounded == 30 then -- Sacred Shield
-			barInfo = self:SacredShield(eventInfo)
+			barInfo = self:SacredShield()
 		elseif durationRounded == 135 then -- Tyr's Wrath
-			barInfo = self:TyrsWrath(eventInfo)
+			barInfo = self:TyrsWrath()
 			barInfo.skipTracking = true
 		elseif durationRounded == 7 or durationRounded == 59 then -- Searing Radiance
-			barInfo = self:SearingRadiance(eventInfo, durationRounded == 7)
+			barInfo = self:SearingRadiance(nil, durationRounded == 7)
 		elseif durationRounded == 20 then -- Sacred Toll
-			barInfo = self:SacredToll(eventInfo)
+			barInfo = self:SacredToll()
 		elseif durationRounded == 15 or durationRounded == 123 then -- Divine Storm
-			barInfo = self:DivineStorm(eventInfo, durationRounded == 123)
+			barInfo = self:DivineStorm(nil, durationRounded == 123)
 		elseif durationRounded == 82 then -- Execution Sentence
-			barInfo = self:ExecutionSentence(eventInfo)
+			barInfo = self:ExecutionSentence()
 			barInfo.skipTracking = true
 		elseif durationRounded == 79 then -- Aura of Wrath
-			barInfo = self:AuraOfWrath(eventInfo)
+			barInfo = self:AuraOfWrath()
 			barInfo.skipTracking = true
 		end
 	else
@@ -249,234 +265,123 @@ function mod:TimersMythic(_, eventInfo)
 		if combatTime > 179 and combatTime < 181 then
 			-- Empowered Searing Radiance sometimes happens here based on spell queueing.
 			-- If it is then the DurationRounded can possibly be 159.00. Capture it here to avoid it messing with the modulo rotation below.
-			barInfo = self:SearingRadiance(eventInfo, true)
+			barInfo = self:SearingRadiance(nil, true)
 		elseif durationRounded == 159 then -- Some of these get delayed, handle it ourselves.
 			-- Zaelous spirit sometimes has a late ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED,
 			-- Because of this we cant rely on this event to pass along the next cast.
 			-- By capturing all 159.00 durations we avoid any bars starting with the wrong spell.
 			durationEventCount[durationRounded] = (durationEventCount[durationRounded] or 0) + 1
 			if durationEventCount[durationRounded] % 8 == 1 or durationEventCount[durationRounded] % 8 == 4 or durationEventCount[durationRounded] % 8 == 7 then
-				barInfo = self:ZealousSpirit(eventInfo)
+				barInfo = self:ZealousSpirit(durationRounded)
 			elseif durationEventCount[durationRounded] % 8 == 2 then
-				barInfo = self:AuraOfDevotion(eventInfo)
+				barInfo = self:AuraOfDevotion()
 			elseif durationEventCount[durationRounded] % 8 == 3 then
-				barInfo = self:DivineToll(eventInfo)
+				barInfo = self:DivineToll()
 			elseif durationEventCount[durationRounded] % 8 == 5 then
-				barInfo = self:AuraOfWrath(eventInfo)
+				barInfo = self:AuraOfWrath()
 			elseif durationEventCount[durationRounded] % 8 == 6 then
-				barInfo = self:ExecutionSentence(eventInfo)
+				barInfo = self:ExecutionSentence()
 			elseif durationEventCount[durationRounded] % 8 == 0 then
-				barInfo = self:TyrsWrath(eventInfo)
+				barInfo = self:TyrsWrath()
 			end
 			barInfo.skipTracking = true
 		else
 			if combatTime > 107 and combatTime < 114 then
 				-- At this point these 3 abilities can happen with a delayed ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED
 				if durationRounded == 18 then
-					barInfo = self:SacredToll(eventInfo)
+					barInfo = self:SacredToll()
 				elseif durationRounded == 36 then
-					barInfo = self:JudgementBlue(eventInfo)
+					barInfo = self:JudgementBlue()
 				elseif durationRounded > 50 then
-					barInfo = self:SearingRadiance(eventInfo, true)
+					barInfo = self:SearingRadiance(nil, true)
 				end
 			else
-				eventInfo.timestamp = GetTime()
-				table.insert(storedTimelineEvents, eventInfo)
-				if scheduleBackups then
-					self:CancelTimer(scheduleBackups)
-					scheduleBackups = nil
-				end
-				scheduleBackups = self:ScheduleTimer(function ()
-					for _, event in next, storedTimelineEvents do
-						if self:ShouldShowBars() and not self:IsWiping() then
-							self:StartBackupBar(event, true)
-						end
-					end
-					table.wipe(storedTimelineEvents)
-				end, 0.5)
-				return
+				return self:StoreEvent(eventInfo)
 			end
 		end
 	end
-	if barInfo then
-		activeBars[eventInfo.id] = barInfo
-	elseif self:ShouldShowBars() and not self:IsWiping() then
-		self:StartBackupBar(eventInfo)
-	end
+	return TrackStored(barInfo)
 end
 
-function mod:TimersHeroic(_, eventInfo)
-	if eventInfo.source ~= 0 then return end
-	local duration = eventInfo.duration
-	local durationRounded = self:RoundNumber(duration, 0)
-	eventInfo.durationRounded = durationRounded
+function mod:TimersHeroic(eventInfo)
+	local durationRounded = self:RoundNumber(eventInfo.duration, 0)
 	timelineEventCount = timelineEventCount + 1
 	local barInfo = nil
 	if timelineEventCount <= 12 then -- Pull Bars
 		if durationRounded == 10 then -- Sacred Toll
-			barInfo = self:SacredToll(eventInfo)
+			barInfo = self:SacredToll()
 		elseif durationRounded == 15 then -- Avenger's Shield
-			barInfo = self:AvengersShield(eventInfo)
+			barInfo = self:AvengersShield()
 		elseif durationRounded == 17 then -- Sacred Shield
-			barInfo = self:SacredShield(eventInfo)
+			barInfo = self:SacredShield()
 		elseif durationRounded == 18 then -- Divine Storm
-			barInfo = self:DivineStorm(eventInfo)
+			barInfo = self:DivineStorm()
 		elseif durationRounded == 26 then -- Judgement Blue
-			barInfo = self:JudgementBlue(eventInfo)
+			barInfo = self:JudgementBlue()
 		elseif durationRounded == 30 and not self:IsWiping() then -- Judgement Red
-			barInfo = self:JudgementRed(eventInfo)
+			barInfo = self:JudgementRed()
 		elseif durationRounded == 35 then -- Aura of Devotion
-			barInfo = self:AuraOfDevotion(eventInfo)
+			barInfo = self:AuraOfDevotion()
 		elseif durationRounded == 38 then -- Divine Toll
-			barInfo = self:DivineToll(eventInfo)
+			barInfo = self:DivineToll()
 		elseif durationRounded == 47 then -- Searing Radiance
-			barInfo = self:SearingRadiance(eventInfo)
+			barInfo = self:SearingRadiance()
 		elseif durationRounded == 83 then -- Aura of Wrath
-			barInfo = self:AuraOfWrath(eventInfo)
+			barInfo = self:AuraOfWrath()
 		elseif durationRounded == 86 then -- Execution Sentence
-			barInfo = self:ExecutionSentence(eventInfo)
+			barInfo = self:ExecutionSentence()
 		elseif durationRounded == 131 then -- Aura of Peace
 			barInfo = self:AuraOfPeace(eventInfo)
 		end
 	else
 		durationEventCount[durationRounded] = (durationEventCount[durationRounded] or 0) + 1
 		if durationRounded == 16 and durationEventCount[durationRounded] == 1 then -- this is a judgement which loses track. we re-force it here.
-			barInfo = self:JudgementBlue(eventInfo)
+			barInfo = self:JudgementBlue()
 		else
-			eventInfo.timestamp = GetTime()
-			table.insert(storedTimelineEvents, eventInfo)
-			if scheduleBackups then
-				self:CancelTimer(scheduleBackups)
-				scheduleBackups = nil
-			end
-			scheduleBackups = self:ScheduleTimer(function ()
-				for _, event in next, storedTimelineEvents do
-					if self:ShouldShowBars() and not self:IsWiping() then
-						self:StartBackupBar(event, true)
-					end
-				end
-				table.wipe(storedTimelineEvents)
-			end, 0.5)
-			return
+			return self:StoreEvent(eventInfo)
 		end
 	end
-	if barInfo then
-		activeBars[eventInfo.id] = barInfo
-	elseif self:ShouldShowBars() and not self:IsWiping() then
-		self:StartBackupBar(eventInfo)
-	end
+	return TrackStored(barInfo)
 end
 
-function mod:TimerOther(_, eventInfo)
-	if eventInfo.source ~= 0 then return end
-	local duration = eventInfo.duration
-	local durationRounded = self:RoundNumber(duration, 0)
-	eventInfo.durationRounded = durationRounded
+function mod:TimerOther(eventInfo)
+	local durationRounded = self:RoundNumber(eventInfo.duration, 0)
 	timelineEventCount = timelineEventCount + 1
 	local barInfo = nil
 	if timelineEventCount <= 10 then -- Pull Bars
 		if durationRounded == 10 then -- Avenger's Shield
-			barInfo = self:AvengersShield(eventInfo)
+			barInfo = self:AvengersShield()
 		elseif durationRounded == 17 then -- Sacred Shield
-			barInfo = self:SacredShield(eventInfo)
+			barInfo = self:SacredShield()
 		elseif durationRounded == 23 then -- Sacred Toll
-			barInfo = self:SacredToll(eventInfo)
+			barInfo = self:SacredToll()
 		elseif durationRounded == 26 then -- Judgement Blue
-			barInfo = self:JudgementBlue(eventInfo)
+			barInfo = self:JudgementBlue()
 		elseif durationRounded == 30 and not self:IsWiping() then -- Judgement Red
-			barInfo = self:JudgementRed(eventInfo)
+			barInfo = self:JudgementRed()
 		elseif durationRounded == 35 then -- Aura of Devotion
-			barInfo = self:AuraOfDevotion(eventInfo)
+			barInfo = self:AuraOfDevotion()
 		elseif durationRounded == 38 then -- Divine Toll
-			barInfo = self:DivineToll(eventInfo)
+			barInfo = self:DivineToll()
 		elseif durationRounded == 83 then -- Aura of Wrath
-			barInfo = self:AuraOfWrath(eventInfo)
+			barInfo = self:AuraOfWrath()
 		elseif durationRounded == 86 then -- Execution Sentence
-			barInfo = self:ExecutionSentence(eventInfo)
+			barInfo = self:ExecutionSentence()
 		elseif durationRounded == 131 then -- Aura of Peace
 			barInfo = self:AuraOfPeace(eventInfo)
 		end
 	else
-		eventInfo.timestamp = GetTime()
-		table.insert(storedTimelineEvents, eventInfo)
-		if scheduleBackups then
-			self:CancelTimer(scheduleBackups)
-			scheduleBackups = nil
-		end
-		scheduleBackups = self:ScheduleTimer(function ()
-			for _, event in next, storedTimelineEvents do
-				if self:ShouldShowBars() and not self:IsWiping() then
-					self:StartBackupBar(event, true)
-				end
-			end
-			table.wipe(storedTimelineEvents)
-		end, 0.5)
-		return
+		return self:StoreEvent(eventInfo)
 	end
-	if barInfo then
-		activeBars[eventInfo.id] = barInfo
-	elseif self:ShouldShowBars() and not self:IsWiping() then
-		self:StartBackupBar(eventInfo)
-	end
-end
-
-function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
-	local barInfo = activeBars[eventID]
-	if barInfo then
-		local newState = C_EncounterTimeline.GetEventState(eventID)
-		if newState == 2 or newState == 3 then -- Finished or Canceled
-			self:StopBar(barInfo.msg)
-			if newState == 2 then -- Finished
-				if barInfo.onFinished then
-					barInfo.onFinished()
-				end
-				if not barInfo.skipTracking then -- These are started with the intent to not re-start from their Finished states.
-					local storedEventInfo = table.remove(storedTimelineEvents, 1)
-					if storedEventInfo then
-						activeBars[storedEventInfo.id] = barInfo.this(self, storedEventInfo, barInfo.empowered)
-					end
-				end
-			elseif newState == 3 then -- Canceled
-				if barInfo.onCanceled then
-					barInfo.onCanceled()
-				end
-			end
-			activeBars[eventID] = nil
-		end
-	elseif backupBars[eventID] then
-		local newState = C_EncounterTimeline.GetEventState(eventID)
-		if newState == 0 then -- Enum.EncounterTimelineEventState.Active
-			self:SendMessage("BigWigs_ResumeBar", nil, nil, eventID)
-		elseif newState == 1 then -- Enum.EncounterTimelineEventState.Paused
-			self:SendMessage("BigWigs_PauseBar", nil, nil, eventID)
-		elseif newState == 3 then -- Enum.EncounterTimelineEventState.Canceled
-			self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
-		elseif newState == 2 then -- Enum.EncounterTimelineEventState.Finished
-			self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
-		end
-	end
-end
-
-function mod:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
-	local barInfo = activeBars[eventID]
-	if barInfo then
-		self:StopBar(barInfo.msg)
-		activeBars[eventID] = nil
-	elseif backupBars[eventID] then
-		backupBars[eventID] = nil
-		self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
-	end
+	return TrackStored(barInfo)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:JudgementBlue(eventInfo)
+function mod:JudgementBlue()
 	local barText = CL.count:format(self:GetRename(1251857), judgementBlueCount)
-	if self:ShouldShowBars() then
-		self:CDBar(1251857, eventInfo.duration, barText, nil, eventInfo.id)
-	end
 	judgementBlueCount = judgementBlueCount + 1
 	return {
 		msg = barText,
@@ -486,15 +391,13 @@ function mod:JudgementBlue(eventInfo)
 				self:PlaySound(1251857, "info")
 			end
 		end,
+		key = 1251857,
 		this = self.JudgementBlue
 	}
 end
 
-function mod:JudgementRed(eventInfo)
+function mod:JudgementRed()
 	local barText = CL.count:format(self:GetRename(1246736), judgementRedCount)
-	if self:ShouldShowBars() then
-		self:CDBar(1246736, eventInfo.duration, barText, nil, eventInfo.id)
-	end
 	judgementRedCount = judgementRedCount + 1
 	return {
 		msg = barText,
@@ -504,15 +407,13 @@ function mod:JudgementRed(eventInfo)
 				self:PlaySound(1246736, "info")
 			end
 		end,
+		key = 1246736,
 		this = self.JudgementRed
 	}
 end
 
-function mod:SacredToll(eventInfo)
+function mod:SacredToll()
 	local barText = CL.count:format(self:GetRename(1246749), sacredTollCount)
-	if self:ShouldShowBars() then
-		self:CDBar(1246749, eventInfo.duration, barText, nil, eventInfo.id)
-	end
 	sacredTollCount = sacredTollCount + 1
 	return {
 		msg = barText,
@@ -522,21 +423,15 @@ function mod:SacredToll(eventInfo)
 				self:PlaySound(1246749, "warning") -- Deadly in Mythic
 			end
 		end,
+		key = 1246749,
 		this = self.SacredToll
 	}
 end
 
-function mod:AvengersShield(eventInfo, empowered)
+function mod:AvengersShield(_, empowered)
 	local barText = self:GetRename(1246485)
 	if empowered then
 		barText = self:GetRename("empowered_avengers_shield")
-	end
-	if self:ShouldShowBars() then
-		if empowered then
-			self:CDBar("empowered_avengers_shield", eventInfo.duration, barText, 1246485, eventInfo.id)
-		else
-			self:CDBar(1246485, eventInfo.duration, barText, 1246485, eventInfo.id)
-		end
 	end
 	return {
 		msg = barText,
@@ -550,22 +445,17 @@ function mod:AvengersShield(eventInfo, empowered)
 				-- Sound from PA's
 			end
 		end,
+		key = empowered and "empowered_avengers_shield" or 1246485,
+		icon = 1246485,
 		this = self.AvengersShield,
 		empowered = empowered
 	}
 end
 
-function mod:DivineStorm(eventInfo, empowered)
+function mod:DivineStorm(_, empowered)
 	local barText = self:GetRename(1246765)
 	if empowered then
 		barText = self:GetRename("empowered_divine_storm")
-	end
-	if self:ShouldShowBars() then
-		if empowered then
-			self:CDBar("empowered_divine_storm", eventInfo.duration, barText, 1246765, eventInfo.id)
-		else
-			self:CDBar(1246765, eventInfo.duration, barText, 1246765, eventInfo.id)
-		end
 	end
 	return {
 		msg = barText,
@@ -575,22 +465,17 @@ function mod:DivineStorm(eventInfo, empowered)
 				self:PlaySound("empowered_divine_storm", "alarm")
 			end
 		end,
+		key = empowered and "empowered_divine_storm" or 1246765,
+		icon = 1246765,
 		this = self.DivineStorm,
 		empowered = empowered
 	}
 end
 
-function mod:SearingRadiance(eventInfo, empowered)
+function mod:SearingRadiance(_, empowered)
 	local barText = self:GetRename(1255738)
 	if empowered then
 		barText = self:GetRename("empowered_searing_radiance")
-	end
-	if self:ShouldShowBars() then
-		if empowered then
-			self:CDBar("empowered_searing_radiance", eventInfo.duration, barText, 1255738, eventInfo.id)
-		else
-			self:CDBar(1255738, eventInfo.duration, barText, 1255738, eventInfo.id)
-		end
 	end
 	return {
 		msg = barText,
@@ -605,16 +490,15 @@ function mod:SearingRadiance(eventInfo, empowered)
 				end
 			end
 		end,
+		key = empowered and "empowered_searing_radiance" or 1255738,
+		icon = 1255738,
 		this = self.SearingRadiance,
 		empowered = empowered
 	}
 end
 
-function mod:SacredShield(eventInfo)
+function mod:SacredShield()
 	local barText = CL.count:format(self:GetRename(1248674), sacredShieldCount)
-	if self:ShouldShowBars() then
-		self:CDBar(1248674, eventInfo.duration, barText, nil, eventInfo.id)
-	end
 	sacredShieldCount = sacredShieldCount + 1
 	return {
 		msg = barText,
@@ -624,19 +508,19 @@ function mod:SacredShield(eventInfo)
 				self:PlaySound(1248674, "alert") -- break shield
 			end
 		end,
+		key = 1248674,
 		this = self.SacredShield
 	}
 end
 
-function mod:ZealousSpirit(eventInfo)
+function mod:ZealousSpirit(durationRounded)
 	local barCount = zealousSpiritCount
+	-- Only the three pull casts are told apart by their duration, and a stored event is
+	-- never claimed until well after those, so the argument is unused on that path
 	if zealousSpiritCount <= 3 then -- it spawns 3 timers on pull (lol)
-		barCount = eventInfo.durationRounded == 4 and 1 or eventInfo.durationRounded == 57 and 2 or 3
+		barCount = durationRounded == 4 and 1 or durationRounded == 57 and 2 or 3
 	end
 	local barText = CL.count:format(self:GetRename(1276243), barCount)
-	if self:ShouldShowBars() then
-		self:CDBar(1276243, eventInfo.duration, barText, nil, eventInfo.id)
-	end
 	zealousSpiritCount = zealousSpiritCount + 1
 	return {
 		msg = barText,
@@ -646,15 +530,12 @@ function mod:ZealousSpirit(eventInfo)
 				self:PlaySound(1276243, "info") -- new empower
 			end
 		end,
-		this = self.ZealousSpirit
+		key = 1276243
 	}
 end
 
-function mod:AuraOfWrath(eventInfo)
+function mod:AuraOfWrath()
 	local barText = CL.count:format(self:GetRename(1248449), auraWrathCount)
-	if self:ShouldShowBars() then
-		self:CDBar(1248449, eventInfo.duration, barText, nil, eventInfo.id)
-	end
 	auraWrathCount = auraWrathCount + 1
 	return {
 		msg = barText,
@@ -665,16 +546,14 @@ function mod:AuraOfWrath(eventInfo)
 				self:PlaySound(1248449, "long") -- Aura enabled
 			end
 		end,
+		key = 1248449,
 		this = self.AuraOfWrath
 	}
 end
 
-function mod:ExecutionSentence(eventInfo)
+function mod:ExecutionSentence()
 	local spellName = self:Mythic() and self:GetRename(1248983, 1) or self:GetRename(1248983, 2)
 	local barText = CL.count:format(spellName, executionCount)
-	if self:ShouldShowBars() then
-		self:CDBar(1248983, eventInfo.duration, barText, nil, eventInfo.id)
-	end
 	executionCount = executionCount + 1
 	return {
 		msg = barText,
@@ -684,15 +563,13 @@ function mod:ExecutionSentence(eventInfo)
 				-- Sound on PA's
 			end
 		end,
+		key = 1248983,
 		this = self.ExecutionSentence
 	}
 end
 
-function mod:AuraOfDevotion(eventInfo)
+function mod:AuraOfDevotion()
 	local barText = CL.count:format(self:GetRename(1246162), auraDevotionCount)
-	if self:ShouldShowBars() then
-		self:CDBar(1246162, eventInfo.duration, barText, nil, eventInfo.id)
-	end
 	auraDevotionCount = auraDevotionCount + 1
 	return {
 		msg = barText,
@@ -703,16 +580,14 @@ function mod:AuraOfDevotion(eventInfo)
 				self:PlaySound(1246162, "long") -- Aura enabled
 			end
 		end,
+		key = 1246162,
 		this = self.AuraOfDevotion
 	}
 end
 
-function mod:DivineToll(eventInfo)
+function mod:DivineToll()
 	local spellName = self:Mythic() and self:GetRename(1248644, 1) or self:GetRename(1248644, 2)
 	local barText = CL.count:format(spellName, divineTollCount)
-	if self:ShouldShowBars() then
-		self:CDBar(1248644, eventInfo.duration, barText, nil, eventInfo.id)
-	end
 	divineTollCount = divineTollCount + 1
 	return {
 		msg = barText,
@@ -722,22 +597,23 @@ function mod:DivineToll(eventInfo)
 				self:PlaySound(1248644, "warning") -- Dodge shields
 			end
 		end,
+		key = 1248644,
 		this = self.DivineToll
 	}
 end
 
 function mod:AuraOfPeace(eventInfo)
 	local barText = CL.count:format(self:GetRename(1248451), auraPeaceCount)
-	if self:ShouldShowBars() then
-		self:CDBar(1248451, eventInfo.duration, barText, nil, eventInfo.id)
-	end
 	auraPeaceCount = auraPeaceCount + 1
 	local tyrsCD = eventInfo.duration + 5  -- always 5 seconds after Aura of Peace
+	local tyrsBarInfo
 	if not self:Mythic() then
-		-- Tyr's Wrath is bugged and missing an event/timers, start it here for now.
-		activeBars[-eventInfo.id] = self:TyrsWrath({
-			duration = tyrsCD,
-		})
+		-- Tyr's Wrath is bugged and missing an event/timers, start it here for now. There is no
+		-- timeline event behind this bar, so it is started and stopped by hand.
+		tyrsBarInfo = self:TyrsWrath()
+		if self:ShouldShowBars() then
+			self:CDBar(1248710, tyrsCD, tyrsBarInfo.msg)
+		end
 	end
 	return {
 		msg = barText,
@@ -748,7 +624,7 @@ function mod:AuraOfPeace(eventInfo)
 					self:CDBar(1248710, {5, tyrsCD}, CL.count:format(self:GetRename(1248710, 2), tyrsWrathCount - 1))
 				end
 				self:ScheduleTimer(function()
-					self:ENCOUNTER_TIMELINE_EVENT_REMOVED(nil, -eventInfo.id)
+					self:StopBar(tyrsBarInfo.msg)
 				end, 0.5)
 			end
 			if self:ShouldShowBars() then
@@ -760,19 +636,17 @@ function mod:AuraOfPeace(eventInfo)
 		onCanceled = function()
 			if not self:Mythic() then
 				-- if the event is canceled, remove the linked Tyr's Wrath timer
-				self:ENCOUNTER_TIMELINE_EVENT_REMOVED(nil, -eventInfo.id)
+				self:StopBar(tyrsBarInfo.msg)
 			end
 		end,
+		key = 1248451,
 		this = self.AuraOfPeace
 	}
 end
 
-function mod:TyrsWrath(eventInfo)
+function mod:TyrsWrath()
 	local spellName = self:Mythic() and self:GetRename(1248710, 1) or self:GetRename(1248710, 2)
 	local barText = CL.count:format(spellName, tyrsWrathCount)
-	if self:ShouldShowBars() then
-		self:CDBar(1248710, eventInfo.duration, barText, nil, eventInfo.id)
-	end
 	tyrsWrathCount = tyrsWrathCount + 1
 	return {
 		msg = barText,
@@ -782,6 +656,6 @@ function mod:TyrsWrath(eventInfo)
 				-- Sound on PA's
 			end
 		end,
-		this = self.TyrsWrath
+		key = 1248710
 	}
 end
