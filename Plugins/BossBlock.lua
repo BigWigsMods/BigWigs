@@ -16,7 +16,7 @@ plugin.defaultDB = {
 		false, -- Normal & Heroic Dungeons
 		true, -- Mythic & Mythic+ Dungeons
 		true, -- Raids
-		false, -- Timewalking (Dungeons & Raids)
+		true, -- Timewalking (Dungeons & Raids)
 		true, -- Scenarios
 		true, -- Delves
 	},
@@ -1127,6 +1127,8 @@ do
 		[316005]=true,[316006]=true,[316007]=true,[316008]=true,[316009]=true,[316010]=true,[303419]=true,[303420]=true,[303421]=true,
 		-- Midnight/The Dreamrift [Raid]
 		[299649]=true,[299650]=true,[299651]=true,[299652]=true,[299653]=true,[299655]=true,[299656]=true,
+		-- Midnight/The Venomous Abyss [Raid]
+		[344934]=true,[344966]=true,
 	}
 	local talkingHeadsWithConditions = {
 		-- Midnight/Murder Row [Dungeon]
