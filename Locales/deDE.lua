@@ -983,6 +983,7 @@ L.blockTalkingHeadMythics = "Mythische & Mythisch+ Dungeons"
 L.blockTalkingHeadRaids = "Schlachtzüge"
 L.blockTalkingHeadTimewalking = "Zeitwanderung (Dungeons & Schlachtzüge)"
 L.blockTalkingHeadScenarios = "Szenarien"
+L.blockTalkingHeadDelves = "Tiefen"
 
 L.redirectPopups = "Popup Banner als BigWigs Nachrichten ausgeben"
 L.redirectPopupsDesc = "Popup Banner in der Mitte des Bildschirms wie das '|cFF33FF99Platz für Schatzkammer aufgewertet|r' Banner werden stattdessen als BigWigs Nachrichten angezeigt. Diese Banner können recht groß und lange Zeit angezeigt werden, was die Möglichkeit blockiert durch diese hindurch zu Klicken."

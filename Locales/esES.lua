@@ -983,6 +983,7 @@ L.blockTalkingHeadMythics = "Mazmorras míticas y míticas+."
 L.blockTalkingHeadRaids = "Bandas"
 L.blockTalkingHeadTimewalking = "Paseo en el tiempo (mazmorras y bandas)"
 L.blockTalkingHeadScenarios = "Escenarios"
+L.blockTalkingHeadDelves = "Profundidades"
 
 L.redirectPopups = "Redirigir las ventanas emergentes a mensajes de BigWigs"
 L.redirectPopupsDesc = "Las ventanas emergentes en el centro de tu pantalla, como el cartel '|cFF33FF99ranura de la bóveda desbloqueada|r' se mostrarán en su lugar como mensajes de BigWigs. Estas ventanas pueden ser bastante grandes, durar mucho tiempo y bloquear tu capacidad de hacer clic a través de ellos."

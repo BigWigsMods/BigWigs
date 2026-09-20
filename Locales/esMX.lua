@@ -983,6 +983,7 @@ L.blockTalkingHeadMythics = "Calabozos Míticos y Míticos+"
 L.blockTalkingHeadRaids = "Bandas"
 L.blockTalkingHeadTimewalking = "Cronoviaje (Calabozos y Bandas)"
 L.blockTalkingHeadScenarios = "Escenarios"
+L.blockTalkingHeadDelves = "Abismos"
 
 L.redirectPopups = "Redirigir carteles emergentes a mensajes de BigWigs"
 L.redirectPopupsDesc = "Carteles emergentes en medio de la pantalla, tales como: '|cFF33FF99Espacio del gran bóveda desbloqueado|r' El cartel será mostrado como mensaje de BigWigs. Estos carteles pueden ser bastante grandes, durar mucho tiempo y bloquear la posibilidad de hacer clic en ellos."

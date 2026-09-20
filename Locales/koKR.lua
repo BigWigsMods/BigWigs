@@ -983,6 +983,7 @@ L.blockTalkingHeadMythics = "신화 및 쐐기돌 던전"
 L.blockTalkingHeadRaids = "레이드"
 L.blockTalkingHeadTimewalking = "시간여행 (던전 및 레이드)"
 L.blockTalkingHeadScenarios = "시나리오"
+L.blockTalkingHeadDelves = "구렁"
 
 L.redirectPopups = "BigWigs 메시지에 표시되는 팝업 배너"
 L.redirectPopupsDesc = "화면 중앙에 나타나는 '|cFF33FF99금고 슬롯이 잠금 해제됨|r' 등의 팝업 배너가 대신 BigWigs 메시지로 표시됩니다. 이러한 배너는 크기가 크고, 오래 지속되며, 클릭을 방해할 수 있습니다."

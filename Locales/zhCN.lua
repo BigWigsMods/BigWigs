@@ -983,6 +983,7 @@ L.blockTalkingHeadMythics = "史诗和史诗钥石+地下城"
 L.blockTalkingHeadRaids = "团队副本"
 L.blockTalkingHeadTimewalking = "时空漫游（地下城和团队）"
 L.blockTalkingHeadScenarios = "场景战役"
+L.blockTalkingHeadDelves = "地下堡"
 
 L.redirectPopups = "弹出式横幅在BigWigs信息中显示"
 L.redirectPopupsDesc = "屏幕中间的弹出式横幅，例如：“|cFF33FF99宏伟宝库已解锁|r”横幅将改为 BigWigs 信息显示。这些横幅可能很大，持续时间很长，而且会阻止你点击交互。"

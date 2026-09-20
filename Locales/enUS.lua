@@ -982,6 +982,7 @@ L.blockTalkingHeadMythics = "Mythic & Mythic+ Dungeons"
 L.blockTalkingHeadRaids = "Raids"
 L.blockTalkingHeadTimewalking = "Timewalking (Dungeons & Raids)"
 L.blockTalkingHeadScenarios = "Scenarios"
+L.blockTalkingHeadDelves = "Delves"
 
 L.redirectPopups = "Redirect popup banners to BigWigs messages"
 L.redirectPopupsDesc = "Popup banners in the middle of your screen such as the '|cFF33FF99vault slot unlocked|r' banner will instead be displayed as BigWigs messages. These banners can be quite large, last a long time, and block your ability to click through them."

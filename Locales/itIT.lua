@@ -983,6 +983,7 @@ L.blockTalkingHeadMythics = "Spedizioni Mitiche & Mitiche+"
 L.blockTalkingHeadRaids = "Incursioni"
 L.blockTalkingHeadTimewalking = "Viaggi nel Tempo (Spedizioni & Incursioni)"
 L.blockTalkingHeadScenarios = "Scenari"
+L.blockTalkingHeadDelves = "Scorribande"
 
 L.redirectPopups = "Reindirizza i banner popup nelle su bigwigs"
 L.redirectPopupsDesc = "I banner popup in mezzo al tuo schermo per esempio '|cFF33FF99slot della Gran Banca sbloccato|r' verrano invece visualizzati come messaggi BigWigs. Questi banner possono essere abbastanza grandi, durare molto, e bloccare la possibilità di cliccarci attraverso."

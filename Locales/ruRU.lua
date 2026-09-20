@@ -928,6 +928,7 @@ L.blockTalkingHeadMythics = "Эпохальные подземелья и клю
 L.blockTalkingHeadRaids = "Рейды"
 L.blockTalkingHeadTimewalking = "Путешествия во времени (подземелья и рейды)"
 L.blockTalkingHeadScenarios = "Сценарии"
+L.blockTalkingHeadDelves = "Вылазки"
 
 L.redirectPopups = "Перенапрявлять выскакивающие уведомления в BigWigs"
 L.redirectPopupsDesc = "Выскакивающие уведомления посреди экрана по типу '|cFF33FF99ячейки великого хранилища доступны|r' будут теперь показываться в виде сообщений BigWigs. Эти уведомления бывают слишком большими, длиться слишком долго и могут блокировать возможность клика сквозь них."

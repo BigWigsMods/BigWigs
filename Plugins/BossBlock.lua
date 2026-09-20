@@ -18,6 +18,7 @@ plugin.defaultDB = {
 		true, -- Raids
 		false, -- Timewalking (Dungeons & Raids)
 		true, -- Scenarios
+		true, -- Delves
 	},
 	blockGarrison = true,
 	blockGuildChallenge = true,
@@ -169,6 +170,7 @@ plugin.pluginOptions = {
 						L.blockTalkingHeadRaids,
 						L.blockTalkingHeadTimewalking,
 						L.blockTalkingHeadScenarios,
+						L.blockTalkingHeadDelves,
 					},
 					get = function(info, entry)
 						return plugin.db.profile[info[#info]][entry]
@@ -1103,6 +1105,9 @@ do
 		[269139]=true,[269140]=true,[269141]=true,[269142]=true,[269143]=true,[269144]=true,[269145]=true,[269146]=true,
 		[269150]=true,[269152]=true,
 
+		-- Midnight/The Ring of Glory [Delve]
+		[360627]=3077,[360633]=3077,[360650]=3077,[360653]=3077,[360722]=3077,[360656]=3077,[361072]=3077,[360660]=3077,
+		[361078]=3077,[360661]=3077,[360662]=3077,[361080]=3077,[360664]=3077,[361081]=3077,[360666]=3077,
 		-- Midnight/Den of Nalorakk [Dungeon]
 		[307905]=true,[307906]=true,[307907]=true,[307909]=true,[307910]=true,[307908]=true,[307900]=true,[307902]=true,
 		-- Midnight/Maisara Caverns [Dungeon]
@@ -1123,7 +1128,12 @@ do
 		-- Midnight/The Dreamrift [Raid]
 		[299649]=true,[299650]=true,[299651]=true,[299652]=true,[299653]=true,[299655]=true,[299656]=true,
 	}
+	local talkingHeadsWithConditions = {
+		-- Midnight/Murder Row [Dungeon]
+		[129619]=function(instanceID, soundKitId) return instanceID == 2813 and soundKitId == 0 end, -- Silent talking head with text
+	}
 
+	-- Normal & Heroic Dungeons (1-off), Mythic & Mythic+ Dungeons (2-on), Raids (3-on), Timewalking (4-off), Scenarios (5-on), Delves (6-on)
 	local lookup = {
 		[1] = 1, -- Normal Dungeon
 		[2] = 1, -- Heroic Dungeon
@@ -1136,20 +1146,31 @@ do
 		[24] = 4, -- Timewalking Dungeon
 		[152] = 5, -- Visions of N'Zoth
 		[205] = 1, -- Follower Dungeon
+		[208] = 6, -- Delves
+		[233] = 3, -- Mythic (Flexible 15-25 player raids)
+		[250] = 3, -- World (Lair bosses on retail wow)
 	}
 	local TalkingHeadLineInfo = C_TalkingHead and C_TalkingHead.GetCurrentLineInfo
 	function plugin:TALKINGHEAD_REQUESTED()
-		local _, _, diff = GetInstanceInfo()
+		local _, _, diff, _, _, _, _, instanceID = GetInstanceInfo()
 		local entry = lookup[diff]
 		if entry then
-			local _, _, soundKitId = TalkingHeadLineInfo()
-			if known[soundKitId] then
+			local displayInfoID, _, soundKitId = TalkingHeadLineInfo()
+			if known[soundKitId] == instanceID or known[soundKitId] == true then
 				if self.db.profile.blockTalkingHeads[entry] and TalkingHeadFrame and TalkingHeadFrame:IsShown() then
 					TalkingHeadFrame:Hide()
 				end
 				self:Debug("BlockedTalkingHead", soundKitId)
 			else
-				self:Debug("NewTalkingHead", TalkingHeadLineInfo())
+				local condition = talkingHeadsWithConditions[displayInfoID]
+				if condition and condition(instanceID, soundKitId) then
+					if self.db.profile.blockTalkingHeads[entry] and TalkingHeadFrame and TalkingHeadFrame:IsShown() then
+						TalkingHeadFrame:Hide()
+					end
+					self:Debug("BlockedTalkingHead+", displayInfoID, soundKitId, instanceID)
+				else
+					self:Debug("NewTalkingHead", TalkingHeadLineInfo())
+				end
 			end
 		end
 	end

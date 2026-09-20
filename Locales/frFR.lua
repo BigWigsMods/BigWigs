@@ -983,6 +983,7 @@ L.blockTalkingHeadMythics = "Donjons mythiques & mythiques+"
 L.blockTalkingHeadRaids = "Raids"
 L.blockTalkingHeadTimewalking = "Marcheurs du temps (donjons & raids)"
 L.blockTalkingHeadScenarios = "Scénarios"
+L.blockTalkingHeadDelves = "Gouffres"
 
 L.redirectPopups = "Redirige les popups vers les messages BigWigs"
 L.redirectPopupsDesc = "Les bannières popup au centre de votre écran, telles que la bannière '|cFF33FF99Emplacement de chambre forte débloqué|r' sera plutôt affichée en tant que message BigWigs. Ces popups sont parfois larges, restent affichées longtemps et vous empêchent de cliquer à travers."

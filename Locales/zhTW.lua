@@ -983,6 +983,7 @@ L.blockTalkingHeadMythics = "傳奇 & 傳奇鑰石地城"
 L.blockTalkingHeadRaids = "團隊副本"
 L.blockTalkingHeadTimewalking = "時光漫遊（地城 & 團隊副本）"
 L.blockTalkingHeadScenarios = "事件"
+L.blockTalkingHeadDelves = "探究"
 
 L.redirectPopups = "以 BigWigs 訊息取代通知橫幅"
 L.redirectPopupsDesc = "以 BigWigs 訊息取代螢幕中央的通知橫幅，例如「|cFF33FF99寶庫欄位解鎖|r」。這些通知橫幅範圍太大、顯示時間太長，會遮擋介面上的其他元素，導致你無法點擊橫幅之後的東西。"

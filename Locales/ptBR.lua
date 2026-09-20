@@ -983,6 +983,7 @@ L.blockTalkingHeadMythics = "Masmorras Míticas & Míticas+"
 L.blockTalkingHeadRaids = "Raides"
 L.blockTalkingHeadTimewalking = "Caminhada Temporal (Masmorras & Raides)"
 L.blockTalkingHeadScenarios = "Cenários"
+L.blockTalkingHeadDelves = "Imersões"
 
 L.redirectPopups = "Redirecionar banners pop-up para mensagens do BigWigs"
 L.redirectPopupsDesc = "Banners pop-up no meio da sua tela, como o banner '|cFF33FF99slot de baú desbloqueado|r', serão exibidos como mensagens do BigWigs. Esses banners podem ser bastante grandes, durar muito tempo e impedir sua capacidade de clicar através deles."
