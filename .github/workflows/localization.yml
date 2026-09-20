@@ -30,7 +30,7 @@ jobs:
           path: wiki
 
       - name: Install Lua
-        run: sudo apt install lua5.1 -y
+        run: sudo apt-get install lua5.1 -y
 
       - name: Output
         run: lua BigWigs/dump_missing_localization.lua BigWigs/BigWigs.toc && cp -av Missing-Localization.md wiki/

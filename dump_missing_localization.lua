@@ -126,7 +126,7 @@ local function parse(file, relative_path)
 		local file_name, condition = string.match(file, "^(%S+)%s*(%[?.-%]?)$")
 		local file_path = relative_path and relative_path .. file_name or file_name
 		if string.match(file_name, "%.lua$") then
-			if string.find(file_name, "[TextLocale]", nil, true) then
+			if string.find(file_name, "[TextLocale]", nil, true) and not string.find(file_name, "Encounters_Classic", nil, true) then
 				-- if the file path contains [TextLocale] then we have to figure out what to replace it with
 				-- first look for [AllowLoadTextLocale ...]
 				local allowed_locales = string.match(condition, "^%[AllowLoadTextLocale (.+)%]$")
