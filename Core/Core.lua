@@ -194,7 +194,7 @@ end
 function core:RegisterEnableMob(moduleName, ...)
 	local module = bosses[moduleName]
 	if not module then
-		core:Error(("RegisterEnableMob failed, no boss module named '%s' found."):format(tostring(moduleName)))
+		core:Error(("RegisterEnableMob failed, no boss module named %q found."):format(tostring(moduleName)))
 	else
 		for i = 1, select("#", ...) do
 			local mobId = select(i, ...)
@@ -709,6 +709,10 @@ do
 			else
 				bossesPendingInit[moduleName] = nil
 				bosses[moduleName] = module
+				if module._enableMobsTemp then
+					core:RegisterEnableMob(moduleName, unpack(module._enableMobsTemp))
+				end
+				module._enableMobsTemp = nil
 				module.SetupOptions = moduleOptions
 				module:SetupOptions()
 
