@@ -1108,6 +1108,8 @@ do
 		-- Midnight/The Ring of Glory [Delve]
 		[360627]=3077,[360633]=3077,[360650]=3077,[360653]=3077,[360722]=3077,[360656]=3077,[361072]=3077,[360660]=3077,
 		[361078]=3077,[360661]=3077,[360662]=3077,[361080]=3077,[360664]=3077,[361081]=3077,[360666]=3077,
+		-- Midnight/Gnarldor Isle [Delve]
+		[360721]=3038,
 		-- Midnight/Den of Nalorakk [Dungeon]
 		[307905]=true,[307906]=true,[307907]=true,[307909]=true,[307910]=true,[307908]=true,[307900]=true,[307902]=true,
 		-- Midnight/Maisara Caverns [Dungeon]
@@ -1128,7 +1130,7 @@ do
 		-- Midnight/The Dreamrift [Raid]
 		[299649]=true,[299650]=true,[299651]=true,[299652]=true,[299653]=true,[299655]=true,[299656]=true,
 		-- Midnight/The Venomous Abyss [Raid]
-		[344934]=true,[344966]=true,
+		[344934]=3004,[344966]=3004,
 	}
 	local talkingHeadsWithConditions = {
 		-- Midnight/Murder Row [Dungeon]
