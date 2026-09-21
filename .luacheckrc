@@ -420,7 +420,6 @@ globals = {
 	"IsControlKeyDown",
 	"IsInGroup",
 	"IsInRaid",
-	"IsLoggedIn",
 	"IsMounted", -- Dragonflight/Amirdrassil/TindralSageswift.lua
 	"IsPartyLFG",
 	"LibStub",
