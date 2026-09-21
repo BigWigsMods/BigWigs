@@ -1329,11 +1329,7 @@ do
 			msg = barText,
 			key = 1286860,
 			offset = 6.5, -- 6.5s cast
-			onFinished = function()
-				self:Message(1286860, "green", barText)
-				self:PlaySound(1286860, "long")
-				self:CastBar(1286860, 20, 2)
-
+			onOffset = function()
 				-- catch early stop if hp threshold is hit
 				self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_STOP", nil, "boss1")
 
@@ -1341,6 +1337,11 @@ do
 					-- next UNIT_TARGETABLE_CHANGED/ENCOUNTER_TIMELINE_EVENT_ADDED starts p2
 					checkStage = true
 				end
+			end,
+			onFinished = function()
+				self:Message(1286860, "green", barText)
+				self:PlaySound(1286860, "long")
+				self:CastBar(1286860, 20, 2)
 			end,
 		}
 	end
