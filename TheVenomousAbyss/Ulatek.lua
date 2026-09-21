@@ -464,7 +464,7 @@ function mod:MythicTimeline(_, eventInfo)
 			barInfo = self:CausticWaves()
 			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
 		elseif rounded == 51 or rounded == 61 then
-			barInfo = self:CirclingPrey(duration)
+			barInfo = self:CirclingPrey()
 			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
 		elseif rounded == 67 or rounded == 53 then
 			barInfo = self:SubmergeP3()
@@ -472,7 +472,7 @@ function mod:MythicTimeline(_, eventInfo)
 
 		elseif rounded == 60 then
 			if count == 2 then
-				barInfo = self:CirclingPrey(duration)
+				barInfo = self:CirclingPrey()
 				barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
 			elseif count == 3 then
 				barInfo = self:SubmergeP3()
@@ -572,7 +572,7 @@ function mod:HeroicTimeline(_, eventInfo)
 			barInfo = self:CausticWaves()
 			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
 		elseif rounded == 51 or rounded == 61 or rounded == 52 then
-			barInfo = self:CirclingPrey(duration)
+			barInfo = self:CirclingPrey()
 			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
 		elseif rounded == 67 or rounded == 53 then
 			barInfo = self:SubmergeP3()
@@ -580,7 +580,7 @@ function mod:HeroicTimeline(_, eventInfo)
 
 		elseif rounded == 60 then
 			if count == 2 then
-				barInfo = self:CirclingPrey(duration)
+				barInfo = self:CirclingPrey()
 				barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
 			elseif count == 3 then
 				barInfo = self:CallOfTheSerpent()
@@ -679,10 +679,12 @@ function mod:EasyTimeline(_, eventInfo)
 			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
 		elseif rounded == 5 or rounded == 63 then
 			barInfo = self:CallOfTheSerpent()
+		elseif rounded == 47 then
+			barInfo = self:CirclingPrey()
 
 		elseif rounded == 50 then
 			if count == 2 then
-				barInfo = self:CirclingPrey(duration)
+				barInfo = self:CirclingPrey()
 			elseif count == 3 then
 				barInfo = self:CausticWaves()
 			end
@@ -697,7 +699,7 @@ function mod:EasyTimeline(_, eventInfo)
 			end
 		elseif rounded == 56 then
 			if count == 1 then
-				barInfo = self:CirclingPrey(duration)
+				barInfo = self:CirclingPrey()
 			elseif count == 2 then
 				barInfo = self:SubmergeP3()
 			end
@@ -713,7 +715,7 @@ function mod:EasyTimeline(_, eventInfo)
 			end
 		elseif rounded == 66 then
 			if count == 1 then
-				barInfo = self:CirclingPrey(duration)
+				barInfo = self:CirclingPrey()
 				barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
 			elseif count == 2 then
 				barInfo = self:SubmergeP3()
@@ -1484,7 +1486,7 @@ end
 
 -- Stage Three: Ula'tek's Ascension
 
-function mod:CirclingPrey(duration)
+function mod:CirclingPrey()
 	local barText = CL.count:format(self:GetRename(1301510), circlingPreyCount)
 	circlingPreyCount = circlingPreyCount + 1
 	return {
