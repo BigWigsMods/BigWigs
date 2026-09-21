@@ -841,6 +841,7 @@ do
 	local dreadmarchMessageTimer = nil
 
 	function mod:UNIT_SPELLCAST_STOP()
+		self:UnregisterUnitEvent("UNIT_SPELLCAST_STOP", "boss2")
 		-- Dreadmarch casts 3.5s after Eternal Nightfall ends, but its timeline event always
 		-- fires 17.22s after Eternal Nightfall started, however early the kick was. A late (or
 		-- no) kick pushes the cast past its own event, so the offset has to make up the gap.
@@ -888,7 +889,8 @@ do
 			msg = barText,
 			key = 1289900,
 			-- offset = 2.5, -- 2s cast + ~0.5s delay before debuffs activate
-			onFinished = function()
+			onFinished = function(this)
+				this:onCanceled()
 				self:Message(1289900, "orange", barText)
 				if not dreadmarchOnMe then
 					self:PlaySound(1289900, "alert")
