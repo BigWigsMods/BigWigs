@@ -1112,6 +1112,16 @@ function mod:UNIT_TARGETABLE_CHANGED(_, unit)
 end
 
 function mod:PhaseTwoStart(isTimelineEvent)
+	do -- Rage of the Shackled
+		self:UnregisterUnitEvent("UNIT_SPELLCAST_CHANNEL_STOP", "boss1")
+		self:StopBar(self:GetRename(1286860, 2))
+		for _, barInfo in next, activeBars do
+			if barInfo.key == 1286860 then
+				self:StopTimelineBar(barInfo)
+			end
+		end
+	end
+
 	self:UnregisterUnitEvent("UNIT_TARGETABLE_CHANGED", "boss1")
 	checkStage = false
 
