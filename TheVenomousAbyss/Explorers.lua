@@ -278,8 +278,8 @@ function mod:Timeline(_, eventInfo, events)
 			barInfo = self:ThrowJunk(duration)
 			if rounded == 20 then
 				self:FlingFish()
-			elseif rounded == 4 and throwJunkCount == 4 then
-				-- Throw Junk cast with the fish. Cancels instead of finishes (like the original event)
+			elseif (rounded == 4 and throwJunkCount == 4) or throwJunkCount > 4 then
+				-- Throw Junk cast with/after the fish cancel instead of finish
 				barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
 			end
 		elseif rounded == 30 then
