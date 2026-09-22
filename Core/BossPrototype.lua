@@ -569,6 +569,200 @@ do
 	end
 end
 
+-------------------------------------------------------------------------------
+-- Timeline events
+-- @section timeline
+--
+
+local resetTimelineData, cleanupTimelineData
+do
+	local GetEventState = C_EncounterTimeline.GetEventState
+	local sourceEncounter = 0 -- Enum.EncounterTimelineEventSource.Encounter
+	local statePaused, stateFinished, stateCanceled = 1, 2, 3 -- Enum.EncounterTimelineEventState
+	local backupBarText = "[B] %s"
+	local invalidHandler = "Module %q tried to set an invalid timeline handler. Expected a method name or function, got %s."
+	local missingMethod = "Module %q tried to set the timeline handler to the method %q, but it doesn't exist in the module."
+
+	local timelineHandlers = {} -- [module] = method name or function used to match events
+	local activeTimelineBars = {} -- [module] = {[eventId] = barInfo}
+	local backupTimelineBars = {} -- [module] = {[eventId] = true}
+
+	function resetTimelineData(module)
+		activeTimelineBars[module] = {}
+		backupTimelineBars[module] = {}
+	end
+
+	function cleanupTimelineData(module)
+		local backupBars = backupTimelineBars[module]
+		if backupBars then
+			for eventId in next, backupBars do
+				module:SendMessage("BigWigs_StopBar", nil, nil, eventId)
+			end
+		end
+		timelineHandlers[module] = nil
+		activeTimelineBars[module] = nil
+		backupTimelineBars[module] = nil
+	end
+
+	--- Set the function this module uses to match encounter timeline events to spells.
+	-- Also registers the module for the ENCOUNTER_TIMELINE_EVENT_* events.
+	-- @param func method name or function used to match events within Timeline events
+	function boss:SetTimelineHandler(func)
+		local funcType = type(func)
+		if funcType ~= "string" and funcType ~= "function" then
+			core:Error(format(invalidHandler, self.moduleName, funcType))
+			return
+		elseif funcType == "string" and not self[func] then
+			core:Error(format(missingMethod, self.moduleName, func))
+			return
+		end
+		timelineHandlers[self] = func
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "OnTimelineEventAdded")
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED", "OnTimelineEventStateChanged")
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED", "OnTimelineEventRemoved")
+	end
+
+	local function runCallback(module, barInfo, callback, eventId)
+		if callback and module:ShouldShowBars() then
+			callback(barInfo, eventId, module)
+		end
+	end
+
+	--- Stop the bar shown for a timeline event and stop tracking it.
+	-- @number eventId the timeline event id
+	-- @bool[opt] runCallbacks if true, the `onFinished` callback is called
+	function boss:StopTimelineBar(eventId, runCallbacks)
+		local bars = activeTimelineBars[self]
+		local barInfo = bars and bars[eventId]
+		if not barInfo then return end
+
+		bars[eventId] = nil
+		if barInfo.offsetTimer then
+			self:CancelTimer(barInfo.offsetTimer)
+			barInfo.offsetTimer = nil
+		end
+		if not barInfo.noStopBar then
+			self:StopBar(barInfo.msg)
+		end
+		if runCallbacks then
+			runCallback(self, barInfo, barInfo.onFinished, eventId)
+		end
+	end
+
+	local function startBackupBar(module, eventInfo)
+		local eventId = eventInfo.id
+		backupTimelineBars[module][eventId] = true
+		module:SendMessage("BigWigs_StartBar", nil, nil, format(backupBarText, eventInfo.spellName), eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventId, eventId)
+		if GetEventState(eventId) == statePaused then
+			module:SendMessage("BigWigs_PauseBar", nil, nil, eventId)
+		end
+	end
+
+	-- Called by the prototype for every event a module has a timeline handler for.
+	-- Modules only need to call this directly when they match events outside of their timeline handler.
+	-- @param eventInfo the event information table from ENCOUNTER_TIMELINE_EVENT_ADDED
+	-- @param[opt] barInfo the result of matching the event, see `:SetTimelineHandler`
+	-- @within Timeline events
+	function boss:HandleTimelineEvent(eventInfo, barInfo)
+		if not activeTimelineBars[self] then return end
+		local eventId = eventInfo.id
+
+		local handler = timelineHandlers[self]
+		self:SendMessage("BigWigs_TimelineEventInfo", self, eventInfo, barInfo)
+
+		if barInfo then
+			barInfo.eventID = eventId
+			activeTimelineBars[self][eventId] = barInfo
+
+			if not barInfo.noBar and self:ShouldShowBars() then
+				local duration = barInfo.duration or eventInfo.duration
+				local offset = barInfo.offset
+				if offset then
+					if type(duration) == "table" then
+						duration = {duration[1] + offset, duration[2] + offset}
+					else
+						duration = duration + offset
+					end
+				end
+				if barInfo.exact then
+					self:Bar(barInfo.key, duration, barInfo.msg, barInfo.icon, eventId)
+				else
+					self:CDBar(barInfo.key, duration, barInfo.msg, barInfo.icon, eventId)
+				end
+			end
+		elseif barInfo == nil and self:ShouldShowBars() then
+			self:ErrorForTimelineEvent(eventInfo)
+			startBackupBar(self, eventInfo)
+		end
+	end
+
+	function boss:OnTimelineEventAdded(_, eventInfo)
+		if eventInfo.source ~= sourceEncounter or self:IsWiping() then return end
+
+		local handler = timelineHandlers[self]
+		if not handler then return end
+
+		local barInfo
+		if type(handler) == "function" then
+			barInfo = handler(self, eventInfo)
+		else
+			barInfo = self[handler](self, eventInfo)
+		end
+
+		self:HandleTimelineEvent(eventInfo, barInfo)
+	end
+
+	function boss:OnTimelineEventStateChanged(_, eventId)
+		local bars = activeTimelineBars[self]
+		if not bars then return end
+
+		local state = GetEventState(eventId)
+		local barInfo = bars[eventId]
+		if barInfo then
+			if barInfo.ignoreState then return end
+
+			if state == stateFinished then
+				if barInfo.offset and not barInfo.offsetTimer then
+					runCallback(self, barInfo, barInfo.onOffset, eventId)
+					barInfo.offsetTimer = self:ScheduleTimer("StopTimelineBar", barInfo.offset, eventId, true)
+				else
+					self:StopTimelineBar(eventId, true)
+				end
+			elseif state == stateCanceled then
+				bars[eventId] = nil
+				if barInfo.offsetTimer then
+					self:CancelTimer(barInfo.offsetTimer)
+					barInfo.offsetTimer = nil
+				end
+				if not barInfo.noStopBar then
+					self:StopBar(barInfo.msg)
+				end
+				runCallback(self, barInfo, barInfo.onCanceled, eventId)
+			end
+		elseif backupTimelineBars[self][eventId] then
+			if state == statePaused then
+				self:SendMessage("BigWigs_PauseBar", nil, nil, eventId)
+			elseif state == stateFinished or state == stateCanceled then
+				self:SendMessage("BigWigs_StopBar", nil, nil, eventId)
+			else -- Enum.EncounterTimelineEventState.Active
+				self:SendMessage("BigWigs_ResumeBar", nil, nil, eventId)
+			end
+		end
+	end
+
+	function boss:OnTimelineEventRemoved(_, eventId)
+		local bars = activeTimelineBars[self]
+		if not bars then return end
+
+		if bars[eventId] then
+			self:StopTimelineBar(eventId)
+		elseif backupTimelineBars[self][eventId] then
+			backupTimelineBars[self][eventId] = nil
+			self:SendMessage("BigWigs_StopBar", nil, nil, eventId)
+		end
+	end
+end
+
 function boss:Initialize() core:RegisterBossModule(self.moduleName) end
 function boss:Enable(isWipe)
 	if not self:IsEnabled() then
@@ -580,6 +774,7 @@ function boss:Enable(isWipe)
 		updateData(self)
 		self.sayCountdowns = {}
 		scheduledEvents[self] = {}
+		resetTimelineData(self)
 
 		-- Update enabled modules list
 		for i = #enabledModules, 1, -1 do
@@ -635,6 +830,7 @@ function boss:Disable(isWipe)
 		-- Cancel and clean up scheduled events
 		self:CancelAllTimers()
 		scheduledEvents[self] = nil
+		cleanupTimelineData(self)
 
 		-- No enabled modules? Unregister the combat log!
 		if #enabledModules == 0 then
