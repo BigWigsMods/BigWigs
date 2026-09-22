@@ -278,7 +278,9 @@ do
 		local registeredPlugins = {}
 		local delayedAdditions = {}
 		function options:BigWigs_PluginOptionsReady(_, pluginName, pluginOptions, subPanelOptions)
-			if not registeredPlugins[pluginName] then
+			if registeredPlugins[pluginName] then
+				BigWigs:Error(("Plugin %q already has options registered."):format(tostring(pluginName)))
+			else
 				if type(pluginOptions) == "table" then
 					registeredPlugins[pluginName] = true
 					aceConfigTableMainBigWigsTab.args.general.args[pluginName] = pluginOptions
