@@ -739,6 +739,24 @@ do
 		end
 	end
 
+	function core:AddColors(moduleName, options)
+		local module = bosses[moduleName] or bossesPendingInit[moduleName]
+		if not module then
+			core:Error(("AddColors: Invalid module %q."):format(moduleName))
+			return
+		end
+		module.colorOptions = options
+	end
+
+	function core:AddSounds(moduleName, options)
+		local module = bosses[moduleName] or bossesPendingInit[moduleName]
+		if not module then
+			core:Error(("AddSounds: Invalid module %q."):format(moduleName))
+			return
+		end
+		module.soundOptions = options
+	end
+
 	function core:RegisterPlugin(moduleName)
 		local module = pluginsPendingInit[moduleName]
 		if not module then
@@ -820,24 +838,6 @@ function core:GetPlugin(moduleName, silent)
 		end
 		return moduleTbl
 	end
-end
-
-function core:AddColors(moduleName, options)
-	local module = bosses[moduleName]
-	if not module then
-		-- core:Error(("AddColors: Invalid module %q."):format(moduleName))
-		return
-	end
-	module.colorOptions = options
-end
-
-function core:AddSounds(moduleName, options)
-	local module = bosses[moduleName]
-	if not module then
-		-- core:Error(("AddSounds: Invalid module %q."):format(moduleName))
-		return
-	end
-	module.soundOptions = options
 end
 
 -------------------------------------------------------------------------------
