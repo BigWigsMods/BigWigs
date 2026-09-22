@@ -212,9 +212,9 @@ L.autotalk_generic_desc = "Seleccionar automáticamente las opciones de diálogo
 L.autotalk_notice = "Interactuando automáticamente con el NPC %s."
 
 -- Auto Player Choice
---L.autoPlayerChoice = "Automatic Player Choice"
---L.autoPlayerChoice_delve_power_desc = "Automatically select player powerups when they are dropped by creatures in the Delve."
---L.autoPlayerChoice_notice = "Automatically selecting: %s"
+L.autoPlayerChoice = "Selección automática del jugador"
+L.autoPlayerChoice_delve_power_desc = "Seleccionar automáticamente potenciadores del jugador cuando caigan como botín en las criaturas de las Profundidades."
+L.autoPlayerChoice_notice = "Selección automática: %s"
 
 -- GUI notes
 L.intermissionOnly = "Solo Intermedio" -- A note to explain that a specific ability only happens during the intermission stage of a boss fight
