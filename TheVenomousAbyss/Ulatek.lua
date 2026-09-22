@@ -465,7 +465,7 @@ function mod:MythicTimeline(_, eventInfo)
 		elseif rounded == 50 or rounded == 44 then
 			barInfo = self:CausticWaves()
 			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
-		elseif rounded == 51 or rounded == 61 then
+		elseif rounded == 51 or rounded == 61 or rounded == 52 then
 			barInfo = self:CirclingPrey()
 			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
 		elseif rounded == 67 or rounded == 53 then
