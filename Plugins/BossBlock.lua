@@ -686,7 +686,7 @@ do
 				elseif basicWarnings[tbl.eventToastID] then -- Basic warnings with no customization
 					tbl.subtitle = tbl.title
 					tbl.title = nil
-					tbl.bwDuration = 3
+					tbl.bwDuration = 5
 					printMessage(self, tbl)
 				else -- Something we don't support, pass to Blizz to process
 					local msgTable = {"eventToastID", tbl.eventToastID, "title", tbl.title}
@@ -1107,7 +1107,9 @@ do
 
 		-- Midnight/The Ring of Glory [Delve]
 		[360627]=3077,[360633]=3077,[360650]=3077,[360653]=3077,[360722]=3077,[360656]=3077,[361072]=3077,[360660]=3077,
-		[361078]=3077,[360661]=3077,[360662]=3077,[361080]=3077,[360664]=3077,[361081]=3077,[360666]=3077,
+		[361078]=3077,[360661]=3077,[360662]=3077,[361080]=3077,[360664]=3077,[361081]=3077,[360666]=3077,[360705]=3077,
+		[360706]=3077,[360707]=3077,[360708]=3077,[360709]=3077,[361057]=3077,[361058]=3077,[361059]=3077,[361060]=3077,
+		[361062]=3077,[361063]=3077,
 		-- Midnight/Gnarldor Isle [Delve]
 		[360721]=3038,
 		-- Midnight/Den of Nalorakk [Dungeon]
