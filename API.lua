@@ -534,6 +534,19 @@ do
 end
 
 do
+	local bitband = bit.band
+	function API.IsValidFrame(frameName)
+		if type(frameName) ~= "string" then return false end
+		local frame = _G[frameName]
+		if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() or -- Forbidden frames
+		(type(frame.GetInheritableForbiddenAspects) == "function" and bitband(frame:GetInheritableForbiddenAspects(1), 8) == 8) then -- Frames with forbidden aspects, Enum.ForbiddenAspect.UntrustedLayoutScriptExecution = 8
+			return false
+		end
+		return true
+	end
+end
+
+do
 	local IsKnownFile = C_UIFileAsset.IsKnownFile
 	function API.IsValidMediaPath(mediaPath)
 		if type(mediaPath) ~= "string" then
