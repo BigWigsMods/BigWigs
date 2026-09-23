@@ -742,7 +742,8 @@ do
 	function core:AddColors(moduleName, options)
 		local module = bosses[moduleName] or bossesPendingInit[moduleName]
 		if not module then
-			core:Error(("AddColors: Invalid module %q."):format(moduleName))
+			-- Can't do errors as some modules purposely don't load for alliance/horde but will still be in !Options
+			--core:Error(("AddColors: Invalid module %q."):format(moduleName))
 			return
 		end
 		module.colorOptions = options
@@ -751,7 +752,8 @@ do
 	function core:AddSounds(moduleName, options)
 		local module = bosses[moduleName] or bossesPendingInit[moduleName]
 		if not module then
-			core:Error(("AddSounds: Invalid module %q."):format(moduleName))
+			-- Can't do errors as some modules purposely don't load for alliance/horde but will still be in !Options
+			--core:Error(("AddSounds: Invalid module %q."):format(moduleName))
 			return
 		end
 		module.soundOptions = options
