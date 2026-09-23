@@ -312,7 +312,7 @@ local dungeonNamesTiny = { -- MapChallengeMode DB2
 	[161] = L.keystoneShortName_Skyreach, -- SKY
 	[556] = L.keystoneShortName_PitOfSaron, -- PIT
 
-	[249] = L.keystoneShortName_KingsRest, -- REST
+	[249] = L.keystoneShortName_KingsRest, -- KINGS
 	[250] = L.keystoneShortName_TempleOfSethraliss, -- TEMPLE
 	[399] = L.keystoneShortName_RubyLifePools, -- POOLS
 	[584] = L.keystoneShortName_TheBlindingVale, -- VALE
@@ -361,7 +361,7 @@ local dungeonNamesTrimmed = {
 	[161] = L.keystoneShortName_Skyreach_Bar, -- Skyreach
 	[556] = L.keystoneShortName_PitOfSaron_Bar, -- Pit
 
-	[249] = L.keystoneShortName_KingsRest_Bar, -- Rest
+	[249] = L.keystoneShortName_KingsRest_Bar, -- Kings
 	[250] = L.keystoneShortName_TempleOfSethraliss_Bar, -- Temple
 	[399] = L.keystoneShortName_RubyLifePools_Bar, -- Pools
 	[584] = L.keystoneShortName_TheBlindingVale_Bar, -- Vale
