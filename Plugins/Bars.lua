@@ -209,23 +209,21 @@ do
 				db.normalPosition[5] = plugin.defaultDB.normalPosition[5]
 				db.normalCopyCustomAnchorWidth = plugin.defaultDB.normalCopyCustomAnchorWidth
 				db.normalWidth = plugin.defaultDB.normalWidth
-			else
+			elseif db.normalCopyCustomAnchorWidth then
 				local frame = _G[db.normalPosition[5]]
-				if db.normalCopyCustomAnchorWidth and type(frame.GetWidth) == "function" and type(frame:GetWidth()) == "number" then
-					activeFrameNormal = frame
-					if not hookedFrameNormal[frame] then
-						hookedFrameNormal[frame] = true
-						normalAnchor.HookScript(frame, "OnSizeChanged", HookScriptNormal)
-					end
-
-					local width = frame:GetWidth()
-					if width < minBarWidth then
-						width = minBarWidth
-					elseif width > maxBarWidth then
-						width = maxBarWidth
-					end
-					db.normalWidth = width
+				activeFrameNormal = frame
+				if not hookedFrameNormal[frame] then
+					hookedFrameNormal[frame] = true
+					normalAnchor.HookScript(frame, "OnSizeChanged", HookScriptNormal)
 				end
+
+				local width = frame:GetWidth()
+				if width < minBarWidth then
+					width = minBarWidth
+				elseif width > maxBarWidth then
+					width = maxBarWidth
+				end
+				db.normalWidth = width
 			end
 		else
 			if db.normalCopyCustomAnchorWidth then
@@ -263,23 +261,21 @@ do
 				db.expPosition[5] = plugin.defaultDB.expPosition[5]
 				db.expCopyCustomAnchorWidth = plugin.defaultDB.expCopyCustomAnchorWidth
 				db.expWidth = plugin.defaultDB.expWidth
-			else
+			elseif db.expCopyCustomAnchorWidth then
 				local frame = _G[db.expPosition[5]]
-				if db.expCopyCustomAnchorWidth and type(frame.GetWidth) == "function" and type(frame:GetWidth()) == "number" then
-					activeFrameExp = frame
-					if not hookedFrameExp[frame] then
-						hookedFrameExp[frame] = true
-						emphasizeAnchor.HookScript(frame, "OnSizeChanged", HookScriptExp)
-					end
-
-					local width = frame:GetWidth()
-					if width < minBarWidth then
-						width = minBarWidth
-					elseif width > maxBarWidth then
-						width = maxBarWidth
-					end
-					db.expWidth = width
+				activeFrameExp = frame
+				if not hookedFrameExp[frame] then
+					hookedFrameExp[frame] = true
+					emphasizeAnchor.HookScript(frame, "OnSizeChanged", HookScriptExp)
 				end
+
+				local width = frame:GetWidth()
+				if width < minBarWidth then
+					width = minBarWidth
+				elseif width > maxBarWidth then
+					width = maxBarWidth
+				end
+				db.expWidth = width
 			end
 		else
 			if db.expCopyCustomAnchorWidth then
