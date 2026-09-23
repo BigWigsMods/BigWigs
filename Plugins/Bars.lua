@@ -201,9 +201,7 @@ do
 		end
 		activeFrameNormal = nil
 		if db.normalPosition[5] ~= plugin.defaultDB.normalPosition[5] then
-			local frame = _G[db.normalPosition[5]]
-			if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() or -- Forbidden frames
-			(type(frame.GetInheritableForbiddenAspects) == "function" and bit.band(frame:GetInheritableForbiddenAspects(1), 8) == 8) then -- Frames with forbidden aspects, Enum.ForbiddenAspect.UntrustedLayoutScriptExecution = 8
+			if not BigWigsAPI.IsValidFrame(db.normalPosition[5]) then
 				db.normalPosition[1] = plugin.defaultDB.normalPosition[1]
 				db.normalPosition[2] = plugin.defaultDB.normalPosition[2]
 				db.normalPosition[3] = plugin.defaultDB.normalPosition[3]
@@ -212,6 +210,7 @@ do
 				db.normalCopyCustomAnchorWidth = plugin.defaultDB.normalCopyCustomAnchorWidth
 				db.normalWidth = plugin.defaultDB.normalWidth
 			else
+				local frame = _G[db.normalPosition[5]]
 				if db.normalCopyCustomAnchorWidth and type(frame.GetWidth) == "function" and type(frame:GetWidth()) == "number" then
 					activeFrameNormal = frame
 					if not hookedFrameNormal[frame] then
@@ -256,9 +255,7 @@ do
 		end
 		activeFrameExp = nil
 		if db.expPosition[5] ~= plugin.defaultDB.expPosition[5] then
-			local frame = _G[db.expPosition[5]]
-			if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() or -- Forbidden frames
-			(type(frame.GetInheritableForbiddenAspects) == "function" and bit.band(frame:GetInheritableForbiddenAspects(1), 8) == 8) then -- Frames with forbidden aspects, Enum.ForbiddenAspect.UntrustedLayoutScriptExecution = 8
+			if not BigWigsAPI.IsValidFrame(db.expPosition[5]) then
 				db.expPosition[1] = plugin.defaultDB.expPosition[1]
 				db.expPosition[2] = plugin.defaultDB.expPosition[2]
 				db.expPosition[3] = plugin.defaultDB.expPosition[3]
@@ -267,6 +264,7 @@ do
 				db.expCopyCustomAnchorWidth = plugin.defaultDB.expCopyCustomAnchorWidth
 				db.expWidth = plugin.defaultDB.expWidth
 			else
+				local frame = _G[db.expPosition[5]]
 				if db.expCopyCustomAnchorWidth and type(frame.GetWidth) == "function" and type(frame:GetWidth()) == "number" then
 					activeFrameExp = frame
 					if not hookedFrameExp[frame] then
@@ -1001,13 +999,8 @@ do
 									end
 									updateProfile()
 								end,
-								validate = function(_, value)
-									local frame = _G[value]
-									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() or -- Forbidden frames
-									(type(frame.GetInheritableForbiddenAspects) == "function" and bit.band(frame:GetInheritableForbiddenAspects(1), 8) == 8) then -- Frames with forbidden aspects, Enum.ForbiddenAspect.UntrustedLayoutScriptExecution = 8
-										return false
-									end
-									return true
+								validate = function(_, frameName)
+									return BigWigsAPI.IsValidFrame(frameName)
 								end,
 								name = L.customAnchorPoint,
 								order = 5,
@@ -1148,13 +1141,8 @@ do
 									end
 									updateProfile()
 								end,
-								validate = function(_, value)
-									local frame = _G[value]
-									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() or -- Forbidden frames
-									(type(frame.GetInheritableForbiddenAspects) == "function" and bit.band(frame:GetInheritableForbiddenAspects(1), 8) == 8) then -- Frames with forbidden aspects, Enum.ForbiddenAspect.UntrustedLayoutScriptExecution = 8
-										return false
-									end
-									return true
+								validate = function(_, frameName)
+									return BigWigsAPI.IsValidFrame(frameName)
 								end,
 								name = L.customAnchorPoint,
 								order = 5,
