@@ -783,11 +783,12 @@ do
 				module:OnRegister()
 				module.OnRegister = nil
 			end
-			core:SendMessage("BigWigs_PluginOptionsReady", module.moduleName, module.pluginOptions, module.subPanelOptions)
 
 			if coreEnabled then
 				module:Enable() -- Support LoD plugins that load after we're enabled (e.g. zone based)
 			end
+
+			core:SendMessage("BigWigs_PluginOptionsReady", module.moduleName, module.pluginOptions, module.subPanelOptions)
 		end
 	end
 end
