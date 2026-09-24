@@ -165,16 +165,13 @@ do
 				plugin.db.profile.position[4] = y
 			end
 		end
-		if plugin.db.profile.position[5] ~= plugin.defaultDB.position[5] then
-			local frame = _G[plugin.db.profile.position[5]]
-			if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-				plugin.db.profile.position[1] = plugin.defaultDB.position[1]
-				plugin.db.profile.position[2] = plugin.defaultDB.position[2]
-				plugin.db.profile.position[3] = plugin.defaultDB.position[3]
-				plugin.db.profile.position[4] = plugin.defaultDB.position[4]
-				plugin.db.profile.position[5] = plugin.defaultDB.position[5]
-			end
-		end
+		--if plugin.db.profile.position[5] ~= plugin.defaultDB.position[5] and not BigWigsAPI.IsValidFrame(plugin.db.profile.position[5]) then
+		--	plugin.db.profile.position[1] = plugin.defaultDB.position[1]
+		--	plugin.db.profile.position[2] = plugin.defaultDB.position[2]
+		--	plugin.db.profile.position[3] = plugin.defaultDB.position[3]
+		--	plugin.db.profile.position[4] = plugin.defaultDB.position[4]
+		--	plugin.db.profile.position[5] = plugin.defaultDB.position[5]
+		--end
 
 		if not LibSharedMedia:IsValid("font", plugin.db.profile.fontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", plugin.db.profile.fontName)) then
 			plugin.db.profile.fontName = plugin.defaultDB.fontName

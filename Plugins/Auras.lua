@@ -179,15 +179,12 @@ local function ValidateAnchor(unitType, pointDB, relativeToDB, relPointDB, xOffs
 		db[unitType][yOffsetDB] = y
 	end
 
-	if relativeToDB and db[unitType][relativeToDB] ~= plugin.defaultDB[unitType][relativeToDB] then
-		local frame = _G[db[unitType][relativeToDB]]
-		if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-			db[unitType][pointDB] = plugin.defaultDB[unitType][pointDB]
-			db[unitType][relPointDB] = plugin.defaultDB[unitType][relPointDB]
-			db[unitType][xOffsetDB] = plugin.defaultDB[unitType][xOffsetDB]
-			db[unitType][yOffsetDB] = plugin.defaultDB[unitType][yOffsetDB]
-			db[unitType][relativeToDB] = plugin.defaultDB[unitType][relativeToDB]
-		end
+	if relativeToDB and db[unitType][relativeToDB] ~= plugin.defaultDB[unitType][relativeToDB] and not BigWigsAPI.IsValidFrame(db[unitType][relativeToDB]) then
+		db[unitType][pointDB] = plugin.defaultDB[unitType][pointDB]
+		db[unitType][relPointDB] = plugin.defaultDB[unitType][relPointDB]
+		db[unitType][xOffsetDB] = plugin.defaultDB[unitType][xOffsetDB]
+		db[unitType][yOffsetDB] = plugin.defaultDB[unitType][yOffsetDB]
+		db[unitType][relativeToDB] = plugin.defaultDB[unitType][relativeToDB]
 	end
 end
 
@@ -1289,12 +1286,8 @@ do
 							anchor:UpdateAnchorPosition()
 						end
 					end,
-					validate = function(_, value)
-						local frame = _G[value]
-						if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-							return false
-						end
-						return true
+					validate = function(_, frameName)
+						return BigWigsAPI.IsValidFrame(frameName)
 					end,
 					disabled = false,
 				},

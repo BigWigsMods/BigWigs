@@ -204,11 +204,8 @@ do
 				db.profile.anyCombatPosition[4] = y
 			end
 		end
-		if db.profile.anyCombatPosition[5] ~= defaults.anyCombatPosition[5] then
-			local frame = _G[db.profile.anyCombatPosition[5]]
-			if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-				db.profile.anyCombatPosition = CopyTable(defaults.anyCombatPosition)
-			end
+		if db.profile.anyCombatPosition[5] ~= defaults.anyCombatPosition[5] and not BigWigsAPI.IsValidFrame(db.profile.anyCombatPosition[5]) then
+			db.profile.anyCombatPosition = CopyTable(defaults.anyCombatPosition)
 		end
 		if db.profile.anyCombatFontSize < ProfileUtils.MinimumFontSize or db.profile.anyCombatFontSize > 200 then
 			db.profile.anyCombatFontSize = defaults.anyCombatFontSize
@@ -243,7 +240,7 @@ do
 		if not db.profile.anyCombatCustomText:find("%s", nil, true) or db.profile.anyCombatCustomText:find("%%[^s]") then
 			db.profile.anyCombatCustomText = defaults.anyCombatCustomText
 		else
-			local success, newValue = xpcall(string.format, function() end, db.profile.anyCombatCustomText, L.hide)
+			local success, newValue = pcall(string.format, db.profile.anyCombatCustomText, L.hide)
 			if not success then -- Must not produce errors
 				db.profile.anyCombatCustomText = defaults.anyCombatCustomText
 			elseif newValue:find("%s", nil, true) then -- Must not still contain %s after being formatted with text (shouldn't really happen)
@@ -278,11 +275,8 @@ do
 				db.profile.bossCombatPosition[4] = y
 			end
 		end
-		if db.profile.bossCombatPosition[5] ~= defaults.bossCombatPosition[5] then
-			local frame = _G[db.profile.bossCombatPosition[5]]
-			if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-				db.profile.bossCombatPosition = CopyTable(defaults.bossCombatPosition)
-			end
+		if db.profile.bossCombatPosition[5] ~= defaults.bossCombatPosition[5] and not BigWigsAPI.IsValidFrame(db.profile.bossCombatPosition[5]) then
+			db.profile.bossCombatPosition = CopyTable(defaults.bossCombatPosition)
 		end
 		if db.profile.bossCombatFontSize < ProfileUtils.MinimumFontSize or db.profile.bossCombatFontSize > 200 then
 			db.profile.bossCombatFontSize = defaults.bossCombatFontSize
@@ -317,7 +311,7 @@ do
 		if not db.profile.bossCombatCustomText:find("%s", nil, true) or db.profile.bossCombatCustomText:find("%%[^s]") then
 			db.profile.bossCombatCustomText = defaults.bossCombatCustomText
 		else
-			local success, newValue = xpcall(string.format, function() end, db.profile.bossCombatCustomText, L.hide)
+			local success, newValue = pcall(string.format, db.profile.bossCombatCustomText, L.hide)
 			if not success then -- Must not produce errors
 				db.profile.bossCombatCustomText = defaults.bossCombatCustomText
 			elseif newValue:find("%s", nil, true) then -- Must not still contain %s after being formatted with text (shouldn't really happen)
@@ -352,11 +346,8 @@ do
 				db.profile.bossStagesPosition[4] = y
 			end
 		end
-		if db.profile.bossStagesPosition[5] ~= defaults.bossStagesPosition[5] then
-			local frame = _G[db.profile.bossStagesPosition[5]]
-			if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-				db.profile.bossStagesPosition = CopyTable(defaults.bossStagesPosition)
-			end
+		if db.profile.bossStagesPosition[5] ~= defaults.bossStagesPosition[5] and not BigWigsAPI.IsValidFrame(db.profile.bossStagesPosition[5]) then
+			db.profile.bossStagesPosition = CopyTable(defaults.bossStagesPosition)
 		end
 		if db.profile.bossStagesFontSize < ProfileUtils.MinimumFontSize or db.profile.bossStagesFontSize > 200 then
 			db.profile.bossStagesFontSize = defaults.bossStagesFontSize
@@ -385,7 +376,7 @@ do
 		if not db.profile.bossStagesCustomText:find("%s", nil, true) or db.profile.bossStagesCustomText:find("%%[^s]") then
 			db.profile.bossStagesCustomText = defaults.bossStagesCustomText
 		else
-			local success, newValue = xpcall(string.format, function() end, db.profile.bossStagesCustomText, L.hide)
+			local success, newValue = pcall(string.format, db.profile.bossStagesCustomText, L.hide)
 			if not success then -- Must not produce errors
 				db.profile.bossStagesCustomText = defaults.bossStagesCustomText
 			elseif newValue:find("%s", nil, true) then -- Must not still contain %s after being formatted with text (shouldn't really happen)
@@ -420,11 +411,8 @@ do
 		--		db.profile.instanceTimerPosition[4] = y
 		--	end
 		--end
-		--if db.profile.instanceTimerPosition[5] ~= defaults.instanceTimerPosition[5] then
-		--	local frame = _G[db.profile.instanceTimerPosition[5]]
-		--	if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-		--		db.profile.instanceTimerPosition = CopyTable(defaults.instanceTimerPosition)
-		--	end
+		--if db.profile.instanceTimerPosition[5] ~= defaults.instanceTimerPosition[5] and not BigWigsAPI.IsValidFrame(db.profile.instanceTimerPosition[5]) then
+		--	db.profile.instanceTimerPosition = CopyTable(defaults.instanceTimerPosition)
 		--end
 		--if db.profile.instanceTimerFontSize < ProfileUtils.MinimumFontSize or db.profile.instanceTimerFontSize > 200 then
 		--	db.profile.instanceTimerFontSize = defaults.instanceTimerFontSize
@@ -2071,7 +2059,7 @@ do
 									if not value:find("%s", nil, true) or value:find("%%[^s]") then -- Must contain %s and no other format characters
 										return false
 									else
-										local success, newValue = xpcall(string.format, function() end, value, L.hide)
+										local success, newValue = pcall(string.format, value, L.hide)
 										if not success then -- Must not produce errors
 											return false
 										elseif newValue:find("%s", nil, true) then -- Must not still contain %s after being formatted with text (shouldn't really happen)
@@ -2159,12 +2147,8 @@ do
 									end
 									UpdateAnyCombatWidget()
 								end,
-								validate = function(_, value)
-									local frame = _G[value]
-									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-										return false
-									end
-									return true
+								validate = function(_, frameName)
+									return BigWigsAPI.IsValidFrame(frameName)
 								end,
 								name = L.customAnchorPoint,
 								order = 3,
@@ -2570,7 +2554,7 @@ do
 									if not value:find("%s", nil, true) or value:find("%%[^s]") then -- Must contain %s and no other format characters
 										return false
 									else
-										local success, newValue = xpcall(string.format, function() end, value, L.hide)
+										local success, newValue = pcall(string.format, value, L.hide)
 										if not success then -- Must not produce errors
 											return false
 										elseif newValue:find("%s", nil, true) then -- Must not still contain %s after being formatted with text (shouldn't really happen)
@@ -2645,12 +2629,8 @@ do
 									end
 									UpdateBossCombatWidget()
 								end,
-								validate = function(_, value)
-									local frame = _G[value]
-									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-										return false
-									end
-									return true
+								validate = function(_, frameName)
+									return BigWigsAPI.IsValidFrame(frameName)
 								end,
 								name = L.customAnchorPoint,
 								order = 3,
@@ -3026,7 +3006,7 @@ do
 									if not value:find("%s", nil, true) or value:find("%%[^s]") then -- Must contain %s and no other format characters
 										return false
 									else
-										local success, newValue = xpcall(string.format, function() end, value, L.hide)
+										local success, newValue = pcall(string.format, value, L.hide)
 										if not success then -- Must not produce errors
 											return false
 										elseif newValue:find("%s", nil, true) then -- Must not still contain %s after being formatted with text (shouldn't really happen)
@@ -3101,12 +3081,8 @@ do
 									end
 									UpdateBossStagesWidget()
 								end,
-								validate = function(_, value)
-									local frame = _G[value]
-									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-										return false
-									end
-									return true
+								validate = function(_, frameName)
+									return BigWigsAPI.IsValidFrame(frameName)
 								end,
 								name = L.customAnchorPoint,
 								order = 3,
@@ -3544,12 +3520,8 @@ do
 									end
 									UpdateInstanceTimerWidget()
 								end,
-								validate = function(_, value)
-									local frame = _G[value]
-									if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-										return false
-									end
-									return true
+								validate = function(_, frameName)
+									return BigWigsAPI.IsValidFrame(frameName)
 								end,
 								name = L.customAnchorPoint,
 								order = 3,

@@ -450,22 +450,19 @@ end
 
 do
 	local parseImportString
-	do
-		local function dummy() end
-		function parseImportString(string)
-			if type(string) ~= "string" then return end
-			local preFix, importData = string:match("^(%w+):(.+)$")
-			if preFix ~= instanceExportPrefix then return end
-			local decode_success, decodedForPrint = xpcall(C_EncodingUtil.DecodeBase64, dummy, importData)
-			if not decode_success or not decodedForPrint then return end
-			local decomp_success, decompressed = xpcall(C_EncodingUtil.DecompressString, dummy, decodedForPrint, 0) -- Enum.CompressionMethod.Deflate = 0
-			if not decomp_success or not decompressed then return end
-			local deserialize_success, data = xpcall(C_EncodingUtil.DeserializeCBOR, dummy, decompressed)
-			if not deserialize_success or not data then return end
-			if data.version ~= instanceExportPrefix then return end -- encoded version does not match expected version
-			lastImportData = data
-			return true
-		end
+	function parseImportString(string)
+		if type(string) ~= "string" then return end
+		local preFix, importData = string:match("^(%w+):(.+)$")
+		if preFix ~= instanceExportPrefix then return end
+		local decode_success, decodedForPrint = pcall(C_EncodingUtil.DecodeBase64, importData)
+		if not decode_success or not decodedForPrint then return end
+		local decomp_success, decompressed = pcall(C_EncodingUtil.DecompressString, decodedForPrint, 0) -- Enum.CompressionMethod.Deflate = 0
+		if not decomp_success or not decompressed then return end
+		local deserialize_success, data = pcall(C_EncodingUtil.DeserializeCBOR, decompressed)
+		if not deserialize_success or not data then return end
+		if data.version ~= instanceExportPrefix then return end -- encoded version does not match expected version
+		lastImportData = data
+		return true
 	end
 
 	function verifyImportString(value)

@@ -157,15 +157,12 @@ do
 				plugin.db.profile.position[4] = y
 			end
 		end
-		if plugin.db.profile.position[5] ~= defaultDB.position[5] then
-			local frame = _G[plugin.db.profile.position[5]]
-			if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-				plugin.db.profile.position[1] = defaultDB.position[1]
-				plugin.db.profile.position[2] = defaultDB.position[2]
-				plugin.db.profile.position[3] = defaultDB.position[3]
-				plugin.db.profile.position[4] = defaultDB.position[4]
-				plugin.db.profile.position[5] = defaultDB.position[5]
-			end
+		if plugin.db.profile.position[5] ~= defaultDB.position[5] and not BigWigsAPI.IsValidFrame(plugin.db.profile.position[5]) then
+			plugin.db.profile.position[1] = defaultDB.position[1]
+			plugin.db.profile.position[2] = defaultDB.position[2]
+			plugin.db.profile.position[3] = defaultDB.position[3]
+			plugin.db.profile.position[4] = defaultDB.position[4]
+			plugin.db.profile.position[5] = defaultDB.position[5]
 		end
 
 		if plugin.db.profile.textXPositionDuration < -100 or plugin.db.profile.textXPositionDuration > 100 then
@@ -218,7 +215,7 @@ do
 		if not plugin.db.profile.durationCustomText:find("%s", nil, true) or plugin.db.profile.durationCustomText:find("%%[^s]") then
 			plugin.db.profile.durationCustomText = defaultDB.durationCustomText
 		else
-			local success, newValue = xpcall(string.format, function() end, plugin.db.profile.durationCustomText, L.hide)
+			local success, newValue = pcall(string.format, plugin.db.profile.durationCustomText, L.hide)
 			if not success then -- Must not produce errors
 				plugin.db.profile.durationCustomText = defaultDB.durationCustomText
 			elseif newValue:find("%s", nil, true) then -- Must not still contain %s after being formatted with text (shouldn't really happen)
@@ -228,7 +225,7 @@ do
 		if not plugin.db.profile.chargesCustomText:find("%s", nil, true) or plugin.db.profile.chargesCustomText:find("%%[^s]") then
 			plugin.db.profile.chargesCustomText = defaultDB.chargesCustomText
 		else
-			local success, newValue = xpcall(string.format, function() end, plugin.db.profile.chargesCustomText, L.hide)
+			local success, newValue = pcall(string.format, plugin.db.profile.chargesCustomText, L.hide)
 			if not success then -- Must not produce errors
 				plugin.db.profile.chargesCustomText = defaultDB.chargesCustomText
 			elseif newValue:find("%s", nil, true) then -- Must not still contain %s after being formatted with text (shouldn't really happen)
@@ -851,7 +848,7 @@ do
 							if not value:find("%s", nil, true) or value:find("%%[^s]") then -- Must contain %s and no other format characters
 								return false
 							else
-								local success, newValue = xpcall(string.format, function() end, value, L.hide)
+								local success, newValue = pcall(string.format, value, L.hide)
 								if not success then -- Must not produce errors
 									return false
 								elseif newValue:find("%s", nil, true) then -- Must not still contain %s after being formatted with text (shouldn't really happen)
@@ -975,7 +972,7 @@ do
 							if not value:find("%s", nil, true) or value:find("%%[^s]") then -- Must contain %s and no other format characters
 								return false
 							else
-								local success, newValue = xpcall(string.format, function() end, value, L.hide)
+								local success, newValue = pcall(string.format, value, L.hide)
 								if not success then -- Must not produce errors
 									return false
 								elseif newValue:find("%s", nil, true) then -- Must not still contain %s after being formatted with text (shouldn't really happen)
@@ -1232,12 +1229,8 @@ do
 							end
 							UpdateWidgets()
 						end,
-						validate = function(_, value)
-							local frame = _G[value]
-							if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or frame:IsForbidden() then
-								return false
-							end
-							return true
+						validate = function(_, frameName)
+							return BigWigsAPI.IsValidFrame(frameName)
 						end,
 						name = L.customAnchorPoint,
 						order = 3,
