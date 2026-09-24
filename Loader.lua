@@ -14,18 +14,18 @@ local strfind = string.find
 
 local BIGWIGS_VERSION = 425
 local CONTENT_PACK_VERSIONS = {
-	["LittleWigs"] = {12, 1, 16},
+	["LittleWigs"] = {12, 1, 17},
 	["BigWigs_Classic"] = {12, 1, 2},
 	["BigWigs_BurningCrusade"] = {12, 1, 11},
-	["BigWigs_WrathOfTheLichKing"] = {12, 0, 11},
-	["BigWigs_Cataclysm"] = {12, 0, 5},
-	["BigWigs_MistsOfPandaria"] = {12, 0, 9},
-	["BigWigs_WarlordsOfDraenor"] = {12, 0, 3},
+	["BigWigs_WrathOfTheLichKing"] = {12, 1, 0},
+	["BigWigs_Cataclysm"] = {12, 1, 0},
+	["BigWigs_MistsOfPandaria"] = {12, 1, 0},
+	["BigWigs_WarlordsOfDraenor"] = {12, 1, 0},
 	["BigWigs_Legion"] = {12, 1, 0},
-	["BigWigs_BattleForAzeroth"] = {12, 0, 5},
-	["BigWigs_Shadowlands"] = {12, 0, 4},
-	["BigWigs_Dragonflight"] = {12, 0, 6},
-	["BigWigs_TheWarWithin"] = {12, 0, 4},
+	["BigWigs_BattleForAzeroth"] = {12, 1, 0},
+	["BigWigs_Shadowlands"] = {12, 1, 0},
+	["BigWigs_Dragonflight"] = {12, 1, 0},
+	["BigWigs_TheWarWithin"] = {12, 1, 0},
 }
 local BIGWIGS_RELEASE_STRING
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
