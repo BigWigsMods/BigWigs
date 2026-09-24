@@ -187,7 +187,7 @@ function mod:OnEncounterStart()
 	end
 
 	self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1")
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_STOP", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
@@ -325,13 +325,13 @@ do
 	-- P2 restarts every 80s (there are no timers up for 12s between sets).
 
 	local startTime = 0
-	function mod:UNIT_SPELLCAST_START(_, _, _, _, castID)
+	function mod:UNIT_SPELLCAST_START()
 		startTime = GetTime()
 	end
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, _, castID)
+	function mod:UNIT_SPELLCAST_STOP(_, unit)
 		if GetTime() - startTime < 2 then -- Ritual of Awakening 1.5s
 			self:UnregisterUnitEvent("UNIT_SPELLCAST_START", unit)
-			self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", unit)
+			self:UnregisterUnitEvent("UNIT_SPELLCAST_STOP", unit)
 			self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", nil, unit)
 
 			self:CancelTimer(repeaters[1285681])
