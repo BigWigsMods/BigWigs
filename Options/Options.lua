@@ -314,15 +314,6 @@ do
 					else
 						aceConfigTableMainBigWigsTab.args[subPanelOptions.key] = subPanelOptions.options
 					end
-					-- Repo users need this delay, LoD users don't
-					if pluginName == "Colors" and not colorModule then
-						colorModule = BigWigs:GetPlugin("Colors")
-						acr:RegisterOptionsTable("BigWigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
-					end
-					if pluginName == "Sounds" and not soundModule then
-						soundModule = BigWigs:GetPlugin("Sounds")
-						acr:RegisterOptionsTable("BigWigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
-					end
 				end
 			end
 		end
@@ -383,14 +374,31 @@ do
 	acd:SetDefaultSize("BigWigs", 858, 660)
 	acd:SetDefaultSize("BigWigsTools", 858, 660)
 
-	-- This should be fine for LoD users, but not repo users
 	colorModule = BigWigs:GetPlugin("Colors", true)
-	if colorModule then
+	if colorModule then -- This should be fine for LoD users
 		acr:RegisterOptionsTable("BigWigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
+	else -- Backup for repo users
+		local tbl = {}
+		loader.RegisterMessage(tbl, "BigWigs_PluginOptionsReady", function(event, pluginName)
+			if pluginName == "Colors" then
+				loader.UnregisterMessage(tbl, event)
+				colorModule = BigWigs:GetPlugin("Colors")
+				acr:RegisterOptionsTable("BigWigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
+			end
+		end)
 	end
 	soundModule = BigWigs:GetPlugin("Sounds", true)
-	if soundModule then
+	if soundModule then -- This should be fine for LoD users
 		acr:RegisterOptionsTable("BigWigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
+	else -- Backup for repo users
+		local tbl = {}
+		loader.RegisterMessage(tbl, "BigWigs_PluginOptionsReady", function(event, pluginName)
+			if pluginName == "Sounds" then
+				loader.UnregisterMessage(tbl, event)
+				soundModule = BigWigs:GetPlugin("Sounds")
+				acr:RegisterOptionsTable("BigWigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
+			end
+		end)
 	end
 end
 
