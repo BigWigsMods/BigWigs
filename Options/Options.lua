@@ -314,6 +314,15 @@ do
 					else
 						aceConfigTableMainBigWigsTab.args[subPanelOptions.key] = subPanelOptions.options
 					end
+					-- Repo users need this delay, LoD users don't
+					if pluginName == "Colors" and not colorModule then
+						colorModule = BigWigs:GetPlugin("Colors")
+						acr:RegisterOptionsTable("BigWigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
+					end
+					if pluginName == "Sounds" and not soundModule then
+						soundModule = BigWigs:GetPlugin("Sounds")
+						acr:RegisterOptionsTable("BigWigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
+					end
 				end
 			end
 		end
@@ -374,10 +383,15 @@ do
 	acd:SetDefaultSize("BigWigs", 858, 660)
 	acd:SetDefaultSize("BigWigsTools", 858, 660)
 
-	colorModule = BigWigs:GetPlugin("Colors")
-	soundModule = BigWigs:GetPlugin("Sounds")
-	acr:RegisterOptionsTable("BigWigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
-	acr:RegisterOptionsTable("BigWigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
+	-- This should be fine for LoD users, but not repo users
+	colorModule = BigWigs:GetPlugin("Colors", true)
+	if colorModule then
+		acr:RegisterOptionsTable("BigWigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
+	end
+	soundModule = BigWigs:GetPlugin("Sounds", true)
+	if soundModule then
+		acr:RegisterOptionsTable("BigWigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
+	end
 end
 
 local spellDescriptionUpdater = CreateFrame("Frame")
