@@ -31,7 +31,7 @@ local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 local LibSpec = LibStub("LibSpecialization", true)
 local loader = BigWigsLoader
 local season = loader.season
-local isClassic, isRetail, isVanilla, isTBC, isWrath, isCata, isMists = loader.isClassic, loader.isRetail, loader.isVanilla, loader.isTBC, loader.isWrath, loader.isCata, loader.isMists
+local isClassic, isRetail, isForever, isVanilla, isTBC, isWrath, isCata, isMists = loader.isClassic, loader.isRetail, loader.isForever, loader.isVanilla, loader.isTBC, loader.isWrath, loader.isCata, loader.isMists
 local C_EncounterJournal_GetSectionInfo = (isCata or isMists) and function(key)
 	return C_EncounterJournal.GetSectionInfo(key) or BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
 end or isRetail and C_EncounterJournal.GetSectionInfo or function(key)
@@ -2743,20 +2743,31 @@ do
 	local items = {
 		[5] = 8149, -- Voodoo Charm
 		[10] = 17626, -- Frostwolf Muzzle
+		[15] = (isVanilla or isForever) and 4559 or 31129, -- CHU's QUEST ITEM (Vanilla & Forever), Blackwhelp Net (TBC+)
 		[20] = 10645, -- Gnomish Death Ray
 		[25] = 13289, -- Egan's Blaster
 		[30] = 835, -- Large Rope Net
 		[35] = 18904, -- Zorbin's Ultra-Shrinker
 		[40] = 4945, -- Faintly Glowing Skull
-		[45] = 23836, -- Goblin Rocket Launcher (TBC+ only)
-		[60] = 32825, -- Soul Cannon (TBC+ only)
-		[100] = 5418, -- Weapon of Mass Destruction (test)
+		[45] = (isVanilla or isForever) and 221316 or 23836, -- Premo's Poise-Demanding Uniform (Vanilla & Forever), Goblin Rocket Launcher (TBC+)
+		[50] = isRetail and 116139 or nil, -- Haunting Memento (WoD+)
+		[55] = (isRetail or isMists) and 74637 or nil, -- Kiryn's Poison Vial (Mists+)
+		[60] = (isRetail or isTBC or isWrath or isCata or isMists) and 32825 or nil, -- Soul Cannon (TBC+)
+		--65
+		[70] = (isRetail or isWrath or isCata or isMists) and 41265 or nil, -- Eyesore Blaster (WotlK+)
+		[75] = isRetail and 185949 or nil, -- Korayn's Spear (Shadowlands+)
+		[80] = (isRetail or isTBC or isWrath or isCata or isMists) and 28131 or nil, -- Reaver Buster Launcher (TBC+)
+		--85
+		[90] = isRetail and 133925 or nil, -- Fel Lash (Legion+)
+		--95
+		[100] = (isVanilla or isTBC or isForever) and 23722 or 33119, -- Permanent R.O.I.D.S. (Vanilla, TBC, Forever), Malister's Frost Wand (WotlK+)
 	}
 	for _,v in next, items do
 		C_Item.RequestLoadItemDataByID(v)
 	end
 	--- Check whether a hostile unit is within a specific range, check is performed based on specific item ranges.
-	-- Available Ranges: 10, 20, 30, 35, 40, 100, (TBC+: 45, 60)
+	-- Available Ranges: 5, 10, 15, 20, 25, 30, 35, 40, 45, 50 (WoD+), 55 (Mists+), 60 (TBC+)
+	-- Available Ranges: 70 (WotlK+), 75 (Shadowlands+), 80 (TBC+), 90 (Legion+), 100
 	-- @string unit unit token or name
 	-- @number range the range to check
 	-- @return boolean
