@@ -332,6 +332,23 @@ do
 	end
 end
 
+do
+	local rangeCheckModuleList = {}
+	--- Mark this module as using range checking API.
+	-- @bool isUsingRangeChecks If true, this module is marked as using range checking API
+	function boss:SetUsesRangeChecks(isUsingRangeChecks)
+		if isUsingRangeChecks then
+			rangeCheckModuleList[self] = true
+		end
+	end
+
+	--- Check if this is module is marked as using range checking API.
+	-- @return boolean
+	function boss:IsUsingRangeChecks()
+		return rangeCheckModuleList[self] or false
+	end
+end
+
 --- Set this module to have custom timers and stop listening to Blizzard's timeline timers.
 -- @bool useCustomTimers When true, disables listening to Blizz timeline timers
 -- @bool noAfterBossError When true, no error will be shown to the user at the end of the boss encounter if :ErrorForTimelineEvent was triggered
@@ -671,6 +688,10 @@ function boss:Enable(isWipe)
 		local _, class = UnitClass("player")
 		if class == "WARLOCK" or class == "HUNTER" then
 			petUtilityFrame:RegisterUnitEvent("UNIT_PET", "player")
+		end
+
+		if self:IsUsingRangeChecks() then
+			self:CacheItemsForRangeChecks()
 		end
 
 		if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
@@ -2739,32 +2760,70 @@ function boss:UnitGUID(unit)
 end
 
 do
-	local IsItemInRange = loader.IsItemInRange
-	local items = {
-		[5] = 8149, -- Voodoo Charm
-		[10] = 17626, -- Frostwolf Muzzle
-		[15] = (isVanilla or isForever) and 4559 or 31129, -- CHU's QUEST ITEM (Vanilla & Forever), Blackwhelp Net (TBC+)
-		[20] = 10645, -- Gnomish Death Ray
-		[25] = 13289, -- Egan's Blaster
-		[30] = 835, -- Large Rope Net
-		[35] = 18904, -- Zorbin's Ultra-Shrinker
-		[40] = 4945, -- Faintly Glowing Skull
-		[45] = (isVanilla or isForever) and 221316 or 23836, -- Premo's Poise-Demanding Uniform (Vanilla & Forever), Goblin Rocket Launcher (TBC+)
-		[50] = isRetail and 116139 or nil, -- Haunting Memento (WoD+)
-		[55] = (isRetail or isMists) and 74637 or nil, -- Kiryn's Poison Vial (Mists+)
-		[60] = (isRetail or isTBC or isWrath or isCata or isMists) and 32825 or nil, -- Soul Cannon (TBC+)
-		--65
-		[70] = (isRetail or isWrath or isCata or isMists) and 41265 or nil, -- Eyesore Blaster (WotlK+)
-		[75] = isRetail and 185949 or nil, -- Korayn's Spear (Shadowlands+)
-		[80] = (isRetail or isTBC or isWrath or isCata or isMists) and 28131 or nil, -- Reaver Buster Launcher (TBC+)
-		--85
-		[90] = isRetail and 133925 or nil, -- Fel Lash (Legion+)
-		--95
-		[100] = (isVanilla or isTBC or isForever) and 23722 or 33119, -- Permanent R.O.I.D.S. (Vanilla, TBC, Forever), Malister's Frost Wand (WotlK+)
-	}
-	for _,v in next, items do
-		C_Item.RequestLoadItemDataByID(v)
+	local rangeToItemTable
+	do
+		local listOfAvailableRanges = {}
+		--- Get the minimum and maximum range of a unit
+		-- @string unit unit token or name
+		-- @return minRange the minimum range at which the unit is detected
+		-- @return maxRange the maximum range at which the unit is detected
+		function boss:GetUnitMinMaxRange(unit)
+			if not self:UnitGUID(unit) then
+				return 0, 0
+			end
+			local minRange = 0
+			for i = 1, #listOfAvailableRanges do
+				local range = listOfAvailableRanges[i]
+				if self:UnitWithinRange(unit, range) then
+					return minRange, range
+				end
+				minRange = range
+			end
+			return minRange, minRange
+		end
+
+		rangeToItemTable = {
+			[5] = 8149, -- Voodoo Charm
+			[10] = 17626, -- Frostwolf Muzzle
+			[15] = (isVanilla or isForever) and 4559 or 31129, -- CHU's QUEST ITEM (Vanilla & Forever), Blackwhelp Net (TBC+)
+			[20] = 10645, -- Gnomish Death Ray
+			[25] = 13289, -- Egan's Blaster
+			[30] = 835, -- Large Rope Net
+			[35] = 18904, -- Zorbin's Ultra-Shrinker
+			[40] = 4945, -- Faintly Glowing Skull
+			[45] = (isVanilla or isForever) and 221316 or 23836, -- Premo's Poise-Demanding Uniform (Vanilla & Forever), Goblin Rocket Launcher (TBC+)
+			[50] = isRetail and 116139 or nil, -- Haunting Memento (WoD+)
+			[55] = (isRetail or isMists) and 74637 or nil, -- Kiryn's Poison Vial (Mists+)
+			[60] = (isRetail or isTBC or isWrath or isCata or isMists) and 32825 or nil, -- Soul Cannon (TBC+)
+			--65
+			[70] = (isRetail or isWrath or isCata or isMists) and 41265 or nil, -- Eyesore Blaster (WotlK+)
+			[75] = isRetail and 185949 or nil, -- Korayn's Spear (Shadowlands+)
+			[80] = (isRetail or isTBC or isWrath or isCata or isMists) and 28131 or nil, -- Reaver Buster Launcher (TBC+)
+			--85
+			[90] = isRetail and 133925 or nil, -- Fel Lash (Legion+)
+			--95
+			[100] = (isVanilla or isTBC or isForever) and 23722 or 33119, -- Permanent R.O.I.D.S. (Vanilla, TBC, Forever), Malister's Frost Wand (WotlK+)
+		}
+
+		for i = 5, 100, 5 do
+			if rangeToItemTable[i] then
+				listOfAvailableRanges[#listOfAvailableRanges+1] = i
+			end
+		end
 	end
+
+	do
+		local IsItemDataCachedByID, RequestLoadItemDataByID = C_Item.IsItemDataCachedByID, C_Item.RequestLoadItemDataByID
+		function boss:CacheItemsForRangeChecks()
+			for _,itemID in next, rangeToItemTable do
+				if not IsItemDataCachedByID(itemID) then
+					RequestLoadItemDataByID(itemID)
+				end
+			end
+		end
+	end
+
+	local IsItemInRange = loader.IsItemInRange
 	--- Check whether a hostile unit is within a specific range, check is performed based on specific item ranges.
 	-- Available Ranges: 5, 10, 15, 20, 25, 30, 35, 40, 45, 50 (WoD+), 55 (Mists+), 60 (TBC+)
 	-- Available Ranges: 70 (WotlK+), 75 (Shadowlands+), 80 (TBC+), 90 (Legion+), 100
@@ -2772,9 +2831,9 @@ do
 	-- @number range the range to check
 	-- @return boolean
 	function boss:UnitWithinRange(unit, range)
-		local item = items[range]
-		if item then
-			local inRange = IsItemInRange(item, unit)
+		local itemID = rangeToItemTable[range]
+		if itemID then
+			local inRange = IsItemInRange(itemID, unit)
 			return inRange
 		end
 	end
