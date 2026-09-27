@@ -311,6 +311,7 @@ L.arrows = "箭矢" -- Plural of L.arrow
 L.ball = "球" -- A ball, like a football, basketball, etc
 L.balls = "球" -- Plural of L.ball
 L.blind = "致盲" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
+L.blood = "血" -- Short for any ability with the name "Blood" in it e.g. "Blood Infusion" (1293969) or "Blood Hunter" (1225274)
 L.bouncing_ball = "弹跳球" -- A ball, but it bounces, usually you need to prevent it touching the ground so it bounces to a different location
 L.bouncing_balls = "弹跳球" -- Plural of L.bouncing_ball
 L.chakram = "飞轮" -- Short for any ability with the name "Chakram" in it e.g. "Wind Chakram" (1258152) or "Solar Chakram" (186046)

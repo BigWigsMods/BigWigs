@@ -311,6 +311,7 @@ L.arrows = "Frecce" -- Plural of L.arrow
 L.ball = "Palla" -- A ball, like a football, basketball, etc
 L.balls = "Palle" -- Plural of L.ball
 L.blind = "Accecamento" -- Any ability that blinds or disorientates you. Usually an ability a boss casts and you need to turn away from the boss or it will blind you.
+L.blood = "Sangue" -- Short for any ability with the name "Blood" in it e.g. "Blood Infusion" (1293969) or "Blood Hunter" (1225274)
 --L.bouncing_ball = "Bouncing Ball" -- A ball, but it bounces, usually you need to prevent it touching the ground so it bounces to a different location
 --L.bouncing_balls = "Bouncing Balls" -- Plural of L.bouncing_ball
 L.chakram = "Chakram" -- Short for any ability with the name "Chakram" in it e.g. "Wind Chakram" (1258152) or "Solar Chakram" (186046)
