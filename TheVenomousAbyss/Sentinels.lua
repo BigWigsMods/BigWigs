@@ -558,8 +558,9 @@ do
 		if self:CheckOption("infobox", "INFOBOX") then
 			nextMarkDose = GetTime() + MARK_INTERVAL
 			self:OpenInfo("infobox", CL.marks)
-			self:SetInfo("infobox", 3, self:SpellName(-34951)) -- Breath of Ula
-			self:SetInfo("infobox", 5, self:SpellName(-34953)) -- Blood of Ula'tek
+			self:SetInfo("infobox", 1, CL.debuff)
+			self:SetInfo("infobox", 3, CL.breath) -- Breath of Ula
+			self:SetInfo("infobox", 5, CL.blood) -- Blood of Ula'tek
 			UpdateInfoBoxList()
 			UpdateInfoBoxBar()
 		end
