@@ -3901,7 +3901,7 @@ end
 
 --- Show a background bar in an already open "Info Box".
 -- @param key the option key to check
--- @number line the line to update, 1-10
+-- @number line the line to update
 -- @number percentage width of the bar between 0 and 1
 -- @number[opt] r red part of rgb, 0-1
 -- @number[opt] g green part of rgb, 0-1
@@ -3910,6 +3910,22 @@ end
 function boss:SetInfoBar(key, line, percentage, r, g, b, a)
 	if checkFlag(self, key, C.INFOBOX) then
 		self:SendMessage("BigWigs_SetInfoBoxBar", self, line, percentage, r, g, b, a)
+	end
+end
+
+--- Start a timer bar in an already open "Info Box".
+-- @param key the option key to check
+-- @number line the line to place the bar on
+-- @number[opt] textLine which line the text depicting the time remaining shows on
+-- @number startTime the time the bar should start e.g. GetTime() if it should start now
+-- @number duration the duration of the bar
+-- @number[opt] r red part of rgb, 0-1
+-- @number[opt] g green part of rgb, 0-1
+-- @number[opt] b blue part of rgb, 0-1
+-- @number[opt] a alpha, 0-1
+function boss:SetInfoTimerBar(key, line, textLine, startTime, duration, r, g, b, a)
+	if checkFlag(self, key, C.INFOBOX) then
+		self:SendMessage("BigWigs_SetInfoBoxTimerBar", self, line, textLine, startTime, duration, r, g, b, a)
 	end
 end
 
