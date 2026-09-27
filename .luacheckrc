@@ -189,6 +189,10 @@ files["Plugins/BossBlock.lua"].ignore = {
 files["Plugins/Break.lua"].ignore = {
 	"113/time",
 }
+files["Plugins/InfoBox.lua"].ignore = {
+	"113/C_DurationUtil",
+	"113/C_StringUtil",
+}
 files["Plugins/Messages.lua"].ignore = {
 	"113/C_UI",
 	"113/GetPlayerInfoByGUID",

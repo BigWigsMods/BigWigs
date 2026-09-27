@@ -228,12 +228,20 @@ do
 	display.title = title
 
 	display.text = {}
+	local secondsFormatter = C_StringUtil.CreateSecondsFormatter()
+	secondsFormatter:SetDefaultAbbreviation(2) -- Enum.SecondsFormatterAbbreviation.OneLetter = 2
+	secondsFormatter:SetMinInterval(0) -- Enum.SecondsFormatterInterval.Seconds = 0
+	secondsFormatter:SetMillisecondsThreshold(60)
 	for i = 1, 20 do
 		local text = display:CreateFontString(nil, "OVERLAY")
 		text:SetFont(plugin:GetDefaultFont(12))
 		text:SetShadowOffset(1, -1)
 		text:SetTextColor(1,0.82,0,1)
 		text:SetSize(infoboxWidth/2, infoboxHeight/5)
+		text.durationBinding = C_DurationUtil.CreateDurationTextBinding()
+		text.durationBinding:SetFormatter(secondsFormatter)
+		text.durationBinding:SetFontString(text)
+		text.durationBinding:SetEnabled(false)
 		if i == 1 then
 			text:SetPoint("TOPLEFT", display, "TOPLEFT", 5, 0)
 			text:SetJustifyH("LEFT")
@@ -255,6 +263,10 @@ do
 		text:SetShadowOffset(1, -1)
 		text:SetTextColor(1,0.82,0,1)
 		text:SetSize(infoboxWidth/2, infoboxHeight/5)
+		text.durationBinding = C_DurationUtil.CreateDurationTextBinding()
+		text.durationBinding:SetFormatter(secondsFormatter)
+		text.durationBinding:SetFontString(text)
+		text.durationBinding:SetEnabled(false)
 		if i == 21 then
 			text:SetPoint("TOPLEFT", display2, "TOPLEFT", 5, 0)
 			text:SetJustifyH("LEFT")
@@ -272,20 +284,41 @@ do
 	end
 
 	display.bar = {}
+	display.statusbar = {}
 	for i = 1, 40, 2 do
 		local bar = display:CreateTexture()
 		bar:SetSize(infoboxWidth, infoboxHeight/5-1)
 		bar:SetColorTexture(0, 1, 0, 0.3)
 		bar:Hide()
+
+		local statusbar = CreateFrame("Statusbar", nil, display)
+		statusbar:SetFrameStrata(display:GetFrameStrata())
+		statusbar:SetFixedFrameStrata(true)
+		statusbar:SetFrameLevel(display:GetFrameLevel())
+		statusbar:SetFixedFrameLevel(true)
+		statusbar:SetSize(infoboxWidth, infoboxHeight/5-1)
+		local texture = statusbar:CreateTexture()
+		texture:SetColorTexture(0, 1, 0, 0.3)
+		statusbar:SetStatusBarTexture(texture)
+		statusbar:Hide()
+		statusbar.durationObject = C_DurationUtil.CreateDuration()
+		-- Enum.StatusBarInterpolation.Immediate = 0 | Enum.StatusBarTimerDirection.RemainingTime = 1
+		statusbar:SetTimerDuration(statusbar.durationObject, 0, 1)
+
 		if i == 1 then
 			bar:SetPoint("TOPLEFT", display, "TOPLEFT", 0, -1)
+			statusbar:SetPoint("TOPLEFT", display, "TOPLEFT", 0, -1)
 		elseif i == 21 then
 			bar:SetPoint("TOPLEFT", display, "TOPRIGHT", 0, -1)
+			statusbar:SetPoint("TOPLEFT", display, "TOPRIGHT", 0, -1)
 		else
 			bar:SetPoint("TOPLEFT", display.bar[i-1], "BOTTOMLEFT", 0, -1)
+			statusbar:SetPoint("TOPLEFT", display.bar[i-1], "BOTTOMLEFT", 0, -1)
 		end
 		display.bar[i] = bar
 		display.bar[i+1] = bar
+		display.statusbar[i] = statusbar
+		display.statusbar[i+1] = statusbar
 	end
 
 	display:Hide()
@@ -362,6 +395,7 @@ function plugin:BigWigs_ShowInfoBox(_, module, title, lines)
 	self:RegisterMessage("BigWigs_SetInfoBoxTable")
 	self:RegisterMessage("BigWigs_SetInfoBoxTableWithBars")
 	self:RegisterMessage("BigWigs_SetInfoBoxBar")
+	self:RegisterMessage("BigWigs_SetInfoBoxTimerBar")
 
 	opener = module or self
 	for unit in self:IterateGroup() do
@@ -498,8 +532,8 @@ do
 				display.text[line]:SetText(colors[n])
 				display.text[line+1]:SetText(result)
 			else
-				display.text[line]:SetText("")
-				display.text[line+1]:SetText("")
+				display.text[line]:ClearText()
+				display.text[line+1]:ClearText()
 			end
 			self:BigWigs_ResizeInfoBoxRow(line)
 			line = line + 2
@@ -574,8 +608,8 @@ do
 				display.text[line]:SetText(colors[n])
 				display.text[line+1]:SetText(result[1])
 			else
-				display.text[line]:SetText("")
-				display.text[line+1]:SetText("")
+				display.text[line]:ClearText()
+				display.text[line+1]:ClearText()
 				self:BigWigs_SetInfoBoxBar(nil, nil, i*2, 0)
 			end
 			self:BigWigs_ResizeInfoBoxRow(line)
@@ -593,10 +627,12 @@ do
 		nameList, sortingTbl = {}, {}
 		display:Hide()
 		for i = 1, 40 do
-			display.text[i]:SetText("")
+			display.text[i].durationBinding:SetEnabled(false)
+			display.text[i]:ClearText()
 		end
 		for i = 1, 40, 2 do
 			display.bar[i]:Hide()
+			display.statusbar[i]:Hide()
 		end
 		display.title:SetText(L.infobox_short)
 		self:UnregisterMessage("BigWigs_SetInfoBoxTitle")
@@ -620,6 +656,29 @@ function plugin:BigWigs_SetInfoBoxBar(_, _, line, percentage, r, g, b, a)
 		bar:Show()
 	else
 		bar:Hide()
+	end
+end
+
+function plugin:BigWigs_SetInfoBoxTimerBar(_, _, barLine, textLine, startTime, duration, r, g, b, a)
+	local statusbar = display.statusbar[barLine]
+	statusbar.durationObject:SetTimeFromStart(startTime, duration)
+	if textLine then
+		display.text[textLine].durationBinding:SetDuration(statusbar.durationObject)
+		display.text[textLine].durationBinding:SetEnabled(true)
+	end
+	if duration > 0 then
+		if r then
+			statusbar:GetStatusBarTexture():SetColorTexture(r, g, b, a)
+		else
+			statusbar:GetStatusBarTexture():SetColorTexture(0.5, 0.5, 0.5, 0.5)
+		end
+		statusbar:Show()
+	else
+		statusbar:Hide()
+		if textLine then
+			display.text[textLine].durationBinding:SetEnabled(false)
+			display.text[textLine]:ClearText()
+		end
 	end
 end
 
