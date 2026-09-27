@@ -2631,7 +2631,7 @@ do
 	-- @string GUID The globally unique identifier of the creature
 	-- @return creature ID
 	function boss:MobId(GUID)
-		if not GUID then return 1 end
+		if not GUID or self:IsSecret(GUID) then return 1 end
 		local creatureID = GetCreatureID(GUID)
 		return creatureID or 1
 	end
