@@ -21,6 +21,7 @@ local backupBars = {}
 
 local durationEventCount = {}
 local isIntermission = false
+local infoBoxTimer = nil
 local berserkCD = 0
 local nextStasis = 0
 
@@ -113,6 +114,7 @@ function mod:OnEncounterStart()
 	self:SetStage(1)
 	durationEventCount = {}
 	isIntermission = false
+	infoBoxTimer = nil
 
 	dropletsCount = 1
 	coagulationCount = 1
@@ -121,6 +123,9 @@ function mod:OnEncounterStart()
 	bloodCount = 1
 	injectionCount = 1
 	protovenomCount = 1
+
+	local t = GetTime()
+	self:SimpleTimer(function() self:OpenMarkInfoBox(t) end, 0.5)
 
 	local stasisCD = 46
 	self:Bar(1284588, stasisCD, CL.count:format(self:GetRename(1284588), 1)) -- Vitriolic Stasis
@@ -135,8 +140,6 @@ function mod:OnEncounterStart()
 		berserkCD = 420
 		self:Bar("berserk", berserkCD, self:GetRename("berserk"), 26662)
 	end
-
-	self:OpenMarkInfoBox()
 end
 
 -- Blizzard adds then cancels a few seconds later if they aren't going to happen which messes up counts.
@@ -167,7 +170,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 		stage = stage + 1
 		self:SetStage(stage)
 
-		self:OpenMarkInfoBox()
+		self:OpenMarkInfoBox(GetTime())
 
 		local stasisCD = 91
 		nextStasis = self.stageTime + stasisCD
@@ -384,6 +387,10 @@ function mod:VitriolicStasis(duration)
 			injectionCount = 1
 			protovenomCount = 1
 
+			if infoBoxTimer then
+				self:CancelTimer(infoBoxTimer)
+				infoBoxTimer = nil
+			end
 			self:CloseInfo("infobox")
 
 			self:StopBlizzMessages(6) -- The Golems of Ula'tek infect players with [Helical Toxins]!
@@ -515,54 +522,45 @@ end
 --
 
 do
-	local UpdateInfoBoxList
-	do
-		local BOSS_UNITS = {"boss1", "boss2"}
-		function UpdateInfoBoxList()
-			if mod:IsEngaged() and not isIntermission then
-				mod:SimpleTimer(UpdateInfoBoxList, 0.5)
+	local function UpdateInfoBoxList()
+		if mod:IsEngaged() and not isIntermission then
+			mod:SimpleTimer(UpdateInfoBoxList, 0.5)
 
-				for i = 1, 2 do
-					local line = (i + 1) * 2
-					local minRange, maxRange = mod:GetUnitMinMaxRange(BOSS_UNITS[i])
-					if minRange < 40 then
-						mod:SetInfo("infobox", line, ("%d - %d"):format(minRange, maxRange), 1, 0.1, 0.1)
-					else
-						mod:SetInfo("infobox", line, ("%d - %d"):format(minRange, maxRange), 0.1, 1, 0.1)
-					end
+			local minRange, maxRange = mod:GetUnitMinMaxRange("boss2")
+			if minRange < 40 then
+				if minRange == 0 and maxRange == 0 then -- Change text when one of the bosses dies
+					mod:SetInfo("infobox", 3, CL.boss)
+					mod:SetInfo("infobox", 5, "")
+					mod:SetInfo("infobox", 6, "")
+				else
+					mod:SetInfo("infobox", 6, ("%d - %d"):format(minRange, maxRange), 1, 0.1, 0.1)
 				end
+			else
+				mod:SetInfo("infobox", 6, ("%d - %d"):format(minRange, maxRange), 0.1, 1, 0.1)
+			end
+
+			minRange, maxRange = mod:GetUnitMinMaxRange("boss1")
+			if minRange < 40 then
+				mod:SetInfo("infobox", 4, ("%d - %d"):format(minRange, maxRange), 1, 0.1, 0.1)
+			else
+				mod:SetInfo("infobox", 4, ("%d - %d"):format(minRange, maxRange), 0.1, 1, 0.1)
 			end
 		end
 	end
 
 	local MARK_INTERVAL = 5
-	local nextMarkDose = 0
-
-	local function UpdateInfoBoxBar()
-		if mod:IsEngaged() and not isIntermission then
-			mod:SimpleTimer(UpdateInfoBoxBar, 0.05)
-
-			local t = GetTime()
-			-- roll forward to the next tick, looped in case we missed one
-			while nextMarkDose <= t do
-				nextMarkDose = nextMarkDose + MARK_INTERVAL
-			end
-
-			local remaining = nextMarkDose - t
-			mod:SetInfoBar("infobox", 1, remaining / MARK_INTERVAL, 1, 1, 0.6)
-			mod:SetInfo("infobox", 2, CL.seconds:format(remaining))
-		end
-	end
-
-	function mod:OpenMarkInfoBox()
+	function mod:OpenMarkInfoBox(startTime)
 		if self:CheckOption("infobox", "INFOBOX") then
-			nextMarkDose = GetTime() + MARK_INTERVAL
 			self:OpenInfo("infobox", CL.marks)
 			self:SetInfo("infobox", 1, CL.debuff)
 			self:SetInfo("infobox", 3, CL.breath) -- Breath of Ula
 			self:SetInfo("infobox", 5, CL.blood) -- Blood of Ula'tek
 			UpdateInfoBoxList()
-			UpdateInfoBoxBar()
+			self:SetInfoTimerBar("infobox", 1, 2, startTime, MARK_INTERVAL, 0.1, 0.1, 1, 0.6)
+			infoBoxTimer = self:ScheduleRepeatingTimer(function()
+				startTime = startTime + MARK_INTERVAL
+				self:SetInfoTimerBar("infobox", 1, 2, startTime, MARK_INTERVAL, 0.1, 0.1, 1, 0.6)
+			end, MARK_INTERVAL)
 		end
 	end
 end
