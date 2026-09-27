@@ -14,6 +14,7 @@ mod:SetBlockedUnitsForWipeHealthCheck({
 })
 mod:SetEncounterID(3492)
 mod:SetRespawnTime(30)
+mod:SetUsesRangeChecks(true)
 mod:UseCustomTimers(true)
 mod:SetStage(1)
 
