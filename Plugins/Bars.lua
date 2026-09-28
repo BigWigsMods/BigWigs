@@ -1795,12 +1795,12 @@ do
 	end
 
 	local initial = true
-	function plugin:CreateBar(module, key, text, time, icon, isApprox, eventId, spellIndicators)
+	function plugin:CreateBar(module, key, text, time, icon, eventId, spellIndicators)
 		local width, height
 		width = db.normalWidth
 		height = db.normalHeight
 		local bar = candy:New(LibSharedMedia:Fetch(STATUSBAR, db.texture), width, height)
-		bar:SetDuration(time, not eventId and isApprox) -- isApprox is maxQueueDuration for timeline bars
+		bar:SetDuration(time)
 		local flags = nil
 		if db.monochrome and db.outline ~= "NONE" then
 			flags = "MONOCHROME," .. db.outline
@@ -1880,21 +1880,21 @@ do
 		bwTooltip:Hide()
 	end
 
-	function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime, eventId, spellIndicators)
+	function plugin:BigWigs_StartBar(_, module, key, text, time, icon, maxQueueDuration, maxTime, eventId, spellIndicators)
 		if not text then text = "" end
 		if not eventId and self:IsSecret(text) then
 			BigWigs:Error("Cannot start a bar with secrets when no eventId is specified.")
 			return
 		end
 		self:StopSpecificBar(nil, module, text, eventId)
-		local bar = self:CreateBar(module, key, text, time, icon, isApprox, eventId, spellIndicators)
+		local bar = self:CreateBar(module, key, text, time, icon, eventId, spellIndicators)
 		if db.iconTooltip and type(key) == "number" and key > 0 then
 			bar.candyBarIconFrame.bwID = key
 			bar:Set("bigwigs:tooltip", key)
 			bar.candyBarIconFrame:SetScript("OnEnter", OnEnterIcon)
 			bar.candyBarIconFrame:SetScript("OnLeave", OnLeaveIcon)
 		end
-		bar:SetPauseWhenDone(isApprox)
+		bar:SetPauseWhenDone(maxQueueDuration)
 		if db.emphasize and time < db.emphasizeTime then
 			if db.emphasizeRestart and maxTime and maxTime > db.emphasizeTime then
 				bar:Start(db.emphasizeTime)
@@ -1912,7 +1912,7 @@ do
 		local anchor = bar:Get("bigwigs:anchor") == "expPosition" and emphasizeAnchor or normalAnchor
 		rearrangeBars(anchor)
 		if isRetail then -- The following callbacks are now deprecated and will eventually be entirely removed
-			self:SendMessage("BigWigs_BarCreated", self, bar, module, key, text, time, icon, isApprox)
+			self:SendMessage("BigWigs_BarCreated", self, bar, module, key, text, time, icon, maxQueueDuration)
 			-- Check if :EmphasizeBar(bar) was run and trigger the callback.
 			-- Bit of a roundabout method to approaching this so that we purposely keep callbacks firing last.
 			if bar:Get("bigwigs:emphasized") then
