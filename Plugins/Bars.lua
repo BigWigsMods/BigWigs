@@ -328,11 +328,7 @@ do
 			bar.candyBarLabel:SetJustifyH(db.alignText)
 			bar:SetTimeVisibility(db.time)
 			bar.candyBarDuration:SetJustifyH(db.alignTime)
-			if not db.icon then
-				bar:SetIcon(nil)
-			else
-				bar:SetIcon(bar:GetIcon() or "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
-			end
+			bar:SetIconVisibility(db.icon)
 			bar:SetIconPosition(db.iconPosition)
 			local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
 			if indicatorFrame then
@@ -362,11 +358,7 @@ do
 				emphasizeAnchor.bars[bar] = nil
 				bar:Set("bigwigs:anchor", "normalPosition")
 			end
-			if not db.icon then
-				bar:SetIcon(nil)
-			else
-				bar:SetIcon(bar:GetIcon() or "Interface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid.tga")
-			end
+			bar:SetIconVisibility(db.icon)
 			bar:SetIconPosition(db.iconPosition)
 			local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
 			if indicatorFrame then
@@ -1825,11 +1817,8 @@ do
 			bar:Set("bigwigs:eventId", eventId)
 		end
 		bar:Set("bigwigs:anchor", "normalPosition")
-		if db.icon then
-			bar:SetIcon(icon)
-		else
-			bar:SetIcon(nil)
-		end
+		bar:SetIconVisibility(db.icon)
+		bar:SetIcon(icon)
 		bar:SetColor(colors:GetColor("barColor", module, key))
 		bar:SetBackgroundColor(colors:GetColor("barBackground", module, key))
 		bar:SetTextColor(colors:GetColor("barText", module, key))

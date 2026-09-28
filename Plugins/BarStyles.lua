@@ -136,11 +136,11 @@ if BigWigsLoader.isRetail then
 		end
 		iconFrame:SetWidth(barHeight)
 		iconFrame.icon:SetTexture(iconTexture)
-		iconFrame:SetShown(iconTexture and true)
+		iconFrame:SetShown(bar:IsIconVisible())
 
 		local statusbar = bar.candyBarBar
 		statusbar:ClearAllPoints()
-		if iconTexture then
+		if bar:IsIconVisible() then
 			if bar:GetIconPosition() == "RIGHT" then
 				statusbar:SetPoint("TOPRIGHT", iconFrame, "TOPLEFT", -4, -4)
 				statusbar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 4, 4)
@@ -352,45 +352,52 @@ do
 		bd:SetPoint("BOTTOMRIGHT", statusbar, "BOTTOMRIGHT", 2, -2)
 		bd:Show()
 
-		local iconTexture = bar:GetIcon()
-		if iconTexture then
-			local reApplyIcon = false
-			local iconFrame = bar.candyBarIconFrame
-			local iconBd = bar.candyBarIconFrameBackdrop
-			if iconFrame.IsAnchoringSecret and iconFrame:IsAnchoringSecret() then
-				iconFrame:SetToDefaults()
-				iconBd:SetToDefaults()
-				iconBd:SetFrameLevel(0)
-				reApplyIcon = true
-			end
+		local reApplyIcon
+		local iconFrame = bar.candyBarIconFrame
+		local iconBd = bar.candyBarIconFrameBackdrop
+		if iconFrame:IsAnchoringSecret() then
+			reApplyIcon = bar:GetIcon()
+			iconFrame:SetToDefaults()
+			iconBd:SetToDefaults()
+			iconBd:SetFrameLevel(0)
+		end
 
-			iconFrame:ClearAllPoints()
-			iconBd:ClearAllPoints()
+		iconFrame:ClearAllPoints()
+		iconBd:ClearAllPoints()
 
-			if bar:GetIconPosition() == "RIGHT" then
-				iconFrame:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -2, 0)
+		if bar:GetIconPosition() == "RIGHT" then
+			iconFrame:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -2, 0)
 
+			statusbar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 2, 0)
+			if bar:IsIconVisible() then
 				statusbar:SetPoint("TOPRIGHT", iconFrame, "LEFT", -6, 0)
-				statusbar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 2, 0)
 			else
-				iconFrame:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 2, 0)
+				statusbar:SetPoint("TOPRIGHT", iconFrame, "RIGHT", 0, 0)
+			end
+		else
+			iconFrame:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 2, 0)
 
+			statusbar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -2, 0)
+			if bar:IsIconVisible() then
 				statusbar:SetPoint("TOPLEFT", iconFrame, "RIGHT", 6, 0)
-				statusbar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -2, 0)
+			else
+				statusbar:SetPoint("TOPLEFT", iconFrame, "LEFT", 0, 0)
 			end
-			iconFrame:SetSize(barHeight, barHeight)
+		end
+		iconFrame:SetSize(barHeight, barHeight)
 
-			iconBd:SetBackdrop(backdropBorder)
-			iconBd:SetBackdropColor(.1,.1,.1,1)
-			iconBd:SetBackdropBorderColor(0,0,0,1)
-			iconBd:SetPoint("TOPLEFT", iconFrame, "TOPLEFT", -2, 2)
-			iconBd:SetPoint("BOTTOMRIGHT", iconFrame, "BOTTOMRIGHT", 2, -2)
+		iconBd:SetBackdrop(backdropBorder)
+		iconBd:SetBackdropColor(.1,.1,.1,1)
+		iconBd:SetBackdropBorderColor(0,0,0,1)
+		iconBd:SetPoint("TOPLEFT", iconFrame, "TOPLEFT", -2, 2)
+		iconBd:SetPoint("BOTTOMRIGHT", iconFrame, "BOTTOMRIGHT", 2, -2)
+		if bar:IsIconVisible() then
 			iconBd:Show()
+		end
 
-			if reApplyIcon then
-				iconFrame:SetTexture(iconTexture)
-				iconFrame:SetTexCoord(0.07, 0.93, 0.07, 0.93)
-			end
+		if reApplyIcon then
+			iconFrame:SetTexture(reApplyIcon)
+			iconFrame:SetTexCoord(0.07, 0.93, 0.07, 0.93)
 		end
 
 		bar.candyBarLabel:SetPoint("BOTTOMLEFT", statusbar, "TOPLEFT", 2, 2)
@@ -462,45 +469,52 @@ do
 		bd:SetPoint("BOTTOMRIGHT", statusbar, "BOTTOMRIGHT", 1, -1)
 		bd:Show()
 
-		local iconTexture = bar:GetIcon()
-		if iconTexture then
-			local reApplyIcon = false
-			local iconFrame = bar.candyBarIconFrame
-			local iconBd = bar.candyBarIconFrameBackdrop
-			if iconFrame.IsAnchoringSecret and iconFrame:IsAnchoringSecret() then
-				iconFrame:SetToDefaults()
-				iconBd:SetToDefaults()
-				iconBd:SetFrameLevel(0)
-				reApplyIcon = true
-			end
+		local reApplyIcon
+		local iconFrame = bar.candyBarIconFrame
+		local iconBd = bar.candyBarIconFrameBackdrop
+		if iconFrame:IsAnchoringSecret() then
+			reApplyIcon = bar:GetIcon()
+			iconFrame:SetToDefaults()
+			iconBd:SetToDefaults()
+			iconBd:SetFrameLevel(0)
+		end
 
-			iconFrame:ClearAllPoints()
-			iconBd:ClearAllPoints()
+		iconFrame:ClearAllPoints()
+		iconBd:ClearAllPoints()
 
-			if bar:GetIconPosition() == "RIGHT" then
-				iconFrame:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -2, 0)
+		if bar:GetIconPosition() == "RIGHT" then
+			iconFrame:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -2, 0)
 
+			statusbar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 2, 0)
+			if bar:IsIconVisible() then
 				statusbar:SetPoint("TOPRIGHT", iconFrame, "LEFT", -4, -2)
-				statusbar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 2, 0)
 			else
-				iconFrame:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 2, 0)
+				statusbar:SetPoint("TOPRIGHT", iconFrame, "RIGHT", 0, -2)
+			end
+		else
+			iconFrame:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 2, 0)
 
+			statusbar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -2, 0)
+			if bar:IsIconVisible() then
 				statusbar:SetPoint("TOPLEFT", iconFrame, "RIGHT", 4, -2)
-				statusbar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -2, 0)
+			else
+				statusbar:SetPoint("TOPLEFT", iconFrame, "LEFT", 0, -2)
 			end
-			iconFrame:SetSize(barHeight, barHeight)
+		end
+		iconFrame:SetSize(barHeight, barHeight)
 
-			iconBd:SetBackdrop(backdropBorder)
-			iconBd:SetBackdropColor(.1,.1,.1,1)
-			iconBd:SetBackdropBorderColor(0,0,0,1)
-			iconBd:SetPoint("TOPLEFT", iconFrame, "TOPLEFT", -1, 1)
-			iconBd:SetPoint("BOTTOMRIGHT", iconFrame, "BOTTOMRIGHT", 1, -1)
+		iconBd:SetBackdrop(backdropBorder)
+		iconBd:SetBackdropColor(.1,.1,.1,1)
+		iconBd:SetBackdropBorderColor(0,0,0,1)
+		iconBd:SetPoint("TOPLEFT", iconFrame, "TOPLEFT", -1, 1)
+		iconBd:SetPoint("BOTTOMRIGHT", iconFrame, "BOTTOMRIGHT", 1, -1)
+		if bar:IsIconVisible() then
 			iconBd:Show()
+		end
 
-			if reApplyIcon then
-				iconFrame:SetTexture(iconTexture)
-				iconFrame:SetTexCoord(0.07, 0.93, 0.07, 0.93)
-			end
+		if reApplyIcon then
+			iconFrame:SetTexture(reApplyIcon)
+			iconFrame:SetTexCoord(0.07, 0.93, 0.07, 0.93)
 		end
 
 		bar.candyBarLabel:SetPoint("BOTTOMLEFT", statusbar, "TOPLEFT", 2, -7)
@@ -627,14 +641,11 @@ do
 			bd.oborder:Hide()
 		end
 
-		local restore = bar:Get("bigwigs:restoreicon")
-		if restore then
-			local iconBd = bar.candyBarIconFrameBackdrop
-			iconBd:Hide()
-			if iconBd.iborder then
-				iconBd.iborder:Hide()
-				iconBd.oborder:Hide()
-			end
+		local iconBd = bar.candyBarIconFrameBackdrop
+		iconBd:Hide()
+		if iconBd.iborder then
+			iconBd.iborder:Hide()
+			iconBd.oborder:Hide()
 		end
 	end
 
@@ -657,60 +668,66 @@ do
 		end
 		bd:Show()
 
-		local iconTexture = bar:GetIcon()
-		if iconTexture then
-			local reApplyIcon = false
-			local statusbar = bar.candyBarBar
-			local iconFrame = bar.candyBarIconFrame
-			local iconBd = bar.candyBarIconFrameBackdrop
-			if iconFrame.IsAnchoringSecret and iconFrame:IsAnchoringSecret() then
-				iconFrame:SetToDefaults()
-				iconBd:SetToDefaults()
-				iconBd:SetFrameLevel(0)
-				reApplyIcon = true
-			end
-			statusbar:ClearAllPoints()
-			iconFrame:ClearAllPoints()
-			iconBd:ClearAllPoints()
+		local reApplyIcon
+		local statusbar = bar.candyBarBar
+		local iconFrame = bar.candyBarIconFrame
+		local iconBd = bar.candyBarIconFrameBackdrop
+		if iconFrame:IsAnchoringSecret() then
+			reApplyIcon = bar:GetIcon()
+			iconFrame:SetToDefaults()
+			iconBd:SetToDefaults()
+			iconBd:SetFrameLevel(0)
+		end
+		statusbar:ClearAllPoints()
+		iconFrame:ClearAllPoints()
+		iconBd:ClearAllPoints()
 
-			if bar:GetIconPosition() == "RIGHT" then
-				--iconFrame:SetPoint("BOTTOMLEFT", bar, "BOTTOMRIGHT", E and (E.PixelMode and 1 or 5) or 1, 0)
-				iconFrame:SetPoint("TOPRIGHT", bar, "TOPRIGHT", 0, 0)
-				iconFrame:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 0, 0)
+		if bar:GetIconPosition() == "RIGHT" then
+			--iconFrame:SetPoint("BOTTOMLEFT", bar, "BOTTOMRIGHT", E and (E.PixelMode and 1 or 5) or 1, 0)
+			iconFrame:SetPoint("TOPRIGHT", bar, "TOPRIGHT", 0, 0)
+			iconFrame:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 0, 0)
 
+			statusbar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 0, 0)
+			if bar:IsIconVisible() then
 				statusbar:SetPoint("TOPRIGHT", iconFrame, "TOPLEFT", -1, 0)
-				statusbar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 0, 0)
 			else
-				--iconFrame:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", E and (E.PixelMode and -1 or -5) or -1, 0)
-				iconFrame:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, 0)
-				iconFrame:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 0, 0)
+				statusbar:SetPoint("TOPRIGHT", bar, "TOPRIGHT", 0, 0)
+			end
+		else
+			--iconFrame:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", E and (E.PixelMode and -1 or -5) or -1, 0)
+			iconFrame:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, 0)
+			iconFrame:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 0, 0)
 
+			statusbar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 0, 0)
+			if bar:IsIconVisible() then
 				statusbar:SetPoint("TOPLEFT", iconFrame, "TOPRIGHT", 1, 0)
-				statusbar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 0, 0)
-			end
-			iconFrame:SetSize(bar:GetHeight(), bar:GetHeight())
-
-			bar:Set("bigwigs:restoreicon", true)
-			if E then
-				iconBd:SetTemplate("Transparent")
-				iconBd:SetOutside(iconFrame)
-				if not E.PixelMode and iconBd.iborder then
-					iconBd.iborder:Show()
-					iconBd.oborder:Show()
-				end
 			else
-				iconBd:SetBackdrop(backdropBorder)
-				iconBd:SetBackdropColor(0.06, 0.06, 0.06, 0.8)
-				iconBd:SetBackdropBorderColor(0, 0, 0)
-				iconBd:SetPoint("TOPLEFT", iconFrame, "TOPLEFT", -1, 1)
-				iconBd:SetPoint("BOTTOMRIGHT", iconFrame, "BOTTOMRIGHT", 1, -1)
+				statusbar:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, 0)
 			end
-			iconBd:Show()
+		end
+		iconFrame:SetSize(bar:GetHeight(), bar:GetHeight())
 
-			if reApplyIcon then
-				iconFrame:SetTexture(iconTexture)
-				iconFrame:SetTexCoord(0.07, 0.93, 0.07, 0.93)
+		if E then
+			iconBd:SetTemplate("Transparent")
+			iconBd:SetOutside(iconFrame)
+			if not E.PixelMode and iconBd.iborder then
+				iconBd.iborder:Show()
+				iconBd.oborder:Show()
 			end
+		else
+			iconBd:SetBackdrop(backdropBorder)
+			iconBd:SetBackdropColor(0.06, 0.06, 0.06, 0.8)
+			iconBd:SetBackdropBorderColor(0, 0, 0)
+			iconBd:SetPoint("TOPLEFT", iconFrame, "TOPLEFT", -1, 1)
+			iconBd:SetPoint("BOTTOMRIGHT", iconFrame, "BOTTOMRIGHT", 1, -1)
+		end
+		if bar:IsIconVisible() then
+			iconBd:Show()
+		end
+
+		if reApplyIcon then
+			iconFrame:SetTexture(reApplyIcon)
+			iconFrame:SetTexCoord(0.07, 0.93, 0.07, 0.93)
 		end
 	end
 
