@@ -735,13 +735,13 @@ function mod:HandleBar(barInfo, eventInfo, noAfterBossError)
 	local eventID = eventInfo and eventInfo.id or 0
 	if barInfo then
 		local duration = barInfo.duration or (eventInfo and eventInfo.duration)
-		-- offset extends the duration and postpones the onFinished callback (ie, to correspond to the end of a cast instead of the start)
-		local offset = barInfo.offset or 0
-		if offset ~= 0 then
+		-- delay extends the duration (ie, to correspond to the end of a cast instead of the start)
+		local delay = barInfo.delay or 0
+		if delay ~= 0 then
 			if type(duration) == "table" then
-				duration[1] = duration[1] + offset
+				duration[1] = duration[1] + delay
 			else
-				duration = duration + offset
+				duration = duration + delay
 			end
 		end
 		local spellIndicators = eventID > 0 and eventID -- don't try to show indicators for fake events
@@ -775,13 +775,11 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 	local barInfo = activeBars[eventID]
 	if barInfo and not barInfo.ignoreState then
 		if state == 2 then -- Finished
-				if barInfo.offset then
-					if barInfo.onOffset then
-						barInfo:onOffset()
+				if barInfo.delay then
+					if barInfo.onFinished and self:ShouldShowBars() then
+						barInfo:onFinished()
 					end
-					barInfo.offsetTimer = self:ScheduleTimer(function()
-						self:StopTimelineBar(barInfo, true)
-					end, barInfo.offset)
+					barInfo._delayTimer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, barInfo.delay)
 				else
 					self:StopBar(barInfo.msg)
 					if barInfo.onFinished and self:ShouldShowBars() then
@@ -816,26 +814,28 @@ end
 
 function mod:StopTimelineBar(barInfo, isFinished)
 	if not barInfo then return end
+	if barInfo.state and barInfo.state >= 2 then return end -- already ended
 
-	if isFinished and barInfo.offset and not barInfo.offsetTimer then
-		if barInfo.onOffset then
-			barInfo:onOffset()
+	-- Handle delayed events: onFinished called on normal finish, onFinishedDelayed called after the delay
+	if isFinished and barInfo.delay and not barInfo._delayTimer then
+		if barInfo.onFinished and self:ShouldShowBars() and not self:IsWiping() then
+			barInfo:onFinished()
 		end
-		barInfo.offsetTimer = self:ScheduleTimer(function()
-			self:StopTimelineBar(barInfo, isFinished)
-		end, barInfo.offset)
-
+		barInfo._delayTimer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, isFinished) end, barInfo.delay)
 		barInfo.ignoreState = true -- don't get canceled
 		return
-	elseif not isFinished and barInfo.offsetTimer then
-		self:CancelTimer(barInfo.offsetTimer)
-		barInfo.offsetTimer = nil
+
+	elseif not isFinished and barInfo._delayTimer then
+		self:CancelTimer(barInfo._delayTimer)
+		barInfo._delayTimer = nil
 	end
 
 	self:StopBar(barInfo.msg)
-	if isFinished and barInfo.onFinished and (not barInfo.state or barInfo.state < 2) and self:ShouldShowBars() and not self:IsWiping() then
-		barInfo:onFinished()
+	local callback = barInfo.delay and "onFinishedDelayed" or "onFinished"
+	if isFinished and barInfo[callback] and self:ShouldShowBars() and not self:IsWiping() then
+		barInfo[callback](barInfo)
 	end
+
 	barInfo.state = isFinished and 2 or 3 -- Finished/Canceled
 	if barInfo.eventID then
 		activeBars[barInfo.eventID] = nil
@@ -1275,15 +1275,15 @@ function mod:SpectralCoilsMythic(duration)
 	local messageText = CL.soon:format(barText)
 
 	local showOtherSide = not playerSide
-	local offset = nil
+	local delay = nil
 	if playerSide == "right" then
-		offset = 7.6
+		delay = 7.6
 		barText = L.count_side:format(self:GetRename(1300530), coilsCount, self:GetRename(1300530, 3))
 		if showOtherSide then
 			self:Bar(1300530, duration + 10.9, L.count_side:format(self:GetRename(1300530), coilsCount, self:GetRename(1300530, 2)))
 		end
 	elseif playerSide == "left" then
-		offset = 10.9
+		delay = 10.9
 		barText = L.count_side:format(self:GetRename(1300530), coilsCount, self:GetRename(1300530, 2))
 		if showOtherSide then
 			self:Bar(1300530, duration + 7.6, L.count_side:format(self:GetRename(1300530), coilsCount, self:GetRename(1300530, 3)))
@@ -1294,8 +1294,8 @@ function mod:SpectralCoilsMythic(duration)
 	local barInfo = {
 		msg = barText,
 		key = 1300530,
-		offset = offset,
-		onOffset = function()
+		delay = delay, -- Bar delayed to the damage event if side is set
+		onFinished = function()
 			self:StopBlizzMessages(1) -- The temple shudders as [Spectral Coils] erupt from the venom!
 			self:Message(1300530, "orange", messageText)
 			self:PlaySound(1300530, "alert")
@@ -1330,8 +1330,8 @@ do
 		return {
 			msg = barText,
 			key = 1286860,
-			offset = 6.5, -- 6.5s cast
-			onOffset = function()
+			delay = 6.5, -- 6.5s cast
+			onFinished = function()
 				-- catch early stop if hp threshold is hit
 				self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_STOP", nil, "boss1")
 
@@ -1340,7 +1340,7 @@ do
 					checkStage = true
 				end
 			end,
-			onFinished = function()
+			onFinishedDelay = function()
 				self:Message(1286860, "green", barText)
 				self:PlaySound(1286860, "long")
 				self:CastBar(1286860, 20, 2)
@@ -1405,17 +1405,17 @@ end
 -- Stage Two: Children of the Doomscale
 
 function mod:VirulentSpit(duration, count)
-	local barText, offset
+	local barText, delay
 	if not duration then
 		barText = CL.count:format(self:GetRename(1302982), spitCount)
 	else
 		if duration == 30 then
 			barText = CL.count:format(self:GetRename(1302982), 1)
-			offset = 3.5
+			delay = 3.5
 			count = 1
 		elseif duration == 40 then
 			barText = CL.count:format(self:GetRename(1302982), 3)
-			offset = 3.5
+			delay = 3.5
 			count = 3
 		else
 			barText = CL.count:format(self:GetRename(1302982), count)
@@ -1423,12 +1423,16 @@ function mod:VirulentSpit(duration, count)
 	end
 	spitCount = spitCount + 1
 
+	-- Event fires once per side and cancels. There are two sets of circles per
+	-- side, but the timer is for when ulatek moves (mb?). So we delay the timer
+	-- to show when the first set goes out then fire a bar for the second set
+	-- when that finishes
 	local barInfo = {
 		msg = barText,
 		key = 1302982,
-		offset = offset,
+		delay = delay,
 		count = count,
-		onFinished = function(this)
+		onFinishedDelay = function(this)
 			self:Message(1302982, "yellow", barText)
 			self:PlaySound(1302982, "alarm")
 			if this.count == 1 or this.count == 3 then
@@ -1505,7 +1509,7 @@ function mod:CirclingPrey()
 	return {
 		msg = barText,
 		key = 1301510,
-		-- offset = 8, -- 8s for cast
+		-- delay = 8, -- 8s for cast
 		onFinished = function()
 			self:Message(1301510, "red", CL.casting:format(barText))
 			self:CastBar(1301510, 8, 2)
