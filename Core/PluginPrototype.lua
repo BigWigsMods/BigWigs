@@ -195,6 +195,10 @@ function plugin:UpdateGUI()
 	end
 end
 
+function plugin:RefreshConfig()
+	self:SendMessage("BigWigs_PluginOptionsUpdate", self.moduleName)
+end
+
 do
 	local hexColors = {}
 	local format, gsub = string.format, string.gsub

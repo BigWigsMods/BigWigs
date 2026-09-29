@@ -276,43 +276,74 @@ do
 	local acr = LibStub("AceConfigRegistry-3.0")
 	do
 		local registeredPlugins = {}
-		local delayedAdditions = {}
-		function options:BigWigs_PluginOptionsReady(_, pluginName, pluginOptions, subPanelOptions)
-			if registeredPlugins[pluginName] then
-				BigWigs:Error(("Plugin %q already has options registered."):format(tostring(pluginName)))
-			else
-				if type(pluginOptions) == "table" then
-					registeredPlugins[pluginName] = true
-					aceConfigTableMainBigWigsTab.args.general.args[pluginName] = pluginOptions
-				elseif type(subPanelOptions) == "table" then
-					registeredPlugins[pluginName] = true
-					if allowedDirectOpens[subPanelOptions.name] then
-						BigWigs:Error(("Panel %q with key %q already exists in allowedDirectOpens."):format(tostring(subPanelOptions.name), tostring(subPanelOptions.key)))
-					else
-						allowedDirectOpens[subPanelOptions.name] = {tab = "options", path = {subPanelOptions.key}}
+		do
+			local delayedAdditions = {}
+			local updateablePlugins = {}
+			loader.RegisterMessage({}, "BigWigs_PluginOptionsUpdate", function(_, pluginName)
+				if updateablePlugins[pluginName] then
+					local optionsTable = updateablePlugins[pluginName].options()
+					aceConfigTableMainBigWigsTab.args[updateablePlugins[pluginName].key] = optionsTable
+					acr:NotifyChange("BigWigs")
+				end
+			end)
+			loader.RegisterMessage({}, "BigWigs_OpenGUI", function()
+				if not next(updateablePlugins) then return end
+				local pluginsToUpdateWhenBigWigsOpens = {}
+				for pluginName, subPanelOptions in next, updateablePlugins do
+					pluginsToUpdateWhenBigWigsOpens[pluginName] = subPanelOptions
+				end
+				local timer
+				local function Loop()
+					local pluginName, subPanelOptions = next(pluginsToUpdateWhenBigWigsOpens)
+					if not pluginName then
+						timer:Cancel()
+						acr:NotifyChange("BigWigs")
+						return
 					end
-					if type(subPanelOptions.options) == "function" then
-						if not next(delayedAdditions) then
-							local timer
-							local function Loop()
-								local optionsKey, optionsTableFunction = next(delayedAdditions)
-								if not optionsKey then
-									timer:Cancel()
-									delayedAdditions = {}
-									acr:NotifyChange("BigWigs")
-									return
-								end
-								delayedAdditions[optionsKey] = nil
-								local optionsTable = securecallfunction(optionsTableFunction)
-								if type(optionsTable) == "table" and xpcall(acr.ValidateOptionsTable, CallErrorHandler, acr, optionsTable, optionsTable.name) then
-									aceConfigTableMainBigWigsTab.args[optionsKey] = optionsTable
-								end
-							end
-							timer = loader.CTimerNewTicker(0, Loop)
+					pluginsToUpdateWhenBigWigsOpens[pluginName] = nil
+					local optionsTable = subPanelOptions.options()
+					aceConfigTableMainBigWigsTab.args[subPanelOptions.key] = optionsTable
+				end
+				timer = loader.CTimerNewTicker(0, Loop)
+			end)
+			function options:BigWigs_PluginOptionsReady(_, pluginName, pluginOptions, subPanelOptions)
+				if registeredPlugins[pluginName] then
+					BigWigs:Error(("Plugin %q already has options registered."):format(tostring(pluginName)))
+				else
+					if type(pluginOptions) == "table" then
+						registeredPlugins[pluginName] = true
+						aceConfigTableMainBigWigsTab.args.general.args[pluginName] = pluginOptions
+					elseif type(subPanelOptions) == "table" then
+						registeredPlugins[pluginName] = true
+						if allowedDirectOpens[subPanelOptions.name] then
+							BigWigs:Error(("Panel %q with key %q already exists in allowedDirectOpens."):format(tostring(subPanelOptions.name), tostring(subPanelOptions.key)))
+						else
+							allowedDirectOpens[subPanelOptions.name] = {tab = "options", path = {subPanelOptions.key}}
 						end
-						delayedAdditions[subPanelOptions.key] = subPanelOptions.options
-					else
-						aceConfigTableMainBigWigsTab.args[subPanelOptions.key] = subPanelOptions.options
+						if type(subPanelOptions.options) == "function" then
+							if not next(delayedAdditions) then
+								local timer
+								local function Loop()
+									local _pluginName, _subPanelOptions = next(delayedAdditions)
+									if not _pluginName then
+										timer:Cancel()
+										delayedAdditions = {}
+										acr:NotifyChange("BigWigs")
+										return
+									end
+									delayedAdditions[_pluginName] = nil
+									local optionsTable = securecallfunction(_subPanelOptions.options)
+									if type(optionsTable) == "table" and xpcall(acr.ValidateOptionsTable, CallErrorHandler, acr, optionsTable, optionsTable.name) then
+										aceConfigTableMainBigWigsTab.args[_subPanelOptions.key] = optionsTable
+										updateablePlugins[_pluginName] = _subPanelOptions
+									end
+								end
+								timer = loader.CTimerNewTicker(0, Loop)
+							end
+							delayedAdditions[pluginName] = subPanelOptions
+						else
+							aceConfigTableMainBigWigsTab.args[subPanelOptions.key] = subPanelOptions.options
+						end
 					end
 				end
 			end
