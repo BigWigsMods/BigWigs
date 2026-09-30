@@ -1109,7 +1109,8 @@ do
 		[360627]=3077,[360633]=3077,[360650]=3077,[360653]=3077,[360722]=3077,[360656]=3077,[361072]=3077,[360660]=3077,
 		[361078]=3077,[360661]=3077,[360662]=3077,[361080]=3077,[360664]=3077,[361081]=3077,[360666]=3077,[360705]=3077,
 		[360706]=3077,[360707]=3077,[360708]=3077,[360709]=3077,[361057]=3077,[361058]=3077,[361059]=3077,[361060]=3077,
-		[361062]=3077,[361063]=3077,
+		[361062]=3077,[361063]=3077,[360667]=3077,[360668]=3077,[360669]=3077,[360671]=3077,[360687]=3077,[360681]=3077,
+		[360686]=3077,[360674]=3077,[360688]=3077,[360694]=3077,[360695]=3077,[360697]=3077,[360699]=3077,[360701]=3077,
 		-- Midnight/Gnarldor Isle [Delve]
 		[360721]=3038,[360600]=3038,[360613]=3038,
 		-- Midnight/Den of Nalorakk [Dungeon]
@@ -1137,6 +1138,8 @@ do
 	local talkingHeadsWithConditions = {
 		-- Midnight/Murder Row [Dungeon]
 		[129619]=function(instanceID, soundKitId) return instanceID == 2813 and soundKitId == 0 end, -- Silent talking head with text
+		-- Midnight/Gnarldor Isle [Delve]
+		[138220]=function(instanceID, soundKitId) return instanceID == 3077 and soundKitId == 0 end, -- Silent talking head with text
 	}
 
 	-- Normal & Heroic Dungeons (1-off), Mythic & Mythic+ Dungeons (2-on), Raids (3-on), Timewalking (4-off), Scenarios (5-on), Delves (6-on)
