@@ -616,6 +616,7 @@ function mod:ENCOUNTER_WARNING(_, info)
 		end
 	elseif severity == 1 and duration == 4 then
 		self:DreadmarchMessage()
+		-- self:SendMessage("BigWigs_Message", nil, nil, info.text, "blue", info.iconFileID, true)
 	end
 end
 
@@ -800,7 +801,7 @@ function mod:Spiritcackle()
 end
 
 do
-	local eternalNightfallStart = 0
+	-- local eternalNightfallStart = 0
 
 	function mod:EternalNightfall()
 		local barText = CL.count:format(self:GetRename(1286918), spellCount[1286918])
@@ -823,7 +824,7 @@ do
 					self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", "StartIntermission", "boss2")
 				elseif self:GetStage() == 3 then
 					-- Dreadmarch in p3 is anchored to Eternal Nightfall, see UNIT_SPELLCAST_STOP
-					eternalNightfallStart = GetTime()
+					-- eternalNightfallStart = GetTime()
 					self:RegisterUnitEvent("UNIT_SPELLCAST_STOP", nil, "boss2")
 				end
 			end,
@@ -840,35 +841,51 @@ do
 	local dreadmarchOnMe = false
 	local dreadmarchMessageTimer = nil
 
+	local function cancelMessageTimer()
+		if dreadmarchMessageTimer then
+			mod:CancelTimer(dreadmarchMessageTimer)
+			dreadmarchMessageTimer = nil
+		end
+	end
+
 	function mod:UNIT_SPELLCAST_STOP()
 		self:UnregisterUnitEvent("UNIT_SPELLCAST_STOP", "boss2")
-		-- Dreadmarch casts 3.5s after Eternal Nightfall ends, but its timeline event always
-		-- fires 17.22s after Eternal Nightfall started, however early the kick was. A late (or
-		-- no) kick pushes the cast past its own event, so the offset has to make up the gap.
+		-- Dreadmarch casts ~3.5s after Eternal Nightfall ends (but no earlier than ~16.85s after
+		-- it started), while its timeline event always fires 17.22s after Eternal Nightfall
+		-- started, however early the kick was. The event can land before or after the cast, so
+		-- the target warning (~0.8s before the cast, 2.6-4.7s after the kick) is caught from the
+		-- kick until the cast starts instead of from the event.
+		cancelMessageTimer()
+		dreadmarchAboutToCast = false
+		dreadmarchMessageTimer = self:ScheduleTimer(function()
+			dreadmarchAboutToCast = true
+			dreadmarchOnMe = false
+			dreadmarchMessageTimer = nil
+		end, 2)
+		self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss2")
+		--[[
 		local toEvent = 17.22 - (GetTime() - eternalNightfallStart)
 		if toEvent < 3.5 then
-			if dreadmarchMessageTimer then
-				self:CancelTimer(dreadmarchMessageTimer)
-				dreadmarchMessageTimer = nil
-			end
-			if not dreadmarchOnMe then -- the warning can land before the kick does
-				dreadmarchAboutToCast = true
-			end
-			--[[
 			local barInfo = self:UpdateTimelineBar(1289900, nil, toEvent) -- Dreadmarch
 			if barInfo then
 				barInfo.offset = 6 - toEvent -- 3.5s until the cast + 2.5s until the debuffs apply
 				self:TimelineBar(barInfo, barInfo.eventInfo)
 			end
-			--]]
 		end
+		--]]
+	end
+
+	function mod:UNIT_SPELLCAST_START()
+		-- The next boss2 cast after the kick is Dreadmarch, and its warning always comes first
+		self:UnregisterUnitEvent("UNIT_SPELLCAST_START", "boss2")
+		cancelMessageTimer()
+		dreadmarchAboutToCast = false
 	end
 
 	function mod:DreadmarchMessage()
 		-- Dreadmarch and Unnerving Fixation are both 4s Medium
-		if dreadmarchAboutToCast then
+		if dreadmarchAboutToCast and not dreadmarchOnMe then
 			-- Malacrass is about to afflict you with [Dreadmarch]!
-			dreadmarchAboutToCast = false -- only the first warning in the window is Dreadmarch
 			dreadmarchOnMe = true
 			self:PersonalMessage(1289900, false, self:GetRename(1289900, 2))
 			self:PlaySound(1289900, "warning")
@@ -879,9 +896,6 @@ do
 	end
 
 	function mod:Dreadmarch(duration)
-		dreadmarchAboutToCast = false
-		dreadmarchOnMe = false
-
 		local barText = CL.count:format(self:GetRename(1289900), spellCount[1289900])
 		spellCount[1289900] = spellCount[1289900] + 1
 
@@ -890,30 +904,34 @@ do
 			key = 1289900,
 			-- offset = 2.5, -- 2s cast + ~0.5s delay before debuffs activate
 			onFinished = function(this)
-				this:onCanceled()
 				self:Message(1289900, "orange", barText)
 				if not dreadmarchOnMe then
 					self:PlaySound(1289900, "alert")
 				end
+				if self:GetStage() ~= 3 then -- the stage 3 window is closed by the cast, see UNIT_SPELLCAST_START
+					dreadmarchAboutToCast = false
+					dreadmarchOnMe = false
+				end
 			end,
 			onCanceled = function(this)
-				if dreadmarchMessageTimer then
-					self:CancelTimer(dreadmarchMessageTimer)
-					dreadmarchMessageTimer = nil
-				end
+				self:UnregisterUnitEvent("UNIT_SPELLCAST_START", "boss2")
+				cancelMessageTimer()
 				dreadmarchAboutToCast = false
+				dreadmarchOnMe = false
 			end,
 		}
-		-- Unnerving Fixation can land at any point in the phase, so keep the window to catch
-		-- the target message as narrow as possible.
-		local lead = 3.6
-		if self:GetStage() == 2 and duration > 10 then -- the second cast warning is closer to the cast
-			lead = self:Easy() and 2.5 or 1
+		if self:GetStage() == 2 then -- stage 3 is anchored to the kick, see UNIT_SPELLCAST_STOP
+			-- Unnerving Fixation can land at any point in the phase, so keep the window to catch
+			-- the target message as narrow as possible.
+			local lead = 3.6
+			if duration > 10 then -- the second cast warning is closer to the cast
+				lead = self:Easy() and 2.5 or 1.2
+			end
+			dreadmarchMessageTimer = self:ScheduleTimer(function()
+				dreadmarchAboutToCast = true
+				dreadmarchMessageTimer = nil
+			end, duration - lead)
 		end
-		dreadmarchMessageTimer = self:ScheduleTimer(function()
-			dreadmarchAboutToCast = true
-			dreadmarchMessageTimer = nil
-		end, duration - lead)
 
 		return barInfo
 	end
