@@ -125,7 +125,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 		if spellChoiceCount > 3 then
 			spellChoiceCount = 1
 		end
-	elseif duration == 18 then
+	elseif durationRounded == 18 then
 		barInfo = self:AlluringBubble(eventInfo)
 	elseif durationRounded == 8 or durationRounded == 23 or durationRounded == 33 then
 		barInfo = self:AbyssalRain(eventInfo)
