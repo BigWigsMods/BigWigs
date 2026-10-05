@@ -415,6 +415,10 @@ function mod:MythicTimeline(_, eventInfo)
 	-- stage 2
 		elseif rounded == 30 or rounded == 40 then
 			barInfo = self:VirulentSpit(rounded)
+			if rounded == 30 then -- start initial doomwarden timers, updated on first cast / interrupt on the players side
+				self:Bar(1290779, 13.5) -- Malice
+				self:Bar(1301117, 27) -- Grasping Fangs
+			end
 		end
 
 	-- intermission
@@ -541,6 +545,10 @@ function mod:HeroicTimeline(_, eventInfo)
 		-- stage 2
 		elseif rounded == 30 or rounded == 40 then
 			barInfo = self:VirulentSpit(rounded)
+			if rounded == 30 then -- start initial doomwarden timers, updated on first cast / interrupt on the players side
+				self:Bar(1290779, 13.5) -- Malice
+				self:Bar(1301117, 27) -- Grasping Fangs
+			end
 		end
 
 	-- intermission
@@ -646,6 +654,10 @@ function mod:EasyTimeline(_, eventInfo)
 		elseif rounded == 30 or rounded == 40 then
 			barInfo = self:VirulentSpit()
 			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+			if rounded == 30 then -- start initial doomwarden timers, updated on first cast / interrupt on the players side
+				self:Bar(1290779, 13.5) -- Malice
+				self:Bar(1301117, 27) -- Grasping Fangs
+			end
 		end
 
 	-- intermission
