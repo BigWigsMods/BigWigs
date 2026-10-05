@@ -355,7 +355,7 @@ do
 		local reApplyIcon
 		local iconFrame = bar.candyBarIconFrame
 		local iconBd = bar.candyBarIconFrameBackdrop
-		if iconFrame:IsAnchoringSecret() then
+		if iconFrame.IsAnchoringSecret and iconFrame:IsAnchoringSecret() then
 			reApplyIcon = bar:GetIcon()
 			iconFrame:SetToDefaults()
 			iconBd:SetToDefaults()
@@ -472,7 +472,7 @@ do
 		local reApplyIcon
 		local iconFrame = bar.candyBarIconFrame
 		local iconBd = bar.candyBarIconFrameBackdrop
-		if iconFrame:IsAnchoringSecret() then
+		if iconFrame.IsAnchoringSecret and iconFrame:IsAnchoringSecret() then
 			reApplyIcon = bar:GetIcon()
 			iconFrame:SetToDefaults()
 			iconBd:SetToDefaults()
@@ -672,7 +672,7 @@ do
 		local statusbar = bar.candyBarBar
 		local iconFrame = bar.candyBarIconFrame
 		local iconBd = bar.candyBarIconFrameBackdrop
-		if iconFrame:IsAnchoringSecret() then
+		if iconFrame.IsAnchoringSecret and iconFrame:IsAnchoringSecret() then
 			reApplyIcon = bar:GetIcon()
 			iconFrame:SetToDefaults()
 			iconBd:SetToDefaults()

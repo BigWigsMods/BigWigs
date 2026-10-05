@@ -5148,7 +5148,7 @@ end
 --
 
 do
-	local issecretvalue = issecretvalue
+	local issecretvalue = issecretvalue or function() return false end -- XXX 12.0 compat
 	--- Check if a value is flagged as being a secret
 	-- @param value the value to check
 	function boss:IsSecret(value)

@@ -63,7 +63,7 @@ do
 	local SendBattleNetMessage = BigWigsLoader.SendBattleNetMessage
 	local Ambiguate = BigWigsLoader.Ambiguate
 	local myClient = WOW_PROJECT_ID
-	local issecretvalue = issecretvalue
+	local issecretvalue = issecretvalue or function() return false end -- XXX 12.0 compat
 	popupFrame:SetScript("OnEvent", function(self, event, message, sender, _, _, _, flag, _, _, _, _, _, guid, bnSenderID)
 		if event == "GROUP_LEFT" then
 			if not IsInGroup() then
