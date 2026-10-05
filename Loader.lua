@@ -953,6 +953,7 @@ do
 	end
 
 	for i = 1, GetNumAddOns() do
+		local addonIndex = i
 		local name, _, _, _, addonState = GetAddOnInfo(i)
 		if name == "BigWigs_Core" then
 			indexOfCore = i
@@ -1011,17 +1012,17 @@ do
 								-- Removing it from the core list means it will correctly load AFTER loadCoreAndOptions() runs.
 								-- i.e. we are trying to prevent this: Load Core > Load Addon > Load Options
 								-- we want to ensure this: Load Core > Load Options > Load Addon
-								if i == loadOnCoreEnabled[tableEntry] then
+								if addonIndex == loadOnCoreEnabled[tableEntry] then
 									table.remove(loadOnCoreEnabled, tableEntry)
 									break
 								end
 							end
 							loadCoreAndOptions()
-							load(i) -- Load the addon/plugin
+							load(addonIndex) -- Load the addon/plugin
 						end)
 					else
 						RegisterSlashCommand(slash, function()
-							load(i) -- Load the addon/plugin
+							load(addonIndex) -- Load the addon/plugin
 						end)
 					end
 				end
