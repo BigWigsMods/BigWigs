@@ -490,6 +490,9 @@ do
 	}
 	local AddAuraSound = C_UnitAuras.AddAuraSound
 	function plugin:RegisterAuraSounds(bossModule)
+		-- AddAuraSound was added in 12.1. Older supported clients only expose the
+		-- private-aura API, which cannot handle this registration format.
+		if not AddAuraSound then return end
 		if bossModule:HasAuraData() and not registeredAuraModules[bossModule] then
 			if self:IsAuraSoundRestrictionsActive() then
 				self:RegisterEvent("ADDON_RESTRICTION_STATE_CHANGED")
