@@ -640,6 +640,7 @@ do
 		self:UnregisterMessage("BigWigs_SetInfoBoxTable")
 		self:UnregisterMessage("BigWigs_SetInfoBoxTableWithBars")
 		self:UnregisterMessage("BigWigs_SetInfoBoxBar")
+		self:UnregisterMessage("BigWigs_SetInfoBoxTimerBar")
 	end
 end
 
