@@ -198,7 +198,7 @@ function mod:ShadowclawSlam(eventInfo)
 	local count = slamCount
 	if eventInfo.durationRounded == 16 then -- 136 and 16 are started on the pull but possibly out of order, correct count here.
 		count = 1
-	elseif eventInfo.durationCount == 136 then
+	elseif eventInfo.durationRounded == 136 then
 		count = 2
 	end
 	local barText = CL.count:format(self:GetRename(1241692), count)
