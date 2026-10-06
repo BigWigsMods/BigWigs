@@ -213,9 +213,9 @@ L.autotalk_generic_desc = "Sélectionne automatiquement le dialogue avec le PNJ 
 L.autotalk_notice = "Interaction automatique avec le PNJ %s."
 
 -- Auto Player Choice
---L.autoPlayerChoice = "Automatic Player Choice"
---L.autoPlayerChoice_delve_power_desc = "Automatically select player powerups when they are dropped by creatures in the Delve."
---L.autoPlayerChoice_notice = "Automatically selecting: %s"
+L.autoPlayerChoice = "Choix automatique du joueur"
+L.autoPlayerChoice_delve_power_desc = "Choisit automatiquement les améliorations lorsqu'elles sont récupérées sur les créatures dans le Gouffre."
+L.autoPlayerChoice_notice = "Choix automatique : %s"
 
 -- GUI notes
 L.intermissionOnly = "Seulement l'intervalle"
