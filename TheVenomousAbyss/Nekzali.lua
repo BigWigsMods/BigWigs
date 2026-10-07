@@ -15,9 +15,6 @@ mod:SetStage(1)
 -- Locals
 --
 
-local activeBars = {}
-local backupBars = {}
-
 local durationEventCount = {}
 local repeaters = {}
 local spellCount = {}
@@ -154,14 +151,10 @@ end
 --
 
 function mod:OnBossEnable()
-	backupBars = {}
-	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED")
-	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
-	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
+	self:RegisterTimelineEvents()
 end
 
 function mod:OnEncounterStart()
-	activeBars = {}
 	self:SetStage(1)
 	durationEventCount = {}
 
@@ -194,8 +187,7 @@ end
 -- Timeline Event Handlers
 --
 
-function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
-	if eventInfo.source ~= 0 or self:IsWiping() then return end
+function mod:OnTimelineEventAdded(eventInfo)
 	local barInfo = nil
 
 	local stage = self:GetStage()
@@ -257,60 +249,27 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 		barInfo.duration = remaining > 0 and { eventInfo.duration, total } or nil
 	end
 
-	if barInfo then
-		barInfo.eventID = eventInfo.id
-		activeBars[eventInfo.id] = barInfo
-		if self:ShouldShowBars() then
-			self:CDBar(barInfo.key, barInfo.duration or eventInfo.duration, barInfo.msg, barInfo.icon, eventInfo.id)
-		end
-	elseif barInfo == nil and self:ShouldShowBars() then
-		self:ErrorForTimelineEvent(eventInfo)
-		backupBars[eventInfo.id] = true
-		self:SendMessage("BigWigs_StartBar", nil, nil, ("[B] %s"):format(eventInfo.spellName), eventInfo.duration, eventInfo.iconFileID, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
-
-		local state = C_EncounterTimeline.GetEventState(eventInfo.id)
-		if state == 1 then -- Paused
-			self:SendMessage("BigWigs_PauseBar", nil, nil, eventInfo.id)
-		end
-	end
+	return barInfo
 end
 
-function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
-	local state = C_EncounterTimeline.GetEventState(eventID)
-	local barInfo = activeBars[eventID]
+function mod:OnTimelineEventChanged(barInfo, eventID, state)
+	if self:GetStage() == 1 and state == 3 and self:ShouldShowBars() and not self:IsWiping() and GetTime() - self.stageTime > 1 then -- Canceled
+		-- stop p1 gap bars with blizzard bars
+		self:CancelTimer(repeaters[1285681])
+		self:StopBar(CL.count:format(self:GetRename(1285681), ignitionCount)) -- Soulcoil Ignition
+		self:StopBar(CL.count:format(self:GetRename(1295397), spellCount[1295397])) -- Restless Amani
+		self:StopBar(CL.count:format(self:GetRename(1287426), spellCount[1287426])) -- Essence Rend
+		self:StopBar(CL.count:format(self:GetRename(1292036), spellCount[1292036])) -- Possession Barrage
+		if self:Mythic() then
+			self:CancelTimer(repeaters[1293212])
+			self:StopBar(CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
+	 	end
+	end
 
 	if barInfo and barInfo.gapTimer and state == 2 then -- Finished (reuse the eventID to set the spell indicator for the next bar)
-		self:Bar(barInfo.key, barInfo.gapTimer, CL.count:format(self:GetRename(barInfo.key, barInfo.renamePosition), spellCount[barInfo.key]), nil, eventID)
+		-- start gap bar
+		self:Bar(barInfo.key, barInfo.gapTimer, CL.count:format(self:GetRename(barInfo.key), spellCount[barInfo.key]), nil, eventID)
 	end
-
-	if barInfo then
-		if state == 2 then -- Finished
-			activeBars[eventID] = nil
-			self:StopBar(barInfo.msg)
-			if barInfo.onFinished and self:ShouldShowBars() then
-				barInfo:onFinished()
-			end
-		elseif state == 3 then -- Canceled
-			activeBars[eventID] = nil
-			self:StopBar(barInfo.msg)
-			if barInfo.onCanceled and self:ShouldShowBars() then
-				barInfo:onCanceled()
-			end
-		end
-	elseif backupBars[eventID] then
-		if state == 0 then -- Enum.EncounterTimelineEventState.Active
-			self:SendMessage("BigWigs_ResumeBar", nil, nil, eventID)
-		elseif state == 1 then -- Enum.EncounterTimelineEventState.Paused
-			self:SendMessage("BigWigs_PauseBar", nil, nil, eventID)
-		elseif state == 2 or state == 3 then -- Enum.EncounterTimelineEventState.Finished / Enum.EncounterTimelineEventState.Canceled
-			self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
-		end
-	end
-end
-
-function mod:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
-	activeBars[eventID] = nil
-	backupBars[eventID] = nil
 end
 
 --------------------------------------------------------------------------------
