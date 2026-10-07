@@ -1667,6 +1667,14 @@ do
 	local EventSource = _G.Enum.EncounterTimelineEventSource
 	local EventState = _G.Enum.EncounterTimelineEventState
 
+	--- Register the encounter timeline events and start tracking timeline bars.
+	-- The module must define `OnTimelineEventAdded(eventInfo)`, which is called for every encounter event that is
+	-- added and decides what is shown: return a barInfo table to start a bar (see `TimelineBar`), nil to show a
+	-- backup bar and print an error (see `TimelineBackupBar`), or false to show nothing.
+	-- The module can also define `OnTimelineEventChanged(barInfo, eventID, state)` (return true to skip the default
+	-- pause/resume/stop handling) and `OnTimelineEventRemoved(barInfo, eventID)`.
+	-- @bool[opt] batchEventDispatch if true, events added in the same frame are dispatched together on the next frame and
+	-- the list of all of them is passed to `OnTimelineEventAdded` as a second argument
 	function boss:RegisterTimelineEvents(batchEventDispatch)
 		-- local addedFunc = nil
 		-- if self:Mythic() and self.OnTimelineEventAddedMythic then
@@ -1696,18 +1704,28 @@ do
 
 	-- Helper methods so we can hook them
 
+	--- Get the info for a timeline event.
+	-- @number eventID the timeline event id
+	-- @return eventInfo the table returned by C_EncounterTimeline.GetEventInfo
 	function boss:GetTimelineEventInfo(eventID)
 		return C_EncounterTimeline.GetEventInfo(eventID)
 	end
 
+	--- Get the state of a timeline event.
+	-- @number eventID the timeline event id
+	-- @return state the Enum.EncounterTimelineEventState value (0 Active, 1 Paused, 2 Finished, 3 Canceled)
 	function boss:GetTimelineEventState(eventID)
 		return C_EncounterTimeline.GetEventState(eventID)
 	end
 
+	--- Get all of the current timeline events.
+	-- @return table a list of timeline event ids
 	function boss:GetTimelineEventList()
 		return C_EncounterTimeline.GetEventList()
 	end
 
+	--- Get the number of running encounter timeline events.
+	-- @return number the count of active or paused events from the encounter
 	function boss:GetTimelineEventCount()
 		-- return C_EncounterTimeline.GetEventCountBySource(EventSource.Encounter) -- weird counts, doesn't filter state?
 		local count = 0
@@ -1723,11 +1741,18 @@ do
 		return count
 	end
 
+	--- Get the bar info for a timeline event.
+	-- @number eventID the timeline event id
+	-- @return barInfo the barInfo table of the running bar, or nil
 	function boss:GetTimelineBarInfo(eventID)
 		return self.timelineActiveBars[eventID]
 	end
 
 	local function cmp(a, b) return boss:GetTimelineBarTimeRemaining(a) < boss:GetTimelineBarTimeRemaining(b) end
+	--- Get the bar info for running timeline bars by their option key.
+	-- @param key the option key
+	-- @return barInfo the barInfo table of the bar with the least time remaining, or nil
+	-- @return table a list of every matching barInfo table, sorted by time remaining
 	function boss:GetTimelineBarInfoByKey(key)
 		local results = {}
 		for eventID, barInfo in next, self.timelineActiveBars do
@@ -1741,6 +1766,9 @@ do
 		return results[1], results
 	end
 
+	--- Get the time remaining on a timeline bar.
+	-- @param[type=table] barInfo the barInfo table
+	-- @return number seconds remaining, or 0 if the bar was never started or already expired
 	function boss:GetTimelineBarTimeRemaining(barInfo)
 		if not barInfo.startTime then return 0 end
 
@@ -1749,6 +1777,13 @@ do
 	end
 
 
+	--- Stop a timeline bar and remove it from the running bars.
+	-- When finished, `barInfo.onFinished` is called. If `barInfo.delay` is set, the bar is kept until the delay has
+	-- passed and `barInfo.onFinishedDelayed` is then called. When canceled, `barInfo.onCanceled` is called if `runCanceled`
+	-- is set. Callbacks are only called if bars are shown (see `ShouldShowBars`).
+	-- @param[type=table] barInfo the barInfo table
+	-- @bool[opt] isFinished true if the event finished, otherwise it's treated as canceled
+	-- @bool[opt] runCanceled if true and the bar is canceled, call `barInfo.onCanceled`
 	function boss:StopTimelineBar(barInfo, isFinished, runCanceled)
 		if not barInfo then return end
 		if barInfo.state and barInfo.state >= 2 then return end -- already ended
@@ -1789,6 +1824,11 @@ do
 		end
 	end
 
+	--- Stop the running timeline bar for a key and set a new duration on its bar info.
+	-- No callbacks are called. The bar is not restarted, pass the returned barInfo to `TimelineBar` to show it again.
+	-- @param key the option key
+	-- @number duration the new time remaining, the previous total duration is kept as the bar's max time if it's longer
+	-- @return barInfo the barInfo table of the bar with the least time remaining, or nil
 	function boss:UpdateTimelineBar(key, duration)
 		local barInfo = self:GetTimelineBarInfoByKey(key)
 		if barInfo and barInfo.state == EventState.Active then
@@ -1801,6 +1841,29 @@ do
 		return barInfo
 	end
 
+	--- Start a bar for a timeline event and track it until the event ends.
+	-- Does nothing if bars aren't shown (see `ShouldShowBars`) or the encounter is wiping.
+	--
+	-- barInfo fields:
+	--
+	-- - `key`: the option key
+	-- - `msg`: the bar text
+	-- - `icon`: [opt] the bar icon
+	-- - `duration`: [opt] seconds, or a table of {remaining, total}. Defaults to the event duration
+	-- - `maxQueueDuration`: [opt] defaults to the event value. Set to true to hold the bar at 0 until it's stopped
+	-- - `delay`: [opt] seconds to extend the bar by, e.g. to end with a cast instead of starting with it
+	-- - `finishOnDuration`: [opt] if true, finish the bar when the duration ends instead of waiting for the event
+	-- - `ignoreState`: [opt] if true, state changes of the event don't affect the bar, e.g. to keep it running when the
+	-- event is canceled. No callbacks are called for the state change and the bar has to be stopped with `StopTimelineBar`
+	-- - `onFinished`: [opt] function(barInfo) called when the event finishes
+	-- - `onFinishedDelayed`: [opt] function(barInfo) called after `delay` has passed since the event finished
+	-- - `onCanceled`: [opt] function(barInfo) called when the event is canceled
+	-- - `onRemoved`: [opt] function(barInfo) called when the event is removed, if the bar is still running
+	--
+	-- The fields `eventID`, `eventInfo`, `duration`, `startTime` and `state` are set on the table.
+	-- @param[type=table] barInfo the barInfo table
+	-- @param[opt] eventInfo the timeline event info, if nil the bar isn't tied to an event and barInfo.duration is required
+	-- @return barInfo the barInfo table, or nil if the bar wasn't started
 	function boss:TimelineBar(barInfo, eventInfo)
 		if not self:ShouldShowBars() or self:IsWiping() then return end
 
@@ -1848,6 +1911,9 @@ do
 		return barInfo
 	end
 
+	--- Start a generic bar for a timeline event that the module didn't handle and print an error for it.
+	-- Does nothing if bars aren't shown (see `ShouldShowBars`) or the encounter is wiping.
+	-- @param[type=table] eventInfo the timeline event info
 	function boss:TimelineBackupBar(eventInfo)
 		if not self:ShouldShowBars() or self:IsWiping() then return end
 
