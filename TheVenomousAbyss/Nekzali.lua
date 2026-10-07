@@ -83,11 +83,10 @@ mod:SetRenames({
 	["stages"] = { CL.intermission, CL.stage:format(2), original = false, notes = {CL.intermission, CL.stage:format(2)}}, -- Stages
 	-- [1284034] = {26662, CL.custom_end:format(mod.displayName, mod:SpellName(26662)), notes = {false, CL.messageNote}}, -- Uncoiled Rage
 	[1285681] = {CL.dodge}, -- Soulcoil Ignition
-	[1287426] = {1287426, CL.you:format(mod:SpellName(1287426)), notes = {CL.generalNote, CL.messageOnYouNote}}, -- Essence Rend  original = {1287426, CL.you:format(mod:SpellName(1287426))},
+	[1287426] = {1287426, CL.you:format(mod:SpellName(1287426)), notes = {CL.generalNote, CL.messageOnYouNote}}, -- Essence Rend
 	[1295397] = {CL.adds}, -- Restless Amani
 	[1287533] = {CL.adds_spawning}, -- Gravebound Advance
-	[1292036] = {L.possession_barrage}, -- Possession Barrage
-	-- [1289696] = {CL.big_adds}, -- Tether of Awakening
+	[1292036] = {L.possession_barrage, CL.you:format(L.possession_barrage), CL.cast:format(L.possession_barrage), original = {1292036, CL.you:format(mod:SpellName(1292036)), CL.cast:format(mod:SpellName(1292036))}, notes = {CL.generalNote, CL.messageOnYouNote, CL.castTimerNote}}, -- Possession Barrage
 	[1293212] = {1293212}, -- Grasping Depths
 	[1305421] = {CL.soak}, -- Hungering Pyre
 	[1299673] = {1299673, CL.cast:format(mod:SpellName(1299673)), notes = {CL.generalNote, CL.castTimerNote}}, -- Invoke
@@ -102,16 +101,17 @@ mod:SetAuraData({
 	{1284103, soundOnApplied = "warning", duration = 2}, -- Possession Barrage
 	{1284109, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.tank_debuff}, -- Hollowing Strikes -- Tank Stacks
 	{1287434, soundOnApplied = "warning", dispel = "magic", duration = 15}, -- Essence Rend
-	{1298698, soundOnApplied = "none", duration = 12, header = CL.general}, -- Residual Toll
-	{1297624, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Ritual Burn
+	{1293214, soundOnApplied = "none", soundOnAppliedDose = "none", difficulty = "mythic"}, -- Grasping Depths
+
+	{1297624, soundOnApplied = "none", soundOnAppliedDose = "none", header = CL.general}, -- Ritual Burn
 	{1288772, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Soulcoil Rite
 	{1285623, soundOnApplied = "none"}, -- Soulcoil Well
-	{1293214, soundOnApplied = "none", soundOnAppliedDose = "none", difficulty = "mythic"}, -- Grasping Depths
 	{1300524, 1300521, soundOnApplied = "none", difficulty = "mythic"}, -- Immortal Coil
 	{1299988, soundOnApplied = "none", difficulty = "mythic"}, -- Immortal Coil
 	{1290361, 1292751, soundOnApplied = "none", difficulty = "mythic"}, -- Soulcoiled
 	{1300235, soundOnApplied = "none", difficulty = "mythic"}, -- Soul Exhaustion
 	{1300239, soundOnApplied = "none", soundOnAppliedDose = "none", difficulty = "mythic"}, -- Swirling Spirit
+
 	{1307939, soundOnApplied = "none", soundOnAppliedDose = "none", header = CL.intermission}, -- Corpse Blight
 	{1289875, soundOnApplied = "none", duration = 3}, -- Cremation
 	{1288554, soundOnApplied = "none"}, -- Latent Cultist
@@ -131,21 +131,27 @@ function mod:GetOptions()
 		1287426, -- Essence Rend
 		1295397, -- Restless Amani
 			1287533,  -- Gravebound Advance
-		1292036, -- Possession Barrage
+		{1292036, "CASTBAR"}, -- Possession Barrage
 
 		-- Intermission: Ritual of Awakening
-		-- 1289696, -- Tether of Awakening
-		1305421, -- Hungering Pyre
-		-- Restless Amani
+		{1305421, "CASTBAR"}, -- Hungering Pyre
 
 		-- Stage Two: Uncoiling
 		{1299673, "CASTBAR"}, -- Invoke
-		-- Possession Barrage
 	}, {
+		{
+			tabName = self:SpellName(-36184), -- Stage 1
+			{ "stages", 1285681, 1287426, 1295397, 1287533, 1292036, 1293212 },
+		},
+		{
+			tabName = self:SpellName(-35255), -- Intermission
+			 { "stages", 1305421, 1295397, 1287533, 1293212 },
+		},
+		{
+			tabName = self:SpellName(-36195), -- Stage 2
+			{ "stages", 1299673, 1287426, 1295397, 1287533, 1293212 },
+		},
 		[1293212] = "mythic",
-		[1285681] = -36184, -- Stage 1
-		[1305421] = -35255, -- Intermission
-		[1299673] = -36195, -- Stage 2
 	}
 end
 
@@ -187,7 +193,8 @@ function mod:OnEncounterStart()
 	end
 
 	self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1")
-	self:RegisterUnitEvent("UNIT_SPELLCAST_STOP", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_INTERRUPTED", "UNIT_SPELLCAST_SUCCEEDED", "boss1")
 end
 
 --------------------------------------------------------------------------------
@@ -318,96 +325,102 @@ end
 --
 
 do
-	-- P1 restarts every 71s (there are no timers up for 8s between sets).
-	-- To catch the intermission we watch for a 1.5s Ritual of Awakening cast.
-	-- Intermission restarts every 30s (if Residual Toll is removed, there's a 10s gap).
-	-- P2 starts with the next channeled spell (Uncoiling) after the Ritual of Awakening channel.
-	-- P2 restarts every 80s (there are no timers up for 12s between sets).
-
 	local startTime = 0
 	function mod:UNIT_SPELLCAST_START()
 		startTime = GetTime()
 	end
-	function mod:UNIT_SPELLCAST_STOP(_, unit)
-		if GetTime() - startTime < 2 then -- Ritual of Awakening 1.5s
+	function mod:UNIT_SPELLCAST_SUCCEEDED(event, unit)
+		if GetTime() - startTime < 2 or event == "UNIT_SPELLCAST_INTERRUPTED" then -- Ritual of Awakening 1.5s
 			self:UnregisterUnitEvent("UNIT_SPELLCAST_START", unit)
-			self:UnregisterUnitEvent("UNIT_SPELLCAST_STOP", unit)
+			self:UnregisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", unit)
+			self:UnregisterUnitEvent("UNIT_SPELLCAST_INTERRUPTED", unit)
 			self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", nil, unit)
 
-			self:CancelTimer(repeaters[1285681])
-			self:StopBar(CL.count:format(self:GetRename(1285681), ignitionCount)) -- Soulcoil Ignition
-			self:StopBar(CL.count:format(self:GetRename(1295397), spellCount[1295397])) -- Restless Amani
-			self:StopBar(CL.count:format(self:GetRename(1287426), spellCount[1287426])) -- Essence Rend
-			self:StopBar(CL.count:format(self:GetRename(1292036), spellCount[1292036])) -- Possession Barrage
-			if self:Mythic() then
-				self:CancelTimer(repeaters[1293212])
-				self:StopBar(CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
-			end
-
-			durationEventCount = {}
-
-			spellCount[1287426] = 1 -- Essence Rend
-			spellCount[1295397] = 1 -- Restless Amani
-			spellCount[1292036] = 1 -- Possession Barrage
-
-			if self:ShouldShowBars() then
-				-- stage set in channel, which is ~1s later (runs to the well)
-				self:Message("stages", "cyan", self:GetRename("stages", 1), false) -- Intermission
-				self:PlaySound("stages", "long")
-			end
+			self:EndPhaseOne()
 		end
 	end
 end
 
-function mod:UNIT_SPELLCAST_CHANNEL_START(event, unit, _, _, castID)
+function mod:UNIT_SPELLCAST_CHANNEL_START(event, unit)
 	local stage = self:GetStage()
 	if stage == 1 then -- Ritual of Awakening
-		self:SetStage(1.5)
-
-		if self:ShouldShowBars() then
-			local gap = 16.5
-			self:Bar(1305421, 11 + gap, CL.count:format(self:GetRename(1305421), spellCount[1305421])) -- Hungering Pyre
-			self:Bar(1295397, (self:Mythic() and 25 or 30) + gap, CL.count:format(self:GetRename(1295397), spellCount[1295397])) -- Restless Amani
-
-			if self:Mythic() then
-				-- restart with the same count so down groups can stay consistent
-				local ritualChannel = 20.5
-				local graspingDepthsCD = ritualChannel + 23.5
-				self:Bar(1293212, graspingDepthsCD, CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
-				repeaters[1293212] = self:ScheduleTimer("GraspingDepthsRepeater", graspingDepthsCD)
-			end
-		end
+		self:StartIntermission()
 
 	elseif stage == 1.5 then -- Uncoiling
 		self:UnregisterUnitEvent(event, unit)
+		self:StartPhaseTwo()
+	end
+end
 
-		self:StopBar(CL.count:format(self:GetRename(1295397), spellCount[1295397])) -- Restless Amani
-		self:StopBar(CL.count:format(self:GetRename(1305421), spellCount[1305421])) -- Hungering Pyre
+function mod:EndPhaseOne()
+	self:CancelTimer(repeaters[1285681])
+	self:StopBar(CL.count:format(self:GetRename(1285681), ignitionCount)) -- Soulcoil Ignition
+	self:StopBar(CL.count:format(self:GetRename(1295397), spellCount[1295397])) -- Restless Amani
+	self:StopBar(CL.count:format(self:GetRename(1287426), spellCount[1287426])) -- Essence Rend
+	self:StopBar(CL.count:format(self:GetRename(1292036), spellCount[1292036])) -- Possession Barrage
+	if self:Mythic() then
+		self:CancelTimer(repeaters[1293212])
+		self:StopBar(CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
+	end
 
-		durationEventCount = {}
+	durationEventCount = {}
 
-		spellCount[1287426] = 1 -- Essence Rend
-		spellCount[1295397] = 1 -- Restless Amani
-		spellCount[1292036] = 1 -- Possession Barrage
+	spellCount[1287426] = 1 -- Essence Rend
+	spellCount[1295397] = 1 -- Restless Amani
+	spellCount[1292036] = 1 -- Possession Barrage
 
-		self:SetStage(2)
-		if self:ShouldShowBars() then
-			self:Message("stages", "cyan", self:GetRename("stages", 2), false) -- Stage 2
-			self:PlaySound("stages", "long")
+	if self:ShouldShowBars() then
+		-- stage set in channel, which is ~1s later (runs to the well)
+		self:Message("stages", "cyan", self:GetRename("stages", 1), false) -- Intermission
+		self:PlaySound("stages", "long")
+	end
+end
 
-			local gap = 5
-			self:Bar(1299673, 8 + gap, CL.count:format(self:GetRename(1299673), spellCount[1299673])) -- Invoke
-			self:Bar(1292036, 40 + gap, CL.count:format(self:GetRename(1292036), spellCount[1292036])) -- Possession Barrage
-			self:Bar(1287426, 49.5 + gap, CL.count:format(self:GetRename(1287426), spellCount[1287426])) -- Essence Rend
-			self:Bar(1295397, 20 + gap, CL.count:format(self:GetRename(1295397), spellCount[1295397])) -- Restless Amani
+function mod:StartIntermission()
+	self:SetStage(1.5)
 
-			if self:Mythic() then
-				self:CancelTimer(repeaters[1293212])
-				-- restart with the same count so down groups can stay consistent
-				local graspingDepthsCD = 27.5
-				self:Bar(1293212, graspingDepthsCD, CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
-				repeaters[1293212] = self:ScheduleTimer("GraspingDepthsRepeater", graspingDepthsCD)
-			end
+	if self:ShouldShowBars() then
+		local gap = 16.5
+		self:Bar(1305421, 11 + gap, CL.count:format(self:GetRename(1305421), spellCount[1305421])) -- Hungering Pyre
+		self:Bar(1295397, (self:Mythic() and 25 or 30) + gap, CL.count:format(self:GetRename(1295397), spellCount[1295397])) -- Restless Amani
+
+		if self:Mythic() then
+			-- restart with the same count so down groups can stay consistent
+			local ritualChannel = 20.5
+			local graspingDepthsCD = ritualChannel + 23.5
+			self:Bar(1293212, graspingDepthsCD, CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
+			repeaters[1293212] = self:ScheduleTimer("GraspingDepthsRepeater", graspingDepthsCD)
+		end
+	end
+end
+
+function mod:StartPhaseTwo()
+	self:StopBar(CL.count:format(self:GetRename(1295397), spellCount[1295397])) -- Restless Amani
+	self:StopBar(CL.count:format(self:GetRename(1305421), spellCount[1305421])) -- Hungering Pyre
+
+	durationEventCount = {}
+
+	spellCount[1287426] = 1 -- Essence Rend
+	spellCount[1295397] = 1 -- Restless Amani
+	spellCount[1292036] = 1 -- Possession Barrage
+
+	self:SetStage(2)
+	if self:ShouldShowBars() then
+		self:Message("stages", "cyan", self:GetRename("stages", 2), false) -- Stage 2
+		self:PlaySound("stages", "long")
+
+		local gap = 5
+		self:Bar(1299673, 8 + gap, CL.count:format(self:GetRename(1299673), spellCount[1299673])) -- Invoke
+		self:Bar(1292036, 40 + gap, CL.count:format(self:GetRename(1292036), spellCount[1292036])) -- Possession Barrage
+		self:Bar(1287426, 49.5 + gap, CL.count:format(self:GetRename(1287426), spellCount[1287426])) -- Essence Rend
+		self:Bar(1295397, 20 + gap, CL.count:format(self:GetRename(1295397), spellCount[1295397])) -- Restless Amani
+
+		if self:Mythic() then
+			self:CancelTimer(repeaters[1293212])
+			-- restart with the same count so down groups can stay consistent
+			local graspingDepthsCD = 27.5
+			self:Bar(1293212, graspingDepthsCD, CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
+			repeaters[1293212] = self:ScheduleTimer("GraspingDepthsRepeater", graspingDepthsCD)
 		end
 	end
 end
@@ -426,6 +439,7 @@ function mod:SoulcoilIgnitionRepeater()
 	ignitionCount = ignitionCount + 1
 
 	-- XXX these are mean values with a few seconds of variance, what causes it x.x
+	-- The two gaps don't overlap (73.7-75.3 and 68.7-71.7)
 	local timers = { 3.0, 74.5, 70.5 }
 	local cd = timers[ignitionCount]
 	if cd then
@@ -467,17 +481,22 @@ function mod:RestlessAmani()
 	}
 end
 
-function mod:PossessionBarrage()
+function mod:PossessionBarrage(duration)
 	local barText = CL.count:format(self:GetRename(1292036), spellCount[1292036])
 	spellCount[1292036] = spellCount[1292036] + 1
-
 	return {
 		msg = barText,
 		key = 1292036,
 		onFinished = function()
-			self:Message(1292036, "purple", barText)
-			self:PlaySound(1292036, "alert")
-			-- 6s cast on current target, then 2s channel
+			local timer = self:ScheduleTimer(function()
+				self:Message(1292036, "purple", barText)
+				self:PlaySound(1292036, "alert")
+			end, 1)
+			self:PersonalMessageFromBlizzMessage(1284103, 1, false, self:GetRename(1292036, 2), nil, nil, function()
+				self:CancelTimer(timer)
+				self:PlaySound(1292036, "warning")
+			end)
+			self:CastBar(1292036, 6, 3)
 		end
 	}
 end
@@ -493,11 +512,11 @@ function mod:GraspingDepthsRepeater()
 	local stage = self:GetStage()
 	local cd
 	if stage == 1 then
-		cd = 71 -- 42.5 into the pull, then every 71
+		cd = 71
 	elseif stage == 1.5 then
-		cd = 35 -- 44 into the intermission, then roughly every 35
+		cd = 35
 	elseif stage == 2 then
-		cd = 40 -- 27.5 into stage 2, then every 40
+		cd = 40
 	end
 	if cd then
 		self:Bar(1293212, cd, CL.count:format(self:GetRename(1293212), graspingDepthsCount))
@@ -516,7 +535,10 @@ function mod:HungeringPyre()
 		key = 1305421,
 		onFinished = function()
 			self:Message(1305421, "orange", barText)
-			-- self:PlaySound(1305421, "alert")
+			self:CastBar(1305421, 7.5, 2)
+			if not self:Tank() then
+				self:PlaySound(1305421, "alert")
+			end
 		end
 	}
 end
