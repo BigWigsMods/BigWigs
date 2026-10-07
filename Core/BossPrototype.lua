@@ -716,6 +716,19 @@ function boss:Disable(isWipe)
 		self.stageTime = nil
 		self.blizzMessageTimer = nil
 
+		if self.timelineActiveBars then
+			for _, info in next, self.timelineActiveBars do
+				self:SendMessage("BigWigs_StopBar", self, info.msg)
+			end
+			self.timelineActiveBars = nil
+		end
+		if self.timelineBackupBars then
+			for eventID in next, self.timelineBackupBars do
+				self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
+			end
+			self.timelineBackupBars = nil
+		end
+
 		if not isWiping then
 			self:SendMessage("BigWigs_OnBossDisable", self)
 		end
@@ -1642,6 +1655,302 @@ do
 	-- @return boolean
 	function boss:IsMobEngaged(guid)
 		return engagedGUIDs[guid] and true or false
+	end
+end
+
+-------------------------------------------------------------------------------
+-- Timeline event functions
+-- @section timeline_events
+--
+
+do
+	local EventSource = _G.Enum.EncounterTimelineEventSource
+	local EventState = _G.Enum.EncounterTimelineEventState
+
+	function boss:RegisterTimelineEvents(batchEventDispatch)
+		-- local addedFunc = nil
+		-- if self:Mythic() and self.OnTimelineEventAddedMythic then
+		-- 	addedFunc = "OnTimelineEventAddedMythic"
+		-- elseif self:Heroic() and self.OnTimelineEventAddedHeroic then
+		-- 	addedFunc = "OnTimelineEventAddedHeroic"
+		-- elseif self:Normal() and self.OnTimelineEventAddedNormal then
+		-- 	addedFunc = "OnTimelineEventAddedNormal"
+		-- elseif self:LFR() and self.OnTimelineEventAddedLFR then
+		-- 	addedFunc = "OnTimelineEventAddedLFR"
+		-- elseif self:Easy() and self.OnTimelineEventAddedEasy then
+		-- 	addedFunc = "OnTimelineEventAddedEasy"
+		-- end
+
+		if not self.OnTimelineEventAdded then
+			core:Print(format("Module %q tried to register for timeline events without an event handler.", self.moduleName))
+			return
+		end
+
+		self.timelineActiveBars = {}
+		self.timelineBackupBars = {}
+
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", batchEventDispatch and "ENCOUNTER_TIMELINE_EVENT_ADDED_DELAYED" or nil)
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
+	end
+
+	-- Helper methods so we can hook them
+
+	function boss:GetTimelineEventInfo(eventID)
+		return C_EncounterTimeline.GetEventInfo(eventID)
+	end
+
+	function boss:GetTimelineEventState(eventID)
+		return C_EncounterTimeline.GetEventState(eventID)
+	end
+
+	function boss:GetTimelineEventList()
+		return C_EncounterTimeline.GetEventList()
+	end
+
+	function boss:GetTimelineEventCount()
+		-- return C_EncounterTimeline.GetEventCountBySource(EventSource.Encounter) -- weird counts, doesn't filter state?
+		local count = 0
+		for _, eventID in ipairs(self:GetTimelineEventList()) do
+			local eventInfo = self:GetTimelineEventInfo(eventID)
+			if eventInfo.source == EventSource.Encounter then
+				local state = self:GetTimelineEventState(eventID)
+				if state == EventState.Active or state == EventState.Paused then
+					count = count + 1
+				end
+			end
+		end
+		return count
+	end
+
+	function boss:GetTimelineBarInfo(eventID)
+		return self.timelineActiveBars[eventID]
+	end
+
+	local function cmp(a, b) return boss:GetTimelineBarTimeRemaining(a) < boss:GetTimelineBarTimeRemaining(b) end
+	function boss:GetTimelineBarInfoByKey(key)
+		local results = {}
+		for eventID, barInfo in next, self.timelineActiveBars do
+			if barInfo.key == key then
+				results[#results + 1] = barInfo
+			end
+		end
+		if #results > 1 then
+			table.sort(results, cmp)
+		end
+		return results[1], results
+	end
+
+	function boss:GetTimelineBarTimeRemaining(barInfo)
+		if not barInfo.startTime then return 0 end
+
+		local duration = type(barInfo.duration) == "table" and barInfo.duration[2] or barInfo.duration
+		return math.max((barInfo.startTime + duration) - GetTime(), 0)
+	end
+
+
+	function boss:StopTimelineBar(barInfo, isFinished, runCanceled)
+		if not barInfo then return end
+		if barInfo.state and barInfo.state >= 2 then return end -- already ended
+
+		-- Clean up barInfo.finishOnDuration
+		if barInfo._stopTimer then
+			self:CancelTimer(barInfo._stopTimer)
+			barInfo._stopTimer = nil
+		end
+
+		-- Handle delayed events: onFinished called on normal finish, onFinishedDelayed called after the delay
+		if isFinished and barInfo.delay and not barInfo._delayTimer then
+			if barInfo.onFinished and self:ShouldShowBars() then
+				barInfo:onFinished()
+			end
+			barInfo._delayTimer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, barInfo.delay)
+			barInfo.ignoreState = true -- don't get canceled
+			return
+
+		elseif not isFinished and barInfo._delayTimer then
+			self:CancelTimer(barInfo._delayTimer)
+			barInfo._delayTimer = nil
+		end
+
+		self:StopBar(barInfo.msg)
+		local callback = barInfo.delay and "onFinishedDelayed" or "onFinished"
+		if isFinished and barInfo[callback] and self:ShouldShowBars() then
+			barInfo[callback](barInfo)
+		end
+
+		if not isFinished and runCanceled and barInfo.onCanceled and self:ShouldShowBars() then
+			barInfo:onCanceled()
+		end
+
+		barInfo.state = isFinished and 2 or 3 -- Finished/Canceled
+		if barInfo.eventID then
+			self.timelineActiveBars[barInfo.eventID] = nil
+		end
+	end
+
+	function boss:UpdateTimelineBar(key, duration)
+		local barInfo = self:GetTimelineBarInfoByKey(key)
+		if barInfo and barInfo.state == EventState.Active then
+			self:StopTimelineBar(barInfo)
+
+			local totalDuration = type(barInfo.duration) == "table" and barInfo.duration[2] or barInfo.duration
+			barInfo.duration = totalDuration > duration and { duration, totalDuration } or duration
+			-- self:Debug("UpdateTimelineBar", key, duration, "->", barInfo.msg, barInfo.duration[1], barInfo.duration[2])
+		end
+		return barInfo
+	end
+
+	function boss:TimelineBar(barInfo, eventInfo)
+		if not self:ShouldShowBars() or self:IsWiping() then return end
+
+		local duration = barInfo.duration or (eventInfo and eventInfo.duration)
+		local maxQueueDuration = barInfo.maxQueueDuration == nil and (eventInfo and eventInfo.maxQueueDuration) or barInfo.maxQueueDuration
+		local eventID = eventInfo and eventInfo.id or 0
+		local spellIndicators = eventID > 0 and eventID -- don't try to show indicators for fake events
+		-- delay extends the duration (ie, to correspond to the end of a cast instead of the start)
+		local delay = barInfo.delay or 0
+		if delay ~= 0 then
+			if type(duration) == "table" then
+				duration[1] = duration[1] + delay
+			else
+				duration = duration + delay
+			end
+		end
+
+		-- since isApprox is gone, just set `barInfo.maxQueueDuration = true` to hold until stopped
+		if maxQueueDuration == true then
+			self:CDBar(barInfo.key, duration, barInfo.msg, barInfo.icon, spellIndicators)
+		else
+			self:Bar(barInfo.key, duration, barInfo.msg, barInfo.icon, spellIndicators, maxQueueDuration)
+		end
+
+		if barInfo.finishOnDuration then
+			barInfo._stopTimer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+		end
+
+		barInfo.eventID = eventID
+		barInfo.eventInfo = eventInfo
+		barInfo.duration = duration
+		barInfo.startTime = GetTime()
+		barInfo.state = EventState.Active
+		if eventID ~= 0 then
+			self.timelineActiveBars[eventID] = barInfo
+			if eventID > 0 then
+				local state = self:GetTimelineEventState(eventID)
+				if state == EventState.Paused then
+					self:PauseBar(barInfo.key, barInfo.msg)
+					barInfo.state = state
+				end
+			end
+		end
+
+		return barInfo
+	end
+
+	function boss:TimelineBackupBar(eventInfo)
+		if not self:ShouldShowBars() or self:IsWiping() then return end
+
+		self:ErrorForTimelineEvent(eventInfo)
+
+		self.timelineBackupBars[eventInfo.id] = true
+		self:SendMessage("BigWigs_StartBar", nil, nil, ("[B] %s"):format(eventInfo.spellName or "??"), eventInfo.duration, eventInfo.iconFileID or 134400, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
+
+		local state = self:GetTimelineEventState(eventInfo.id)
+		if state == EventState.Paused then
+			self:SendMessage("BigWigs_PauseBar", nil, nil, eventInfo.id)
+		end
+	end
+
+	function boss:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo, ...)
+		if not self:IsEngaged() or eventInfo.source ~= EventSource.Encounter then return end
+
+		local barInfo = self:OnTimelineEventAdded(eventInfo, ...)
+		if barInfo then
+			self:TimelineBar(barInfo, eventInfo)
+		elseif barInfo == nil then
+			self:TimelineBackupBar(eventInfo)
+		end
+	end
+
+	do
+		local event = "ENCOUNTER_TIMELINE_EVENT_ADDED"
+		local scheduled = nil
+		local events = {}
+		local function dispatch()
+			scheduled = nil
+			for i = 1, #events do
+				local eventInfo = events[i]
+				boss[event](eventInfo.module, event, eventInfo, events)
+			end
+			table.wipe(events)
+		end
+		function boss:ENCOUNTER_TIMELINE_EVENT_ADDED_DELAYED(_, eventInfo)
+			if eventInfo.source ~= EventSource.Encounter then return end
+
+			if not scheduled then
+				scheduled = true
+				SimpleTimer(0, dispatch)
+			end
+			eventInfo.module = self
+			events[#events + 1] = eventInfo
+		end
+	end
+
+	function boss:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
+		local state = self:GetTimelineEventState(eventID)
+
+		if self.timelineBackupBars[eventID] then
+			if state == EventState.Active then
+				self:SendMessage("BigWigs_ResumeBar", nil, nil, eventID)
+			elseif state == EventState.Paused then
+				self:SendMessage("BigWigs_PauseBar", nil, nil, eventID)
+			elseif state == EventState.Finished or state == EventState.Canceled then
+				self:SendMessage("BigWigs_StopBar", nil, nil, eventID)
+				self.timelineBackupBars[eventID] = nil
+			end
+		end
+
+		local barInfo = self.timelineActiveBars[eventID]
+		if barInfo and state == EventState.Finished then
+			self:SendMessage("BigWigs_TimelineEventFinished", self, barInfo.key) -- callback for unsecreted cast event
+		end
+
+		if self.OnTimelineEventChanged and self:OnTimelineEventChanged(barInfo, eventID, state) then
+			-- return true => the module handled the event
+			return
+		end
+
+		-- make sure the record still exists
+		barInfo = self.timelineActiveBars[eventID]
+		if barInfo and not barInfo.ignoreState then
+			if state == EventState.Active then
+				self:ResumeBar(barInfo.key, barInfo.msg)
+				barInfo.state = state
+			elseif state == EventState.Paused then
+				self:PauseBar(barInfo.key, barInfo.msg)
+				barInfo.state = state
+			elseif state == EventState.Finished then
+				self:StopTimelineBar(barInfo, true)
+			elseif state == EventState.Canceled then
+				self:StopTimelineBar(barInfo, nil, true)
+			end
+		end
+	end
+
+	function boss:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
+		self.timelineBackupBars[eventID] = nil
+
+		local barInfo = self.timelineActiveBars[eventID]
+		if barInfo and barInfo.onRemoved then
+			barInfo:onRemoved()
+		end
+
+		if self.OnTimelineEventRemoved then
+			self:OnTimelineEventRemoved(barInfo, eventID)
+		end
+
+		self.timelineActiveBars[eventID] = nil
 	end
 end
 
@@ -4616,7 +4925,8 @@ do
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	-- @param[opt] eventId the timeline event ID (Retail only)
-	function boss:Bar(key, length, text, icon, eventId)
+	-- @param[opt] holdTime the time in seconds to hold the bar after expiring (Retail only)
+	function boss:Bar(key, length, text, icon, eventId, holdTime)
 		local lengthType = type(length)
 		if not length then
 			if not self.missing then self.missing = {} end
@@ -4654,7 +4964,7 @@ do
 		end
 		local isBarEnabled = checkFlag(self, key, C.BAR)
 		if isBarEnabled then
-			self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], false, maxTime, nil, eventId)
+			self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], holdTime or false, maxTime, nil, eventId)
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
 			self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
