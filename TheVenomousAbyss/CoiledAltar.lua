@@ -20,6 +20,7 @@ local backupBars = {}
 
 local durationEventCount = {}
 local warnStageThree = false
+local stageThreeEventCount = 0
 local spellCount = {}
 
 local gapTimer do
@@ -221,6 +222,7 @@ function mod:OnEncounterStart()
 	self:SetStage(1)
 	self:ResetCounts()
 	warnStageThree = false
+	stageThreeEventCount = 0
 
 	-- Starts the encounter by casting Fangs of the Coiled Altar
 	self:Message(1282487, "red")
@@ -323,7 +325,12 @@ function mod:MythicTimeline(_, eventInfo)
 		end
 
 	elseif stage == 3 then
-		if rounded == 62 or rounded == 90 then
+		stageThreeEventCount = stageThreeEventCount + 1
+		if stageThreeEventCount > 27 then
+			-- Dreadmarch 3 is a 6s cast of March of the Damned (1316797), which is enrage
+			barInfo = false -- don't show bars beyond enrage
+
+		elseif rounded == 62 or rounded == 90 then
 			barInfo = self:Spiritcackle()
 		elseif rounded == 55 or rounded == 48 or rounded == 104 then
 			barInfo = self:Dreadmarch(duration)
