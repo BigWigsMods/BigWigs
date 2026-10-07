@@ -104,24 +104,26 @@ mod:SetRenames({
 mod:SetAuraData({
 	{1295928, soundOnApplied = "warning", header = CL.important}, -- Burning Flames (Fire debuff, clears ice)
 	{1295954, soundOnApplied = "warning"}, -- Piercing Frost (Ice debuff, clears fire)
-	{1295935, soundOnApplied = "warning", duration = 8}, -- Frostfire Volley (Frost - Targetted)
-	{1295886, soundOnApplied = "warning", duration = 8}, -- Frostfire Volley (Fire - Targetted)
-	{1296025, soundOnApplied = "warning", duration = 7}, -- Blink Nova (Targetted)
-	{1297625, soundOnApplied = "warning", duration = 10}, -- Explosive Surprise (Targeted)
-	{1296092, soundOnApplied = "warning"}, -- Mighty Thud (Targeted) XXX not applied to players?
-	{1295858, soundOnApplied = "none", soundOnAppliedDose = "none", header = CL.general, note = CL.tank_debuff}, -- Shredding Shards
-	{1310500, soundOnApplied = "none"}, -- Aftershock
-	{1305844, soundOnApplied = "underyou"}, -- Blast Wave (Explosion DoT)
-	{1299854, soundOnApplied = "none"}, -- Bounce (Mushroom bounce)
-	{1291390, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Cataclysmic Invocation
-	{1295952, soundOnApplied = "none"}, -- Elemental Explosion
-	{1297649, soundOnApplied = "none"}, -- Fire Patch (Standing in ice)
+	{1295935, soundOnApplied = "warning", duration = 8, note = CL.debuffTargetedNote:format(mod:SpellName(1295935))}, -- Frostfire Volley (Frost - Targeted)
+	{1295886, soundOnApplied = "warning", duration = 8, note = CL.debuffTargetedNote:format(mod:SpellName(1295886))}, -- Frostfire Volley (Fire - Targeted)
+	{1296025, soundOnApplied = "warning", duration = 7, note = CL.debuffTargetedNote:format(mod:SpellName(1296025))}, -- Blink Nova (Targeted)
+	{1297625, soundOnApplied = "warning", duration = 10, note = CL.debuffTargetedNote:format(mod:SpellName(1297625))}, -- Explosive Surprise (Targeted)
+	-- {1296092, soundOnApplied = "warning"}, -- Mighty Thud (Targeted) XXX not applied to players?
+
+	{1295858, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.tank_debuff, header = CL.general}, -- Shredding Shards
+	{1291929, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.tank_debuff}, -- Steady Strikes
+	{1299854, soundOnApplied = "none", note = CL.debuffWalkIntoObjectNote:format(mod:SpellName(1268773))}, -- Bounce (Mushroom bounce)
+
+	{1308853, soundOnApplied = "none", soundOnAppliedDose = "none", dispel = "bleed", header = CL.damage}, -- Splinters (Junk stacks)
+	{1297650, soundOnApplied = "none"}, -- Spreading Flames (Standing in the explosion)
 	{1297648, soundOnApplied = "none"}, -- Frost Patch (Standing in fire)
-	{1286922, soundOnApplied = "alarm", dispel = "magic"}, -- Icebound Flames
-	{1291918, soundOnApplied = "underyou"}, -- Shell Spin (Stunned)
-	{1308853, soundOnApplied = "none", soundOnAppliedDose = "none", dispel = "bleed"}, -- Splinters (Junk stacks)
-	{1297650, soundOnApplied = "none"}, -- Spreading Flames
-	{1291929, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Steady Strikes
+	{1297649, soundOnApplied = "none"}, -- Fire Patch (Standing in ice)
+	{1310500, soundOnApplied = "none"}, -- Aftershock (Standing in thud quake)
+
+	{1286922, soundOnApplied = "alarm", dispel = "magic", note = CL.debuffFailureInterruptNote:format(mod:SpellName(1286922)), header = CL.failed}, -- Icebound Flames
+	{1291918, soundOnApplied = "underyou", mechanic = "stunned", note = CL.debuffFailureMoveFromCastNote:format(mod:SpellName(1291918))}, -- Shell Spin (Stunned)
+	{1305844, soundOnApplied = "underyou"}, -- Blast Wave (Explosion DoT)
+	{1291390, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.debuffDotAfterCastNote:format(mod:SpellName(1291390))}, -- Cataclysmic Invocation
 })
 
 
@@ -221,8 +223,8 @@ do
 	end
 end
 
-local function ContainsIf(tbl, pred, delta)
-	delta = delta or 0.5
+local function ContainsIf(tbl, pred)
+	local delta = 0.5
 	for k, v in next, tbl do
 		if (pred - delta) < v.duration and v.duration < (pred + delta) then
 			return true
@@ -259,12 +261,14 @@ function mod:Timeline(_, eventInfo, events)
 		self:SetStage(stage)
 		self:ResetCounts()
 
-		self:Message(1297022, "cyan", self:GetRename(1297022, stage), false) -- Mor'zahi's Command: Turtle
-		if currentChannelStart then
-			local commandCD = (currentChannelStart + 60) - GetTime()
-			self:Bar(1297022, commandCD, self:GetRename(1297022, 1)) -- Empower over
+		if self:ShouldShowBars() then
+			self:Message(1297022, "cyan", self:GetRename(1297022, stage), false) -- Mor'zahi's Command: Turtle
+			if currentChannelStart then
+				local commandCD = (currentChannelStart + 60) - GetTime()
+				self:Bar(1297022, commandCD, self:GetRename(1297022, 1)) -- Empower over
+			end
+			self:PlaySound(1297022, "long")
 		end
-		self:PlaySound(1297022, "long")
 	end
 
 	local duration = eventInfo.duration
@@ -435,11 +439,10 @@ end
 
 -- friendly -> ~4s -> channel stop (Empower) -> channel start (Mor'zahi's Command) -> ~2s -> timers -> enemy
 
-function mod:CheckStage(event, unit, isFriend)
-	self:Debug(event, unit, "UnitIsFriend:" .. tostring(UnitIsFriend("player", unit)), "UnitCanAttack:" .. tostring(UnitCanAttack("player", unit)))
+function mod:CheckStage(event, unit)
 	if self.isWinning then return end -- they go friendly after they are all dead D; (in the gap between :Win and :Disable)
 
-	if UnitIsFriend("player", unit) or isFriend then
+	if UnitIsFriend("player", unit) and self:ShouldShowBars() then
 		local stage = UNIT_TO_STAGE[unit]
 		self:Message(1296535, "green", self:GetRename(1296535, stage)) -- Disgusting Fish: Turtle
 		self:PlaySound(1296535, "info")
@@ -463,8 +466,10 @@ function mod:UNIT_SPELLCAST_CHANNEL_STOP(event, unit, _, _, _, castID)
 			self:SetStage(1)
 			self:ResetCounts()
 
-			self:Message(1297022, "green", self:GetRename(1297022, 1), false) -- Mor'zahi's Command over
-			self:PlaySound(1297022, "long")
+			if self:ShouldShowBars() then
+				self:Message(1297022, "green", self:GetRename(1297022, 1), false) -- Mor'zahi's Command over
+				self:PlaySound(1297022, "long")
+			end
 		end
 	end
 end
@@ -475,8 +480,10 @@ do
 		local t = GetTime()
 		if t - prev > 35 and C_ActionBar.HasExtraActionBar() then -- luacheck: ignore
 			prev = t
-			self:PersonalMessage(1296535, false, self:GetRename(1296535, 1)) -- Digusting Fish
-			self:PlaySound(1296535, "info")
+			if self:ShouldShowBars() then
+				self:PersonalMessage(1296535, false, self:GetRename(1296535, 1)) -- Digusting Fish
+				self:PlaySound(1296535, "info")
+			end
 		end
 	end
 end
@@ -490,7 +497,7 @@ function mod:FinalAscension()
 		msg = barText,
 		key = 1292779,
 		onFinished = function()
-			self:Message(1292779, "red", barText)
+			self:Message(1292779, "red")
 			self:PlaySound(1292779, "alarm")
 		end,
 	}
