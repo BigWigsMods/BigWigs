@@ -1818,7 +1818,7 @@ do
 			barInfo:onCanceled()
 		end
 
-		barInfo.state = isFinished and 2 or 3 -- Finished/Canceled
+		barInfo.state = isFinished and EventState.Finished or EventState.Canceled
 		if barInfo.eventID then
 			self.timelineActiveBars[barInfo.eventID] = nil
 		end
@@ -1850,13 +1850,14 @@ do
 	-- - `msg`: the bar text
 	-- - `icon`: [opt] the bar icon
 	-- - `duration`: [opt] seconds, or a table of {remaining, total}. Defaults to the event duration
-	-- - `maxQueueDuration`: [opt] defaults to the event value. Set to true to hold the bar at 0 until it's stopped
-	-- - `delay`: [opt] seconds to extend the bar by, e.g. to end with a cast instead of starting with it
+	-- - `maxQueueDuration`: [opt] seconds to hold the bar after it expires, defaults to the event value. Set to true to
+	-- hold the bar until stopped with `StopTimelineBar`
+	-- - `delay`: [opt] seconds to extend the bar by, e.g. to end with cast success instead of cast start
 	-- - `finishOnDuration`: [opt] if true, finish the bar when the duration ends instead of waiting for the event
 	-- - `ignoreState`: [opt] if true, state changes of the event don't affect the bar, e.g. to keep it running when the
 	-- event is canceled. No callbacks are called for the state change and the bar has to be stopped with `StopTimelineBar`
 	-- - `onFinished`: [opt] function(barInfo) called when the event finishes
-	-- - `onFinishedDelayed`: [opt] function(barInfo) called after `delay` has passed since the event finished
+	-- - `onFinishedDelayed`: [opt] function(barInfo) called after `delay` seconds since the event finished
 	-- - `onCanceled`: [opt] function(barInfo) called when the event is canceled
 	-- - `onRemoved`: [opt] function(barInfo) called when the event is removed, if the bar is still running
 	--
@@ -1919,12 +1920,13 @@ do
 
 		self:ErrorForTimelineEvent(eventInfo)
 
-		self.timelineBackupBars[eventInfo.id] = true
-		self:SendMessage("BigWigs_StartBar", nil, nil, ("[B] %s"):format(eventInfo.spellName or "??"), eventInfo.duration, eventInfo.iconFileID or 134400, eventInfo.maxQueueDuration, nil, eventInfo.id, eventInfo.id)
+		local eventID = eventInfo.id
+		self.timelineBackupBars[eventID] = true
+		self:SendMessage("BigWigs_StartBar", nil, nil, ("[B] %s"):format(eventInfo.spellName or "??"), eventInfo.duration, eventInfo.iconFileID or 134400, eventInfo.maxQueueDuration, nil, eventID, eventID)
 
-		local state = self:GetTimelineEventState(eventInfo.id)
+		local state = self:GetTimelineEventState(eventID)
 		if state == EventState.Paused then
-			self:SendMessage("BigWigs_PauseBar", nil, nil, eventInfo.id)
+			self:SendMessage("BigWigs_PauseBar", nil, nil, eventID)
 		end
 	end
 
@@ -1947,7 +1949,9 @@ do
 			scheduled = nil
 			for i = 1, #events do
 				local eventInfo = events[i]
-				boss[event](eventInfo.module, event, eventInfo, events)
+				local module = eventInfo.module
+				eventInfo.module = nil
+				boss[event](module, event, eventInfo, events)
 			end
 			table.wipe(events)
 		end
