@@ -683,7 +683,7 @@ do
 						module.db.profile.auras[auraSpellID] = {}
 					else
 						for auraDataTableName, auraDataTableValue in next, auraTable do
-							if auraDataTableName ~= "soundOnApplied" and auraDataTableName ~= "soundOnAppliedDose" and auraDataTableName ~= "soundOnRemoved" and auraDataTableName ~= "countdown" then
+							if auraDataTableName ~= "soundOnApplied" and auraDataTableName ~= "soundOnAppliedDose" and auraDataTableName ~= "soundOnRemoved" then
 								module.db.profile.auras[auraSpellID][auraDataTableName] = nil
 							elseif auraDataTableName == "soundOnApplied" and type(auraDataTableValue) ~= "string" then
 								module.db.profile.auras[auraSpellID].soundOnApplied = nil
@@ -691,8 +691,6 @@ do
 								module.db.profile.auras[auraSpellID].soundOnAppliedDose = nil
 							elseif auraDataTableName == "soundOnRemoved" and type(auraDataTableValue) ~= "string" then
 								module.db.profile.auras[auraSpellID].soundOnRemoved = nil
-							elseif auraDataTableName == "countdown" and type(auraDataTableValue) ~= "string" then
-								module.db.profile.auras[auraSpellID].countdown = nil
 							end
 						end
 					end

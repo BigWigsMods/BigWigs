@@ -1244,11 +1244,7 @@ local function AuraSoundDropdownValueChanged(widget, _, value)
 	local triggerType = widget:GetUserData("triggerType")
 	local module = widget:GetUserData("module")
 	local soundList = LibSharedMedia:List("sound")
-	if triggerType ~= "countdown" then
-		value = soundList[value]
-	else
-		if value then value = "Amy" else value = nil end
-	end
+	value = soundList[value]
 
 	local auraDB = module.db.profile.auras
 	auraDB[key] = auraDB[key] or {}
@@ -1297,7 +1293,6 @@ local function getAuraOptions(module, spellID)
 	local tip = module:GetAuraTip(spellID)
 	local texture = module:SpellTexture(spellID)
 	local defaultDoseSound = module:GetAuraAppliedDoseSoundDefault(spellID)
-	local hasDuration = module:GetAuraDuration(spellID)
 
 	local nameText = name
 	if note then
@@ -1378,7 +1373,7 @@ local function getAuraOptions(module, spellID)
 	local appliedDropdown = AceGUI:Create("BigWigsSharedDropdown")
 	appliedDropdown:SetLabel(L.onApplied)
 	appliedDropdown:SetList(soundList, nil, "DDI-Sound")
-	appliedDropdown:SetRelativeWidth(defaultDoseSound and 0.29 or hasDuration and 0.42 or 0.44)
+	appliedDropdown:SetRelativeWidth(defaultDoseSound and 0.29 or 0.44)
 	appliedDropdown:SetUserData("key", key)
 	appliedDropdown:SetUserData("module", module)
 	appliedDropdown:SetUserData("triggerType", "soundOnApplied")
@@ -1419,7 +1414,7 @@ local function getAuraOptions(module, spellID)
 	local removedDropdown = AceGUI:Create("BigWigsSharedDropdown")
 	removedDropdown:SetLabel(L.onRemoved)
 	removedDropdown:SetList(soundList, nil, "DDI-Sound")
-	removedDropdown:SetRelativeWidth(defaultDoseSound and 0.29 or hasDuration and 0.42 or 0.44)
+	removedDropdown:SetRelativeWidth(defaultDoseSound and 0.29 or 0.44)
 	removedDropdown:SetUserData("key", key)
 	removedDropdown:SetUserData("module", module)
 	removedDropdown:SetUserData("triggerType", "soundOnRemoved")
@@ -1436,23 +1431,6 @@ local function getAuraOptions(module, spellID)
 		end
 	end
 	auraWidgets[#auraWidgets+1] = removedDropdown
-
-	if hasDuration and not defaultDoseSound then -- hide duration option for auras that stack
-		local durationCheck = AceGUI:Create("CheckBox")
-		durationCheck:SetLabel("")
-		durationCheck:SetWidth(24)
-		durationCheck:SetUserData("key", key)
-		durationCheck:SetUserData("module", module)
-		durationCheck:SetUserData("triggerType", "countdown")
-		durationCheck:SetCallback("OnValueChanged", AuraSoundDropdownValueChanged)
-		durationCheck:SetUserData("label", L.countdown)
-		durationCheck:SetUserData("desc", L.auraCountdownDesc)
-		durationCheck:SetCallback("OnEnter", slaveOptionMouseOver)
-		durationCheck:SetCallback("OnLeave", optionsTooltip_Hide)
-
-		durationCheck:SetValue(module.db.profile.auras[key] and module.db.profile.auras[key].countdown and true)
-		auraWidgets[#auraWidgets+1] = durationCheck
-	end
 
 	return unpack(auraWidgets)
 end
