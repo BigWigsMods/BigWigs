@@ -185,6 +185,20 @@ function mod:OnEncounterStart()
 end
 
 function mod:ResetCounts()
+	-- Stop Throw Junk on phase
+	for eventID, barInfo in next, activeBars do
+		if barInfo.timer then
+			self:StopBar(barInfo.msg)
+			barInfo:onCanceled()
+
+			self:CancelTimer(barInfo.timer)
+			barInfo.timer = nil
+
+			activeBars[eventID] = nil
+			break
+		end
+	end
+
 	durationEventCount = {}
 
 	blinkNovaCount = 1
@@ -284,7 +298,11 @@ function mod:Timeline(_, eventInfo, events)
 				self:FlingFish()
 			elseif (rounded == 4 and throwJunkCount == 4) or throwJunkCount > 4 then
 				-- Throw Junk cast with/after the fish cancel instead of finish
-				barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+				barInfo.ignoreState = true
+				barInfo.timer = self:ScheduleTimer(function()
+					self:StopTimelineBar(barInfo, true)
+					barInfo.timer = nil
+				end, duration)
 			end
 		elseif rounded == 30 then
 			barInfo = self:ShreddingShards()
@@ -393,7 +411,7 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 	local state = C_EncounterTimeline.GetEventState(eventID)
 
 	local barInfo = activeBars[eventID]
-	if barInfo then
+	if barInfo and not barInfo.ignoreState then
 		if state == 2 then -- Finished
 			activeBars[eventID] = nil
 			self:StopBar(barInfo.msg)
