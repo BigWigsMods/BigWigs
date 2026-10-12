@@ -306,16 +306,40 @@ local function updateProfile()
 		plugin:BigWigs_StartConfigureMode(nil, plugin.moduleName)
 	end
 
-	--XXX temp 12.1.5
+	if type(db.sounds) ~= "table" then
+		db.sounds = {}
+	end
+
 	for soundIndex = #db.sounds, 1, -1 do
 		local soundInfo = db.sounds[soundIndex]
-		if soundInfo.voice or soundInfo.duration then
-			table.remove(db.sounds, soundIndex) -- Remove voice countdown support
-		elseif not soundInfo.throttleSeconds then
-			soundInfo.throttleSeconds = 1 -- Add throttle support
+		-- Not a table, or spellID is invalid | XXX temp also remove voice countdown support 12.1.5
+		if type(soundInfo) ~= "table" or type(soundInfo.spellID) ~= "number" or not BigWigsLoader.GetSpellName(soundInfo.spellID) or soundInfo.voice or soundInfo.duration then
+			table.remove(db.sounds, soundIndex)
+		else
+			if type(soundInfo.enabled) ~= "bolean" then
+				soundInfo.enabled = true
+			end
+			if type(soundInfo.trigger) ~= "number" or soundInfo.trigger < 0 or soundInfo.trigger > 2 or math.floor(soundInfo.trigger+0.5) ~= soundInfo.trigger then
+				soundInfo.trigger = 0
+			end
+			if type(soundInfo.unit) ~= "string" or (soundInfo.unit ~= "player" and soundInfo.unit ~= "tank" and soundInfo.unit ~= "name") then
+				soundInfo.unit = "player"
+			end
+			if soundInfo.unit ~= "name" or (soundInfo.unit == "name" and type(soundInfo.playerName) ~= "string") then
+				soundInfo.playerName = nil
+			end
+			if type(soundInfo.sound) ~= "string" or not LibSharedMedia:IsValid("sound", soundInfo.sound) then
+				soundInfo.sound = "None"
+			end
+			if type(soundInfo.throttleSeconds) ~= "number" then
+				soundInfo.throttleSeconds = 1
+			elseif soundInfo.throttleSeconds > 5 then
+				soundInfo.throttleSeconds = 5
+			elseif soundInfo.throttleSeconds < 0 then
+				soundInfo.throttleSeconds = 0
+			end
 		end
 	end
-	--XXX end temp
 
 	RemoveAllAuraSounds()
 	UpdateSoundOptions()
@@ -389,7 +413,7 @@ do
 					spellID = spellID,
 					trigger = 0,
 					unit = "player",
-					sound = LibSharedMedia:GetDefault(SOUND),
+					sound = "None",
 					throttleSeconds = 1,
 				})
 				UpdateSoundOptions()
@@ -415,7 +439,6 @@ do
 			local auraDB = db.sounds[index]
 			local key = info[#info]
 			auraDB[key] = value
-			auraDB.sound = auraDB.sound or LibSharedMedia:GetDefault(SOUND)
 			if key == "unit" and value ~= "name" then
 				auraDB.playerName = nil
 			end
@@ -427,7 +450,6 @@ do
 		for soundIndex = #db.sounds, 1, -1 do
 			order = order + 1
 			local soundInfo = db.sounds[soundIndex]
-			local spellInfo = C_Spell.GetSpellInfo(soundInfo.spellID)
 			options[tostring(soundIndex)] = {
 				type = "group",
 				name = " ",
@@ -438,8 +460,8 @@ do
 				args = {
 					enabled = {
 						type = "toggle",
-						name = ("|cfffed000%s|r (%d)"):format(spellInfo and spellInfo.name or L.unknown, soundInfo.spellID),
-						image = spellInfo and spellInfo.iconID or 134400, -- question mark
+						name = ("|cfffed000%s|r (%d)"):format(BigWigsLoader.GetSpellName(soundInfo.spellID) or L.unknown, soundInfo.spellID),
+						image = BigWigsLoader.GetSpellTexture(soundInfo.spellID) or 134400, -- question mark
 						width = 2.6,
 						order = 1,
 					},
