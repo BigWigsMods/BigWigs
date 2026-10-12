@@ -70,6 +70,7 @@ local valid_aura_keys = {
 	soundOnApplied = true,
 	soundOnAppliedDose = true,
 	soundOnRemoved = true,
+	throttle = true,
 }
 local valid_aura_dispels = { -- SpellDispelType, lowercase
 	magic = true,
@@ -808,6 +809,10 @@ local function parseAuraData(file_name, lines, start)
 			if sound and not (type(sound) == "string" and (sound == "none" or valid_sounds[sound])) then
 				error(string.format("    %s:%d: SetAuraData: Invalid %s sound %q (spell %d)", file_name, start, sound_field, sound, spell_id))
 			end
+		end
+		local throttle = entry.throttle
+		if throttle and not (type(throttle) == "number" and throttle >= 0 and throttle <= 5) then
+			error(string.format("    %s:%d: SetAuraData: throttle must be a number between 0 and 5, got %q (spell %d)", file_name, start, tostring(throttle), spell_id))
 		end
 	end
 	for index, entry in next, aura_data do
