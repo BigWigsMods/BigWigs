@@ -674,6 +674,7 @@ do
 		[2979] = lw_delves, -- Shadowguard Point
 		[3003] = lw_delves, -- The Darkway
 		[3038] = lw_delves, -- Gnarldor Isle
+		[3043] = lw_delves, -- The Labyrinth of Kindo'jan
 		[3077] = lw_delves, -- The Ring of Glory
 		[3079] = lw_delves, -- Venomfall Deeps
 	}
