@@ -62,7 +62,6 @@ local valid_sounds = {
 }
 local valid_aura_keys = {
 	header = true,
-	duration = true,
 	dispel = true,
 	mechanic = true,
 	note = true,
@@ -803,10 +802,6 @@ local function parseAuraData(file_name, lines, start)
 		local header = entry.header
 		if header and type(header) ~= "number" and header ~= localized then
 			error(string.format("    %s:%d: SetAuraData: header must be an NPC ID, localized string, or mod:SpellName()/mod:BossName(), got %q (spell %d)", file_name, start, tostring(header), spell_id))
-		end
-		local duration = entry.duration
-		if duration and not (type(duration) == "number" and duration > 0) then
-			error(string.format("    %s:%d: SetAuraData: Invalid duration %s (spell %d)", file_name, start, tostring(duration), spell_id))
 		end
 		for _, sound_field in ipairs({ "soundOnApplied", "soundOnAppliedDose", "soundOnRemoved" }) do
 			local sound = entry[sound_field]
