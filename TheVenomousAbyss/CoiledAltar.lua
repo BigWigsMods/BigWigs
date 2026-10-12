@@ -112,29 +112,29 @@ mod:SetRenames({
 
 mod:SetAuraData({
 	-- important
-	{1282419, soundOnApplied = "warning", duration = 5, header = CL.important}, -- Volatile Venom
-	{1310498, soundOnApplied = "warning", duration = 5, difficulty = "mythic"}, -- Mutagenic Venom
-	{1283485, soundOnApplied = "warning", duration = 5, note = CL.debuffTargetedNote:format(mod:SpellName(1283485))}, -- Guillotine
-	{1297435, soundOnApplied = "warning", duration = 6, note = CL.debuffTargetedNote:format(mod:SpellName(1297435))}, -- Dreadmarch XXX not applied to players?
-	{1285911, soundOnApplied = "warning", duration = 7}, -- Unnerving Fixation
-	{1310881, soundOnApplied = "warning", duration = 5}, -- Gloombomb
-	{1286837, soundOnApplied = "alarm", soundOnAppliedDose = "none", duration = 11}, -- Gravebound
-	{1299266, soundOnApplied = "warning", duration = 5, note = CL.debuffTargetedNote:format(mod:SpellName(1299266))}, -- Grim Guillotine
+	{1282419, soundOnApplied = "warning", header = CL.important}, -- Volatile Venom
+	{1310498, soundOnApplied = "warning", difficulty = "mythic"}, -- Mutagenic Venom
+	{1283485, soundOnApplied = "warning", note = CL.debuffTargetedNote:format(mod:SpellName(1283485))}, -- Guillotine
+	{1297435, soundOnApplied = "warning", note = CL.debuffTargetedNote:format(mod:SpellName(1297435))}, -- Dreadmarch XXX not applied to players?
+	{1285911, soundOnApplied = "warning"}, -- Unnerving Fixation
+	{1310881, soundOnApplied = "warning"}, -- Gloombomb
+	{1286837, soundOnApplied = "alarm", soundOnAppliedDose = "none"}, -- Gravebound
+	{1299266, soundOnApplied = "warning", note = CL.debuffTargetedNote:format(mod:SpellName(1299266))}, -- Grim Guillotine
 	-- Zul'jan
 	{1283345, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.tank_debuff, header = mod:SpellName(-35063)}, -- Twinfang Toxin
 	{1283290, soundOnApplied = "none"}, -- Noxious Ground
 	{1299838, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Venom Rupture
 	{1307425, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.debuffHitByCastNote:format(mod:SpellName(1283485))}, -- Guillotined
 	{1301690, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.debuffHitByCastNote:format(mod:SpellName(1301690))}, -- Sever
-	{1306906, soundOnApplied = "none", dispel = "poison", duration = 14}, -- Venomfang
+	{1306906, soundOnApplied = "none", dispel = "poison"}, -- Venomfang
 	{1285017, soundOnApplied = "none"}, -- Axegrinder
 	-- Malacrass
 	{1297445, soundOnApplied = "none", mechanic = "horrified", note = CL.mainDebuffNote, header = mod:SpellName(-35062)}, -- Dreadmarch
-	{1310744, soundOnApplied = "none", duration = 5, difficulty = "mythic"}, -- Malevolent Resonance
+	{1310744, soundOnApplied = "none", difficulty = "mythic"}, -- Malevolent Resonance
 	{1307959, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.debuffHitByCastNote:format(mod:SpellName(1307959))}, -- Soul Sever
-	{1286918, soundOnApplied = "none", duration = 15}, -- Eternal Nightfall
+	{1286918, soundOnApplied = "none"}, -- Eternal Nightfall
 	{1286947, soundOnApplied = "none"}, -- Suffocating Darkness
-	{1286399, soundOnApplied = "alarm", mechanic = "fleeing", duration = 5, note = CL.debuffFailureInterruptNote:format(mod:SpellName(1286399))}, -- Wail of Terror
+	{1286399, soundOnApplied = "alarm", mechanic = "fleeing", note = CL.debuffFailureInterruptNote:format(mod:SpellName(1286399))}, -- Wail of Terror
 	-- intermission
 	{1300665, soundOnApplied = "none", soundOnAppliedDose = "none", difficulty = "mythic", header = CL.intermission}, -- Spirit Erasure
 	-- p3

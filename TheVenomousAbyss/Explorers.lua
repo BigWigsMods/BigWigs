@@ -104,10 +104,10 @@ mod:SetRenames({
 mod:SetAuraData({
 	{1295928, soundOnApplied = "warning", header = CL.important}, -- Burning Flames (Fire debuff, clears ice)
 	{1295954, soundOnApplied = "warning"}, -- Piercing Frost (Ice debuff, clears fire)
-	{1295935, soundOnApplied = "warning", duration = 8, note = CL.debuffTargetedNote:format(mod:SpellName(1295935))}, -- Frostfire Volley (Frost - Targeted)
-	{1295886, soundOnApplied = "warning", duration = 8, note = CL.debuffTargetedNote:format(mod:SpellName(1295886))}, -- Frostfire Volley (Fire - Targeted)
-	{1296025, soundOnApplied = "warning", duration = 7, note = CL.debuffTargetedNote:format(mod:SpellName(1296025))}, -- Blink Nova (Targeted)
-	{1297625, soundOnApplied = "warning", duration = 10, note = CL.debuffTargetedNote:format(mod:SpellName(1297625))}, -- Explosive Surprise (Targeted)
+	{1295935, soundOnApplied = "warning", note = CL.debuffTargetedNote:format(mod:SpellName(1295935))}, -- Frostfire Volley (Frost - Targeted)
+	{1295886, soundOnApplied = "warning", note = CL.debuffTargetedNote:format(mod:SpellName(1295886))}, -- Frostfire Volley (Fire - Targeted)
+	{1296025, soundOnApplied = "warning", note = CL.debuffTargetedNote:format(mod:SpellName(1296025))}, -- Blink Nova (Targeted)
+	{1297625, soundOnApplied = "warning", note = CL.debuffTargetedNote:format(mod:SpellName(1297625))}, -- Explosive Surprise (Targeted)
 	-- {1296092, soundOnApplied = "warning"}, -- Mighty Thud (Targeted) XXX not applied to players?
 
 	{1295858, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.tank_debuff, header = CL.general}, -- Shredding Shards

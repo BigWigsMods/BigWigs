@@ -56,14 +56,14 @@ mod:SetRenames({
 --
 
 mod:SetAuraData({
-	{1305963, soundOnApplied = "warning", duration = 10, header = CL.important}, -- Venomous Surge
-	{1285419, 1285425, 1285453, 1297096, 1297111, soundOnApplied = "alert", duration = 8}, -- Raging Crosswinds
+	{1305963, soundOnApplied = "warning", header = CL.important}, -- Venomous Surge
+	{1285419, 1285425, 1285453, 1297096, 1297111, soundOnApplied = "alert"}, -- Raging Crosswinds
 	{1305621, soundOnApplied = "warning", difficulty = "mythic"}, -- Serpent's Fury,
-	{1297707, soundOnApplied = "warning", duration = 5, note = CL.left, difficulty = "mythic"}, -- Virulence (Left)
-	{1299899, soundOnApplied = "warning", duration = 5, note = CL.right, difficulty = "mythic"}, -- Virulence (Right)
+	{1297707, soundOnApplied = "warning", note = CL.left, difficulty = "mythic"}, -- Virulence (Left)
+	{1299899, soundOnApplied = "warning", note = CL.right, difficulty = "mythic"}, -- Virulence (Right)
 
 	{1277105, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.debuffHitByCastNote:format(mod:SpellName(1277002)), header = mod:SpellName(1277105)}, -- Ravage
-	{1277051, soundOnApplied = "none", duration = 22, note = CL.debuffHitByCastNote:format(mod:SpellName(1277027))}, -- Mutilated Gash
+	{1277051, soundOnApplied = "none", note = CL.debuffHitByCastNote:format(mod:SpellName(1277027))}, -- Mutilated Gash
 	{1287083, soundOnApplied = "alarm", soundOnAppliedDose = "none", dispel = "poison", mechanic = "snared", note = CL.debuffFailureMoveFromCastNote:format(mod:SpellName(1287083))}, -- Tempest
 
 	{1282873, soundOnApplied = "none", note = CL.tank_debuff, header = CL.general}, -- Corroding Venom
