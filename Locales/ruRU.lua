@@ -1098,10 +1098,9 @@ L.selectPlayer = "Выбрать игрока"
 L.myself = "На себя"
 L.trigger = "Условие воспроизведения"
 L.remove = "Исключить"
-L.auraCountdownDesc = "Если включено, голосовое оповещение сработает на последних трёх секундах ауры."
-L.auraDuration = "Длительность ауры"
-L.auraDurationDesc = "Длительность ауры в секундах."
 L.currentUnit = "(Текущий: %s)"
+--L.throttle = "Throttle"
+--L.throttleDesc = "How regularly this sound is allowed to play (in seconds) between each time the aura is triggered. If set to 0, the sound will play every time the aura triggers."
 
 -----------------------------------------------------------------------
 -- Nameplates.lua

@@ -825,10 +825,9 @@ L.maxIconsDesc = "La cantidad máxima de íconos que se mostrarán."
 --L.myself = "Myself"
 --L.trigger = "Trigger"
 L.remove = "Quitar"
---L.auraCountdownDesc = "If enabled, a vocal countdown will be added to the last 3 seconds of the aura."
---L.auraDuration = "Aura Duration"
---L.auraDurationDesc = "The duration in seconds that the aura will last."
 L.currentUnit = "(Actual: %s)"
+--L.throttle = "Throttle"
+--L.throttleDesc = "How regularly this sound is allowed to play (in seconds) between each time the aura is triggered. If set to 0, the sound will play every time the aura triggers."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua

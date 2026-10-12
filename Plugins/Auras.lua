@@ -305,6 +305,21 @@ local function updateProfile()
 	if inConfigureMode then -- Update visible anchors
 		plugin:BigWigs_StartConfigureMode(nil, plugin.moduleName)
 	end
+
+	--XXX temp 12.1.5
+	for soundIndex = #db.sounds, 1, -1 do
+		local soundInfo = db.sounds[soundIndex]
+		if soundInfo.voice or soundInfo.duration then
+			table.remove(db.sounds, soundIndex) -- Remove voice countdown support
+		elseif not soundInfo.throttleSeconds then
+			soundInfo.throttleSeconds = 1 -- Add throttle support
+		end
+	end
+	--XXX end temp
+
+	RemoveAllAuraSounds()
+	UpdateSoundOptions()
+	AddAllAuraSounds()
 end
 
 --------------------------------------------------------------------------------
@@ -375,6 +390,7 @@ do
 					trigger = 0,
 					unit = "player",
 					sound = LibSharedMedia:GetDefault(SOUND),
+					throttleSeconds = 1,
 				})
 				UpdateSoundOptions()
 			end,
@@ -399,16 +415,7 @@ do
 			local auraDB = db.sounds[index]
 			local key = info[#info]
 			auraDB[key] = value
-
-			if key == "trigger" and value ~= 3 then
-				auraDB.sound = auraDB.sound or LibSharedMedia:GetDefault(SOUND)
-				auraDB.voice = nil
-				auraDB.duration = nil
-			elseif key == "trigger" and value == 3 then
-				auraDB.sound = nil
-				auraDB.voice = "Amy"
-				auraDB.duration = 0
-			end
+			auraDB.sound = auraDB.sound or LibSharedMedia:GetDefault(SOUND)
 			if key == "unit" and value ~= "name" then
 				auraDB.playerName = nil
 			end
@@ -455,9 +462,8 @@ do
 							[0] = L.onApplied,
 							[1] = L.onDose,
 							[2] = L.onRemoved,
-							[3] = L.countdown,
 						},
-						width = 1.4,
+						width = 1,
 						order = 3,
 					},
 					sound = {
@@ -477,30 +483,8 @@ do
 						values = LibSharedMedia:List(SOUND),
 						dialogControl = "BigWigsSharedDropdown",
 						itemControl = "DDI-Sound",
-						hidden = function() return db.sounds[soundIndex].trigger == 3 end,
-						width = 1.8,
+						width = 2,
 						order = 4,
-					},
-					voice = {
-						type = "select",
-						name = L.countdownVoice,
-						values = {
-							Amy = "English: Amy",
-							-- David = "English: David",
-							-- Jim = "English: Jim",
-						},
-						hidden = function() return db.sounds[soundIndex].trigger ~= 3 end,
-						width = 1.1,
-						order = 4,
-					},
-					duration = {
-						type = "range",
-						name = L.auraDuration,
-						desc = L.auraDurationDesc,
-						min = 1, max = 30, step = 1,
-						hidden = function() return db.sounds[soundIndex].trigger ~= 3 end,
-						width = 0.6,
-						order = 5,
 					},
 					unit = {
 						type = "select",
@@ -512,7 +496,7 @@ do
 						},
 						sorting = { "player", "tank", "name" },
 						width = 1,
-						order = 6,
+						order = 5,
 					},
 					playerName = {
 						type = "select",
@@ -532,17 +516,13 @@ do
 						end,
 						hidden = function() return db.sounds[soundIndex].unit ~= "name" end,
 						width = 1.6,
-						order = 7,
+						order = 6,
 					},
 					unitTarget = {
 						type = "description",
 						name = function()
-							local unitType = db.sounds[soundIndex].unit
-							if unitType == "player" then
-								return ""
-							end
 							local name = L.none
-							local unit = plugin:GetUnitToken(unitType, db.sounds[soundIndex].playerName)
+							local unit = plugin:GetUnitToken("tank", db.sounds[soundIndex].playerName)
 							if unit then
 								name = plugin:UnitName(unit)
 								-- name = followerShortNameMap[name] or name
@@ -554,7 +534,16 @@ do
 							end
 							return "  "..L.currentUnit:format(name)
 						end,
+						hidden = function() return db.sounds[soundIndex].unit ~= "tank" end,
 						width = 1.2,
+						order = 7,
+					},
+					throttleSeconds = {
+						type = "range",
+						name = L.throttle,
+						desc = L.throttleDesc,
+						min = 0, max = 5, step = 0.1,
+						width = 2,
 						order = 8,
 					},
 				},
@@ -1834,11 +1823,8 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StopConfigureMode")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	updateProfile()
-	UpdateSoundOptions()
 
 	self:RegisterEvent("GROUP_ROSTER_UPDATE")
-
-	AddAllAuraSounds()
 
 	if not db.player.disabled and self.db.global.showHelpTip and anchors.player then
 		self:CreateTestAura()
@@ -2720,8 +2706,6 @@ do
 		if not info or not info.enabled then return end
 
 		local unit = info.unit
-		local trigger = info.trigger
-		local duration = tonumber(info.duration)
 
 		if unit == "tank" then
 			unit = plugin:GetUnitToken("tank")
@@ -2729,21 +2713,15 @@ do
 			unit = plugin:GetUnitToken("name", info.playerName)
 		end
 
-		local soundFile
-		if trigger < 3 then
-			soundFile = LibSharedMedia:Fetch("sound", info.sound, true)
-		elseif duration and duration > 0 and duration <= 30 and info.voice then -- countdown
-			trigger = 0
-			local path = [[Interface\AddOns\BigWigs\Media\Sounds\AuraCountdowns\%s\%s_Countdown%d.ogg]]
-			soundFile = path:format(info.voice, info.voice, duration)
-		end
+		local soundFile = LibSharedMedia:Fetch("sound", info.sound, true)
 		if unit and soundFile then
-			local auraSoundID = C_UnitAuras.AddAuraSound(trigger, {
+			local auraSoundID = C_UnitAuras.AddAuraSound(info.trigger, {
 				unitToken = unit,
 				spellID = info.spellID,
 				soundFileName = type(soundFile) == "string" and soundFile or nil,
 				soundFileID = type(soundFile) == "number" and soundFile or nil,
 				outputChannel = "master",
+				throttleSeconds = info.throttleSeconds,
 			})
 			if auraSoundID and (info.unit == "tank" or info.unit == "name") then
 				registeredUnits[index] = unit

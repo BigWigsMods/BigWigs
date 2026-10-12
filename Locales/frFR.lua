@@ -825,10 +825,9 @@ L.selectPlayer = "Sélectionne un joueur"
 L.myself = "Moi-même"
 L.trigger = "Déclencheur"
 L.remove = "Supprimer"
-L.auraCountdownDesc = "Si activé, un CàR vocal sera ajouté sur les 3 dernières secondes de l'aura."
-L.auraDuration = "Durée d'Aura"
-L.auraDurationDesc = "La durée de l'aura en secondes."
 L.currentUnit = "(Actuel : %s)"
+--L.throttle = "Throttle"
+--L.throttleDesc = "How regularly this sound is allowed to play (in seconds) between each time the aura is triggered. If set to 0, the sound will play every time the aura triggers."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua

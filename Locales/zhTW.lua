@@ -825,10 +825,9 @@ L.selectPlayer = "選擇玩家"
 L.myself = "自己"
 L.trigger = "觸發時機"
 L.remove = "移除"
-L.auraCountdownDesc = "啟用後，會在光環結束前 3 秒開始播放語音倒數。"
---L.auraDuration = "Aura Duration"
---L.auraDurationDesc = "The duration in seconds that the aura will last."
 L.currentUnit = "（當前：%s）"
+--L.throttle = "Throttle"
+--L.throttleDesc = "How regularly this sound is allowed to play (in seconds) between each time the aura is triggered. If set to 0, the sound will play every time the aura triggers."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
