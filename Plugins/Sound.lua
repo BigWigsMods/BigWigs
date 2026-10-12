@@ -538,7 +538,7 @@ do
 					soundsToRegister.onRemoved = self:GetSoundFile(nil, nil, onRemovedSound)
 				end
 
-				local throttle = bossModule:GetAuraSoundThrottle(spellId) or 1
+				local throttle = bossModule:GetAuraSoundThrottle(spellId)
 				for event, sound in next, soundsToRegister do
 					local auraSoundInfoTable = {
 						spellID = spellId,

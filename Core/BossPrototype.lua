@@ -1184,7 +1184,7 @@ do
 			return
 		end
 
-		return moduleAurasList[self][index].throttle
+		return moduleAurasList[self][index].throttle or 1
 	end
 
 	--- Get the aura type. (Magic/Poison/Etc)
