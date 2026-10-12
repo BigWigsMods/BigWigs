@@ -398,3 +398,5 @@ L.tank_grip = "Poigne du Tank" -- When a boss grapples the tank towards them. We
 -- Aura Sections
 L.important = "Important" -- High priority debuffs
 L.achievement = "Haut fait : \"%s\"" -- Debuff related to an achievement
+L.damage = "Dégâts" -- Debuff is just damage
+L.fail = "Échec" -- Debuff indicates a mechanics failure

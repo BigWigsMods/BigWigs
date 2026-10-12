@@ -189,7 +189,7 @@ function mod:ResetCounts()
 	for eventID, barInfo in next, activeBars do
 		if barInfo.timer then
 			self:StopBar(barInfo.msg)
-			barInfo:onCanceled()
+			barInfo:onCanceled() -- cancel Fling Fish
 
 			self:CancelTimer(barInfo.timer)
 			barInfo.timer = nil

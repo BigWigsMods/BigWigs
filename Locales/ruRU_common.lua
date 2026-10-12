@@ -397,3 +397,5 @@ L.tank_grip = "Танк Притяжка" -- When a boss grapples the tank towar
 -- Aura Sections
 L.important = "Важное" -- High priority debuffs
 L.achievement = "Достижение: \"%s\"" -- Debuff related to an achievement
+L.damage = "Урон" -- Debuff is just damage
+L.fail = "Провал" -- Debuff indicates a mechanics failure

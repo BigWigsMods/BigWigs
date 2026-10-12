@@ -396,3 +396,5 @@ L.tank_grip = "Tank Grip" -- When a boss grapples the tank towards them. We use 
 -- Aura Sections
 L.important = "Important" -- High priority debuffs
 L.achievement = "Achievement: \"%s\"" -- Debuff related to an achievement
+L.damage = "Damage" -- Debuff is just damage
+L.fail = "Fail" -- Debuff indicates a mechanics failure

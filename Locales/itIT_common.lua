@@ -397,3 +397,5 @@ L.tank_soak = "Tank Soak" -- Similar to L.soak but only applies to tanks
 -- Aura Sections
 L.important = "Importante" -- High priority debuffs
 L.achievement = "Impresa: \"%s\"" -- Debuff related to an achievement
+L.damage = "Danno" -- Debuff is just damage
+L.fail = "Errore" -- Debuff indicates a mechanics failure
