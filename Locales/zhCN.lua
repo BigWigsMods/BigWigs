@@ -826,8 +826,8 @@ L.myself = "自己"
 L.trigger = "触发条件"
 L.remove = "移除"
 L.currentUnit = "（当前：%s）"
---L.throttle = "Throttle"
---L.throttleDesc = "How regularly this sound is allowed to play (in seconds) between each time the aura is triggered. If set to 0, the sound will play every time the aura triggers."
+L.throttle = "播放间隔"
+L.throttleDesc = "光环触发时播放音效的最短间隔（秒）。设为 0 则每次触发都播放。"
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
