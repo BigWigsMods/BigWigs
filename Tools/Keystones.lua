@@ -2281,10 +2281,18 @@ end
 --
 
 local NamePlatePercentUtils = {testing = false, isActive = false}
+do -- Tooltip: Filter Blizz progress
+	local function ShouldFilterMythicPlusProgress(tooltip)
+		if db.profile.progressTooltip and NamePlatePercentUtils.isActive and tooltip == GameTooltip and tooltip:IsTooltipType(2) then -- Enum.TooltipDataType.Unit
+			return true
+		end
+	end
+	TooltipDataProcessor.AddLinePreCall(50, ShouldFilterMythicPlusProgress) -- Enum.TooltipDataLineType.UnitCriteriaProgress
+end
 do
 	local totalEnemyForcesRaw = 0
 	local GetUnitCriteriaProgressValues = C_ScenarioInfo.GetUnitCriteriaProgressValues
-	do -- Tooltip
+	do -- Tooltip: Add BigWigs progress
 		local function AddPercentLine(tooltip)
 			if db.profile.progressTooltip and NamePlatePercentUtils.isActive then
 				local value, _, percentString = GetUnitCriteriaProgressValues("mouseover")
@@ -2292,7 +2300,6 @@ do
 					tooltip:AddLine(L.progressPercentTooltipText[db.profile.progressTooltipFormat]:format(percentString, value, totalEnemyForcesRaw))
 				end
 			end
-
 		end
 		TooltipDataProcessor.AddTooltipPostCall(2, AddPercentLine) -- Enum.TooltipDataType.Unit
 	end
@@ -2559,7 +2566,7 @@ do
 			elseif event == "PLAYER_ENTERING_WORLD" then -- Only the first time it fires, to compensate for reloading UI in the middle of a M+
 				self:UnregisterEvent(event)
 				local _, _, diffID = BigWigsLoader.GetInstanceInfo()
-				if diffID == 8 and db.profile.progressNameplate then
+				if diffID == 8 and db.profile.progressNameplate then -- Active M+
 					NamePlatePercentUtils.isActive = true
 					self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
 					self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
