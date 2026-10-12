@@ -398,4 +398,4 @@ L.tank_grip = "탱커 당기기" -- When a boss grapples the tank towards them. 
 L.important = "중요" -- High priority debuffs
 L.achievement = "업적: \"%s\"" -- Debuff related to an achievement
 L.damage = "피해" -- Debuff is just damage
-L.fail = "실패" -- Debuff indicates a mechanics failure
+L.failed = "실패" -- Debuff indicates a mechanics failure

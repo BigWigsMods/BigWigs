@@ -398,4 +398,4 @@ L.tank_grip = "Agarre al Tanque" -- When a boss grapples the tank towards them. 
 L.important = "Importante" -- High priority debuffs
 L.achievement = "Logro: \"%s\"" -- Debuff related to an achievement
 L.damage = "Daño" -- Debuff is just damage
-L.fail = "Fallo" -- Debuff indicates a mechanics failure
+L.failed = "Fallido" -- Debuff indicates a mechanics failure

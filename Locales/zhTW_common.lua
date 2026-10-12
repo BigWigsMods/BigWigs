@@ -398,4 +398,4 @@ L.tank_grip = "坦克被抓" -- 坦克被抓/被拉 When a boss grapples the tan
 L.important = "重要" -- High priority debuffs
 L.achievement = "成就：「%s」" -- Debuff related to an achievement
 L.damage = "傷害" -- Debuff is just damage
-L.fail = "失誤" -- Debuff indicates a mechanics failure
+L.failed = "失敗" -- Debuff indicates a mechanics failure

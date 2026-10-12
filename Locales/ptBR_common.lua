@@ -398,4 +398,4 @@ L.tank_grip = "Agarrão no Tanque" -- When a boss grapples the tank towards them
 L.important = "Importante" -- High priority debuffs
 L.achievement = "Conquista: \"%s\"" -- Debuff related to an achievement
 L.damage = "Dano" -- Debuff is just damage
-L.fail = "Falha" -- Debuff indicates a mechanics failure
+L.failed = "Falhou" -- Debuff indicates a mechanics failure

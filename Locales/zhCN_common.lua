@@ -398,4 +398,4 @@ L.tank_grip = "拉拽坦克" -- When a boss grapples the tank towards them. We u
 L.important = "重要" -- High priority debuffs
 L.achievement = "成就：“%s”" -- Debuff related to an achievement
 L.damage = "伤害" -- Debuff is just damage
-L.fail = "失误" -- Debuff indicates a mechanics failure
+L.failed = "失败" -- Debuff indicates a mechanics failure
