@@ -11,10 +11,11 @@ BigWigs:AddColors("Nek'zali the Soulcoiler", {
 })
 
 BigWigs:AddSounds("Nek'zali the Soulcoiler", {
-	[1292036] = "alert",
+	[1292036] = {"alert","warning"},
 	[1293212] = "long",
 	[1295397] = "info",
 	[1299673] = "alarm",
+	[1305421] = "alert",
 	["stages"] = "long",
 })
 
