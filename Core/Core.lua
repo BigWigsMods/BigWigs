@@ -100,37 +100,11 @@ end
 -- ENCOUNTER event handler
 --
 
-if loader.isRetail then
-	function mod:ENCOUNTER_START(_, encounterId)
-		for _, module in next, bosses do
-			if module:IsEncounterID(encounterId) then
-				if not module:IsEnabled() then
-					module:Enable()
-				end
-				module:Engage()
-			end
-		end
-	end
-elseif loader.isMists or loader.isCata then
-	function mod:ENCOUNTER_START(_, encounterId)
-		for _, module in next, bosses do
-			if module:IsEncounterID(encounterId) and not module:IsEnabled() then
-				module:Enable()
-				if UnitGUID("boss1") then -- Only if _START fired after IEEU
-					module:Engage()
-				end
-			end
-		end
-	end
-else
-	function mod:ENCOUNTER_START(_, encounterId)
-		for _, module in next, bosses do
-			if module:IsEncounterID(encounterId) then
-				if not module:IsEnabled() then
-					module:Enable()
-				end
-				module:Engage()
-			end
+function mod:ENCOUNTER_START(_, encounterId)
+	for _, module in next, bosses do
+		if module:IsEncounterID(encounterId) then
+			module:Enable()
+			module:Engage()
 		end
 	end
 end
@@ -143,8 +117,8 @@ local enablemobs = {}
 
 local function UpdateMouseoverUnit()
 	local GUID = UnitGUID("mouseover")
-	if issecretvalue and issecretvalue(GUID) then return end -- XXX 12.0 compat
-	if not GUID or UnitIsCorpse("mouseover") or UnitIsDead("mouseover") then return end
+	if not GUID or issecretvalue(GUID) then return end
+	if UnitIsCorpse("mouseover") or UnitIsDead("mouseover") then return end
 	local creatureID = loader.GetCreatureID(GUID)
 	if creatureID then
 		local moduleNameOrTable = enablemobs[creatureID]
@@ -235,9 +209,8 @@ end
 do
 	local SendAddonMessage = loader.SendAddonMessage
 	local Timer = loader.CTimerAfter
-	local issecretvalue = issecretvalue or function() return false end -- XXX 12.0 compat
 	function mod:RAID_BOSS_WHISPER(_, msg) -- Purely for Transcriptor to assist in logging purposes.
-		if not issecretvalue(msg) and msg ~= "" and IsInGroup() and coreEnabled then
+		if not issecretvalue(msg) and msg ~= "" and IsInGroup() then
 			local result = SendAddonMessage("Transcriptor", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 			if type(result) == "number" and result > 0 then
 				if result == 3 or result == 8 or result == 9 then -- AddonMessageThrottle, ChannelThrottle, GeneralError
@@ -357,7 +330,7 @@ do
 				plugins[i]:Enable()
 			end
 
-			if loader.isRetail then
+			if loader.isModern then -- We cannot use NPC scanning in modern clients, so enable trash modules on zone in
 				for _, module in next, bosses do
 					if module:IsZoneID(instanceID) then
 						-- Enable trash modules for the current zone

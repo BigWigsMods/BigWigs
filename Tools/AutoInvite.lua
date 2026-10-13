@@ -54,7 +54,7 @@ end
 -- Widgets & Events
 --
 
-local popupFrame = (BigWigsLoader.isRetail or BigWigsLoader.isForever) and CreateFrame("Frame", nil, UIParent, "PortraitFrameTexturedBaseTemplate") or CreateFrame("Frame")
+local popupFrame = BigWigsLoader.isModern and CreateFrame("Frame", nil, UIParent, "PortraitFrameTexturedBaseTemplate") or CreateFrame("Frame")
 do
 	local delayedInvite = {}
 	local invitesBlocked = false
@@ -190,7 +190,7 @@ do
 	text:SetNonSpaceWrap(true)
 	text:SetText(L.groupIsFullConvertToRaid)
 
-	if BigWigsLoader.isRetail or BigWigsLoader.isForever then
+	if BigWigsLoader.isModern then
 		popupFrame:SetTitle("BigWigs")
 		popupFrame:SetTitleOffsets(0, 0)
 		popupFrame:SetBorder("HeldBagLayout")
@@ -205,7 +205,7 @@ do
 		text:SetPoint("TOP", 0, -16)
 	end
 
-	local buttonYes = CreateFrame("Button", nil, popupFrame, (BigWigsLoader.isRetail or BigWigsLoader.isForever) and "SharedButtonTemplate" or "UIPanelButtonTemplate")
+	local buttonYes = CreateFrame("Button", nil, popupFrame, BigWigsLoader.isModern and "SharedButtonTemplate" or "UIPanelButtonTemplate")
 	buttonYes:SetSize(128, 32)
 	buttonYes:SetPoint("RIGHT", popupFrame, "BOTTOM", -6, 28)
 	buttonYes:SetScript("OnClick", function(self)
@@ -234,7 +234,7 @@ do
 		end)
 	end)
 	buttonYes:SetText(L.yes)
-	local buttonNo = CreateFrame("Button", nil, popupFrame, (BigWigsLoader.isRetail or BigWigsLoader.isForever) and "SharedButtonTemplate" or "UIPanelButtonTemplate")
+	local buttonNo = CreateFrame("Button", nil, popupFrame, BigWigsLoader.isModern and "SharedButtonTemplate" or "UIPanelButtonTemplate")
 	buttonNo:SetSize(128, 32)
 	buttonNo:SetPoint("LEFT", buttonYes, "RIGHT", 12, 0)
 	local InChatMessagingLockdown = C_ChatInfo.InChatMessagingLockdown

@@ -42,6 +42,7 @@ do
 	tbl.version = BIGWIGS_VERSION
 	public.isRetail = tbl.isRetail
 	public.isForever = tbl.isForever
+	public.isModern = tbl.isRetail or tbl.isForever
 	public.isClassic = tbl.isClassic
 	public.isVanilla = tbl.isVanilla
 	public.season = tbl.season
