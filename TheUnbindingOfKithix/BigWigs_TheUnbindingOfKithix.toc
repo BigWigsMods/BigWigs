@@ -21,8 +21,8 @@
 ## Notes-koKR: BigWigs The Unbinding of Kith'ix Modules
 ## Notes-ptBR: BigWigs The Unbinding of Kith'ix Modules
 ## Notes-ruRU: BigWigs The Unbinding of Kith'ix Modules
-## Notes-zhCN: BigWigs The Unbinding of Kith'ix Modules
-## Notes-zhTW: BigWigs The Unbinding of Kith'ix Modules
+## Notes-zhCN: BigWigs 基希克斯破封模块
+## Notes-zhTW: BigWigs 克希斯的解放模組
 ## IconTexture: Interface\AddOns\BigWigs\Media\Icons\minimap_raid.tga
 ## Version: @project-version@
 
