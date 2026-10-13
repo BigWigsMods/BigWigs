@@ -3081,8 +3081,10 @@ do
 		local buttonID = button and button.id
 		if buttonID then
 			local spellID = choiceInfo.options[choiceNumber].spellID
+			local text
 			if spellID then
 				local spellLink = loader.GetSpellLink(spellID)
+				text = choiceInfo.options[choiceNumber].header
 				local linkToUse
 				if type(spellLink) == "string" and spellLink:find("Hspell", nil, true) then
 					linkToUse = spellLink -- Use Blizz link if valid...
@@ -3092,12 +3094,27 @@ do
 				end
 				core:Print(format(CL.autoPlayerChoice_notice, linkToUse), self.isLittleWigs)
 			else
-				core:Print(format(CL.autoPlayerChoice_notice, choiceInfo.options[choiceNumber].header), self.isLittleWigs)
+				text = choiceInfo.options[choiceNumber].header
+				if text and text ~= "" then
+					core:Print(format(CL.autoPlayerChoice_notice, text), self.isLittleWigs)
+				else
+					text = button.text or "???"
+				end
 			end
-			self:SendMessage("BigWigs_Message", self, nil, choiceInfo.options[choiceNumber].header, "cyan", choiceInfo.options[choiceNumber].choiceArtID, nil, 4)
+			self:SendMessage("BigWigs_Message", self, nil, text, "cyan", choiceInfo.options[choiceNumber].choiceArtID, nil, 4)
 			SendPlayerChoiceResponse(buttonID)
 			OnUIClosed()
 		end
+	end
+end
+
+--- Get the spell ID of a specific choice
+-- @param choiceInfo The table provided by :GetPlayerChoiceOptions()
+-- @number choiceNumber The number of the specific choice you want
+-- @return number The spell ID of the choice
+function boss:GetPlayerChoiceSpellID(choiceInfo, choiceNumber)
+	if choiceInfo and choiceInfo.options and choiceInfo.options[choiceNumber] then
+		return choiceInfo.options[choiceNumber].spellID
 	end
 end
 
