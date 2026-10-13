@@ -54,77 +54,79 @@ end
 -- Widgets & Events
 --
 
-local popupFrame = BigWigsLoader.isRetail and CreateFrame("Frame", nil, UIParent, "PortraitFrameTexturedBaseTemplate") or CreateFrame("Frame")
+local popupFrame = (BigWigsLoader.isRetail or BigWigsLoader.isForever) and CreateFrame("Frame", nil, UIParent, "PortraitFrameTexturedBaseTemplate") or CreateFrame("Frame")
 do
-	local throttle = {}
 	local delayedInvite = {}
 	local invitesBlocked = false
 	local SendChatMessage = BigWigsLoader.SendChatMessage
 	local SendBattleNetMessage = BigWigsLoader.SendBattleNetMessage
-	local Ambiguate = BigWigsLoader.Ambiguate
-	local myClient = WOW_PROJECT_ID
-	local issecretvalue = issecretvalue
-	popupFrame:SetScript("OnEvent", function(self, event, message, sender, _, _, _, flag, _, _, _, _, _, guid, bnSenderID)
-		if event == "GROUP_LEFT" then
-			if not IsInGroup() then
-				invitesBlocked = false
-				throttle = {}
-				delayedInvite = {}
-			end
-		else
-			if issecretvalue(message) or (IsInGroup() and not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player")) then -- C_PartyInfo.CanInvite is an alternative, but XXX [Mainline:✓ MoP:✗ Wrath:✗ Vanilla:✗]
-				return -- Message is secret or we don't have invite permission
-			elseif event == "CHAT_MSG_WHISPER" then
-				local trimmedPlayer = Ambiguate(sender, "none")
-				if flag == "GM" or flag == "DEV" or UnitInRaid(trimmedPlayer) or UnitInParty(trimmedPlayer) or guid == BigWigsLoader.UnitGUID("player") then
-					return -- Player is GM/DEV or already in our group, return
-				elseif not throttle[sender] or (GetTime() - throttle[sender]) > 1 then
-					throttle[sender] = GetTime()
-					message = message:lower()
-					local dbToUse
-					if C_BattleNet.GetGameAccountInfoByGUID(guid) or IsGuildMember(guid) or C_FriendList.IsFriend(guid) then
-						dbToUse = db.global.wordsFriendly
-					else
-						dbToUse = db.global.wordsOther
-					end
-					for i = 1, #dbToUse do
-						if dbToUse[i] == message then
-							if IsInRaid() then
-								if C_PartyInfo.IsPartyFull() then
-									throttle[sender] = throttle[sender] + 10
-									SendChatMessage(L.whisperToPlayerMyGroupIsFull, "WHISPER", nil, sender)
-								else
-									BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(sender))
-									C_PartyInfo.InviteUnit(sender)
-								end
-							else
-								if C_PartyInfo.IsPartyFull() then
-									if not invitesBlocked then
-										if not next(delayedInvite) then
-											popupFrame:Show()
-										end
-										delayedInvite[sender] = true
-									else
-										throttle[sender] = throttle[sender] + 10
+	do
+		local throttle = {}
+		local IsGUIDInGroup = C_PartyInfo.IsGUIDInGroup
+		local myClient = WOW_PROJECT_ID
+		local issecretvalue = issecretvalue
+		popupFrame:SetScript("OnEvent", function(self, event, message, sender, _, _, _, flag, _, _, _, _, _, guid, bnSenderID)
+			if event == "GROUP_LEFT" then
+				if not IsInGroup() then
+					invitesBlocked = false
+					throttle = {}
+					delayedInvite = {}
+				end
+			else
+				if issecretvalue(message) or (IsInGroup() and not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player")) then -- C_PartyInfo.CanInvite is an alternative, but XXX [Mainline:✓ MoP:✗ Wrath:✗ Vanilla:✗]
+					return -- Message is secret or we don't have invite permission
+				elseif event == "CHAT_MSG_WHISPER" then
+					if flag == "GM" or flag == "DEV" or guid == BigWigsLoader.UnitGUID("player") or IsGUIDInGroup(guid) then
+						return -- Player is GM/DEV or already in our group, return
+					elseif not throttle[guid] or GetTime() > throttle[guid] then
+						message = message:lower()
+						local dbToUse
+						if C_BattleNet.GetGameAccountInfoByGUID(guid) or IsGuildMember(guid) or C_FriendList.IsFriend(guid) then
+							dbToUse = db.global.wordsFriendly
+						else
+							dbToUse = db.global.wordsOther
+						end
+						for i = 1, #dbToUse do
+							if dbToUse[i] == message then
+								if IsInRaid() then
+									if C_PartyInfo.IsPartyFull() then
+										throttle[guid] = GetTime() + 10
 										SendChatMessage(L.whisperToPlayerMyGroupIsFull, "WHISPER", nil, sender)
+									else
+										throttle[guid] = GetTime() + 2
+										BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(sender))
+										C_PartyInfo.InviteUnit(sender)
 									end
 								else
-									BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(sender))
-									C_PartyInfo.InviteUnit(sender)
+									if C_PartyInfo.IsPartyFull() then
+										if not invitesBlocked then
+											if not next(delayedInvite) then
+												popupFrame:Show()
+											end
+											delayedInvite[sender] = true
+											throttle[guid] = GetTime() + 2
+										else
+											throttle[guid] = GetTime() + 5
+											SendChatMessage(L.whisperToPlayerMyGroupIsFull, "WHISPER", nil, sender)
+										end
+									else
+										throttle[guid] = GetTime() + 2
+										BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(sender))
+										C_PartyInfo.InviteUnit(sender)
+									end
 								end
 							end
 						end
 					end
-				end
-			elseif event == "CHAT_MSG_BN_WHISPER" and not BNIsSelf(bnSenderID) then
-				if not throttle[bnSenderID] or (GetTime() - throttle[bnSenderID]) > 1 then
-					throttle[bnSenderID] = GetTime()
+				elseif event == "CHAT_MSG_BN_WHISPER" and not BNIsSelf(bnSenderID) then
 					local index = BNGetFriendIndex(bnSenderID)
 					local gameAccs = C_BattleNet.GetFriendNumGameAccounts(index)
 					for i=1, gameAccs do
 						local gameAccountInfo = C_BattleNet.GetFriendGameAccountInfo(index, i)
 						if gameAccountInfo.clientProgram == "WoW" and gameAccountInfo.wowProjectID == myClient and gameAccountInfo.isInCurrentRegion and gameAccountInfo.realmID > 0
 						and (BigWigsLoader.isRetail or (gameAccountInfo.realmID == GetRealmID() and gameAccountInfo.factionName == UnitFactionGroup("player"))) then -- Classic is more restrictive than retail
+							guid = gameAccountInfo.playerGuid
+							if not guid or (throttle[guid] and GetTime() < throttle[guid]) then return end
 							local player = gameAccountInfo.characterName
 							local realmName = gameAccountInfo.realmName -- Short name "ServerOne"
 							local realmDisplayName = gameAccountInfo.realmDisplayName -- Full name "Server One"
@@ -132,15 +134,16 @@ do
 								if realmDisplayName ~= GetRealmName() then
 									player = player .. "-" .. realmName
 								end
-								if not UnitInRaid(player) and not UnitInParty(player) then -- Player is not already in our group
+								if not IsGUIDInGroup(guid) then -- Player is not already in our group
 									message = message:lower()
 									for num = 1, #db.global.wordsFriendly do
 										if db.global.wordsFriendly[num] == message then
 											if IsInRaid() then
 												if C_PartyInfo.IsPartyFull() then
-													throttle[bnSenderID] = throttle[bnSenderID] + 10
+													throttle[guid] = GetTime() + 10
 													SendBattleNetMessage(bnSenderID, L.whisperToPlayerMyGroupIsFull)
 												else
+													throttle[guid] = GetTime() + 2
 													BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(player))
 													C_PartyInfo.InviteUnit(player)
 												end
@@ -151,11 +154,13 @@ do
 															popupFrame:Show()
 														end
 														delayedInvite[player] = bnSenderID
+														throttle[guid] = GetTime() + 2
 													else
-														throttle[bnSenderID] = throttle[bnSenderID] + 10
+														throttle[guid] = GetTime() + 5
 														SendBattleNetMessage(bnSenderID, L.whisperToPlayerMyGroupIsFull)
 													end
 												else
+													throttle[guid] = GetTime() + 2
 													BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(player))
 													C_PartyInfo.InviteUnit(player)
 												end
@@ -168,8 +173,8 @@ do
 					end
 				end
 			end
-		end
-	end)
+		end)
+	end
 
 	popupFrame:SetFrameStrata("DIALOG")
 	popupFrame:SetFixedFrameStrata(true)
@@ -185,7 +190,7 @@ do
 	text:SetNonSpaceWrap(true)
 	text:SetText(L.groupIsFullConvertToRaid)
 
-	if BigWigsLoader.isRetail then
+	if BigWigsLoader.isRetail or BigWigsLoader.isForever then
 		popupFrame:SetTitle("BigWigs")
 		popupFrame:SetTitleOffsets(0, 0)
 		popupFrame:SetBorder("HeldBagLayout")
@@ -200,7 +205,7 @@ do
 		text:SetPoint("TOP", 0, -16)
 	end
 
-	local buttonYes = CreateFrame("Button", nil, popupFrame, BigWigsLoader.isRetail and "SharedButtonTemplate" or "UIPanelButtonTemplate")
+	local buttonYes = CreateFrame("Button", nil, popupFrame, (BigWigsLoader.isRetail or BigWigsLoader.isForever) and "SharedButtonTemplate" or "UIPanelButtonTemplate")
 	buttonYes:SetSize(128, 32)
 	buttonYes:SetPoint("RIGHT", popupFrame, "BOTTOM", -6, 28)
 	buttonYes:SetScript("OnClick", function(self)
@@ -229,7 +234,7 @@ do
 		end)
 	end)
 	buttonYes:SetText(L.yes)
-	local buttonNo = CreateFrame("Button", nil, popupFrame, BigWigsLoader.isRetail and "SharedButtonTemplate" or "UIPanelButtonTemplate")
+	local buttonNo = CreateFrame("Button", nil, popupFrame, (BigWigsLoader.isRetail or BigWigsLoader.isForever) and "SharedButtonTemplate" or "UIPanelButtonTemplate")
 	buttonNo:SetSize(128, 32)
 	buttonNo:SetPoint("LEFT", buttonYes, "RIGHT", 12, 0)
 	local InChatMessagingLockdown = C_ChatInfo.InChatMessagingLockdown

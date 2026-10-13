@@ -23,7 +23,6 @@ files["Loader.lua"].ignore = {
 	"113/geterrorhandler",
 
 	"113/Ambiguate",
-	"113/BNSendWhisper", -- XXX temp
 	"113/C_AddOns",
 	"113/C_BattleNet",
 	"113/C_ChatInfo",
