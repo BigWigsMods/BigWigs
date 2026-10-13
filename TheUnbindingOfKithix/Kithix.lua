@@ -47,7 +47,7 @@ mod:SetRenames({
 	[1304045] = {CL.debuffs}, -- Unspeakable Horrors
 	[1302951] = {CL.intermission}, -- Suffocating Darkness XXX Full Energy?
 	[1303169] = {CL.stage:format(1)}, -- Divine Radiance XXX Full Energy? Weakened? Boss Stunned?
-	[1303406] = {1303406}, -- Abyssal Grasp
+	[1303406] = {CL.heal_absorbs}, -- Abyssal Grasp
 	[1308873] = {1308873}, -- Null Gate
 	[1318467] = {CL.tank_debuff}, -- Negation
 	[1301479] = {1301479}, -- Eightfold Eclipse
@@ -92,7 +92,7 @@ function mod:GetOptions()
 		1303681, -- Twisted Appendage
 		{1304930, "CASTBAR"}, -- Dark Devastation
 
-		-- Intermission
+		-- Intermission: Suffocating Darkness
 		1302951, -- Suffocating Darkness
 		1303406, -- Abyssal Grasp
 		1303169, -- Divine Radiance
@@ -140,6 +140,15 @@ function mod:OnEncounterStart()
 	nullGateCount = 1
 	negationCount = 1
 end
+
+-- function mod:ResetCounts()
+-- 	voidswarmCount = 1
+-- 	appendageCount = 1
+-- 	devastationCount = 1
+-- 	extinguishCount = 1
+-- 	horrorsCount = 1
+-- 	graspCount = 1
+-- end
 
 --------------------------------------------------------------------------------
 -- Timeline Event Handlers
@@ -210,13 +219,20 @@ function mod:MythicTimeline(_, eventInfo)
 				barInfo = self:SuffocatingDarkness()
 			end
 		end
+
 	elseif stage == 2 then
 		if rounded == 1 then
 			barInfo = self:NullGate()
-		elseif rounded == 8 then
-			barInfo = trackBar(self:NullGate())
-		elseif rounded == 10 or rounded == 16 then
+		elseif rounded == 16 then
 			barInfo = self:Negation()
+		elseif rounded == 10 then
+			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+			local count = durationEventCount[rounded]
+			if count == 1 then -- on stage start
+				barInfo = self:Negation()
+			else
+			barInfo = trackBar(self:NullGate())
+			end
 		elseif rounded == 61 then
 			barInfo = self:EightfoldEclipse()
 		end
@@ -238,7 +254,6 @@ function mod:HeroicTimeline(_, eventInfo)
 		stage = 2
 	end
 
-	-- From Heroic testing
 	if stage == 1 then
 		if rounded == 5 then
 			barInfo = self:Voidswarm()
@@ -283,6 +298,7 @@ function mod:HeroicTimeline(_, eventInfo)
 				barInfo = self:SuffocatingDarkness()
 			end
 		end
+
 	elseif stage == 2 then
 		if rounded == 3 then
 			barInfo = self:NullGate()
@@ -526,7 +542,7 @@ function mod:Extinguish(duration)
 		count = count,
 		onFinished = function()
 			self:StopBlizzMessages(1)
-			self:Message(1304424, "orange", CL.casting:format(barText))
+			self:Message(1304424, "red", CL.casting:format(barText))
 			self:PlaySound(1304424, "alarm")
 		end,
 		onCanceled = function(this)
@@ -542,7 +558,8 @@ function mod:UnspeakableHorrors()
 		msg = barText,
 		key = 1304045,
 		onFinished = function()
-			self:Message(1304045, "yellow", barText)
+			-- self:PersonalMessageFromBlizzMessage
+			self:Message(1304045, "orange", barText)
 			if self:Healer() then
 				self:PlaySound(1304045, "alert")
 			end
@@ -571,8 +588,11 @@ function mod:AbyssalGrasp()
 		msg = barText,
 		key = 1303406,
 		onFinished = function()
+			-- self:PersonalMessageFromBlizzMessage
 			self:Message(1303406, "yellow", barText)
-			self:PlaySound(1303406, "alert")
+			if self:Healer() then
+				self:PlaySound(1303406, "alert")
+			end
 		end,
 	}
 end
@@ -584,9 +604,12 @@ function mod:DivineRadiance()
 		msg = barText,
 		key = 1303169,
 		delay = 4, -- timer to when boss is stunned
+		-- onFinished = function()
+		-- 	mod:ResetCounts()
+		-- end,
 		onFinishedDelayed = function()
-			self:Message(1303169, "green", barText)
-			self:PlaySound(1303169, "info")
+			self:Message(1303169, "cyan", barText)
+			self:PlaySound(1303169, "long")
 		end,
 	}
 end
