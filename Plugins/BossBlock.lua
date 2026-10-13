@@ -539,6 +539,8 @@ do
 		[491] = true, -- Additional Voidlight Marl Reward Will Manifest Upon Delve Completion
 		[492] = true, -- Additional Decor Reward Will Manifest Upon Delve Completion
 		[493] = true, -- Additional Companion Experience Reward Will Manifest Upon Delve Completion
+		[503] = true, -- Chamber Complete. The treasure room's contents swell.
+		[506] = true, -- Your party has been deemed worthy of entering De Empire's Rest.
 	}
 	local nemesisBoxCounts = {0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4}
 	local GetNextToastToDisplay = C_EventToastManager and C_EventToastManager.GetNextToastToDisplay
