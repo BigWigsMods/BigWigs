@@ -302,10 +302,16 @@ function mod:HeroicTimeline(_, eventInfo)
 	elseif stage == 2 then
 		if rounded == 3 then
 			barInfo = self:NullGate()
-		elseif rounded == 8 then
-			barInfo = trackBar(self:NullGate())
-		elseif rounded == 10 or rounded == 15 then
+		elseif rounded == 15 then
 			barInfo = self:Negation()
+		elseif rounded == 10 then
+			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+			local count = durationEventCount[rounded]
+			if count == 1 then -- on stage start
+				barInfo = self:Negation()
+			else
+				barInfo = trackBar(self:NullGate())
+			end
 		elseif rounded == 61 then
 			barInfo = self:EightfoldEclipse()
 		end
