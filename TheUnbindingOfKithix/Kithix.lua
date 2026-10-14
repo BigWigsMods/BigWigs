@@ -544,7 +544,7 @@ function mod:Extinguish(duration)
 	return {
 		msg = barText,
 		key = 1304424,
-		delay = 8, -- show timer to the damage
+		delay = self:Mythic() and 7 or 8, -- show timer to the damage
 		count = count,
 		onFinished = function()
 			self:StopBlizzMessages(1)
