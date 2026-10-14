@@ -826,8 +826,8 @@ L.myself = "Ich"
 L.trigger = "Auslöser"
 L.remove = "Entfernen"
 L.currentUnit = "(Aktuell: %s)"
---L.throttle = "Throttle"
---L.throttleDesc = "How regularly this sound is allowed to play (in seconds) between each time the aura is triggered. If set to 0, the sound will play every time the aura triggers."
+L.throttle = "Drosseln"
+L.throttleDesc = "Legt fest, wie regelmäßig (in Sekunden) dieser Sound zwischen dem Auslösen der Aura gespielt werden darf. Bei Eingabe von 0 wird der Sound bei jedem Auslösen der Aura gespielt."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
