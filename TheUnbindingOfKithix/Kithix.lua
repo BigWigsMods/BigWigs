@@ -324,7 +324,8 @@ end
 
 -- Normal, LFR and Story share stage 1, Story just doesn't have Abyssal Grasp or Unspeakable Horrors
 -- XXX Normal is unconfirmed, assumed to be LFR with Heroic's Negation in stage 2
-function mod:EasyTimeline(eventInfo)
+function mod:EasyTimeline(_, eventInfo)
+	if eventInfo.source ~= 0 or self:IsWiping() then return end
 	local barInfo = nil
 
 	local stage = self:GetStage()
@@ -397,7 +398,7 @@ function mod:EasyTimeline(eventInfo)
 		end
 	end
 
-	return barInfo
+	self:HandleBar(barInfo, eventInfo)
 end
 
 function mod:HandleBar(barInfo, eventInfo, noAfterBossError)
