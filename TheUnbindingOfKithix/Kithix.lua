@@ -116,8 +116,10 @@ function mod:OnBossEnable()
 	backupBars = {}
 	if self:Mythic() then
 		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "MythicTimeline")
-	else
+	elseif self:Heroic() then
 		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "HeroicTimeline")
+	else
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "EasyTimeline")
 	end
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
 	self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_REMOVED")
@@ -320,13 +322,83 @@ function mod:HeroicTimeline(_, eventInfo)
 	self:HandleBar(barInfo, eventInfo)
 end
 
--- function mod:EasyTimeline(_, eventInfo)
--- 	if eventInfo.source ~= 0 or self:IsWiping() then return end
--- 	local barInfo = nil
+-- Normal, LFR and Story share stage 1, Story just doesn't have Abyssal Grasp or Unspeakable Horrors
+-- XXX Normal is unconfirmed, assumed to be LFR with Heroic's Negation in stage 2
+function mod:EasyTimeline(eventInfo)
+	local barInfo = nil
 
--- 	-- Straight to backup bars
--- 	self:HandleBar(barInfo, eventInfo, true)
--- end
+	local stage = self:GetStage()
+	local duration = eventInfo.duration
+	local rounded = self:RoundNumber(duration, 0)
+
+	if stage == 1 and (rounded == 3 or rounded == 121) then -- Null Gate (Normal/LFR) / Eightfold Eclipse (Story) = Stage 2
+		self:StageTwoStart(true)
+		stage = 2
+	end
+
+	if stage == 1 then
+		if rounded == 5 then
+			barInfo = self:Voidswarm()
+		elseif rounded == 15 or rounded == 21 or rounded == 34 then
+			barInfo = self:TwistedAppendage()
+		elseif rounded == 20 or rounded == 22 or rounded == 77 then
+			barInfo = self:DarkDevastation()
+		elseif rounded == 31 or rounded == 62 then
+			barInfo = self:Extinguish(duration)
+		elseif rounded == 40 then
+			barInfo = self:UnspeakableHorrors()
+		elseif rounded == 37 or rounded == 82 then
+			barInfo = trackBar(self:UnspeakableHorrors())
+		elseif rounded == 67 then
+			barInfo = self:AbyssalGrasp()
+		elseif rounded == 30 or rounded == 89 then
+			barInfo = trackBar(self:AbyssalGrasp())
+		elseif rounded == 45 then
+			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+			local count = durationEventCount[rounded]
+			if count == 1 then -- on pull
+				barInfo = self:DarkDevastation()
+			else
+				barInfo = self:DivineRadiance()
+			end
+		elseif rounded == 57 then
+			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+			local count = durationEventCount[rounded]
+			if count == 1 then -- on pull
+				barInfo = self:SuffocatingDarkness()
+			else
+				barInfo = self:Extinguish(duration)
+			end
+		elseif rounded == 119 then
+			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+			local count = durationEventCount[rounded]
+			if count % 2 == 1 then
+				barInfo = self:Voidswarm()
+			else
+				barInfo = self:SuffocatingDarkness()
+			end
+		end
+
+	elseif stage == 2 then
+		if rounded == 3 then
+			barInfo = self:NullGate()
+		elseif rounded == 15 then -- Normal
+			barInfo = self:Negation()
+		elseif rounded == 10 then
+			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+			local count = durationEventCount[rounded]
+			if count == 1 and self:Normal() then -- on stage start, LFR has no Negation
+				barInfo = self:Negation()
+			else
+				barInfo = trackBar(self:NullGate())
+			end
+		elseif rounded == 61 or rounded == 121 then
+			barInfo = self:EightfoldEclipse()
+		end
+	end
+
+	return barInfo
+end
 
 function mod:HandleBar(barInfo, eventInfo, noAfterBossError)
 	local eventID = eventInfo and eventInfo.id or 0
