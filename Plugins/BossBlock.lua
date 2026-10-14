@@ -1291,6 +1291,7 @@ do
 		[-2409] = true, -- Liberation of Undermine, Gallywix defeat
 		[-2516] = true, -- [Midnight/Magisters' Terrace][Dungeon] clicking to drain the shield after defeating Seranel Sunlash
 		[-2529] = function() return latestKill[2] == 3181 and GetTime()-latestKill[1] < 10 end, -- [Midnight/The Voidspire][Raid] Crown of the Cosmos defeat
+		[-2669] = function() return latestKill[2] == 3513 and GetTime()-latestKill[1] < 10 end, -- [Midnight/The Unbinding of Kith'ix][Raid] Kith'ix defeat
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
