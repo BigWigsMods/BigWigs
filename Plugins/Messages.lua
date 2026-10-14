@@ -799,7 +799,7 @@ function plugin:OnPluginEnable()
 	updateProfile()
 
 	self:RegisterMessage("BigWigs_Message")
-	if BigWigsLoader.isRetail then
+	if BigWigsLoader.isModern then
 		self:RegisterEvent("ENCOUNTER_WARNING")
 		self:RegisterMessage("BigWigs_BlockBlizzMessages")
 		self:RegisterMessage("BigWigs_AllowBlizzMessages")

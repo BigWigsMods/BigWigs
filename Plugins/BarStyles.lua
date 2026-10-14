@@ -23,7 +23,7 @@ do
 	})
 end
 
-if BigWigsLoader.isRetail then
+if BigWigsLoader.isModern then
 	--local atlasInfo = { -- from C_Texture.GetAtlasInfo
 	--	["UI-HUD-CoolDownManager-Bar"] = {"Interface/AddOns/BigWigs/Media/Textures/UICooldownManager2x", 0.341796875, 0.826177875, 00.16015625, 0.23828125, 0, 8, 10, 8, 8},
 	--	["UI-HUD-CoolDownManager-Bar-BG"] = {"Interface/AddOns/BigWigs/Media/Textures/UICooldownManager2x", 0.341796875, 0.857421875, 0.00390625, 0.15234375, 1, 242, 14, 20, 22},

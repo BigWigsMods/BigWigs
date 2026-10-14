@@ -185,6 +185,30 @@ local dontPrint = { -- Don't print a warning message for these difficulties
 226. 20 Player
 231. Normal
 
+1.60.1
+1. Normal
+9. 40 Player
+148. 20 Player
+184. Normal
+185. 20 Player
+186. 40 Player
+197. 10 Player
+198. Normal
+201. Normal
+202. Difficulty A
+203. Difficulty B
+204. Difficulty C
+207. Normal
+213. Infinite
+214. DNT - Internal only
+215. Normal
+226. 20 Player
+231. Normal
+242. 20 Player
+243. 10 Player
+255. 20 Player
+256. 10 Player
+
 /run for i=1, 1000 do local n = GetDifficultyInfo(i) if n then print(i..".", n) end end
 ]]--
 
@@ -433,7 +457,7 @@ do
 				end
 			end
 
-			if self.db.profile.printHealth and not BigWigsLoader.isRetail then
+			if self.db.profile.printHealth and not BigWigsLoader.isModern then
 				healthPools[journalID] = {
 					names = {},
 					timer = self:ScheduleRepeatingTimer(function() StoreHealth(module) end, 2),

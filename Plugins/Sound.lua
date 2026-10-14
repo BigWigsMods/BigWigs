@@ -169,7 +169,6 @@ plugin.pluginOptions = {
 		--	values = function() return soundList end,
 		--	width = "full",
 		--	itemControl = "DDI-Sound",
-		--	hidden = BigWigsLoader.isClassic,
 		--},
 		newline2 = {
 			type = "description",
@@ -390,7 +389,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	self:RegisterMessage("BigWigs_BossModuleRegistered")
 	self:RegisterMessage("BigWigs_RefreshAuraSounds")
-	if BigWigsLoader.isRetail then
+	if BigWigsLoader.isModern then
 		self:RegisterEvent("ENCOUNTER_WARNING")
 		self:RegisterMessage("BigWigs_BlockBlizzMessages")
 		self:RegisterMessage("BigWigs_AllowBlizzMessages")

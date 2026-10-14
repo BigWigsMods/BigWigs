@@ -70,7 +70,7 @@ do
 end
 
 function mod:OnPluginEnable()
-	if not BigWigsLoader.isRetail then
+	if not BigWigsLoader.isModern then
 		self:RegisterMessage("BigWigs_Flash")
 		self:RegisterMessage("BigWigs_Pulse")
 	end

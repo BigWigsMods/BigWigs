@@ -1494,7 +1494,7 @@ do
 					resCollector = {}
 					fightStartTime = GetTime()
 					battleResFrame.updater:Play()
-					if not BigWigsLoader.isRetail then
+					if not BigWigsLoader.isModern then
 						battleResFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 					end
 				end
@@ -1515,7 +1515,7 @@ do
 				resCollector = {}
 				fightStartTime = GetTime()
 				battleResFrame.updater:Play()
-				if not BigWigsLoader.isRetail then
+				if not BigWigsLoader.isModern then
 					battleResFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 				end
 				plugin:RegisterEvent("PLAYER_REGEN_DISABLED")
@@ -1561,7 +1561,7 @@ function plugin:OnPluginDisable()
 	if plugin.db.profile.iconDesaturate == 3 then
 		battleResFrame.icon:SetDesaturated(false)
 	end
-	if not BigWigsLoader.isRetail then
+	if not BigWigsLoader.isModern then
 		battleResFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 end
@@ -1579,7 +1579,7 @@ function plugin:ENCOUNTER_START()
 	battleResFrame.chargesText:SetFormattedText(chargesTextFormat, 0)
 	battleResFrame.chargesTextRaw = 0
 	battleResFrame.updater:Play()
-	if not BigWigsLoader.isRetail then
+	if not BigWigsLoader.isModern then
 		battleResFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 end
@@ -1594,7 +1594,7 @@ function plugin:ENCOUNTER_END()
 	if self.db.profile.iconDesaturate == 3 then
 		battleResFrame.icon:SetDesaturated(true)
 	end
-	if not BigWigsLoader.isRetail then
+	if not BigWigsLoader.isModern then
 		battleResFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 end
@@ -1618,7 +1618,7 @@ function plugin:CHALLENGE_MODE_START()
 	self:RegisterEvent("CHALLENGE_MODE_COMPLETED")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-	if not BigWigsLoader.isRetail then
+	if not BigWigsLoader.isModern then
 		battleResFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 end
