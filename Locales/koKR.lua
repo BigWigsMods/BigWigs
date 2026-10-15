@@ -826,8 +826,8 @@ L.myself = "나"
 L.trigger = "발동 조건"
 L.remove = "추방"
 L.currentUnit = "(현재: %s)"
---L.throttle = "Throttle"
---L.throttleDesc = "How regularly this sound is allowed to play (in seconds) between each time the aura is triggered. If set to 0, the sound will play every time the aura triggers."
+L.throttle = "속도 조절"
+L.throttleDesc = "오라가 활성화 될 때마다 이 소리가 재생되는 간격(초 단위). 0으로 설정하면 오라가 활성화 될 때마다 소리가 재생됩니다."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
