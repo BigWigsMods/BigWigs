@@ -32,6 +32,7 @@ local playerSide = nil
 local rageCount = 1
 local goreRattleCount = 1
 local wavesCount = 1
+local wavesSubcount = 1
 local wrathCount = 1
 local coilsCount = 1
 local thrashCount = 1
@@ -243,6 +244,8 @@ function mod:OnBossEnable()
 		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "MythicTimeline")
 	elseif self:Heroic() then
 		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "HeroicTimeline")
+	elseif self:Story() then
+		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "StoryTimeline")
 	else
 		self:RegisterEvent("ENCOUNTER_TIMELINE_EVENT_ADDED", "EasyTimeline")
 	end
@@ -258,7 +261,9 @@ function mod:OnEncounterStart()
 	checkStage = false
 	rageCount = 1
 
-	self:RegisterUnitEvent("UNIT_TARGETABLE_CHANGED", nil, "boss1")
+	if not self:Story() then -- no stage 2 in story, goes straight to the intermission
+		self:RegisterUnitEvent("UNIT_TARGETABLE_CHANGED", nil, "boss1")
+	end
 	if self:Mythic() then
 		self:RegisterWretchEvents()
 	end
@@ -269,6 +274,7 @@ function mod:ResetCounts()
 
 	goreRattleCount = 1
 	wavesCount = 1
+	wavesSubcount = 1
 	wrathCount = 1
 	coilsCount = 1
 	thrashCount = 1
@@ -743,6 +749,116 @@ function mod:EasyTimeline(_, eventInfo)
 	self:HandleBar(barInfo, eventInfo)
 end
 
+function mod:StoryTimeline(_, eventInfo)
+	if eventInfo.source ~= 0 or self:IsWiping() then return end
+	local barInfo = nil
+
+	local stage = self:GetStage()
+	local duration = eventInfo.duration
+	local rounded = self:RoundNumber(duration, 0)
+
+	if stage == 1 and rounded == 10 then -- Spectral Coils is the only bar in the intermission (no stage 2)
+		self:IntermissionStart()
+		checkStage = false -- set by Rage of the Shackled, wait for Spectral Coils instead
+		stage = 2.5
+
+	elseif stage == 2.5 and checkStage then
+		self:PhaseThreeStart()
+		stage = 3
+	end
+
+	if stage == 1 then
+		if rounded == 55 then
+			barInfo = self:CausticWaves()
+		elseif rounded == 3 then
+			barInfo = self:GoreRattle()
+		elseif rounded == 40 then
+			barInfo = self:SpectralCoils(duration)
+		elseif rounded == 7 or rounded == 68 then
+			barInfo = self:MothersWrath()
+		elseif rounded == 20 then
+			barInfo = self:CallOfTheSerpent()
+			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+		elseif rounded == 145 then
+			barInfo = self:RageOfTheShackled()
+		elseif rounded == 70 then
+			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+			local count = durationEventCount[rounded]
+			if count == 1 then
+				barInfo = self:CallOfTheSerpent()
+				barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+			elseif count == 2 then
+				barInfo = self:SpectralCoils(duration)
+			elseif count == 3 then
+				barInfo = self:CausticWaves()
+			end
+		end
+
+	-- intermission
+	elseif stage == 2.5 then
+		if rounded == 10 then
+			barInfo = self:SpectralCoilsIntermission()
+		end
+
+	-- stage 3
+	else
+		durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
+		local count = durationEventCount[rounded]
+
+		if (rounded == 180 or rounded == 141 or rounded == 38 or rounded == 30 or
+			 rounded == 20 or rounded == 5) and count == 1
+		then
+			return nil -- the whole opening set is added twice, the first is canceled
+		end
+
+		if rounded == 180 then
+			barInfo = self:FuryUnleashed()
+		elseif rounded == 141 then
+			barInfo = self:RageOfTheShackled()
+		elseif rounded == 5 then
+			if count == 2 then
+				barInfo = self:CallOfTheSerpent()
+			else
+				wavesSubcount = wavesSubcount + 1
+				barInfo = self:CausticWaves(wavesSubcount)
+			end
+			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+		elseif rounded == 20 then
+			wavesSubcount = 1
+			barInfo = self:CausticWaves(wavesSubcount)
+			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+		elseif rounded == 38 then
+			barInfo = self:SubmergeP3()
+			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+		elseif rounded == 30 then
+			if count == 2 then
+				barInfo = self:CirclingPrey()
+			else
+				wavesSubcount = 1
+				barInfo = self:CausticWaves(wavesSubcount)
+			end
+			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+		elseif rounded == 46 then
+			if count == 1 then
+				barInfo = self:CallOfTheSerpent()
+			else
+				wavesSubcount = 1
+				barInfo = self:CausticWaves(wavesSubcount)
+			end
+			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+		elseif rounded == 50 or rounded == 40 then
+			if count % 2 == 1 then
+				barInfo = self:CirclingPrey()
+			else
+				barInfo = self:SubmergeP3()
+			end
+			barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+		end
+	end
+
+	self:HandleBar(barInfo, eventInfo)
+end
+
 function mod:HandleBar(barInfo, eventInfo, noAfterBossError)
 	local eventID = eventInfo and eventInfo.id or 0
 	if barInfo then
@@ -1191,9 +1307,17 @@ end
 
 -- Stage One: Fury of the Serpent Mother
 
-function mod:CausticWaves()
-	local barText = CL.count:format(self:GetRename(1292188), wavesCount)
-	wavesCount = wavesCount + 1
+function mod:CausticWaves(subcount)
+	local castCount = wavesCount
+	if subcount and subcount > 1 then
+		castCount = wavesCount - 1 -- same set
+	else
+		wavesCount = wavesCount + 1
+	end
+	local barText = CL.count:format(self:GetRename(1292188), castCount)
+	if subcount and castCount > 1 then -- story mode has bars for each wave in the set
+		barText = CL.count_amount:format(barText, subcount, castCount)
+	end
 	return {
 		msg = barText,
 		key = 1292188,
@@ -1352,7 +1476,7 @@ do
 					checkStage = true
 				end
 			end,
-			onFinishedDelay = function()
+			onFinishedDelayed = function()
 				self:Message(1286860, "green", barText)
 				self:PlaySound(1286860, "long")
 				self:CastBar(1286860, 20, 2)
@@ -1444,7 +1568,7 @@ function mod:VirulentSpit(duration, count)
 		key = 1302982,
 		delay = delay,
 		count = count,
-		onFinishedDelay = function(this)
+		onFinishedDelayed = function(this)
 			self:Message(1302982, "yellow", barText)
 			self:PlaySound(1302982, "alarm")
 			if this.count == 1 or this.count == 3 then
