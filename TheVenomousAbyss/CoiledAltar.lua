@@ -227,10 +227,12 @@ function mod:OnEncounterStart()
 	encounterStart = GetTime()
 
 	-- Starts the encounter by casting Fangs of the Coiled Altar
-	self:Message(1282487, "red")
+	if self:ShouldShowBars() then
+		self:Message(1282487, "red")
 
-	self:SendMessage("BigWigs_BlockBlizzMessages")
-	self:RegisterEvent("ENCOUNTER_WARNING")
+		self:SendMessage("BigWigs_BlockBlizzMessages")
+		self:RegisterEvent("ENCOUNTER_WARNING")
+	end
 	self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_STOP", nil, "boss2")
 end
 
@@ -567,13 +569,17 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 		-- mythic typically fires the next event before canceling
 		if spellCount[1282487] > barInfo.count then
 			-- next bar started, so it finished
-			barInfo:onFinished()
+			if self:ShouldShowBars() then
+				barInfo:onFinished()
+			end
 		else
 			-- normal and heroic typically cancel and delay the next event
 			self:SimpleTimer(function()
 				if spellCount[1282487] > barInfo.count then
 					-- next bar started, so it finished
-					barInfo:onFinished()
+					if self:ShouldShowBars() then
+						barInfo:onFinished()
+					end
 				else
 					-- actually ended early, so trigger next phase
 					self:StartPhaseTwo()
@@ -611,7 +617,7 @@ function mod:StopTimelineBar(barInfo, isFinished, runCanceled)
 	if barInfo.state and barInfo.state >= 2 then return end -- already ended
 
 	-- Start the next bar if there is a gap timer
-	if isFinished and barInfo.gapTimer then
+	if isFinished and barInfo.gapTimer and self:ShouldShowBars() and not self:IsWiping() then
 		-- reuse the eventID to set the spell indicator for the next bar
 		self:Bar(barInfo.key, barInfo.gapTimer, CL.count:format(self:GetRename(barInfo.key, barInfo.renamePosition), spellCount[barInfo.key]), nil, barInfo.eventID)
 	end
