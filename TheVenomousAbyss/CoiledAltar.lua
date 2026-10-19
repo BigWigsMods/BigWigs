@@ -21,6 +21,7 @@ local backupBars = {}
 local durationEventCount = {}
 local warnStageThree = false
 local stageThreeEventCount = 0
+local encounterStart = 0
 local spellCount = {}
 
 local gapTimer do
@@ -223,6 +224,7 @@ function mod:OnEncounterStart()
 	self:ResetCounts()
 	warnStageThree = false
 	stageThreeEventCount = 0
+	encounterStart = GetTime()
 
 	-- Starts the encounter by casting Fangs of the Coiled Altar
 	self:Message(1282487, "red")
@@ -399,7 +401,7 @@ function mod:OtherTimeline(_, eventInfo)
 
 	local stage = self:GetStage()
 	if stage == 1 then
-		if rounded == 2 then
+		if rounded == 2 or (rounded == 42 and self:Story()) then -- no Guillotine in story
 			barInfo = self:ToxicDeluge()
 		elseif rounded == 12 then
 			barInfo = self:Axegrinder()
@@ -891,7 +893,14 @@ do
 
 	function mod:DreadmarchMessage()
 		-- Dreadmarch and Unnerving Fixation are both 4s Medium
-		if dreadmarchAboutToCast and not dreadmarchOnMe then
+		local onMe
+		if self:Story() then
+			-- the only Dreadmarch debuff in story is from the enrage, a 10s cast 10 minutes into the fight
+			onMe = GetTime() - encounterStart > 600
+		else
+			onMe = dreadmarchAboutToCast
+		end
+		if onMe and not dreadmarchOnMe then
 			-- Malacrass is about to afflict you with [Dreadmarch]!
 			dreadmarchOnMe = true
 			self:PersonalMessage(1289900, false, self:GetRename(1289900, 2))
