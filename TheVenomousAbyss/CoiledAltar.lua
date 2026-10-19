@@ -64,7 +64,7 @@ local gapTimer do
 		[1286573] = { [2] = { [33] = 52 } }, -- Soul Sever
 	}
 	function gapTimer(spellId, duration)
-		local timers = mod:Mythic() and timersMythic or mod:Heroic() and timersHeroic or mod:Normal() and timersNormal
+		local timers = mod:Mythic() and timersMythic or mod:Heroic() and timersHeroic or (mod:Normal() or mod:Story()) and timersNormal
 		if timers and timers[spellId] then
 			if duration == true then
 				return true
@@ -416,6 +416,9 @@ function mod:OtherTimeline(_, eventInfo)
 			end
 		elseif rounded == 20 or rounded == 17 or rounded == 21 or rounded == 16 then
 			barInfo = self:Sever()
+			if self:Story() then -- canceled instead of finished
+				barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+			end
 		elseif rounded == 85 then
 			barInfo = self:FangsOfTheCoiledAltar()
 		end
@@ -447,10 +450,16 @@ function mod:OtherTimeline(_, eventInfo)
 				barInfo = self:EternalNightfall()
 			elseif rounded == 6 or rounded == 34 then -- 5.5
 				barInfo = self:Dreadmarch(duration)
+				if self:Story() then -- canceled instead of finished
+					barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+				end
 			elseif rounded == 20 or rounded == 40 then
 				barInfo = self:Gloombomb()
 			elseif rounded == 32 or rounded == 33 then
 				barInfo = self:SoulSever()
+				if self:Story() then -- canceled instead of finished
+					barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+				end
 			end
 		end
 
@@ -498,6 +507,9 @@ function mod:OtherTimeline(_, eventInfo)
 				barInfo = self:ToxicDeluge()
 			elseif rounded == 29 or rounded == 28 or rounded == 30 or rounded == 33 then
 				barInfo = self:BlightedSever()
+				if self:Story() then -- canceled instead of finished
+					barInfo.timer = self:ScheduleTimer(function() self:StopTimelineBar(barInfo, true) end, duration)
+				end
 			elseif rounded == 92 or rounded == 91 then
 				barInfo = self:DefilementOfTheCoiledAltar()
 			elseif rounded == 34 then
@@ -572,23 +584,11 @@ function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(_, eventID)
 		return
 	end
 
-	if barInfo and barInfo.gapTimer and state == 2 then -- Finished (reuse the eventID to set the spell indicator for the next bar)
-		self:Bar(barInfo.key, barInfo.gapTimer, CL.count:format(self:GetRename(barInfo.key, barInfo.renamePosition), spellCount[barInfo.key]), nil, eventID)
-	end
-
 	if barInfo and not barInfo.ignoreState then
 		if state == 2 then -- Finished
-			activeBars[eventID] = nil
-			self:StopBar(barInfo.msg)
-			if barInfo.onFinished and self:ShouldShowBars() then
-				barInfo:onFinished()
-			end
+			self:StopTimelineBar(barInfo, true)
 		elseif state == 3 then -- Canceled
-			activeBars[eventID] = nil
-			self:StopBar(barInfo.msg)
-			if barInfo.onCanceled and self:ShouldShowBars() then
-				barInfo:onCanceled()
-			end
+			self:StopTimelineBar(barInfo, false, true)
 		end
 	elseif backupBars[eventID] then
 		if state == 0 then -- Enum.EncounterTimelineEventState.Active
@@ -604,6 +604,31 @@ end
 function mod:ENCOUNTER_TIMELINE_EVENT_REMOVED(_, eventID)
 	activeBars[eventID] = nil
 	backupBars[eventID] = nil
+end
+
+function mod:StopTimelineBar(barInfo, isFinished, runCanceled)
+	if not barInfo then return end
+	if barInfo.state and barInfo.state >= 2 then return end -- already ended
+
+	-- Start the next bar if there is a gap timer
+	if isFinished and barInfo.gapTimer then
+		-- reuse the eventID to set the spell indicator for the next bar
+		self:Bar(barInfo.key, barInfo.gapTimer, CL.count:format(self:GetRename(barInfo.key, barInfo.renamePosition), spellCount[barInfo.key]), nil, barInfo.eventID)
+	end
+
+	self:StopBar(barInfo.msg)
+	if isFinished and barInfo.onFinished and self:ShouldShowBars() and not self:IsWiping() then
+		barInfo:onFinished()
+	end
+
+	if not isFinished and runCanceled and barInfo.onCanceled then
+		barInfo:onCanceled()
+	end
+
+	barInfo.state = isFinished and 2 or 3 -- Finished/Canceled
+	if barInfo.eventID then
+		activeBars[barInfo.eventID] = nil
+	end
 end
 
 --------------------------------------------------------------------------------
