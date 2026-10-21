@@ -105,6 +105,8 @@ function mod:ENCOUNTER_START(_, encounterId)
 		if module:IsEncounterID(encounterId) then
 			module:Enable()
 			module:Engage()
+		elseif module:IsEnabled() and not module:IsEngaged() then
+			module:Disable()
 		end
 	end
 end
