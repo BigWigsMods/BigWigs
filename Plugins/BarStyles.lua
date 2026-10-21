@@ -635,6 +635,10 @@ do
 
 	local function removeStyle(bar)
 		local bd = bar.candyBarBackdrop
+		if bd.SetToDefaults then
+			bd:SetToDefaults()
+			bd:SetFrameLevel(0)
+		end
 		bd:Hide()
 		if bd.iborder then
 			bd.iborder:Hide()
@@ -651,6 +655,10 @@ do
 
 	local function styleBar(bar)
 		local bd = bar.candyBarBackdrop
+		if bd.SetToDefaults then
+			bd:SetToDefaults()
+			bd:SetFrameLevel(0)
+		end
 		bd:ClearAllPoints()
 		if E then
 			bd:SetTemplate("Transparent")
@@ -663,8 +671,13 @@ do
 			bd:SetBackdrop(backdropBorder)
 			bd:SetBackdropColor(0.06, 0.06, 0.06, 0.8)
 			bd:SetBackdropBorderColor(0, 0, 0)
-			bd:SetPoint("TOPLEFT", bar, "TOPLEFT", -1, 1)
-			bd:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 1, -1)
+			if PixelUtil then
+				PixelUtil.SetPoint(bd, "TOPLEFT", bar, "TOPLEFT", -1, 1)
+				PixelUtil.SetPoint(bd, "BOTTOMRIGHT", bar, "BOTTOMRIGHT", 1, -1)
+			else
+				bd:SetPoint("TOPLEFT", bar, "TOPLEFT", -1, 1)
+				bd:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 1, -1)
+			end
 		end
 		bd:Show()
 
