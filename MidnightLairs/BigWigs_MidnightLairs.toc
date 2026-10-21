@@ -1,4 +1,4 @@
-## Interface: 120100, 120105, 120007
+## Interface: 120100, 120105, 120107
 ## AllowLoadGameType: standard
 
 ## Title: BigWigs [|cffeda55fMidnight Lair Bosses|r]
