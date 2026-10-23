@@ -2,7 +2,7 @@
 
 BigWigs:AddColors("Nek'zali the Soulcoiler", {
 	[1287426] = "blue",
-	[1292036] = "purple",
+	[1292036] = {"blue","purple"},
 	[1293212] = "cyan",
 	[1295397] = "cyan",
 	[1299673] = "orange",
