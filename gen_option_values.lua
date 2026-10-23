@@ -1505,8 +1505,11 @@ local function parseLua(file)
 			local key, sound, color, bitflag = nil, nil, nil, nil
 			local check_line = line:gsub("^.* = ", "") -- remove assignment lhs
 			check_line = check_line:gsub("C?L%.%w+:", "") -- remove locale format lhs
-			local obj, sugar, functionName, argsList = check_line:match("(%w+)([.:])(.-)(%b())")
-			if argsList then argsList = argsList:sub(2, -2) end
+			local obj, sugar, functionName, argsList = check_line:match("(%w+)([.:])(%w+)(%(.*)")
+			if argsList then
+				-- the call can continue onto the next line (e.g. a trailing function() callback), so use the rest of the line
+				argsList = argsList:match("^%b()") and argsList:match("^%b()"):sub(2, -2) or argsList:sub(2)
+			end
 			local offset = 0
 			if functionName == "ScheduleTimer" or functionName == "ScheduleRepeatingTimer" then
 				functionName = argsList:match("^\"(.-)\"")
