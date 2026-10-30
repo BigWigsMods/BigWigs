@@ -261,7 +261,7 @@ function mod:RagingCrosswinds()
 		msg = barText,
 		key = 1285425,
 		onFinished = function()
-			self:PersonalMessageFromBlizzMessage(1285425, 1, false, self:GetRename(1285425, 2))
+			self:PersonalMessageFromBlizzMessage(1285425, 1.5, false, self:GetRename(1285425, 2))
 
 			self:Message(1285425, "orange", barText)
 			-- self:PlaySound(1285425, "alert")
