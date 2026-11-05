@@ -1860,9 +1860,10 @@ end
 
 do
 	local isRetail = BigWigsLoader.isRetail
+	local isForever = BigWigsLoader.isForever
 	local function moveBar(bar)
 		plugin:EmphasizeBar(bar)
-		if isRetail then
+		if isRetail or isForever then
 			plugin:SendMessage("BigWigs_BarEmphasized", plugin, bar)
 		end
 		rearrangeBars(normalAnchor)
@@ -1911,7 +1912,7 @@ do
 		end
 		local anchor = bar:Get("bigwigs:anchor") == "expPosition" and emphasizeAnchor or normalAnchor
 		rearrangeBars(anchor)
-		if isRetail then -- The following callbacks are now deprecated and will eventually be entirely removed
+		if isRetail or isForever then -- The following callbacks are now deprecated and will eventually be entirely removed
 			self:SendMessage("BigWigs_BarCreated", self, bar, module, key, text, time, icon, maxQueueDuration)
 			-- Check if :EmphasizeBar(bar) was run and trigger the callback.
 			-- Bit of a roundabout method to approaching this so that we purposely keep callbacks firing last.
