@@ -95,6 +95,34 @@ do
 end
 
 --------------------------------------------------------------------------------
+-- Blizz functions
+--
+
+if addonTbl.isForever then
+	local UnitNameUnmodified = UnitNameUnmodified
+	function API.UnitName(unit)
+		local name, surname = UnitNameUnmodified(unit)
+		if not name then
+			return
+		elseif surname then
+			name = name .." ".. surname
+		end
+		return name
+	end
+else
+	local UnitNameUnmodified = UnitNameUnmodified
+	function API.UnitName(unit, trimServer)
+		local name, server = UnitNameUnmodified(unit)
+		if not name then
+			return
+		elseif server and server ~= "" then
+			name = name .. (trimServer and "*" or "-"..server)
+		end
+		return name
+	end
+end
+
+--------------------------------------------------------------------------------
 -- Configuration
 --
 

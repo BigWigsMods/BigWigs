@@ -9,6 +9,7 @@ files["API.lua"].ignore = {
 	"113/C_UIFileAsset",
 	"112/SlashCmdList",
 	"113/strlenutf8",
+	"113/UnitNameUnmodified",
 }
 files["Init_Vanilla.lua"].ignore = {
 	"113/C_Seasons",
@@ -55,7 +56,6 @@ files["Loader.lua"].ignore = {
 	"113/UnitIsDeadOrGhost",
 	"113/UnitIsPlayer",
 	"113/UnitLevel",
-	"113/UnitNameUnmodified",
 	"113/UnitSex",
 	"113/UnitTokenFromGUID",
 
@@ -290,7 +290,6 @@ files["Tools/AutoInvite.lua"].ignore = {
 files["Tools/AutoRole.lua"].ignore = {
 	"113/RolePollPopup",
 	"113/UnitGroupRolesAssigned",
-	"113/UnitNameUnmodified",
 	"113/UnitSetRole",
 }
 files["Tools/CombatTimer.lua"].ignore = {

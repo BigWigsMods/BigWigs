@@ -56,7 +56,7 @@ local format, find, gsub, band, tremove, twipe = string.format, string.find, str
 local select, type, next, tonumber = select, type, next, tonumber
 local PlaySoundFile = loader.PlaySoundFile
 local C = core.C
-local myName = loader.UnitName("player")
+local myName = BigWigsAPI.UnitName("player")
 local myNameWithColor
 local myLocale = GetLocale()
 local hasVoice = BigWigsAPI:HasVoicePack()
@@ -2603,17 +2603,12 @@ do
 end
 
 do
-	local UnitName = loader.UnitName
+	local UnitName = BigWigsAPI.UnitName
 	--- Get the full name of a unit.
 	-- @string unit unit token or name
 	-- @return name name with the server appended if appropriate
 	function boss:UnitName(unit)
-		local name, server = UnitName(unit)
-		if not name then
-			return
-		elseif server and server ~= "" then
-			name = name .."-".. server
-		end
+		local name = UnitName(unit)
 		return name
 	end
 end
@@ -2968,7 +2963,7 @@ do
 	-- @number id The ID of the specific gossip option to be selected
 	-- @bool[opt] skipConfirmDialogBox If the pop up confirmation dialog box should be skipped
 	local autotalk_notice = CL.autotalk_notice
-	local UnitName = loader.UnitName
+	local UnitName = BigWigsAPI.UnitName
 	function boss:SelectGossipID(id, skipConfirmDialogBox)
 		local npc = UnitName("npc")
 		if npc then

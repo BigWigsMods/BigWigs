@@ -52,6 +52,7 @@ do
 	public.isCata = tbl.isCata
 	public.isMists = tbl.isMists
 	public.dbmPrefix = "D5"
+	public.UnitName = tbl.API.UnitName
 
 	-- START: MAGIC PACKAGER VOODOO VERSION STUFF
 	local REPO = "REPO"
@@ -111,10 +112,9 @@ end
 local next, tonumber, type, strsplit = next, tonumber, type, strsplit
 local SendAddonMessage, RegisterAddonMessagePrefix, CTimerAfter, CTimerNewTimer = C_ChatInfo.SendAddonMessage, C_ChatInfo.RegisterAddonMessagePrefix, C_Timer.After, C_Timer.NewTimer
 local GetBestMapForUnit, GetMapInfo = C_Map.GetBestMapForUnit, C_Map.GetMapInfo
-local Ambiguate, UnitNameUnmodified, UnitGUID = Ambiguate, UnitNameUnmodified, UnitGUID
+local Ambiguate, UnitGUID = Ambiguate, UnitGUID
 local debugstack, print = debugstack, print
 local myLocale = GetLocale()
-local myName = UnitNameUnmodified("player")
 local myGUID = UnitGUID("player")
 local function sysprint(msg)
 	print("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t|cFF33FF99BigWigs|r: "..msg)
@@ -175,7 +175,6 @@ public.UnitHealthMax = UnitHealthMax
 public.UnitIsDeadOrGhost = UnitIsDeadOrGhost
 public.UnitIsPlayer = UnitIsPlayer
 public.UnitLevel = UnitLevel
-public.UnitName = UnitNameUnmodified
 public.UnitSex = UnitSex
 public.UnitClassification = UnitClassification
 public.UnitTokenFromGUID = UnitTokenFromGUID
@@ -1679,6 +1678,16 @@ end
 -- DBM version collection & faking
 --
 
+local myNameForDBMSync -- Why does DBM still complicate its comms with useless data? Who knows.
+if public.isForever then
+	myNameForDBMSync = public.UnitName("player")
+else
+	local name = public.UnitName("player")
+	local realm = GetRealmName()
+	local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
+	myNameForDBMSync = name .."-".. normalizedPlayerRealm
+end
+
 do
 	local DBMdotRevision = "20261012172152" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
 	local DBMdotDisplayVersion = "12.1.13" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
@@ -1690,9 +1699,7 @@ do
 	local timer = nil
 	local function sendDBMMsg()
 		if IsInGroup() then
-			local realm = GetRealmName()
-			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
-			local msg = myName.. "-" ..normalizedPlayerRealm.."\t"..protocol.."\t".. versionPrefix .."\t".. DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..myLocale.."\ttrue\t"..PForceDisable.."\t0\t0"
+			local msg = myNameForDBMSync.."\t"..protocol.."\t".. versionPrefix .."\t".. DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..myLocale.."\ttrue\t"..PForceDisable.."\t0\t0"
 			local result = SendAddonMessage(dbmPrefix, msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			if type(result) == "number" and result ~= 0 then
 				if result == 3 or result == 8 or result == 9 then -- AddonMessageThrottle, ChannelThrottle, GeneralError
@@ -2082,9 +2089,7 @@ do
 				sysprint("Failed to ask for versions. Error code: ".. result)
 				geterrorhandler()("BigWigs: Failed to ask for versions. Error code: ".. result)
 			end
-			local realm = GetRealmName()
-			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
-			local dbmResult = SendAddonMessage(dbmPrefix, myName.. "-" ..normalizedPlayerRealm.."\t1\tH\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
+			local dbmResult = SendAddonMessage(dbmPrefix, myNameForDBMSync.."\t1\tH\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 			if type(dbmResult) == "number" and dbmResult ~= 0 and dbmResult ~= 11 then -- 0=Success, 11=AddOnMessageLockdown
 				sysprint("Failed to ask for _ versions. Error code: ".. dbmResult)
 				geterrorhandler()("BigWigs: Failed to ask for _ versions. Error code: ".. dbmResult)
@@ -2229,7 +2234,7 @@ SlashCmdList.BigWigsVersion = function()
 	local list = {}
 	local unit
 	if not IsInRaid() then
-		list[1] = myName
+		list[1] = public.UnitName("player")
 		unit = "party%d"
 	else
 		unit = "raid%d"
@@ -2237,9 +2242,8 @@ SlashCmdList.BigWigsVersion = function()
 	for i = 1, GetNumGroupMembers() do
 		local unitToken = (unit):format(i)
 		if not UnitInPartyIsAI or not UnitInPartyIsAI(unitToken) then -- Filter AI units from version list
-			local n, s = UnitNameUnmodified(unitToken)
-			if n and s and s ~= "" then n = n.."-"..s end
-			if n then list[#list+1] = n end
+			local name = public.UnitName(unitToken)
+			if name then list[#list+1] = name end
 		end
 	end
 

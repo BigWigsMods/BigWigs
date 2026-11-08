@@ -53,18 +53,13 @@ function plugin:Disable()
 end
 
 do
-	local UnitName = BigWigsLoader.UnitName
+	local UnitName = BigWigsAPI.UnitName
 	--- Get the full name of a unit.
 	-- @string unit unit token or name
 	-- @bool[opt] trimServer append * instead of the server name
 	-- @return unit name with the server appended if appropriate
 	function plugin:UnitName(unit, trimServer)
-		local name, server = UnitName(unit)
-		if not name then
-			return
-		elseif server and server ~= "" then
-			name = name .. (trimServer and "*" or "-"..server)
-		end
+		local name = UnitName(unit, trimServer)
 		return name
 	end
 end
@@ -231,7 +226,7 @@ end
 
 do
 	local SendAddonMessage, IsInGroup = BigWigsLoader.SendAddonMessage, IsInGroup
-	local pName = BigWigsLoader.UnitName("player")
+	local pName = BigWigsAPI.UnitName("player")
 	--- Send an addon sync to other players.
 	-- @param msg the sync message/prefix
 	-- @param[opt] extra other optional value you want to send
