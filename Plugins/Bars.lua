@@ -27,6 +27,7 @@ local next = next
 local db = nil
 local normalAnchor, emphasizeAnchor = nil, nil
 local rearrangeBars, getBar
+local GetBarBorderFrame
 
 local minBarWidth, minBarHeight, maxBarWidth, maxBarHeight = 120, 10, 550, 100
 
@@ -53,6 +54,10 @@ do
 		iconPosition = "LEFT",
 		fill = false,
 		barStyle = "Default",
+		borderName = "None",
+		borderColor = {0, 0, 0, 1},
+		borderOffset = 0,
+		borderSize = 1,
 		emphasize = true,
 		emphasizeMove = true,
 		emphasizeGrowup = false,
@@ -100,6 +105,36 @@ do
 			emphasizeAnchor:SetWidth(width)
 		end
 	end
+	local function CopyTable(settingsTable)
+		local copy = {}
+		for key, value in next, settingsTable do
+			if type(value) == "table" then
+				copy[key] = CopyTable(value)
+			else
+				copy[key] = value
+			end
+		end
+		return copy
+	end
+	local function ValidateColor(current, default, alphaLimit)
+		for i = 1, 3 do
+			local n = current[i]
+			if type(n) ~= "number" or n < 0 or n > 1 then
+				current[1] = default[1] -- If 1 entry is bad, reset the whole table
+				current[2] = default[2]
+				current[3] = default[3]
+				current[4] = default[4]
+				return
+			end
+		end
+		if alphaLimit then
+			if type(current[4]) ~= "number" or current[4] < alphaLimit or current[4] > 1 then
+				current[4] = default[4]
+			end
+		elseif current[4] then
+			current[4] = nil
+		end
+	end
 	local hookedFrameNormal, hookedFrameExp = {}, {}
 	function updateProfile()
 		db = plugin.db.profile
@@ -109,7 +144,11 @@ do
 			if defaultType == "nil" then
 				db[k] = nil
 			elseif type(v) ~= defaultType then
-				db[k] = plugin.defaultDB[k]
+				if defaultType == "table" then
+					db[k] = CopyTable(plugin.defaultDB[k])
+				else
+					db[k] = plugin.defaultDB[k]
+				end
 			end
 		end
 
@@ -120,6 +159,18 @@ do
 		end
 		if not LibSharedMedia:IsValid(STATUSBAR, db.texture) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(STATUSBAR, db.texture)) then
 			db.texture = plugin.defaultDB.texture
+		end
+		if db.barStyle ~= "Default" or not LibSharedMedia:IsValid("border", db.borderName) or (db.borderName ~= "None" and not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("border", db.borderName))) then
+			db.borderName = plugin.defaultDB.borderName -- If the border is suddenly invalid then reset the size and offset also
+			db.borderSize = plugin.defaultDB.borderSize
+			db.borderOffset = plugin.defaultDB.borderOffset
+		end
+		ValidateColor(db.borderColor, plugin.defaultDB.borderColor, 0)
+		if db.borderOffset < 0 or db.borderOffset > 32 then
+			db.borderOffset = plugin.defaultDB.borderOffset
+		end
+		if db.borderSize < 1 or db.borderSize > 32 then
+			db.borderSize = plugin.defaultDB.borderSize
 		end
 		if db.fontSize < 10 or db.fontSize > 200 then
 			db.fontSize = plugin.defaultDB.fontSize
@@ -337,6 +388,19 @@ do
 				indicatorFrame:SetIndicatorSize(height)
 				indicatorFrame:AddIndicators(bar:Get("bigwigs:indicators"))
 			end
+			local borderFrame = bar:Get("bigwigs:borderFrame")
+			if borderFrame then
+				if db.borderName == "None" then
+					borderFrame:RemoveBorder()
+					bar:Set("bigwigs:borderFrame", nil)
+				else
+					borderFrame:AddBorder(bar)
+				end
+			elseif db.borderName ~= "None" then
+				borderFrame = GetBarBorderFrame()
+				borderFrame:AddBorder(bar)
+				bar:Set("bigwigs:borderFrame", borderFrame)
+			end
 			currentBarStyler.ApplyStyle(bar)
 		end
 
@@ -366,6 +430,19 @@ do
 				indicatorFrame:ClearTextures()
 				indicatorFrame:SetIndicatorSize(db.expHeight)
 				indicatorFrame:AddIndicators(bar:Get("bigwigs:indicators"))
+			end
+			local borderFrame = bar:Get("bigwigs:borderFrame")
+			if borderFrame then
+				if db.borderName == "None" then
+					borderFrame:RemoveBorder()
+					bar:Set("bigwigs:borderFrame", nil)
+				else
+					borderFrame:AddBorder(bar)
+				end
+			elseif db.borderName ~= "None" then
+				borderFrame = GetBarBorderFrame()
+				borderFrame:AddBorder(bar)
+				bar:Set("bigwigs:borderFrame", borderFrame)
 			end
 			currentBarStyler.ApplyStyle(bar)
 		end
@@ -398,6 +475,8 @@ do
 	local function HiddenOnRetail() return not BigWigsLoader.isRetail end
 	local function IsNormalAnchorPointDefault() return db.normalPosition[5] == plugin.defaultDB.normalPosition[5] end
 	local function IsExpAnchorPointDefault() return db.expPosition[5] == plugin.defaultDB.expPosition[5] end
+	local function IsBarStyleNotDefault() return db.barStyle ~= "Default" end
+	local function IsBarStyleNotDefaultOrBorderSetToNone() return db.barStyle ~= "Default" or db.borderName == "None" end
 
 	local inTestMode = false
 	local StartTest, StopTest
@@ -600,6 +679,9 @@ do
 								if type(style.texture) == "string" and LibSharedMedia:IsValid(STATUSBAR, style.texture) and BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(STATUSBAR, style.texture)) then
 									db.texture = style.texture
 								end
+								db.borderName = plugin.defaultDB.borderName
+								db.borderSize = plugin.defaultDB.borderSize
+								db.borderOffset = plugin.defaultDB.borderOffset
 
 								plugin:UpdateGUI()
 							end
@@ -645,21 +727,74 @@ do
 							updateProfile()
 						end,
 					},
+					borderColor = {
+						type = "color",
+						name = L.borderColor,
+						order = 9,
+						hasAlpha = true,
+						width = 1,
+						get = function()
+							return db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4]
+						end,
+						set = function(_, r, g, b, a)
+							db.borderColor = {r, g, b, a}
+							updateProfile()
+						end,
+						disabled = IsBarStyleNotDefaultOrBorderSetToNone,
+					},
+					borderSize = {
+						type = "range",
+						name = L.borderSize,
+						order = 10,
+						min = 1,
+						max = 32,
+						step = 1,
+						width = 1,
+						disabled = IsBarStyleNotDefaultOrBorderSetToNone,
+					},
+					borderOffset = {
+						type = "range",
+						name = L.borderOffset,
+						order = 11,
+						min = 0,
+						max = 32,
+						step = 1,
+						width = 1,
+						disabled = IsBarStyleNotDefaultOrBorderSetToNone,
+					},
+					borderName = {
+						type = "select",
+						name = L.borderName,
+						order = 12,
+						values = LibSharedMedia:List("border"),
+						get = function()
+							for i, v in next, LibSharedMedia:List("border") do
+								if v == db.borderName then return i end
+							end
+						end,
+						set = function(_, value)
+							local list = LibSharedMedia:List("border")
+							db.borderName = list[value]
+							updateProfile()
+						end,
+						width = 1,
+						disabled = IsBarStyleNotDefault,
+					},
 					header2 = {
 						type = "header",
 						name = "",
-						order = 9,
+						order = 13,
 					},
 					text = {
 						type = "toggle",
 						name = L.text,
 						desc = L.textDesc,
-						order = 10,
+						order = 14,
 					},
 					alignText = {
 						type = "select",
 						name = L.alignText,
-						order = 11,
+						order = 15,
 						values = {
 							LEFT = L.LEFT,
 							CENTER = L.CENTER,
@@ -669,18 +804,18 @@ do
 					textSpacer = {
 						type = "description",
 						name = " ",
-						order = 12,
+						order = 16,
 					},
 					time = {
 						type = "toggle",
 						name = L.time,
 						desc = L.timeDesc,
-						order = 13,
+						order = 17,
 					},
 					alignTime = {
 						type = "select",
 						name = L.alignTime,
-						order = 14,
+						order = 18,
 						values = {
 							LEFT = L.LEFT,
 							CENTER = L.CENTER,
@@ -690,19 +825,19 @@ do
 					timeSpacer = {
 						type = "description",
 						name = " ",
-						order = 15,
+						order = 19,
 					},
 					icon = {
 						type = "toggle",
 						name = L.icon,
 						desc = L.iconDesc,
-						order = 16,
+						order = 20,
 					},
 					iconPosition = {
 						type = "select",
 						name = L.iconPosition,
 						desc = L.iconPositionDesc,
-						order = 17,
+						order = 21,
 						values = {
 							LEFT = L.LEFT,
 							RIGHT = L.RIGHT,
@@ -713,13 +848,13 @@ do
 						type = "toggle",
 						name = L.iconTooltip,
 						desc = L.iconTooltipDesc,
-						order = 18,
+						order = 22,
 						disabled = function() return not db.icon end,
 					},
 					spellIndicators = {
 						type = "multiselect",
 						name = L.indicatorTitle,
-						order = 19,
+						order = 23,
 						width = 2,
 						control = "Dropdown",
 						values = {
@@ -750,7 +885,7 @@ do
 					spellIndicatorsSize = {
 						type = "select",
 						name = L.spellIndicatorSize,
-						order = 20,
+						order = 24,
 						values = {
 							L.spellIndicatorSizeDropdown_Large1,
 							L.spellIndicatorSizeDropdown_Large2,
@@ -764,7 +899,7 @@ do
 						type = "select",
 						name = L.spellIndicatorsPosition,
 						desc = L.spellIndicatorsPositionDesc,
-						order = 21,
+						order = 25,
 						width = 2,
 						values = {
 							LEFT = L.LEFT,
@@ -776,7 +911,7 @@ do
 						type = "range",
 						name = L.spellIndicatorsOffset,
 						desc = L.positionDesc,
-						order = 22,
+						order = 26,
 						max = 100,
 						min = 0,
 						step = 1,
@@ -785,14 +920,14 @@ do
 					resetHeader = {
 						type = "header",
 						name = "",
-						order = 23,
+						order = 27,
 					},
 					reset = {
 						type = "execute",
 						name = L.resetAll,
 						desc = L.resetBarsDesc,
 						func = function() plugin.db:ResetProfile() updateProfile() end,
-						order = 24,
+						order = 28,
 					},
 				},
 			},
@@ -1259,6 +1394,10 @@ local function barStopped(_, bar)
 	local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
 	if indicatorFrame then
 		indicatorFrame:RemoveIndicators()
+	end
+	local borderFrame = bar:Get("bigwigs:borderFrame")
+	if borderFrame then
+		borderFrame:RemoveBorder()
 	end
 	local anchorText = bar:Get("bigwigs:anchor")
 	if anchorText then
@@ -1794,6 +1933,46 @@ do
 		end
 	end
 
+	do
+		local function AddBorder(self, bar)
+			self:SetParent(bar)
+			self:SetFrameLevel(bar.candyBarBar:GetFrameLevel()+1)
+			self:ClearAllPoints()
+			self:SetBackdrop({
+				edgeFile = LibSharedMedia:Fetch("border", db.borderName),
+				edgeSize = db.borderSize,
+			})
+			self:SetBackdropBorderColor(db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4])
+			self:SetPoint("TOPLEFT", bar, "TOPLEFT", -db.borderOffset, db.borderOffset)
+			self:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", db.borderOffset, -db.borderOffset)
+			self:Show()
+		end
+
+		local borderCache = {}
+		local function RemoveBorder(self)
+			self:ClearBackdrop()
+			self:ClearAllPoints()
+			self:SetParent(UIParent)
+			self:Hide()
+			borderCache[#borderCache+1] = self
+		end
+
+		function GetBarBorderFrame()
+			local borderFrame
+
+			if next(borderCache) then
+				borderFrame = table.remove(borderCache)
+			else
+				borderFrame = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
+				borderFrame:Hide()
+				borderFrame.AddBorder = AddBorder
+				borderFrame.RemoveBorder = RemoveBorder
+			end
+
+			return borderFrame
+		end
+	end
+
 	local initial = true
 	function plugin:CreateBar(module, key, text, time, icon, eventId, spellIndicators)
 		local width, height
@@ -1841,6 +2020,11 @@ do
 			indicatorFrame:AddIndicators(indicators)
 			bar:Set("bigwigs:indicatorFrame", indicatorFrame)
 			bar:Set("bigwigs:indicators", indicators)
+		end
+		if db.borderName ~= "None" then
+			local borderFrame = GetBarBorderFrame()
+			borderFrame:AddBorder(bar)
+			bar:Set("bigwigs:borderFrame", borderFrame)
 		end
 		normalAnchor.bars[bar] = true
 		if initial then
@@ -1971,6 +2155,10 @@ function plugin:EmphasizeBar(bar, freshBar)
 		end
 	end
 	bar:SetFrameLevel(105) -- Put emphasized bars just above normal bars (LibCandyBar 100)
+	local borderFrame = bar:Get("bigwigs:borderFrame")
+	if borderFrame then
+		borderFrame:SetFrameLevel(bar.candyBarBar:GetFrameLevel()+1)
+	end
 	currentBarStyler.ApplyStyle(bar)
 	bar:Set("bigwigs:emphasized", true)
 end
