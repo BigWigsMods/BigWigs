@@ -88,7 +88,7 @@ local function updateProfile()
 	if db.outline ~= "NONE" and db.outline ~= "OUTLINE" and db.outline ~= "THICKOUTLINE" then
 		db.outline = plugin.defaultDB.outline
 	end
-	if db.fontSize < 20 or db.fontSize > 200 then
+	if db.fontSize < 20 or db.fontSize > 200 or math.floor(db.fontSize+0.5) ~= db.fontSize then
 		db.fontSize = plugin.defaultDB.fontSize
 	end
 	if type(db.fontColor.r) ~= "number" or db.fontColor.r < 0 or db.fontColor.r > 1

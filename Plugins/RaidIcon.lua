@@ -103,10 +103,10 @@ do
 			end
 		end
 
-		if db.icon < 1 or db.icon > 8 then
+		if db.icon < 1 or db.icon > 8 or math.floor(db.icon+0.5) ~= db.icon then
 			db.icon = plugin.defaultDB.icon
 		end
-		if db.secondIcon < 1 or db.secondIcon > 8 then
+		if db.secondIcon < 1 or db.secondIcon > 8 or math.floor(db.secondIcon+0.5) ~= db.secondIcon then
 			db.secondIcon = plugin.defaultDB.secondIcon
 		end
 	end

@@ -166,16 +166,16 @@ do
 			db.borderOffset = plugin.defaultDB.borderOffset
 		end
 		ValidateColor(db.borderColor, plugin.defaultDB.borderColor, 0)
-		if db.borderOffset < 0 or db.borderOffset > 32 then
+		if db.borderOffset < 0 or db.borderOffset > 32 or math.floor(db.borderOffset+0.5) ~= db.borderOffset then
 			db.borderOffset = plugin.defaultDB.borderOffset
 		end
-		if db.borderSize < 1 or db.borderSize > 32 then
+		if db.borderSize < 1 or db.borderSize > 32 or math.floor(db.borderSize+0.5) ~= db.borderSize then
 			db.borderSize = plugin.defaultDB.borderSize
 		end
-		if db.fontSize < 10 or db.fontSize > 200 then
+		if db.fontSize < 10 or db.fontSize > 200 or math.floor(db.fontSize+0.5) ~= db.fontSize then
 			db.fontSize = plugin.defaultDB.fontSize
 		end
-		if db.fontSizeEmph < 10 or db.fontSizeEmph > 200 then
+		if db.fontSizeEmph < 10 or db.fontSizeEmph > 200 or math.floor(db.fontSizeEmph+0.5) ~= db.fontSizeEmph then
 			db.fontSizeEmph = plugin.defaultDB.fontSizeEmph
 		end
 		if db.outline ~= "NONE" and db.outline ~= "OUTLINE" and db.outline ~= "THICKOUTLINE" then
@@ -190,44 +190,44 @@ do
 		if db.iconPosition ~= "LEFT" and db.iconPosition ~= "RIGHT" then
 			db.iconPosition = plugin.defaultDB.iconPosition
 		end
-		if db.emphasizeTime < 6 or db.emphasizeTime > 60 then
+		if db.emphasizeTime < 6 or db.emphasizeTime > 60 or math.floor(db.emphasizeTime+0.5) ~= db.emphasizeTime then
 			db.emphasizeTime = plugin.defaultDB.emphasizeTime
 		end
 		if db.emphasizeMultiplier < 1 or db.emphasizeMultiplier > 3 then
 			db.emphasizeMultiplier = plugin.defaultDB.emphasizeMultiplier
 		end
-		if db.spacing < 0 or db.spacing > 20 then
+		if db.spacing < 0 or db.spacing > 20 or math.floor(db.spacing+0.5) ~= db.spacing then
 			db.spacing = plugin.defaultDB.spacing
 		end
-		if db.visibleBarLimit < 1 or db.visibleBarLimit > 100 then
+		if db.visibleBarLimit < 1 or db.visibleBarLimit > 100 or math.floor(db.visibleBarLimit+0.5) ~= db.visibleBarLimit then
 			db.visibleBarLimit = plugin.defaultDB.visibleBarLimit
 		end
-		if db.visibleBarLimitEmph < 1 or db.visibleBarLimitEmph > 100 then
+		if db.visibleBarLimitEmph < 1 or db.visibleBarLimitEmph > 100 or math.floor(db.visibleBarLimitEmph+0.5) ~= db.visibleBarLimitEmph then
 			db.visibleBarLimitEmph = plugin.defaultDB.visibleBarLimitEmph
 		end
-		if db.normalWidth < minBarWidth or db.normalWidth > maxBarWidth then
+		if db.normalWidth < minBarWidth or db.normalWidth > maxBarWidth or math.floor(db.normalWidth+0.5) ~= db.normalWidth then
 			db.normalWidth = plugin.defaultDB.normalWidth
 		end
-		if db.normalHeight < minBarHeight or db.normalHeight > maxBarHeight then
+		if db.normalHeight < minBarHeight or db.normalHeight > maxBarHeight or math.floor(db.normalHeight+0.5) ~= db.normalHeight then
 			db.normalHeight = plugin.defaultDB.normalHeight
 		end
-		if db.expWidth < minBarWidth or db.expWidth > maxBarWidth then
+		if db.expWidth < minBarWidth or db.expWidth > maxBarWidth or math.floor(db.expWidth+0.5) ~= db.expWidth then
 			db.expWidth = plugin.defaultDB.expWidth
 		end
-		if db.expHeight < minBarHeight or db.expHeight > maxBarHeight then
+		if db.expHeight < minBarHeight or db.expHeight > maxBarHeight or math.floor(db.expHeight+0.5) ~= db.expHeight then
 			db.expHeight = plugin.defaultDB.expHeight
 		end
 
-		if db.spellIndicators < 0 or db.spellIndicators > plugin.defaultDB.spellIndicators then
+		if db.spellIndicators < 0 or db.spellIndicators > plugin.defaultDB.spellIndicators or math.floor(db.spellIndicators+0.5) ~= db.spellIndicators then
 			db.spellIndicators = plugin.defaultDB.spellIndicators
 		end
-		if db.spellIndicatorsSize < 0 or db.spellIndicatorsSize > 5 then
+		if db.spellIndicatorsSize < 0 or db.spellIndicatorsSize > 5 or math.floor(db.spellIndicatorsSize+0.5) ~= db.spellIndicatorsSize then
 			db.spellIndicatorsSize = plugin.defaultDB.spellIndicatorsSize
 		end
 		if db.spellIndicatorsPosition ~= "LEFT" and db.spellIndicatorsPosition ~= "RIGHT" then
 			db.spellIndicatorsPosition = plugin.defaultDB.spellIndicatorsPosition
 		end
-		if db.spellIndicatorsOffset < 0 or db.spellIndicatorsOffset > 100 then
+		if db.spellIndicatorsOffset < 0 or db.spellIndicatorsOffset > 100 or math.floor(db.spellIndicatorsOffset+0.5) ~= db.spellIndicatorsOffset then
 			db.spellIndicatorsOffset = plugin.defaultDB.spellIndicatorsOffset
 		end
 

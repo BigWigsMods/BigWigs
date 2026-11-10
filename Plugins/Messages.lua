@@ -85,10 +85,10 @@ local function updateProfile()
 	if db.align ~= "LEFT" and db.align ~= "CENTER" and db.align ~= "RIGHT" then
 		db.align = plugin.defaultDB.align
 	end
-	if db.fontSize < 14 or db.fontSize > 200 then
+	if db.fontSize < 14 or db.fontSize > 200 or math.floor(db.fontSize+0.5) ~= db.fontSize then
 		db.fontSize = plugin.defaultDB.fontSize
 	end
-	if db.emphFontSize < 20 or db.emphFontSize > 200 then
+	if db.emphFontSize < 20 or db.emphFontSize > 200 or math.floor(db.emphFontSize+0.5) ~= db.emphFontSize then
 		db.emphFontSize = plugin.defaultDB.emphFontSize
 	end
 	if db.chatOutput < 1 or db.chatOutput > 10 or math.floor(db.chatOutput+0.5) ~= db.chatOutput then

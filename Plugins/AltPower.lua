@@ -176,16 +176,16 @@ do
 		if not LibSharedMedia:IsValid("font", plugin.db.profile.fontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", plugin.db.profile.fontName)) then
 			plugin.db.profile.fontName = plugin.defaultDB.fontName
 		end
-		if db.fontSize < 10 or db.fontSize > 200 then
+		if db.fontSize < 10 or db.fontSize > 200 or math.floor(db.fontSize+0.5) ~= db.fontSize then
 			db.fontSize = plugin.defaultDB.fontSize
 		end
 		if db.outline ~= "NONE" and db.outline ~= "OUTLINE" and db.outline ~= "THICKOUTLINE" then
 			db.outline = plugin.defaultDB.outline
 		end
-		if db.additionalWidth < 0 or db.additionalWidth > 100 then
+		if db.additionalWidth < 0 or db.additionalWidth > 100 or math.floor(db.additionalWidth+0.5) ~= db.additionalWidth then
 			db.additionalWidth = plugin.defaultDB.additionalWidth
 		end
-		if db.additionalHeight < 0 or db.additionalHeight > 100 then
+		if db.additionalHeight < 0 or db.additionalHeight > 100 or math.floor(db.additionalHeight+0.5) ~= db.additionalHeight then
 			db.additionalHeight = plugin.defaultDB.additionalHeight
 		end
 		ValidateColor(db.barTextColor, plugin.defaultDB.barTextColor)

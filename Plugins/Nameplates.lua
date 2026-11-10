@@ -224,40 +224,40 @@ do
 		if not BigWigsAPI.IsValidFramePoint(db.iconGrowDirectionStartTarget) then
 			db.iconGrowDirectionStartTarget = plugin.defaultDB.iconGrowDirectionStartTarget
 		end
-		if db.iconSpacing < 0 or db.iconSpacing > 20 then
+		if db.iconSpacing < 0 or db.iconSpacing > 20 or math.floor(db.iconSpacing+0.5) ~= db.iconSpacing then
 			db.iconSpacing = plugin.defaultDB.iconSpacing
 		end
-		if db.iconSpacingTarget < 0 or db.iconSpacingTarget > 20 then
+		if db.iconSpacingTarget < 0 or db.iconSpacingTarget > 20 or math.floor(db.iconSpacingTarget+0.5) ~= db.iconSpacingTarget then
 			db.iconSpacingTarget = plugin.defaultDB.iconSpacingTarget
 		end
-		if db.iconWidthTarget < 12 or db.iconWidthTarget > 50 then
+		if db.iconWidthTarget < 12 or db.iconWidthTarget > 50 or math.floor(db.iconWidthTarget+0.5) ~= db.iconWidthTarget then
 			db.iconWidthTarget = plugin.defaultDB.iconWidthTarget
 		end
-		if db.iconHeightTarget < 12 or db.iconHeightTarget > 50 then
+		if db.iconHeightTarget < 12 or db.iconHeightTarget > 50 or math.floor(db.iconHeightTarget+0.5) ~= db.iconHeightTarget then
 			db.iconHeightTarget = plugin.defaultDB.iconHeightTarget
 		end
-		if db.iconWidthOthers < 12 or db.iconWidthOthers > 50 then
+		if db.iconWidthOthers < 12 or db.iconWidthOthers > 50 or math.floor(db.iconWidthOthers+0.5) ~= db.iconWidthOthers then
 			db.iconWidthOthers = plugin.defaultDB.iconWidthOthers
 		end
-		if db.iconHeightOthers < 12 or db.iconHeightOthers > 50 then
+		if db.iconHeightOthers < 12 or db.iconHeightOthers > 50 or math.floor(db.iconHeightOthers+0.5) ~= db.iconHeightOthers then
 			db.iconHeightOthers = plugin.defaultDB.iconHeightOthers
 		end
-		if db.iconOffsetX < -100 or db.iconOffsetX > 100 then
+		if db.iconOffsetX < -100 or db.iconOffsetX > 100 or math.floor(db.iconOffsetX+0.5) ~= db.iconOffsetX then
 			db.iconOffsetX = plugin.defaultDB.iconOffsetX
 		end
-		if db.iconOffsetY < -100 or db.iconOffsetY > 100 then
+		if db.iconOffsetY < -100 or db.iconOffsetY > 100 or math.floor(db.iconOffsetY+0.5) ~= db.iconOffsetY then
 			db.iconOffsetY = plugin.defaultDB.iconOffsetY
 		end
-		if db.iconOffsetXTarget < -100 or db.iconOffsetXTarget > 100 then
+		if db.iconOffsetXTarget < -100 or db.iconOffsetXTarget > 100 or math.floor(db.iconOffsetXTarget+0.5) ~= db.iconOffsetXTarget then
 			db.iconOffsetXTarget = plugin.defaultDB.iconOffsetXTarget
 		end
-		if db.iconOffsetYTarget < -100 or db.iconOffsetYTarget > 100 then
+		if db.iconOffsetYTarget < -100 or db.iconOffsetYTarget > 100 or math.floor(db.iconOffsetYTarget+0.5) ~= db.iconOffsetYTarget then
 			db.iconOffsetYTarget = plugin.defaultDB.iconOffsetYTarget
 		end
 		if not LibSharedMedia:IsValid(FONT, db.iconFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.iconFontName)) then
 			db.iconFontName = plugin.defaultDB.iconFontName
 		end
-		if db.iconFontSize < 6 or db.iconFontSize > 200 then
+		if db.iconFontSize < 6 or db.iconFontSize > 200 or math.floor(db.iconFontSize+0.5) ~= db.iconFontSize then
 			db.iconFontSize = plugin.defaultDB.iconFontSize
 		end
 		ValidateColor(db.iconFontColor, plugin.defaultDB.iconFontColor, 0)
@@ -270,16 +270,16 @@ do
 		if db.iconGlowFrequency < -2 or db.iconGlowFrequency > 2 then
 			db.iconGlowFrequency = plugin.defaultDB.iconGlowFrequency
 		end
-		if db.iconGlowPixelLines < 1 or db.iconGlowPixelLines > 15 then
+		if db.iconGlowPixelLines < 1 or db.iconGlowPixelLines > 15 or math.floor(db.iconGlowPixelLines+0.5) ~= db.iconGlowPixelLines then
 			db.iconGlowPixelLines = plugin.defaultDB.iconGlowPixelLines
 		end
-		if db.iconGlowPixelLength < 1 or db.iconGlowPixelLength > 20 then
+		if db.iconGlowPixelLength < 1 or db.iconGlowPixelLength > 20 or math.floor(db.iconGlowPixelLength+0.5) ~= db.iconGlowPixelLength then
 			db.iconGlowPixelLength = plugin.defaultDB.iconGlowPixelLength
 		end
-		if db.iconGlowPixelThickness < 1 or db.iconGlowPixelThickness > 5 then
+		if db.iconGlowPixelThickness < 1 or db.iconGlowPixelThickness > 5 or math.floor(db.iconGlowPixelThickness+0.5) ~= db.iconGlowPixelThickness then
 			db.iconGlowPixelThickness = plugin.defaultDB.iconGlowPixelThickness
 		end
-		if db.iconGlowAutoCastParticles < 1 or db.iconGlowAutoCastParticles > 15 then
+		if db.iconGlowAutoCastParticles < 1 or db.iconGlowAutoCastParticles > 15 or math.floor(db.iconGlowAutoCastParticles+0.5) ~= db.iconGlowAutoCastParticles then
 			db.iconGlowAutoCastParticles = plugin.defaultDB.iconGlowAutoCastParticles
 		end
 		if db.iconGlowAutoCastScale < 0.5 or db.iconGlowAutoCastScale > 3 then
@@ -288,13 +288,13 @@ do
 		if db.iconGlowProcAnimDuration < 0.1 or db.iconGlowProcAnimDuration > 3 then
 			db.iconGlowProcAnimDuration = plugin.defaultDB.iconGlowProcAnimDuration
 		end
-		if db.iconGlowTimeLeft < 0 or db.iconGlowTimeLeft > 3 then
+		if db.iconGlowTimeLeft < 0 or db.iconGlowTimeLeft > 3 or math.floor(db.iconGlowTimeLeft+0.5) ~= db.iconGlowTimeLeft then
 			db.iconGlowTimeLeft = plugin.defaultDB.iconGlowTimeLeft
 		end
-		if db.iconGlowOffsetX < -32 or db.iconGlowOffsetX > 32 then
+		if db.iconGlowOffsetX < -32 or db.iconGlowOffsetX > 32 or math.floor(db.iconGlowOffsetX+0.5) ~= db.iconGlowOffsetX then
 			db.iconGlowOffsetX = plugin.defaultDB.iconGlowOffsetX
 		end
-		if db.iconGlowOffsetY < -32 or db.iconGlowOffsetY > 32 then
+		if db.iconGlowOffsetY < -32 or db.iconGlowOffsetY > 32 or math.floor(db.iconGlowOffsetY+0.5) ~= db.iconGlowOffsetY then
 			db.iconGlowOffsetY = plugin.defaultDB.iconGlowOffsetY
 		end
 		if db.iconZoom < 0 or db.iconZoom > 0.5 then
@@ -307,21 +307,21 @@ do
 			db.iconBorderSize = plugin.defaultDB.iconBorderSize
 			db.iconBorderOffset = plugin.defaultDB.iconBorderOffset
 		end
-		if db.iconBorderSize < 1 or db.iconBorderSize > 32 then
+		if db.iconBorderSize < 1 or db.iconBorderSize > 32 or math.floor(db.iconBorderSize+0.5) ~= db.iconBorderSize then
 			db.iconBorderSize = plugin.defaultDB.iconBorderSize
 		end
-		if db.iconBorderOffset < 0 or db.iconBorderOffset > 32 then
+		if db.iconBorderOffset < 0 or db.iconBorderOffset > 32 or math.floor(db.iconBorderOffset+0.5) ~= db.iconBorderOffset then
 			db.iconBorderOffset = plugin.defaultDB.iconBorderOffset
 		end
 		ValidateColor(db.iconBorderColor, plugin.defaultDB.iconBorderColor, 0)
 		if db.iconFrameStrata ~= "MEDIUM" and db.iconFrameStrata ~= "LOW" then
 			db.iconFrameStrata = plugin.defaultDB.iconFrameStrata
 		end
-		if db.iconEmphasizeTime < 0 or db.iconEmphasizeTime > 12 then
+		if db.iconEmphasizeTime < 0 or db.iconEmphasizeTime > 12 or math.floor(db.iconEmphasizeTime+0.5) ~= db.iconEmphasizeTime then
 			db.iconEmphasizeTime = plugin.defaultDB.iconEmphasizeTime
 		end
 		ValidateColor(db.iconEmphasizeFontColor, plugin.defaultDB.iconEmphasizeFontColor, 0)
-		if db.iconEmphasizeFontSize < 6 or db.iconEmphasizeFontSize > 200 then
+		if db.iconEmphasizeFontSize < 6 or db.iconEmphasizeFontSize > 200 or math.floor(db.iconEmphasizeFontSize+0.5) ~= db.iconEmphasizeFontSize then
 			db.iconEmphasizeFontSize = plugin.defaultDB.iconEmphasizeFontSize
 		end
 
@@ -331,19 +331,19 @@ do
 		if not BigWigsAPI.IsValidFramePoint(db.textGrowDirectionStart) then
 			db.textGrowDirectionStart = plugin.defaultDB.textGrowDirectionStart
 		end
-		if db.textSpacing < 0 or db.textSpacing > 20 then
+		if db.textSpacing < 0 or db.textSpacing > 20 or math.floor(db.textSpacing+0.5) ~= db.textSpacing then
 			db.textSpacing = plugin.defaultDB.textSpacing
 		end
-		if db.textOffsetX < -150 or db.textOffsetX > 150 then
+		if db.textOffsetX < -150 or db.textOffsetX > 150 or math.floor(db.textOffsetX+0.5) ~= db.textOffsetX then
 			db.textOffsetX = plugin.defaultDB.textOffsetX
 		end
-		if db.textOffsetY < -150 or db.textOffsetY > 150 then
+		if db.textOffsetY < -150 or db.textOffsetY > 150 or math.floor(db.textOffsetY+0.5) ~= db.textOffsetY then
 			db.textOffsetY = plugin.defaultDB.textOffsetY
 		end
 		if not LibSharedMedia:IsValid(FONT, db.textFontName) or not BigWigsAPI.IsValidMediaPath(db.textFontName) then
 			db.textFontName = plugin.defaultDB.textFontName
 		end
-		if db.textFontSize < 10 or db.textFontSize > 200 then
+		if db.textFontSize < 10 or db.textFontSize > 200 or math.floor(db.textFontSize+0.5) ~= db.textFontSize then
 			db.textFontSize = plugin.defaultDB.textFontSize
 		end
 		ValidateColor(db.textFontColor, plugin.defaultDB.textFontColor, 0.3)

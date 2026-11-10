@@ -132,10 +132,10 @@ do
 			end
 		end
 
-		if plugin.db.profile.mode < 1 or plugin.db.profile.mode > 2 then
+		if plugin.db.profile.mode < 1 or plugin.db.profile.mode > 2 or floor(plugin.db.profile.mode+0.5) ~= plugin.db.profile.mode then
 			plugin.db.profile.mode = defaultDB.mode
 		end
-		if plugin.db.profile.size < 20 or plugin.db.profile.size > 150 then
+		if plugin.db.profile.size < 20 or plugin.db.profile.size > 150 or floor(plugin.db.profile.size+0.5) ~= plugin.db.profile.size then
 			plugin.db.profile.size = defaultDB.size
 		end
 
@@ -197,16 +197,16 @@ do
 				plugin.db.profile.textYPositionCharges = y
 			end
 		end
-		if plugin.db.profile.durationFontSize < ProfileUtils.MinimumFontSize or plugin.db.profile.durationFontSize > 200 then
+		if plugin.db.profile.durationFontSize < ProfileUtils.MinimumFontSize or plugin.db.profile.durationFontSize > 200 or floor(plugin.db.profile.durationFontSize+0.5) ~= plugin.db.profile.durationFontSize then
 			plugin.db.profile.durationFontSize = defaultDB.durationFontSize
 		end
-		if plugin.db.profile.durationEmphasizeFontSize < ProfileUtils.MinimumFontSize or plugin.db.profile.durationEmphasizeFontSize > 200 then
+		if plugin.db.profile.durationEmphasizeFontSize < ProfileUtils.MinimumFontSize or plugin.db.profile.durationEmphasizeFontSize > 200 or floor(plugin.db.profile.durationEmphasizeFontSize+0.5) ~= plugin.db.profile.durationEmphasizeFontSize then
 			plugin.db.profile.durationEmphasizeFontSize = defaultDB.durationEmphasizeFontSize
 		end
-		if plugin.db.profile.chargesNoneFontSize < ProfileUtils.MinimumFontSize or plugin.db.profile.chargesNoneFontSize > 200 then
+		if plugin.db.profile.chargesNoneFontSize < ProfileUtils.MinimumFontSize or plugin.db.profile.chargesNoneFontSize > 200 or floor(plugin.db.profile.chargesNoneFontSize+0.5) ~= plugin.db.profile.chargesNoneFontSize then
 			plugin.db.profile.chargesNoneFontSize = defaultDB.chargesNoneFontSize
 		end
-		if plugin.db.profile.chargesAvailableFontSize < ProfileUtils.MinimumFontSize or plugin.db.profile.chargesAvailableFontSize > 200 then
+		if plugin.db.profile.chargesAvailableFontSize < ProfileUtils.MinimumFontSize or plugin.db.profile.chargesAvailableFontSize > 200 or floor(plugin.db.profile.chargesAvailableFontSize+0.5) ~= plugin.db.profile.chargesAvailableFontSize then
 			plugin.db.profile.chargesAvailableFontSize = defaultDB.chargesAvailableFontSize
 		end
 		if plugin.db.profile.outline ~= "NONE" and plugin.db.profile.outline ~= "OUTLINE" and plugin.db.profile.outline ~= "THICKOUTLINE" then
@@ -234,10 +234,10 @@ do
 		end
 
 		ValidateColor(plugin.db.profile.borderColor, defaultDB.borderColor, 0)
-		if plugin.db.profile.borderOffset < 0 or plugin.db.profile.borderOffset > 32 then
+		if plugin.db.profile.borderOffset < 0 or plugin.db.profile.borderOffset > 32 or floor(plugin.db.profile.borderOffset+0.5) ~= plugin.db.profile.borderOffset then
 			plugin.db.profile.borderOffset = defaultDB.borderOffset
 		end
-		if plugin.db.profile.borderSize < 1 or plugin.db.profile.borderSize > 32 then
+		if plugin.db.profile.borderSize < 1 or plugin.db.profile.borderSize > 32 or floor(plugin.db.profile.borderSize+0.5) ~= plugin.db.profile.borderSize then
 			plugin.db.profile.borderSize = defaultDB.borderSize
 		end
 		if plugin.db.profile.durationAlign ~= "LEFT" and plugin.db.profile.durationAlign ~= "CENTER" and plugin.db.profile.durationAlign ~= "RIGHT" then
@@ -251,14 +251,14 @@ do
 		ValidateColor(plugin.db.profile.durationEmphasizeColor, defaultDB.durationEmphasizeColor, 0)
 		ValidateColor(plugin.db.profile.chargesNoneColor, defaultDB.chargesNoneColor, 0)
 		ValidateColor(plugin.db.profile.chargesAvailableColor, defaultDB.chargesAvailableColor, 0)
-		if plugin.db.profile.durationEmphasizeTime < 0 or plugin.db.profile.durationEmphasizeTime > 30 then
+		if plugin.db.profile.durationEmphasizeTime < 0 or plugin.db.profile.durationEmphasizeTime > 30 or floor(plugin.db.profile.durationEmphasizeTime+0.5) ~= plugin.db.profile.durationEmphasizeTime then
 			plugin.db.profile.durationEmphasizeTime = defaultDB.durationEmphasizeTime
 		end
 		ValidateColor(plugin.db.profile.iconColor, defaultDB.iconColor, 0)
 		if not BigWigsLoader.GetSpellTexture(plugin.db.profile.iconTextureFromSpellID) then
 			plugin.db.profile.iconTextureFromSpellID = defaultDB.iconTextureFromSpellID
 		end
-		if plugin.db.profile.iconDesaturate < 1 or plugin.db.profile.iconDesaturate > 3 then
+		if plugin.db.profile.iconDesaturate < 1 or plugin.db.profile.iconDesaturate > 3 or floor(plugin.db.profile.iconDesaturate+0.5) ~= plugin.db.profile.iconDesaturate then
 			plugin.db.profile.iconDesaturate = defaultDB.iconDesaturate
 		end
 		if not LibSharedMedia:IsValid("font", plugin.db.profile.fontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", plugin.db.profile.fontName)) then

@@ -236,44 +236,44 @@ local function updateProfile()
 			db[unitType].tempSizeMigrate = true
 		end
 
-		if db[unitType].width < 24 or db[unitType].width > 256 then
+		if db[unitType].width < 24 or db[unitType].width > 256 or math.floor(db[unitType].width+0.5) ~= db[unitType].width then
 			db[unitType].width = plugin.defaultDB[unitType].width
 		end
-		if db[unitType].height < 24 or db[unitType].height > 256 then
+		if db[unitType].height < 24 or db[unitType].height > 256 or math.floor(db[unitType].height+0.5) ~= db[unitType].height then
 			db[unitType].height = plugin.defaultDB[unitType].height
 		end
 		if db[unitType].zoom < 0 or db[unitType].zoom > 0.5 then
 			db[unitType].zoom = plugin.defaultDB[unitType].zoom
 		end
-		if db[unitType].spacing < 0 or db[unitType].spacing > 50 then
+		if db[unitType].spacing < 0 or db[unitType].spacing > 50 or math.floor(db[unitType].spacing+0.5) ~= db[unitType].spacing then
 			db[unitType].spacing = plugin.defaultDB[unitType].spacing
 		end
-		if db[unitType].cooldownTextFontSize < 8 or db[unitType].cooldownTextFontSize > 200 then
+		if db[unitType].cooldownTextFontSize < 8 or db[unitType].cooldownTextFontSize > 200 or math.floor(db[unitType].cooldownTextFontSize+0.5) ~= db[unitType].cooldownTextFontSize then
 			db[unitType].cooldownTextFontSize = plugin.defaultDB[unitType].cooldownTextFontSize
 		end
 		ValidateColor(db[unitType].cooldownTextColor, plugin.defaultDB[unitType].cooldownTextColor, 0)
-		if db[unitType].cooldownEmphasizeTime < 0 or db[unitType].cooldownEmphasizeTime > 30 then
+		if db[unitType].cooldownEmphasizeTime < 0 or db[unitType].cooldownEmphasizeTime > 30 or math.floor(db[unitType].cooldownEmphasizeTime+0.5) ~= db[unitType].cooldownEmphasizeTime then
 			db[unitType].cooldownEmphasizeTime = plugin.defaultDB[unitType].cooldownEmphasizeTime
 		end
-		if db[unitType].cooldownTextFontSize < 10 or db[unitType].cooldownTextFontSize > 200 then
+		if db[unitType].cooldownTextFontSize < 10 or db[unitType].cooldownTextFontSize > 200 or math.floor(db[unitType].cooldownTextFontSize+0.5) ~= db[unitType].cooldownTextFontSize then
 			db[unitType].cooldownTextFontSize = plugin.defaultDB[unitType].cooldownTextFontSize
 		end
-		if db[unitType].cooldownTextDecimals < 0 or db[unitType].cooldownTextDecimals > 60 then
+		if db[unitType].cooldownTextDecimals < 0 or db[unitType].cooldownTextDecimals > 60 or math.floor(db[unitType].cooldownTextDecimals+0.5) ~= db[unitType].cooldownTextDecimals then
 			db[unitType].cooldownTextDecimals = plugin.defaultDB[unitType].cooldownTextDecimals
 		end
 		ValidateColor(db[unitType].cooldownEmphasizeColor, plugin.defaultDB[unitType].cooldownEmphasizeColor, 0)
-		if db[unitType].countTextFontSize < 8 or db[unitType].countTextFontSize > 200 then
+		if db[unitType].countTextFontSize < 8 or db[unitType].countTextFontSize > 200 or math.floor(db[unitType].countTextFontSize+0.5) ~= db[unitType].countTextFontSize then
 			db[unitType].countTextFontSize = plugin.defaultDB[unitType].countTextFontSize
 		end
 		ValidateColor(db[unitType].countTextColor, plugin.defaultDB[unitType].countTextColor, 0)
 		ValidateColor(db[unitType].borderColor, plugin.defaultDB[unitType].borderColor, 0)
-		if db[unitType].borderSize < 1 or db[unitType].borderSize > 32 then
+		if db[unitType].borderSize < 1 or db[unitType].borderSize > 32 or math.floor(db[unitType].borderSize+0.5) ~= db[unitType].borderSize then
 			db[unitType].borderSize = plugin.defaultDB[unitType].borderSize
 		end
-		if db[unitType].borderOffset < 0 or db[unitType].borderOffset > 32 then
+		if db[unitType].borderOffset < 0 or db[unitType].borderOffset > 32 or math.floor(db[unitType].borderOffset+0.5) ~= db[unitType].borderOffset then
 			db[unitType].borderOffset = plugin.defaultDB[unitType].borderOffset
 		end
-		if db[unitType].dispelTypeSize < 1 or db[unitType].dispelTypeSize > 64 then
+		if db[unitType].dispelTypeSize < 1 or db[unitType].dispelTypeSize > 64 or math.floor(db[unitType].dispelTypeSize+0.5) ~= db[unitType].dispelTypeSize then
 			db[unitType].dispelTypeSize = plugin.defaultDB[unitType].dispelTypeSize
 		end
 
@@ -292,7 +292,7 @@ local function updateProfile()
 		end
 	end
 
-	if db.other.tankIndicatorSize < 1 or db.other.tankIndicatorSize > 64 then
+	if db.other.tankIndicatorSize < 1 or db.other.tankIndicatorSize > 64 or math.floor(db.other.tankIndicatorSize+0.5) ~= db.other.tankIndicatorSize then
 		db.other.tankIndicatorSize = plugin.defaultDB.other.tankIndicatorSize
 	end
 	ValidateAnchor("other", "tankIndicatorAnchorPoint", nil, "tankIndicatorAnchorRelPoint", "tankIndicatorAnchorXOffset", "tankIndicatorAnchorYOffset")

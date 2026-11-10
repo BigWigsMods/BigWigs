@@ -126,16 +126,16 @@ do
 			end
 		end
 
-		if db.mode < 1 or db.mode > 4 then
+		if db.mode < 1 or db.mode > 4 or math.floor(db.mode+0.5) ~= db.mode then
 			db.mode = plugin.defaultDB.mode
 		end
-		if db.modeOther < 1 or db.modeOther > 4 then
+		if db.modeOther < 1 or db.modeOther > 4 or math.floor(db.modeOther+0.5) ~= db.modeOther then
 			db.modeOther = plugin.defaultDB.modeOther
 		end
-		if db.exitCombat < 1 or db.exitCombat > 4 then
+		if db.exitCombat < 1 or db.exitCombat > 4 or math.floor(db.exitCombat+0.5) ~= db.exitCombat then
 			db.exitCombat = plugin.defaultDB.exitCombat
 		end
-		if db.exitCombatOther < 1 or db.exitCombatOther > 4 then
+		if db.exitCombatOther < 1 or db.exitCombatOther > 4 or math.floor(db.exitCombatOther+0.5) ~= db.exitCombatOther then
 			db.exitCombatOther = plugin.defaultDB.exitCombatOther
 		end
 	end
