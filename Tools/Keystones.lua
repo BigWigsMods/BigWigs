@@ -121,7 +121,7 @@ do
 		if checkCount ~= db.profile.countBegin then
 			db.profile.countBegin = checkCount
 		end
-		if db.profile.windowHeight < 320 or db.profile.windowHeight > 620 then
+		if db.profile.windowHeight < 320 or db.profile.windowHeight > 620 or math.floor(db.profile.windowHeight+0.5) ~= db.profile.windowHeight then
 			db.profile.windowHeight = defaults.windowHeight
 		end
 		if type(db.profile.viewerPosition[1]) ~= "string" or type(db.profile.viewerPosition[2]) ~= "string"
@@ -158,7 +158,7 @@ do
 				db.profile.instanceKeysPosition[4] = y
 			end
 		end
-		if db.profile.instanceKeysFontSize < 14 or db.profile.instanceKeysFontSize > 200 then
+		if db.profile.instanceKeysFontSize < 14 or db.profile.instanceKeysFontSize > 200 or math.floor(db.profile.instanceKeysFontSize+0.5) ~= db.profile.instanceKeysFontSize then
 			db.profile.instanceKeysFontSize = defaults.instanceKeysFontSize
 		end
 		if db.profile.instanceKeysOutline ~= "NONE" and db.profile.instanceKeysOutline ~= "OUTLINE" and db.profile.instanceKeysOutline ~= "THICKOUTLINE" then

@@ -184,10 +184,10 @@ do
 			end
 		end
 
-		if db.profile.anyCombatWidth < ProfileUtils.MinimumWidth or db.profile.anyCombatWidth > ProfileUtils.MaximumWidth then
+		if db.profile.anyCombatWidth < ProfileUtils.MinimumWidth or db.profile.anyCombatWidth > ProfileUtils.MaximumWidth or math.floor(db.profile.anyCombatWidth+0.5) ~= db.profile.anyCombatWidth then
 			db.profile.anyCombatWidth = defaults.anyCombatWidth
 		end
-		if db.profile.anyCombatHeight < ProfileUtils.MinimumHeight or db.profile.anyCombatHeight > ProfileUtils.MaximumHeight then
+		if db.profile.anyCombatHeight < ProfileUtils.MinimumHeight or db.profile.anyCombatHeight > ProfileUtils.MaximumHeight or math.floor(db.profile.anyCombatHeight+0.5) ~= db.profile.anyCombatHeight then
 			db.profile.anyCombatHeight = defaults.anyCombatHeight
 		end
 		if type(db.profile.anyCombatPosition[1]) ~= "string" or type(db.profile.anyCombatPosition[2]) ~= "string"
@@ -207,7 +207,7 @@ do
 		if db.profile.anyCombatPosition[5] ~= defaults.anyCombatPosition[5] and not BigWigsAPI.IsValidFrame(db.profile.anyCombatPosition[5]) then
 			db.profile.anyCombatPosition = CopyTable(defaults.anyCombatPosition)
 		end
-		if db.profile.anyCombatFontSize < ProfileUtils.MinimumFontSize or db.profile.anyCombatFontSize > 200 then
+		if db.profile.anyCombatFontSize < ProfileUtils.MinimumFontSize or db.profile.anyCombatFontSize > 200 or math.floor(db.profile.anyCombatFontSize+0.5) ~= db.profile.anyCombatFontSize then
 			db.profile.anyCombatFontSize = defaults.anyCombatFontSize
 		end
 		if db.profile.anyCombatOutline ~= "NONE" and db.profile.anyCombatOutline ~= "OUTLINE" and db.profile.anyCombatOutline ~= "THICKOUTLINE" then
@@ -216,10 +216,10 @@ do
 		if db.profile.anyCombatAlign ~= "LEFT" and db.profile.anyCombatAlign ~= "CENTER" and db.profile.anyCombatAlign ~= "RIGHT" then
 			db.profile.anyCombatAlign = defaults.anyCombatAlign
 		end
-		if db.profile.anyCombatBorderSize < 1 or db.profile.anyCombatBorderSize > 32 then
+		if db.profile.anyCombatBorderSize < 1 or db.profile.anyCombatBorderSize > 32 or math.floor(db.profile.anyCombatBorderSize+0.5) ~= db.profile.anyCombatBorderSize then
 			db.profile.anyCombatBorderSize = defaults.anyCombatBorderSize
 		end
-		if db.profile.anyCombatBorderOffset < 0 or db.profile.anyCombatBorderOffset > 32 then
+		if db.profile.anyCombatBorderOffset < 0 or db.profile.anyCombatBorderOffset > 32 or math.floor(db.profile.anyCombatBorderOffset+0.5) ~= db.profile.anyCombatBorderOffset then
 			db.profile.anyCombatBorderOffset = defaults.anyCombatBorderOffset
 		end
 		if db.profile.anyCombatInactive ~= "NONE" and db.profile.anyCombatInactive ~= "HIDE" and db.profile.anyCombatInactive ~= "COLOR" then
@@ -255,10 +255,10 @@ do
 		ValidateColor(db.profile.anyCombatBorderColor, defaults.anyCombatBorderColor, 0)
 		ValidateColor(db.profile.anyCombatBorderColorInactive, defaults.anyCombatBorderColorInactive, 0)
 
-		if db.profile.bossCombatWidth < ProfileUtils.MinimumWidth or db.profile.bossCombatWidth > ProfileUtils.MaximumWidth then
+		if db.profile.bossCombatWidth < ProfileUtils.MinimumWidth or db.profile.bossCombatWidth > ProfileUtils.MaximumWidth or math.floor(db.profile.bossCombatWidth+0.5) ~= db.profile.bossCombatWidth then
 			db.profile.bossCombatWidth = defaults.bossCombatWidth
 		end
-		if db.profile.bossCombatHeight < ProfileUtils.MinimumHeight or db.profile.bossCombatHeight > ProfileUtils.MaximumHeight then
+		if db.profile.bossCombatHeight < ProfileUtils.MinimumHeight or db.profile.bossCombatHeight > ProfileUtils.MaximumHeight or math.floor(db.profile.bossCombatHeight+0.5) ~= db.profile.bossCombatHeight then
 			db.profile.bossCombatHeight = defaults.bossCombatHeight
 		end
 		if type(db.profile.bossCombatPosition[1]) ~= "string" or type(db.profile.bossCombatPosition[2]) ~= "string"
@@ -278,7 +278,7 @@ do
 		if db.profile.bossCombatPosition[5] ~= defaults.bossCombatPosition[5] and not BigWigsAPI.IsValidFrame(db.profile.bossCombatPosition[5]) then
 			db.profile.bossCombatPosition = CopyTable(defaults.bossCombatPosition)
 		end
-		if db.profile.bossCombatFontSize < ProfileUtils.MinimumFontSize or db.profile.bossCombatFontSize > 200 then
+		if db.profile.bossCombatFontSize < ProfileUtils.MinimumFontSize or db.profile.bossCombatFontSize > 200 or math.floor(db.profile.bossCombatFontSize+0.5) ~= db.profile.bossCombatFontSize then
 			db.profile.bossCombatFontSize = defaults.bossCombatFontSize
 		end
 		if db.profile.bossCombatOutline ~= "NONE" and db.profile.bossCombatOutline ~= "OUTLINE" and db.profile.bossCombatOutline ~= "THICKOUTLINE" then
@@ -287,10 +287,10 @@ do
 		if db.profile.bossCombatAlign ~= "LEFT" and db.profile.bossCombatAlign ~= "CENTER" and db.profile.bossCombatAlign ~= "RIGHT" then
 			db.profile.bossCombatAlign = defaults.bossCombatAlign
 		end
-		if db.profile.bossCombatBorderSize < 1 or db.profile.bossCombatBorderSize > 32 then
+		if db.profile.bossCombatBorderSize < 1 or db.profile.bossCombatBorderSize > 32 or math.floor(db.profile.bossCombatBorderSize+0.5) ~= db.profile.bossCombatBorderSize then
 			db.profile.bossCombatBorderSize = defaults.bossCombatBorderSize
 		end
-		if db.profile.bossCombatBorderOffset < 0 or db.profile.bossCombatBorderOffset > 32 then
+		if db.profile.bossCombatBorderOffset < 0 or db.profile.bossCombatBorderOffset > 32 or math.floor(db.profile.bossCombatBorderOffset+0.5) ~= db.profile.bossCombatBorderOffset then
 			db.profile.bossCombatBorderOffset = defaults.bossCombatBorderOffset
 		end
 		if db.profile.bossCombatInactive ~= "NONE" and db.profile.bossCombatInactive ~= "HIDE" and db.profile.bossCombatInactive ~= "COLOR" then
@@ -326,10 +326,10 @@ do
 		ValidateColor(db.profile.bossCombatBorderColor, defaults.bossCombatBorderColor, 0)
 		ValidateColor(db.profile.bossCombatBorderColorInactive, defaults.bossCombatBorderColorInactive, 0)
 
-		if db.profile.bossStagesWidth < ProfileUtils.MinimumWidth or db.profile.bossStagesWidth > ProfileUtils.MaximumWidth then
+		if db.profile.bossStagesWidth < ProfileUtils.MinimumWidth or db.profile.bossStagesWidth > ProfileUtils.MaximumWidth or math.floor(db.profile.bossStagesWidth+0.5) ~= db.profile.bossStagesWidth then
 			db.profile.bossStagesWidth = defaults.bossStagesWidth
 		end
-		if db.profile.bossStagesHeight < ProfileUtils.MinimumHeight or db.profile.bossStagesHeight > ProfileUtils.MaximumHeight then
+		if db.profile.bossStagesHeight < ProfileUtils.MinimumHeight or db.profile.bossStagesHeight > ProfileUtils.MaximumHeight or math.floor(db.profile.bossStagesHeight+0.5) ~= db.profile.bossStagesHeight then
 			db.profile.bossStagesHeight = defaults.bossStagesHeight
 		end
 		if type(db.profile.bossStagesPosition[1]) ~= "string" or type(db.profile.bossStagesPosition[2]) ~= "string"
@@ -349,7 +349,7 @@ do
 		if db.profile.bossStagesPosition[5] ~= defaults.bossStagesPosition[5] and not BigWigsAPI.IsValidFrame(db.profile.bossStagesPosition[5]) then
 			db.profile.bossStagesPosition = CopyTable(defaults.bossStagesPosition)
 		end
-		if db.profile.bossStagesFontSize < ProfileUtils.MinimumFontSize or db.profile.bossStagesFontSize > 200 then
+		if db.profile.bossStagesFontSize < ProfileUtils.MinimumFontSize or db.profile.bossStagesFontSize > 200 or math.floor(db.profile.bossStagesFontSize+0.5) ~= db.profile.bossStagesFontSize then
 			db.profile.bossStagesFontSize = defaults.bossStagesFontSize
 		end
 		if db.profile.bossStagesOutline ~= "NONE" and db.profile.bossStagesOutline ~= "OUTLINE" and db.profile.bossStagesOutline ~= "THICKOUTLINE" then
@@ -358,10 +358,10 @@ do
 		if db.profile.bossStagesAlign ~= "LEFT" and db.profile.bossStagesAlign ~= "CENTER" and db.profile.bossStagesAlign ~= "RIGHT" then
 			db.profile.bossStagesAlign = defaults.bossStagesAlign
 		end
-		if db.profile.bossStagesBorderSize < 1 or db.profile.bossStagesBorderSize > 32 then
+		if db.profile.bossStagesBorderSize < 1 or db.profile.bossStagesBorderSize > 32 or math.floor(db.profile.bossStagesBorderSize+0.5) ~= db.profile.bossStagesBorderSize then
 			db.profile.bossStagesBorderSize = defaults.bossStagesBorderSize
 		end
-		if db.profile.bossStagesBorderOffset < 0 or db.profile.bossStagesBorderOffset > 32 then
+		if db.profile.bossStagesBorderOffset < 0 or db.profile.bossStagesBorderOffset > 32 or math.floor(db.profile.bossStagesBorderOffset+0.5) ~= db.profile.bossStagesBorderOffset then
 			db.profile.bossStagesBorderOffset = defaults.bossStagesBorderOffset
 		end
 		if db.profile.bossStagesInactive ~= "NONE" and db.profile.bossStagesInactive ~= "HIDE" and db.profile.bossStagesInactive ~= "COLOR" then
