@@ -27,7 +27,7 @@ Looking for functionality that BigWigs doesn't cover? Try these addons:
 
 Please remember that we are always interested in hearing directly from you.
 About anything you want to share or ask. You can [report issues on GitHub](https://github.com/BigWigsMods/BigWigs/issues)
-or [contact us on Discord](https://discord.gg/jGveg85).
+or [contact us on Discord](https://discord.gg/5xtACNuQm9).
 
 ## Our goals
 

@@ -233,7 +233,7 @@ do
 					},
 					discord = {
 						type = "input",
-						get = function() return "discord.gg/jGveg85" end,
+						get = function() return "discord.gg/gtDxWKvXE8" end,
 						set = function() end,
 						name = "Discord",
 						order = 52,
