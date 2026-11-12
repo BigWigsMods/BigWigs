@@ -66,6 +66,7 @@ Tools\CombatTimer.lua
 Tools\AutoInvite.lua
 Tools\LFGTimer.lua [AllowLoadGameType standard, wrath, cata, mists]
 Tools\AutoRole.lua [AllowLoadGameType standard, cata, mists]
+Tools\AuraSounds.lua [AllowLoadGameType mainline]
 
 #@do-not-package@
 Core\Constants.lua

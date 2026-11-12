@@ -129,13 +129,9 @@ files["Plugins/AltPower.lua"].ignore = {
 files["Plugins/Auras.lua"].ignore = {
 	"113/AnchorUtil",
 	"113/AuraUtil",
-	"113/C_ClassColor",
 	"113/C_CurveUtil",
 	"113/C_DurationUtil",
-	"113/C_RestrictedActions",
-	"113/C_Spell",
 	"113/C_StringUtil",
-	"113/C_UnitAuras",
 	"113/CreateColor",
 	"113/CreateUnsecuredObjectPool",
 	"113/Enum",
@@ -272,9 +268,17 @@ files["gen_option_values.lua"].ignore = {
 	"113/arg", -- We use global arg in the parser
 	"113/print",
 }
-
 files["Media/Media.lua"].ignore = {
 	"113/GetBuildInfo",
+}
+files["Tools/AuraSounds.lua"].ignore = {
+	"113/C_ClassColor",
+	"113/C_RestrictedActions",
+	"113/C_Spell",
+	"113/C_UnitAuras",
+	"113/GetNumGroupMembers",
+	"113/UnitGroupRolesAssigned",
+	"113/UnitInPartyIsAI",
 }
 files["Tools/AutoInvite.lua"].ignore = {
 	"113/C_BattleNet",
