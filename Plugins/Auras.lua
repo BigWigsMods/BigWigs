@@ -220,7 +220,7 @@ local function updateProfile()
 			db.sounds = {}
 			plugin:SimpleTimer(function() BigWigs:SendMessage("BigWigs_ProfileUpdate") end, 0)
 		else
-			BigWigs:Print("Couldn't locate the AuraSounds namespace.")
+			BigWigs:Error("Couldn't locate the AuraSounds namespace.")
 		end
 	end
 
