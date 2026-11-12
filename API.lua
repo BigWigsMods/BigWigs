@@ -492,17 +492,28 @@ end
 do -- Plugins (Tabs)
 	local tbl = {}
 	-- Get all AceGUI option tables for custom tabs under the "Plugins" category
-	function API.GetPluginOptionsCustomTabs()
-		return CopyTable(tbl)
+	function API.GetPluginOptionsCustomTabs(moduleName)
+		local tableToFill = {}
+		if tbl[moduleName] then
+			for key, func in next, tbl[moduleName] do
+				tableToFill[key] = func()
+			end
+		end
+		return tableToFill
 	end
 
 	-- Register a custom tab to already existing Plugins, using AceGUI option tables
-	function PrivateAPI.RegisterPluginOptionsCustomTab(moduleName, tabTableKey, settingsTable)
+	function PrivateAPI.RegisterPluginOptionsCustomTab(moduleName, tabTableKey, settingsFunc)
 		if type(moduleName) ~= "string" then error("The module name needs to be a string.") return end
 		if type(tabTableKey) ~= "string" then error("The tab table key needs to be a string.") return end
-		if type(settingsTable) ~= "table" then error("The settings table needs to be a table.") return end
+		if type(settingsFunc) ~= "function" then error("The settings table needs to be returned by a function.") return end
 		if not tbl[moduleName] then
-			tbl[moduleName] = {tabTableKey, settingsTable}
+			tbl[moduleName] = {}
+		end
+		if not tbl[moduleName][tabTableKey] then
+			tbl[moduleName][tabTableKey] = settingsFunc
+		else
+			error("Tab '"..tabTableKey.."' already exists for module '"..moduleName.."'.")
 		end
 	end
 end

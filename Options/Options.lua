@@ -284,6 +284,15 @@ do
 					local optionsTable = updateablePlugins[pluginName].options()
 					aceConfigTableMainBigWigsTab.args[updateablePlugins[pluginName].key] = optionsTable
 					acr:NotifyChange("BigWigs")
+				elseif aceConfigTableMainBigWigsTab.args.general.args[pluginName] then
+					local updated = false
+					for tabTableKey, settingsTable in next, API.GetPluginOptionsCustomTabs(pluginName) do
+						updated = true
+						aceConfigTableMainBigWigsTab.args.general.args[pluginName].args[tabTableKey] = settingsTable
+					end
+					if updated then
+						acr:NotifyChange("BigWigs")
+					end
 				end
 			end)
 			loader.RegisterMessage({}, "BigWigs_OpenGUI", function()
@@ -313,6 +322,9 @@ do
 					if type(pluginOptions) == "table" then
 						registeredPlugins[pluginName] = true
 						aceConfigTableMainBigWigsTab.args.general.args[pluginName] = pluginOptions
+						for tabTableKey, settingsTable in next, API.GetPluginOptionsCustomTabs(pluginName) do
+							aceConfigTableMainBigWigsTab.args.general.args[pluginName].args[tabTableKey] = settingsTable
+						end
 					elseif type(subPanelOptions) == "table" then
 						registeredPlugins[pluginName] = true
 						if allowedDirectOpens[subPanelOptions.name] then
@@ -356,12 +368,6 @@ do
 		end
 		for key, optionsTable in next, API.GetPluginOptions() do
 			aceConfigTableMainBigWigsTab.args[key] = optionsTable
-		end
-		for pluginName, dataTable in next, API.GetPluginOptionsCustomTabs() do
-			if registeredPlugins[pluginName] then
-				local tabTableKey, settingsTable = dataTable[1], dataTable[2]
-				aceConfigTableMainBigWigsTab.args.general.args[pluginName].args[tabTableKey] = settingsTable
-			end
 		end
 
 		local lds = LibStub("LibDualSpec-1.0", true)
