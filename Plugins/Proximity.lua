@@ -315,7 +315,7 @@ do
 			setText(tooClose)
 			if not db.sound then return end
 			local t = GetTime()
-			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
+			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", plugin, nil, db.soundName)
 			end
@@ -338,7 +338,7 @@ do
 			proxAnchor.text:SetText(coloredNames[player])
 			if not db.sound then return end
 			local t = GetTime()
-			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
+			if t > (lastplayed + 1) and not UnitIsDead("player") then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", plugin, nil, db.soundName)
 			end
@@ -375,7 +375,7 @@ do
 			setText(tooClose)
 			if not db.sound then return end
 			local t = GetTime()
-			if t > (lastplayed + 1) and not UnitIsDead("player") and InCombatLockdown() then
+			if t > (lastplayed + 1) and not UnitIsDead("player") then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", plugin, nil, db.soundName)
 			end
@@ -408,7 +408,7 @@ do
 			proxAnchor.text:SetText("|cffff0202> STACK <|r") -- XXX localize or remove?
 			if not db.sound then return end
 			local t = GetTime()
-			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
+			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", plugin, nil, db.soundName)
 			end
@@ -466,7 +466,7 @@ do
 			setText(tooClose)
 			if not db.sound then return end
 			local t = GetTime()
-			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
+			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", plugin, nil, db.soundName)
 			end
