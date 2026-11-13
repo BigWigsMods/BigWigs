@@ -368,6 +368,7 @@ globals = {
 	"tremove",
 
 	-- framexml
+	"PixelUtil",
 	"tContains",
 
 	-- Vanilla
