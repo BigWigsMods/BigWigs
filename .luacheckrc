@@ -398,7 +398,6 @@ globals = {
 	"CreateFrame",
 	"EJ_GetCreatureInfo",
 	"EJ_GetEncounterInfo",
-	"ElvUI",
 	"FlashClientIcon",
 	"GameFontHighlight",
 	"GameFontNormal",
@@ -436,7 +435,6 @@ globals = {
 	"RaidNotice_AddMessage", -- XXX temp
 	"RaidWarningFrame", -- XXX temp
 	"TalkingHeadFrame",
-	"Tukui",
 	"UIParent",
 	"UIWidgetManager",
 	"UnitAffectingCombat",

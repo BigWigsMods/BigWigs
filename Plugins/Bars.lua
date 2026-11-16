@@ -15,7 +15,6 @@ if not plugin then return end
 plugin.displayName = L.bars
 
 local currentBarStyler = nil
-local SetBarStyle
 
 local bwTooltip = BigWigsAPI.GetTooltip()
 local colors = nil
@@ -23,19 +22,56 @@ local candy = LibStub("LibCandyBar-3.0")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local FONT = LibSharedMedia.MediaType and LibSharedMedia.MediaType.FONT or "font"
 local STATUSBAR = LibSharedMedia.MediaType and LibSharedMedia.MediaType.STATUSBAR or "statusbar"
+local BORDER = LibSharedMedia.MediaType and LibSharedMedia.MediaType.BORDER or "border"
+local BACKGROUND = LibSharedMedia.MediaType and LibSharedMedia.MediaType.BACKGROUND or "background"
 local next = next
 local db = nil
 local normalAnchor, emphasizeAnchor = nil, nil
-local rearrangeBars, getBar
-local GetBarBorderFrame
+local rearrangeBars, getBar, UpdateAllIndicatorPoints
+local inConfigureMode = false
+local backdropTbl = {}
 
 local minBarWidth, minBarHeight, maxBarWidth, maxBarHeight = 120, 10, 550, 100
+
+local function OnEnterIcon(self)
+	if self.bwID then
+		bwTooltip:SetOwner(self, "ANCHOR_TOP")
+		bwTooltip:SetSpellByID(self.bwID, false, true)
+		bwTooltip:Show()
+	end
+end
+
+local function OnLeaveIcon()
+	bwTooltip:Hide()
+end
+
+local function GetIconTexCoord(width, height)
+	if currentBarStyler.modernStyle then
+		local baseZoom = 0.86 -- (0.07, 0.93, 0.07, 0.93) is the default texture coords
+		local zoom = baseZoom * (1 - db.iconZoom)
+		local zoomedOffset = 1 - ((1 - zoom) / 2)
+		local offsetX, offsetY = zoomedOffset, zoomedOffset
+
+		if db.iconKeepAspectRatio then
+			if width > height then
+				offsetY = 1 - (1 - (height / width) * zoom) / 2
+			elseif height > width then
+				offsetX = 1 - (1 - (width / height) * zoom) / 2
+			end
+		end
+
+		return 1 - offsetX, offsetX, 1 - offsetY, offsetY
+	else
+		return 0.07, 0.93, 0.07, 0.93
+	end
+end
 
 --------------------------------------------------------------------------------
 -- Profile
 --
 
 local updateProfile
+local activeFrameNormal, activeFrameExp = nil, nil
 do
 	plugin.defaultDB = {
 		fontName = plugin:GetDefaultFont(),
@@ -49,28 +85,40 @@ do
 		time = true,
 		alignText = "LEFT",
 		alignTime = "RIGHT",
+		textOffsetX = 0,
+		textOffsetY = 0,
+		timeOffsetX = 0,
+		timeOffsetY = 0,
 		icon = true,
 		iconTooltip = true,
 		iconPosition = "LEFT",
+		detachedIcon = false,
+		iconOffset = 2,
+		iconWidthOffset = 0,
+		iconZoom = 0,
+		iconKeepAspectRatio = true,
 		fill = false,
 		barStyle = "Default",
 		borderName = "None",
 		borderColor = {0, 0, 0, 1},
 		borderOffset = 0,
 		borderSize = 1,
+		backgroundName = "None",
+		backgroundColor = {0, 0, 0, 1},
 		emphasize = true,
 		emphasizeMove = true,
 		emphasizeGrowup = false,
 		emphasizeRestart = true,
 		emphasizeTime = 11,
-		emphasizeMultiplier = 1.1,
 		spacing = 1,
 		visibleBarLimit = 100,
 		visibleBarLimitEmph = 100,
 		normalWidth = 180,
 		normalHeight = 18,
+		normalBarHeightOffset = 0,
 		expWidth = 260,
 		expHeight = 22,
+		expBarHeightOffset = 0,
 		spellIndicators = 1023, -- Constants.EncounterTimelineIconMasks.EncounterTimelineAllIcons = 1023
 		spellIndicatorsSize = 4,
 		spellIndicatorsPosition = "LEFT",
@@ -81,28 +129,32 @@ do
 		expCopyCustomAnchorWidth = false,
 	}
 
-	local activeFrameNormal = nil
 	local function HookScriptNormal(self, width)
 		if self == activeFrameNormal then
+			width = math.floor(width+0.5)
 			if width < minBarWidth then
 				width = minBarWidth
 			elseif width > maxBarWidth then
 				width = maxBarWidth
 			end
-			db.normalWidth = width
-			normalAnchor:SetWidth(width)
+			if width ~= db.normalWidth then
+				db.normalWidth = width
+				normalAnchor:SetWidth(width)
+			end
 		end
 	end
-	local activeFrameExp = nil
 	local function HookScriptExp(self, width)
 		if self == activeFrameExp then
+			width = math.floor(width+0.5)
 			if width < minBarWidth then
 				width = minBarWidth
 			elseif width > maxBarWidth then
 				width = maxBarWidth
 			end
-			db.expWidth = width
-			emphasizeAnchor:SetWidth(width)
+			if width ~= db.expWidth then
+				db.expWidth = width
+				emphasizeAnchor:SetWidth(width)
+			end
 		end
 	end
 	local function CopyTable(settingsTable)
@@ -152,15 +204,18 @@ do
 			end
 		end
 
-		SetBarStyle(db.barStyle)
-
-		if not LibSharedMedia:IsValid(FONT, db.fontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.fontName)) then
+		local styleToApply = BigWigsAPI:GetBarStyle(db.barStyle)
+		if not styleToApply then
+			db.barStyle = plugin.defaultDB.barStyle
+			styleToApply = BigWigsAPI:GetBarStyle(db.barStyle)
+		end
+		if not LibSharedMedia:IsValid(FONT, db.fontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(FONT, db.fontName)) then
 			db.fontName = plugin.defaultDB.fontName
 		end
 		if not LibSharedMedia:IsValid(STATUSBAR, db.texture) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(STATUSBAR, db.texture)) then
 			db.texture = plugin.defaultDB.texture
 		end
-		if db.barStyle ~= "Default" or not LibSharedMedia:IsValid("border", db.borderName) or (db.borderName ~= "None" and not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("border", db.borderName))) then
+		if not LibSharedMedia:IsValid(BORDER, db.borderName) or (db.borderName ~= "None" and not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(BORDER, db.borderName))) then
 			db.borderName = plugin.defaultDB.borderName -- If the border is suddenly invalid then reset the size and offset also
 			db.borderSize = plugin.defaultDB.borderSize
 			db.borderOffset = plugin.defaultDB.borderOffset
@@ -172,6 +227,10 @@ do
 		if db.borderSize < 1 or db.borderSize > 32 or math.floor(db.borderSize+0.5) ~= db.borderSize then
 			db.borderSize = plugin.defaultDB.borderSize
 		end
+		if not LibSharedMedia:IsValid(BACKGROUND, db.backgroundName) or (db.backgroundName ~= "None" and not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(BACKGROUND, db.backgroundName))) then
+			db.backgroundName = plugin.defaultDB.backgroundName
+		end
+		ValidateColor(db.backgroundColor, plugin.defaultDB.backgroundColor, 0)
 		if db.fontSize < 10 or db.fontSize > 200 or math.floor(db.fontSize+0.5) ~= db.fontSize then
 			db.fontSize = plugin.defaultDB.fontSize
 		end
@@ -190,11 +249,29 @@ do
 		if db.iconPosition ~= "LEFT" and db.iconPosition ~= "RIGHT" then
 			db.iconPosition = plugin.defaultDB.iconPosition
 		end
+		if db.iconOffset < 1 or db.iconOffset > 100 or math.floor(db.iconOffset+0.5) ~= db.iconOffset then
+			db.iconOffset = plugin.defaultDB.iconOffset
+		end
+		if db.iconWidthOffset < -50 or db.iconWidthOffset > 50 or math.floor(db.iconWidthOffset+0.5) ~= db.iconWidthOffset then
+			db.iconWidthOffset = plugin.defaultDB.iconWidthOffset
+		end
+		if db.iconZoom < 0 or db.iconZoom > 0.5 then
+			db.iconZoom = plugin.defaultDB.iconZoom
+		end
+		if db.textOffsetX < -100 or db.textOffsetX > 100 or math.floor(db.textOffsetX+0.5) ~= db.textOffsetX then
+			db.textOffsetX = plugin.defaultDB.textOffsetX
+		end
+		if db.textOffsetY < -100 or db.textOffsetY > 100 or math.floor(db.textOffsetY+0.5) ~= db.textOffsetY then
+			db.textOffsetY = plugin.defaultDB.textOffsetY
+		end
+		if db.timeOffsetX < -100 or db.timeOffsetX > 100 or math.floor(db.timeOffsetX+0.5) ~= db.timeOffsetX then
+			db.timeOffsetX = plugin.defaultDB.timeOffsetX
+		end
+		if db.timeOffsetY < -100 or db.timeOffsetY > 100 or math.floor(db.timeOffsetY+0.5) ~= db.timeOffsetY then
+			db.timeOffsetY = plugin.defaultDB.timeOffsetY
+		end
 		if db.emphasizeTime < 6 or db.emphasizeTime > 60 or math.floor(db.emphasizeTime+0.5) ~= db.emphasizeTime then
 			db.emphasizeTime = plugin.defaultDB.emphasizeTime
-		end
-		if db.emphasizeMultiplier < 1 or db.emphasizeMultiplier > 3 then
-			db.emphasizeMultiplier = plugin.defaultDB.emphasizeMultiplier
 		end
 		if db.spacing < 0 or db.spacing > 20 or math.floor(db.spacing+0.5) ~= db.spacing then
 			db.spacing = plugin.defaultDB.spacing
@@ -211,17 +288,23 @@ do
 		if db.normalHeight < minBarHeight or db.normalHeight > maxBarHeight or math.floor(db.normalHeight+0.5) ~= db.normalHeight then
 			db.normalHeight = plugin.defaultDB.normalHeight
 		end
+		if db.normalBarHeightOffset < -100 or db.normalBarHeightOffset > 0 or math.floor(db.normalBarHeightOffset+0.5) ~= db.normalBarHeightOffset then
+			db.normalBarHeightOffset = plugin.defaultDB.normalBarHeightOffset
+		end
 		if db.expWidth < minBarWidth or db.expWidth > maxBarWidth or math.floor(db.expWidth+0.5) ~= db.expWidth then
 			db.expWidth = plugin.defaultDB.expWidth
 		end
 		if db.expHeight < minBarHeight or db.expHeight > maxBarHeight or math.floor(db.expHeight+0.5) ~= db.expHeight then
 			db.expHeight = plugin.defaultDB.expHeight
 		end
+		if db.expBarHeightOffset < -100 or db.expBarHeightOffset > 0 or math.floor(db.expBarHeightOffset+0.5) ~= db.expBarHeightOffset then
+			db.expBarHeightOffset = plugin.defaultDB.expBarHeightOffset
+		end
 
 		if db.spellIndicators < 0 or db.spellIndicators > plugin.defaultDB.spellIndicators or math.floor(db.spellIndicators+0.5) ~= db.spellIndicators then
 			db.spellIndicators = plugin.defaultDB.spellIndicators
 		end
-		if db.spellIndicatorsSize < 0 or db.spellIndicatorsSize > 5 or math.floor(db.spellIndicatorsSize+0.5) ~= db.spellIndicatorsSize then
+		if db.spellIndicatorsSize < 1 or db.spellIndicatorsSize > 5 or math.floor(db.spellIndicatorsSize+0.5) ~= db.spellIndicatorsSize then
 			db.spellIndicatorsSize = plugin.defaultDB.spellIndicatorsSize
 		end
 		if db.spellIndicatorsPosition ~= "LEFT" and db.spellIndicatorsPosition ~= "RIGHT" then
@@ -268,7 +351,7 @@ do
 					normalAnchor.HookScript(frame, "OnSizeChanged", HookScriptNormal)
 				end
 
-				local width = frame:GetWidth()
+				local width = math.floor(frame:GetWidth()+0.5)
 				if width < minBarWidth then
 					width = minBarWidth
 				elseif width > maxBarWidth then
@@ -283,7 +366,7 @@ do
 			end
 		end
 
-		if type(db.expPosition[1]) ~= "string" or type(db.expPosition[2]) ~= "string"
+		if not db.emphasizeMove or type(db.expPosition[1]) ~= "string" or type(db.expPosition[2]) ~= "string"
 		or type(db.expPosition[3]) ~= "number" or type(db.expPosition[4]) ~= "number"
 		or not BigWigsAPI.IsValidFramePoint(db.expPosition[1]) or not BigWigsAPI.IsValidFramePoint(db.expPosition[2]) then
 			db.expPosition[1] = plugin.defaultDB.expPosition[1]
@@ -291,7 +374,10 @@ do
 			db.expPosition[3] = plugin.defaultDB.expPosition[3]
 			db.expPosition[4] = plugin.defaultDB.expPosition[4]
 			db.expPosition[5] = plugin.defaultDB.expPosition[5]
-			db.expCopyCustomAnchorWidth = plugin.defaultDB.expCopyCustomAnchorWidth
+			if db.expCopyCustomAnchorWidth then
+				db.expCopyCustomAnchorWidth = plugin.defaultDB.expCopyCustomAnchorWidth
+				db.expWidth = plugin.defaultDB.expWidth
+			end
 		else
 			local x = math.floor(db.expPosition[3]+0.5)
 			if x ~= db.expPosition[3] then
@@ -320,7 +406,7 @@ do
 					emphasizeAnchor.HookScript(frame, "OnSizeChanged", HookScriptExp)
 				end
 
-				local width = frame:GetWidth()
+				local width = math.floor(frame:GetWidth()+0.5)
 				if width < minBarWidth then
 					width = minBarWidth
 				elseif width > maxBarWidth then
@@ -335,12 +421,32 @@ do
 			end
 		end
 
+		if not currentBarStyler then currentBarStyler = styleToApply end -- Would be nil the first time the plugin loads
+		local previousBarStyler = currentBarStyler -- Clarify intent with a different name
+
+		local normalFunc = normalAnchor:GetScript("OnSizeChanged")
+		normalAnchor:SetScript("OnSizeChanged", nil)
 		normalAnchor:SetWidth(db.normalWidth)
 		normalAnchor:SetHeight(db.normalHeight)
+
+		local expFunc = emphasizeAnchor:GetScript("OnSizeChanged")
+		emphasizeAnchor:SetScript("OnSizeChanged", nil)
 		emphasizeAnchor:SetWidth(db.expWidth)
 		emphasizeAnchor:SetHeight(db.expHeight)
+
 		normalAnchor:RefixPosition()
 		emphasizeAnchor:RefixPosition()
+
+		normalAnchor:SetScript("OnSizeChanged", normalFunc)
+		emphasizeAnchor:SetScript("OnSizeChanged", expFunc)
+
+		if inConfigureMode then
+			if db.emphasizeMove then
+				emphasizeAnchor:Show()
+			else
+				emphasizeAnchor:Hide()
+			end
+		end
 
 		local flags = nil
 		if db.monochrome and db.outline ~= "NONE" then
@@ -352,26 +458,51 @@ do
 		end
 		local font = LibSharedMedia:Fetch(FONT, db.fontName)
 		local texture = LibSharedMedia:Fetch(STATUSBAR, db.texture)
+		backdropTbl.bgFile = db.backgroundName ~= "None" and LibSharedMedia:Fetch(BACKGROUND, db.backgroundName) or nil
+		backdropTbl.edgeFile = db.borderName ~= "None" and LibSharedMedia:Fetch(BORDER, db.borderName) or nil
+		backdropTbl.edgeSize = db.borderName ~= "None" and db.borderSize or nil
 
-		local lastIndicatorFrame = nil
-		for bar in next, normalAnchor.bars do
-			currentBarStyler.BarStopped(bar)
-			local height
-			if bar:Get("bigwigs:emphasized") then
-				height = db.normalHeight * db.emphasizeMultiplier
-				bar:SetHeight(height)
-				bar:SetWidth(db.normalWidth * db.emphasizeMultiplier)
-				bar:SetFont(font, db.fontSizeEmph, flags)
-				if db.emphasizeMove then
+		if not db.emphasizeMove or not db.emphasize then
+			for bar in next, emphasizeAnchor.bars do
+				normalAnchor.bars[bar] = true
+				emphasizeAnchor.bars[bar] = nil
+				bar:Set("bigwigs:anchor", "normalPosition")
+			end
+		else
+			for bar in next, normalAnchor.bars do
+				if bar:Get("bigwigs:emphasized") then
 					normalAnchor.bars[bar] = nil
 					emphasizeAnchor.bars[bar] = true
 					bar:Set("bigwigs:anchor", "expPosition")
 				end
+			end
+		end
+
+		for bar in next, normalAnchor.bars do
+			previousBarStyler.BarStopped(bar)
+
+			local module = bar:Get("bigwigs:module")
+			local key = bar:Get("bigwigs:option")
+			local height
+			if bar:Get("bigwigs:emphasized") and db.emphasize then
+				height = db.expHeight
+				bar:SetSize(db.expWidth, height)
+				bar:SetFont(font, db.fontSizeEmph, flags)
+				bar:SetColor(colors:GetColor("barEmphasized", module, key))
 			else
 				height = db.normalHeight
-				bar:SetHeight(height)
-				bar:SetWidth(db.normalWidth)
+				bar:SetSize(db.normalWidth, height)
 				bar:SetFont(font, db.fontSize, flags)
+				bar:SetColor(colors:GetColor("barColor", module, key))
+				if bar:Get("bigwigs:emphasized") then
+					bar:Set("bigwigs:emphasized", nil)
+					bar:SetFrameLevel(100)
+				end
+				if db.emphasize then
+					bar:SetTimeCallback(bar:Get("bigwigs:move"), db.emphasizeTime)
+				else
+					bar:SetTimeCallback(nil, nil)
+				end
 			end
 			bar:SetTexture(texture)
 			bar:SetFill(db.fill)
@@ -381,34 +512,130 @@ do
 			bar.candyBarDuration:SetJustifyH(db.alignTime)
 			bar:SetIconVisibility(db.icon)
 			bar:SetIconPosition(db.iconPosition)
+			bar:SetBackgroundColor(colors:GetColor("barBackground", module, key))
+			bar:SetTextColor(colors:GetColor("barText", module, key))
+			bar:SetShadowColor(colors:GetColor("barTextShadow", module, key))
+			if db.icon and db.iconTooltip and type(key) == "number" and key > 0 then
+				bar.candyBarIconFrame.bwID = key
+				bar:Set("bigwigs:tooltip", key)
+				bar.candyBarIconFrame:SetScript("OnEnter", OnEnterIcon)
+				bar.candyBarIconFrame:SetScript("OnLeave", OnLeaveIcon)
+				bar.candyBarIconFrame:EnableMouse(not bar:Get("bigwigs:notvisible"))
+			elseif bar:Get("bigwigs:tooltip") then
+				bar.candyBarIconFrame.bwID = nil
+				bar:Set("bigwigs:tooltip", nil)
+				bar.candyBarIconFrame:SetScript("OnEnter", nil)
+				bar.candyBarIconFrame:SetScript("OnLeave", nil)
+				bar.candyBarIconFrame:EnableMouse(false)
+			end
+			local iconWidth = height
+			if db.icon and styleToApply.modernStyle and db.iconWidthOffset ~= 0 then
+				iconWidth = math.max(height + db.iconWidthOffset, 1)
+				bar.candyBarIconFrame:SetWidth(iconWidth)
+			end
+			local barHeightOffset = 0
+			if db.icon and db.detachedIcon then
+				barHeightOffset = bar:Get("bigwigs:emphasized") and db.expBarHeightOffset or db.normalBarHeightOffset
+				if -barHeightOffset >= height then
+					barHeightOffset = 0
+				end
+				bar.candyBarIconFrame:ClearAllPoints()
+				bar.candyBarBar:ClearAllPoints()
+				if db.iconPosition == "LEFT" then
+					bar.candyBarIconFrame:SetPoint("TOPLEFT", bar, "TOPLEFT", -db.iconOffset, 0)
+					bar.candyBarIconFrame:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", -db.iconOffset, 0)
+					bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", iconWidth, barHeightOffset)
+					bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", iconWidth, 0)
+					bar.candyBarBar:SetPoint("TOPRIGHT", bar, "TOPRIGHT", 0, barHeightOffset)
+					bar.candyBarBar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 0, 0)
+				else
+					bar.candyBarIconFrame:SetPoint("TOPRIGHT", bar, "TOPRIGHT", db.iconOffset, 0)
+					bar.candyBarIconFrame:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", db.iconOffset, 0)
+					bar.candyBarBar:SetPoint("TOPRIGHT", bar, "TOPRIGHT", -iconWidth, barHeightOffset)
+					bar.candyBarBar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -iconWidth, 0)
+					bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, barHeightOffset)
+					bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 0, 0)
+				end
+			elseif db.icon and styleToApply.modernStyle and db.iconWidthOffset ~= 0 then
+				bar.candyBarBar:ClearAllPoints()
+				if db.iconPosition == "LEFT" then
+					bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", iconWidth, 0)
+					bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", iconWidth, 0)
+					bar.candyBarBar:SetPoint("TOPRIGHT", bar, "TOPRIGHT", 0, 0)
+					bar.candyBarBar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 0, 0)
+				else
+					bar.candyBarBar:SetPoint("TOPRIGHT", bar, "TOPRIGHT", -iconWidth, 0)
+					bar.candyBarBar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -iconWidth, 0)
+					bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, 0)
+					bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 0, 0)
+				end
+			end
+			bar.candyBarLabel:ClearAllPoints()
+			bar.candyBarLabel:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", 2 + db.textOffsetX, -barHeightOffset / 2 + db.textOffsetY)
+			bar.candyBarLabel:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", -2 + db.textOffsetX, barHeightOffset / 2 + db.textOffsetY)
+			bar.candyBarDuration:ClearAllPoints()
+			bar.candyBarDuration:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", 2 + db.timeOffsetX, -barHeightOffset / 2 + db.timeOffsetY)
+			bar.candyBarDuration:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", -2 + db.timeOffsetX, barHeightOffset / 2 + db.timeOffsetY)
 			local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
 			if indicatorFrame then
-				lastIndicatorFrame = indicatorFrame
 				indicatorFrame:ClearTextures()
 				indicatorFrame:SetIndicatorSize(height)
 				indicatorFrame:AddIndicators(bar:Get("bigwigs:indicators"))
 			end
-			local borderFrame = bar:Get("bigwigs:borderFrame")
-			if borderFrame then
-				if db.borderName == "None" then
-					borderFrame:RemoveBorder()
-					bar:Set("bigwigs:borderFrame", nil)
+			if db.borderName ~= "None" or db.backgroundName ~= "None" then
+				local border = bar.candyBarBackdrop
+				border:ClearAllPoints()
+				local borderOffset = db.borderName ~= "None" and db.borderOffset or 0
+				if db.icon and db.detachedIcon then
+					border:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", -borderOffset, borderOffset)
+					border:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", borderOffset, -borderOffset)
+					local iconBorder = bar.candyBarIconFrameBackdrop
+					iconBorder:ClearAllPoints()
+					if db.iconPosition == "LEFT" then
+						iconBorder:SetPoint("TOPLEFT", bar, "TOPLEFT", -db.iconOffset - borderOffset, borderOffset)
+						iconBorder:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", -db.iconOffset + iconWidth + borderOffset, -borderOffset)
+					else
+						iconBorder:SetPoint("TOPLEFT", bar, "TOPRIGHT", db.iconOffset - iconWidth - borderOffset, borderOffset)
+						iconBorder:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", db.iconOffset + borderOffset, -borderOffset)
+					end
+					iconBorder:Show()
+					iconBorder:SetBackdrop(backdropTbl)
+					if db.backgroundName ~= "None" then
+						iconBorder:SetBackdropColor(db.backgroundColor[1], db.backgroundColor[2], db.backgroundColor[3], db.backgroundColor[4])
+					end
+					if db.borderName ~= "None" then
+						iconBorder:SetBackdropBorderColor(db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4])
+					end
 				else
-					borderFrame:AddBorder(bar)
+					bar.candyBarIconFrameBackdrop:ClearBackdrop()
+					bar.candyBarIconFrameBackdrop:Hide()
+					border:SetPoint("TOPLEFT", bar, "TOPLEFT", -borderOffset, borderOffset)
+					border:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", borderOffset, -borderOffset)
 				end
-			elseif db.borderName ~= "None" then
-				borderFrame = GetBarBorderFrame()
-				borderFrame:AddBorder(bar)
-				bar:Set("bigwigs:borderFrame", borderFrame)
+				border:Show()
+				border:SetBackdrop(backdropTbl)
+				if db.backgroundName ~= "None" then
+					border:SetBackdropColor(db.backgroundColor[1], db.backgroundColor[2], db.backgroundColor[3], db.backgroundColor[4])
+				end
+				if db.borderName ~= "None" then
+					border:SetBackdropBorderColor(db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4])
+				end
+			else
+				bar.candyBarBackdrop:ClearBackdrop()
+				bar.candyBarBackdrop:Hide()
+				bar.candyBarIconFrameBackdrop:ClearBackdrop()
+				bar.candyBarIconFrameBackdrop:Hide()
 			end
-			currentBarStyler.ApplyStyle(bar)
+			styleToApply.ApplyStyle(bar)
+			bar.candyBarIconFrame:SetTexCoord(GetIconTexCoord(iconWidth, height))
 		end
 
-		local rerun = false
 		for bar in next, emphasizeAnchor.bars do
-			currentBarStyler.BarStopped(bar)
-			bar:SetHeight(db.expHeight)
-			bar:SetWidth(db.expWidth)
+			previousBarStyler.BarStopped(bar)
+
+			local module = bar:Get("bigwigs:module")
+			local key = bar:Get("bigwigs:option")
+			bar:SetSize(db.expWidth, db.expHeight)
 			bar:SetTexture(texture)
 			bar:SetFill(db.fill)
 			bar:SetFont(font, db.fontSizeEmph, flags)
@@ -416,47 +643,133 @@ do
 			bar.candyBarLabel:SetJustifyH(db.alignText)
 			bar:SetTimeVisibility(db.time)
 			bar.candyBarDuration:SetJustifyH(db.alignTime)
-			if not db.emphasizeMove then
-				rerun = true
-				normalAnchor.bars[bar] = true
-				emphasizeAnchor.bars[bar] = nil
-				bar:Set("bigwigs:anchor", "normalPosition")
-			end
 			bar:SetIconVisibility(db.icon)
 			bar:SetIconPosition(db.iconPosition)
+			bar:SetColor(colors:GetColor("barEmphasized", module, key))
+			bar:SetBackgroundColor(colors:GetColor("barBackground", module, key))
+			bar:SetTextColor(colors:GetColor("barText", module, key))
+			bar:SetShadowColor(colors:GetColor("barTextShadow", module, key))
+			if db.icon and db.iconTooltip and type(key) == "number" and key > 0 then
+				bar.candyBarIconFrame.bwID = key
+				bar:Set("bigwigs:tooltip", key)
+				bar.candyBarIconFrame:SetScript("OnEnter", OnEnterIcon)
+				bar.candyBarIconFrame:SetScript("OnLeave", OnLeaveIcon)
+				bar.candyBarIconFrame:EnableMouse(not bar:Get("bigwigs:notvisible"))
+			elseif bar:Get("bigwigs:tooltip") then
+				bar.candyBarIconFrame.bwID = nil
+				bar:Set("bigwigs:tooltip", nil)
+				bar.candyBarIconFrame:SetScript("OnEnter", nil)
+				bar.candyBarIconFrame:SetScript("OnLeave", nil)
+				bar.candyBarIconFrame:EnableMouse(false)
+			end
+			local iconWidth = db.expHeight
+			if db.icon and styleToApply.modernStyle and db.iconWidthOffset ~= 0 then
+				iconWidth = math.max(db.expHeight + db.iconWidthOffset, 1)
+				bar.candyBarIconFrame:SetWidth(iconWidth)
+			end
+			local barHeightOffset = 0
+			if db.icon and db.detachedIcon then
+				barHeightOffset = db.expBarHeightOffset
+				if -barHeightOffset >= db.expHeight then
+					barHeightOffset = 0
+				end
+				bar.candyBarIconFrame:ClearAllPoints()
+				bar.candyBarBar:ClearAllPoints()
+				if db.iconPosition == "LEFT" then
+					bar.candyBarIconFrame:SetPoint("TOPLEFT", bar, "TOPLEFT", -db.iconOffset, 0)
+					bar.candyBarIconFrame:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", -db.iconOffset, 0)
+					bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", iconWidth, barHeightOffset)
+					bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", iconWidth, 0)
+					bar.candyBarBar:SetPoint("TOPRIGHT", bar, "TOPRIGHT", 0, barHeightOffset)
+					bar.candyBarBar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 0, 0)
+				else
+					bar.candyBarIconFrame:SetPoint("TOPRIGHT", bar, "TOPRIGHT", db.iconOffset, 0)
+					bar.candyBarIconFrame:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", db.iconOffset, 0)
+					bar.candyBarBar:SetPoint("TOPRIGHT", bar, "TOPRIGHT", -iconWidth, barHeightOffset)
+					bar.candyBarBar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -iconWidth, 0)
+					bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, barHeightOffset)
+					bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 0, 0)
+				end
+			elseif db.icon and styleToApply.modernStyle and db.iconWidthOffset ~= 0 then
+				bar.candyBarBar:ClearAllPoints()
+				if db.iconPosition == "LEFT" then
+					bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", iconWidth, 0)
+					bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", iconWidth, 0)
+					bar.candyBarBar:SetPoint("TOPRIGHT", bar, "TOPRIGHT", 0, 0)
+					bar.candyBarBar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 0, 0)
+				else
+					bar.candyBarBar:SetPoint("TOPRIGHT", bar, "TOPRIGHT", -iconWidth, 0)
+					bar.candyBarBar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -iconWidth, 0)
+					bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, 0)
+					bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 0, 0)
+				end
+			end
+			bar.candyBarLabel:ClearAllPoints()
+			bar.candyBarLabel:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", 2 + db.textOffsetX, -barHeightOffset / 2 + db.textOffsetY)
+			bar.candyBarLabel:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", -2 + db.textOffsetX, barHeightOffset / 2 + db.textOffsetY)
+			bar.candyBarDuration:ClearAllPoints()
+			bar.candyBarDuration:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", 2 + db.timeOffsetX, -barHeightOffset / 2 + db.timeOffsetY)
+			bar.candyBarDuration:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", -2 + db.timeOffsetX, barHeightOffset / 2 + db.timeOffsetY)
 			local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
 			if indicatorFrame then
-				lastIndicatorFrame = indicatorFrame
 				indicatorFrame:ClearTextures()
 				indicatorFrame:SetIndicatorSize(db.expHeight)
 				indicatorFrame:AddIndicators(bar:Get("bigwigs:indicators"))
 			end
-			local borderFrame = bar:Get("bigwigs:borderFrame")
-			if borderFrame then
-				if db.borderName == "None" then
-					borderFrame:RemoveBorder()
-					bar:Set("bigwigs:borderFrame", nil)
+			if db.borderName ~= "None" or db.backgroundName ~= "None" then
+				local border = bar.candyBarBackdrop
+				border:ClearAllPoints()
+				local borderOffset = db.borderName ~= "None" and db.borderOffset or 0
+				if db.icon and db.detachedIcon then
+					border:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", -borderOffset, borderOffset)
+					border:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", borderOffset, -borderOffset)
+					local iconBorder = bar.candyBarIconFrameBackdrop
+					iconBorder:ClearAllPoints()
+					if db.iconPosition == "LEFT" then
+						iconBorder:SetPoint("TOPLEFT", bar, "TOPLEFT", -db.iconOffset - borderOffset, borderOffset)
+						iconBorder:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", -db.iconOffset + iconWidth + borderOffset, -borderOffset)
+					else
+						iconBorder:SetPoint("TOPLEFT", bar, "TOPRIGHT", db.iconOffset - iconWidth - borderOffset, borderOffset)
+						iconBorder:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", db.iconOffset + borderOffset, -borderOffset)
+					end
+					iconBorder:Show()
+					iconBorder:SetBackdrop(backdropTbl)
+					if db.backgroundName ~= "None" then
+						iconBorder:SetBackdropColor(db.backgroundColor[1], db.backgroundColor[2], db.backgroundColor[3], db.backgroundColor[4])
+					end
+					if db.borderName ~= "None" then
+						iconBorder:SetBackdropBorderColor(db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4])
+					end
 				else
-					borderFrame:AddBorder(bar)
+					bar.candyBarIconFrameBackdrop:ClearBackdrop()
+					bar.candyBarIconFrameBackdrop:Hide()
+					border:SetPoint("TOPLEFT", bar, "TOPLEFT", -borderOffset, borderOffset)
+					border:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", borderOffset, -borderOffset)
 				end
-			elseif db.borderName ~= "None" then
-				borderFrame = GetBarBorderFrame()
-				borderFrame:AddBorder(bar)
-				bar:Set("bigwigs:borderFrame", borderFrame)
+				border:Show()
+				border:SetBackdrop(backdropTbl)
+				if db.backgroundName ~= "None" then
+					border:SetBackdropColor(db.backgroundColor[1], db.backgroundColor[2], db.backgroundColor[3], db.backgroundColor[4])
+				end
+				if db.borderName ~= "None" then
+					border:SetBackdropBorderColor(db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4])
+				end
+			else
+				bar.candyBarBackdrop:ClearBackdrop()
+				bar.candyBarBackdrop:Hide()
+				bar.candyBarIconFrameBackdrop:ClearBackdrop()
+				bar.candyBarIconFrameBackdrop:Hide()
 			end
-			currentBarStyler.ApplyStyle(bar)
+			styleToApply.ApplyStyle(bar)
+			bar.candyBarIconFrame:SetTexCoord(GetIconTexCoord(iconWidth, db.expHeight))
 		end
 
-		if lastIndicatorFrame then
-			lastIndicatorFrame:UpdateAllIndicatorPoints()
-		end
+		currentBarStyler = styleToApply -- Always swap AFTER everything has been applied
+
+		UpdateAllIndicatorPoints()
 
 		rearrangeBars(normalAnchor)
 		rearrangeBars(emphasizeAnchor)
-
-		if rerun then
-			updateProfile()
-		end
 	end
 end
 
@@ -464,7 +777,6 @@ end
 -- Options
 --
 
-local inConfigureMode = false
 do
 	local testCount = 0
 	local testIcons = {
@@ -474,9 +786,23 @@ do
 	}
 	local function HiddenOnRetail() return not BigWigsLoader.isRetail end
 	local function IsNormalAnchorPointDefault() return db.normalPosition[5] == plugin.defaultDB.normalPosition[5] end
-	local function IsExpAnchorPointDefault() return db.expPosition[5] == plugin.defaultDB.expPosition[5] end
-	local function IsBarStyleNotDefault() return db.barStyle ~= "Default" end
-	local function IsBarStyleNotDefaultOrBorderSetToNone() return db.barStyle ~= "Default" or db.borderName == "None" end
+	local function IsExpAnchorPointDefault()
+		if not db.emphasize then
+			return true
+		end
+		if not db.emphasizeMove then
+			return IsNormalAnchorPointDefault()
+		end
+		return db.expPosition[5] == plugin.defaultDB.expPosition[5]
+	end
+	local function IsEmphasizeDisabled() return not db.emphasize end
+	local function IsBarStyleNotModern() return not currentBarStyler.modernStyle end
+	local function IsBarStyleNotModernOrBorderSetToNone() return not currentBarStyler.modernStyle or db.borderName == "None" end
+	local function IsBarStyleNotModernOrBackgroundSetToNone() return not currentBarStyler.modernStyle or db.backgroundName == "None" end
+	local function IsBarStyleNotModernOrTextDisabled() return not db.text or not currentBarStyler.modernStyle end
+	local function IsBarStyleNotModernOrTimeDisabled() return not db.time or not currentBarStyler.modernStyle end
+	local function IsBarStyleNotModernOrIconDisabled() return not db.icon or not currentBarStyler.modernStyle end
+	local function IsDetachedIconDisabled() return not db.icon or not db.detachedIcon or not currentBarStyler.modernStyle end
 
 	local inTestMode = false
 	local StartTest, StopTest
@@ -579,10 +905,388 @@ do
 				name = L.general,
 				order = 1,
 				args = {
+					barStyle = {
+						type = "select",
+						name = L.style,
+						order = 1,
+						width = 1,
+						values = function() return BigWigsAPI:GetBarStyleList() end,
+						set = function(info, value)
+							db[info[#info]] = value
+							local style = BigWigsAPI:GetBarStyle(value)
+							if style then
+								if type(style.barSpacing) == "number" and style.barSpacing >= 0 and style.barSpacing <= 20 then
+									db.spacing = style.barSpacing
+								else
+									db.spacing = plugin.defaultDB.spacing
+								end
+								if type(style.barHeight) == "number" and style.barHeight >= minBarHeight and style.barHeight <= maxBarHeight then
+									db.normalHeight = style.barHeight
+								else
+									db.normalHeight = plugin.defaultDB.normalHeight
+								end
+								if type(style.expBarHeight) == "number" and style.expBarHeight >= minBarHeight and style.expBarHeight <= maxBarHeight then
+									db.expHeight = style.expBarHeight
+								else
+									db.expHeight = plugin.defaultDB.expHeight
+								end
+								if type(style.barHeightOffset) == "number" and style.barHeightOffset <= 0 and style.barHeightOffset >= -100 then
+									db.normalBarHeightOffset = style.barHeightOffset
+								else
+									db.normalBarHeightOffset = plugin.defaultDB.normalBarHeightOffset
+								end
+								if type(style.expBarHeightOffset) == "number" and style.expBarHeightOffset <= 0 and style.expBarHeightOffset >= -100 then
+									db.expBarHeightOffset = style.expBarHeightOffset
+								else
+									db.expBarHeightOffset = plugin.defaultDB.expBarHeightOffset
+								end
+								if type(style.fontSizeNormal) == "number" and style.fontSizeNormal >= 10 and style.fontSizeNormal <= 200 then
+									db.fontSize = style.fontSizeNormal
+								else
+									db.fontSize = plugin.defaultDB.fontSize
+								end
+								if type(style.fontSizeEmphasized) == "number" and style.fontSizeEmphasized >= 10 and style.fontSizeEmphasized <= 200 then
+									db.fontSizeEmph = style.fontSizeEmphasized
+								else
+									db.fontSizeEmph = plugin.defaultDB.fontSizeEmph
+								end
+								if type(style.fontOutline) == "string" and (style.fontOutline == "NONE" or style.fontOutline == "OUTLINE" or style.fontOutline == "THICKOUTLINE") then
+									db.outline = style.fontOutline
+								else
+									db.outline = plugin.defaultDB.outline
+								end
+								if type(style.borderName) == "string" and LibSharedMedia:IsValid(BORDER, style.borderName) and (style.borderName == "None" or BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(BORDER, style.borderName))) then
+									db.borderName = style.borderName
+								else
+									db.borderName = plugin.defaultDB.borderName
+								end
+								if type(style.borderColor) == "table"
+								and type(style.borderColor[1]) == "number" and style.borderColor[1] >= 0 and style.borderColor[1] <= 1
+								and type(style.borderColor[2]) == "number" and style.borderColor[2] >= 0 and style.borderColor[2] <= 1
+								and type(style.borderColor[3]) == "number" and style.borderColor[3] >= 0 and style.borderColor[3] <= 1
+								and type(style.borderColor[4]) == "number" and style.borderColor[4] >= 0 and style.borderColor[4] <= 1 then
+									db.borderColor = {
+										style.borderColor[1],
+										style.borderColor[2],
+										style.borderColor[3],
+										style.borderColor[4],
+									}
+								else
+									db.borderColor = {
+										plugin.defaultDB.borderColor[1],
+										plugin.defaultDB.borderColor[2],
+										plugin.defaultDB.borderColor[3],
+										plugin.defaultDB.borderColor[4],
+									}
+								end
+								if type(style.borderOffset) == "number" and style.borderOffset >= 0 and style.borderOffset <= 32 then
+									db.borderOffset = style.borderOffset
+								else
+									db.borderOffset = plugin.defaultDB.borderOffset
+								end
+								if type(style.borderSize) == "number" and style.borderSize >= 1 and style.borderSize <= 32 then
+									db.borderSize = style.borderSize
+								else
+									db.borderSize = plugin.defaultDB.borderSize
+								end
+								if type(style.backgroundName) == "string" and LibSharedMedia:IsValid(BACKGROUND, style.backgroundName) and (style.backgroundName == "None" or BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(BACKGROUND, style.backgroundName))) then
+									db.backgroundName = style.backgroundName
+								else
+									db.backgroundName = plugin.defaultDB.backgroundName
+								end
+								if type(style.backgroundColor) == "table"
+								and type(style.backgroundColor[1]) == "number" and style.backgroundColor[1] >= 0 and style.backgroundColor[1] <= 1
+								and type(style.backgroundColor[2]) == "number" and style.backgroundColor[2] >= 0 and style.backgroundColor[2] <= 1
+								and type(style.backgroundColor[3]) == "number" and style.backgroundColor[3] >= 0 and style.backgroundColor[3] <= 1
+								and type(style.backgroundColor[4]) == "number" and style.backgroundColor[4] >= 0 and style.backgroundColor[4] <= 1 then
+									db.backgroundColor = {
+										style.backgroundColor[1],
+										style.backgroundColor[2],
+										style.backgroundColor[3],
+										style.backgroundColor[4],
+									}
+								else
+									db.backgroundColor = {
+										plugin.defaultDB.backgroundColor[1],
+										plugin.defaultDB.backgroundColor[2],
+										plugin.defaultDB.backgroundColor[3],
+										plugin.defaultDB.backgroundColor[4],
+									}
+								end
+								if type(style.detachedIcon) == "boolean" then
+									db.detachedIcon = style.detachedIcon
+								else
+									db.detachedIcon = plugin.defaultDB.detachedIcon
+								end
+								if type(style.iconOffset) == "number" and style.iconOffset >= 1 and style.iconOffset <= 100 then
+									db.iconOffset = style.iconOffset
+								else
+									db.iconOffset = plugin.defaultDB.iconOffset
+								end
+								if type(style.iconWidthOffset) == "number" and style.iconWidthOffset >= -50 and style.iconWidthOffset <= 50 then
+									db.iconWidthOffset = style.iconWidthOffset
+								else
+									db.iconWidthOffset = plugin.defaultDB.iconWidthOffset
+								end
+								if type(style.iconZoom) == "number" and style.iconZoom >= 0 and style.iconZoom <= 0.5 then
+									db.iconZoom = style.iconZoom
+								else
+									db.iconZoom = plugin.defaultDB.iconZoom
+								end
+								if type(style.iconKeepAspectRatio) == "boolean" then
+									db.iconKeepAspectRatio = style.iconKeepAspectRatio
+								else
+									db.iconKeepAspectRatio = plugin.defaultDB.iconKeepAspectRatio
+								end
+								if type(style.textOffsetX) == "number" and style.textOffsetX >= -100 and style.textOffsetX <= 100 then
+									db.textOffsetX = style.textOffsetX
+								else
+									db.textOffsetX = plugin.defaultDB.textOffsetX
+								end
+								if type(style.textOffsetY) == "number" and style.textOffsetY >= -100 and style.textOffsetY <= 100 then
+									db.textOffsetY = style.textOffsetY
+								else
+									db.textOffsetY = plugin.defaultDB.textOffsetY
+								end
+								if type(style.timeOffsetX) == "number" and style.timeOffsetX >= -100 and style.timeOffsetX <= 100 then
+									db.timeOffsetX = style.timeOffsetX
+								else
+									db.timeOffsetX = plugin.defaultDB.timeOffsetX
+								end
+								if type(style.timeOffsetY) == "number" and style.timeOffsetY >= -100 and style.timeOffsetY <= 100 then
+									db.timeOffsetY = style.timeOffsetY
+								else
+									db.timeOffsetY = plugin.defaultDB.timeOffsetY
+								end
+								if type(style.spellIndicatorsOffset) == "number" and style.spellIndicatorsOffset >= 0 and style.spellIndicatorsOffset <= 100 then
+									db.spellIndicatorsOffset = style.spellIndicatorsOffset
+								else
+									db.spellIndicatorsOffset = plugin.defaultDB.spellIndicatorsOffset
+								end
+								if style.iconPosition == "RIGHT" then
+									db.iconPosition = style.iconPosition
+								else
+									db.iconPosition = plugin.defaultDB.iconPosition
+								end
+								if style.spellIndicatorsPosition == "RIGHT" then
+									db.spellIndicatorsPosition = style.spellIndicatorsPosition
+								else
+									db.spellIndicatorsPosition = plugin.defaultDB.spellIndicatorsPosition
+								end
+								if type(style.fontName) == "string" and LibSharedMedia:IsValid(FONT, style.fontName) and BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(FONT, style.fontName)) then
+									db.fontName = style.fontName
+								end
+								if type(style.texture) == "string" and LibSharedMedia:IsValid(STATUSBAR, style.texture) and BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(STATUSBAR, style.texture)) then
+									db.texture = style.texture
+								end
+							end
+							updateProfile()
+							plugin:UpdateGUI()
+						end,
+					},
+					spacing = {
+						type = "range",
+						name = L.spacing,
+						desc = L.spacingDesc,
+						order = 2,
+						min = 0,
+						max = 20,
+						step = 1,
+						width = 1,
+					},
+					fill = {
+						type = "toggle",
+						name = L.fill,
+						desc = L.fillDesc,
+						order = 3,
+						width = 1,
+					},
+					texture = {
+						type = "select",
+						name = L.texture,
+						order = 4,
+						width = 2,
+						values = LibSharedMedia:List(STATUSBAR),
+						itemControl = "DDI-Statusbar",
+						get = function(info)
+							for i, v in next, LibSharedMedia:List(STATUSBAR) do
+								if v == db[info[#info]] then return i end
+							end
+						end,
+						set = function(info, value)
+							local list = LibSharedMedia:List(STATUSBAR)
+							local tex = list[value]
+							db[info[#info]] = tex
+							updateProfile()
+						end,
+					},
+					borderSpacer = {
+						type = "description",
+						name = "\n\n",
+						order = 5,
+						width = "full",
+					},
+					borderHeader = {
+						type = "header",
+						name = L.border,
+						order = 6,
+					},
+					borderName = {
+						type = "select",
+						name = L.borderName,
+						order = 7,
+						values = LibSharedMedia:List(BORDER),
+						get = function()
+							for i, v in next, LibSharedMedia:List(BORDER) do
+								if v == db.borderName then return i end
+							end
+						end,
+						set = function(_, value)
+							local list = LibSharedMedia:List(BORDER)
+							db.borderName = list[value]
+							updateProfile()
+						end,
+						width = 1.5,
+						disabled = IsBarStyleNotModern,
+					},
+					borderColor = {
+						type = "color",
+						name = L.borderColor,
+						order = 8,
+						hasAlpha = true,
+						width = 1.5,
+						get = function()
+							return db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4]
+						end,
+						set = function(_, r, g, b, a)
+							db.borderColor = {r, g, b, a}
+							updateProfile()
+						end,
+						disabled = IsBarStyleNotModernOrBorderSetToNone,
+					},
+					borderSize = {
+						type = "range",
+						name = L.borderSize,
+						order = 9,
+						min = 1,
+						max = 32,
+						step = 1,
+						width = 1.5,
+						disabled = IsBarStyleNotModernOrBorderSetToNone,
+					},
+					borderOffset = {
+						type = "range",
+						name = L.borderOffset,
+						order = 10,
+						min = 0,
+						max = 32,
+						step = 1,
+						width = 1.5,
+						disabled = IsBarStyleNotModernOrBorderSetToNone,
+					},
+					backgroundSpacer = {
+						type = "description",
+						name = "\n\n",
+						order = 11,
+						width = "full",
+					},
+					backgroundHeader = {
+						type = "header",
+						name = L.background,
+						order = 12,
+					},
+					backgroundName = {
+						type = "select",
+						name = L.background,
+						order = 13,
+						values = LibSharedMedia:List(BACKGROUND),
+						get = function()
+							for i, v in next, LibSharedMedia:List(BACKGROUND) do
+								if v == db.backgroundName then return i end
+							end
+						end,
+						set = function(_, value)
+							local list = LibSharedMedia:List(BACKGROUND)
+							db.backgroundName = list[value]
+							updateProfile()
+						end,
+						width = 1.5,
+						disabled = IsBarStyleNotModern,
+					},
+					backgroundColor = {
+						type = "color",
+						name = L.backgroundColor,
+						order = 14,
+						hasAlpha = true,
+						width = 1.5,
+						get = function()
+							return db.backgroundColor[1], db.backgroundColor[2], db.backgroundColor[3], db.backgroundColor[4]
+						end,
+						set = function(_, r, g, b, a)
+							db.backgroundColor = {r, g, b, a}
+							updateProfile()
+						end,
+						disabled = IsBarStyleNotModernOrBackgroundSetToNone,
+					},
+					resetSpacer = {
+						type = "description",
+						name = "\n\n",
+						order = 15,
+						width = "full",
+					},
+					resetHeader = {
+						type = "header",
+						name = "",
+						order = 16,
+					},
+					reset = {
+						type = "execute",
+						name = L.reset,
+						desc = L.resetDesc,
+						func = function()
+							db.barStyle = plugin.defaultDB.barStyle
+							db.spacing = plugin.defaultDB.spacing
+							db.fill = plugin.defaultDB.fill
+							db.texture = plugin.defaultDB.texture
+							db.borderName = plugin.defaultDB.borderName
+							db.borderColor = {
+								plugin.defaultDB.borderColor[1],
+								plugin.defaultDB.borderColor[2],
+								plugin.defaultDB.borderColor[3],
+								plugin.defaultDB.borderColor[4],
+							}
+							db.borderSize = plugin.defaultDB.borderSize
+							db.borderOffset = plugin.defaultDB.borderOffset
+							db.backgroundName = plugin.defaultDB.backgroundName
+							db.backgroundColor = {
+								plugin.defaultDB.backgroundColor[1],
+								plugin.defaultDB.backgroundColor[2],
+								plugin.defaultDB.backgroundColor[3],
+								plugin.defaultDB.backgroundColor[4],
+							}
+							updateProfile()
+						end,
+						order = 17,
+					},
+					resetAll = {
+						type = "execute",
+						name = L.resetAll,
+						desc = L.resetBarsDesc,
+						func = function() plugin.db:ResetProfile() updateProfile() end,
+						order = 18,
+					},
+				},
+			},
+			text = {
+				type = "group",
+				name = L.text,
+				order = 2,
+				args = {
 					fontName = {
 						type = "select",
 						name = L.font,
 						order = 1,
+						width = 1,
 						values = LibSharedMedia:List(FONT),
 						itemControl = "DDI-Font",
 						get = function()
@@ -600,6 +1304,7 @@ do
 						type = "select",
 						name = L.outline,
 						order = 2,
+						width = 1,
 						values = {
 							NONE = L.none,
 							OUTLINE = L.thin,
@@ -611,251 +1316,243 @@ do
 						name = L.monochrome,
 						desc = L.monochromeDesc,
 						order = 3,
+						width = 1,
 					},
-					header1 = {
-						type = "header",
-						name = "",
+					textSpacer = {
+						type = "description",
+						name = "\n\n",
 						order = 4,
+						width = "full",
 					},
-					barStyle = {
-						type = "select",
-						name = L.style,
-						order = 5,
-						values = function() return BigWigsAPI:GetBarStyleList() end,
-						set = function(info, value)
-							db[info[#info]] = value
-							local style = BigWigsAPI:GetBarStyle(value)
-							if style then
-								if type(style.barSpacing) == "number" and style.barSpacing > 0 and style.barSpacing < 101 then
-									db.spacing = style.barSpacing
-								else
-									db.spacing = plugin.defaultDB.spacing
-								end
-								rearrangeBars(normalAnchor)
-								rearrangeBars(emphasizeAnchor)
-
-								if type(style.barHeight) == "number" and style.barHeight > 0 and style.barHeight < 201 then
-									db.normalHeight = style.barHeight
-									local expHeight = style.barHeight * 1.1
-									expHeight = math.floor(expHeight+0.5)
-									db.expHeight = expHeight
-								else
-									db.normalHeight = plugin.defaultDB.normalHeight
-									db.expHeight = plugin.defaultDB.expHeight
-								end
-								if type(style.fontSizeNormal) == "number" and style.fontSizeNormal > 0 and style.fontSizeNormal < 201 then
-									db.fontSize = style.fontSizeNormal
-								else
-									db.fontSize = plugin.defaultDB.fontSize
-								end
-								if type(style.fontSizeEmphasized) == "number" and style.fontSizeEmphasized > 0 and style.fontSizeEmphasized < 201 then
-									db.fontSizeEmph = style.fontSizeEmphasized
-								else
-									db.fontSizeEmph = plugin.defaultDB.fontSizeEmph
-								end
-								if type(style.fontOutline) == "string" and (style.fontOutline == "NONE" or style.fontOutline == "OUTLINE" or style.fontOutline == "THICKOUTLINE") then
-									db.outline = style.fontOutline
-								else
-									db.outline = plugin.defaultDB.outline
-								end
-								if type(style.spellIndicatorsOffset) == "number" and db.spellIndicatorsOffset > 0 and db.spellIndicatorsOffset <= 100 then
-									db.spellIndicatorsOffset = style.spellIndicatorsOffset
-								else
-									db.spellIndicatorsOffset = plugin.defaultDB.spellIndicatorsOffset
-								end
-								if style.iconPosition == "RIGHT" then
-									db.iconPosition = style.iconPosition
-								else
-									db.iconPosition = plugin.defaultDB.iconPosition
-								end
-								if style.spellIndicatorsPosition == "RIGHT" then
-									db.spellIndicatorsPosition = style.spellIndicatorsPosition
-								else
-									db.spellIndicatorsPosition = plugin.defaultDB.spellIndicatorsPosition
-								end
-								if type(style.fontName) == "string" and LibSharedMedia:IsValid(FONT, style.fontName) and BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", style.fontName)) then
-									db.fontName = style.fontName
-								end
-								if type(style.texture) == "string" and LibSharedMedia:IsValid(STATUSBAR, style.texture) and BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(STATUSBAR, style.texture)) then
-									db.texture = style.texture
-								end
-								db.borderName = plugin.defaultDB.borderName
-								db.borderSize = plugin.defaultDB.borderSize
-								db.borderOffset = plugin.defaultDB.borderOffset
-
-								plugin:UpdateGUI()
-							end
-							updateProfile()
-						end,
-					},
-					spacing = {
-						type = "range",
-						name = L.spacing,
-						desc = L.spacingDesc,
-						order = 6,
-						min = 0,
-						max = 20,
-						step = 1,
-						width = 2,
-						disabled = function()
-							-- Just throw in a random frame (normalAnchor) instead of a bar to see if it returns a value since we noop() styles that don't have a .GetSpacing entry
-							return currentBarStyler.GetSpacing(normalAnchor)
-						end,
-					},
-					fill = {
-						type = "toggle",
-						name = L.fill,
-						desc = L.fillDesc,
-						order = 7,
-					},
-					texture = {
-						type = "select",
-						name = L.texture,
-						order = 8,
-						width = 2,
-						values = LibSharedMedia:List(STATUSBAR),
-						itemControl = "DDI-Statusbar",
-						get = function(info)
-							for i, v in next, LibSharedMedia:List(STATUSBAR) do
-								if v == db[info[#info]] then return i end
-							end
-						end,
-						set = function(info, value)
-							local list = LibSharedMedia:List(STATUSBAR)
-							local tex = list[value]
-							db[info[#info]] = tex
-							updateProfile()
-						end,
-					},
-					borderColor = {
-						type = "color",
-						name = L.borderColor,
-						order = 9,
-						hasAlpha = true,
-						width = 1,
-						get = function()
-							return db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4]
-						end,
-						set = function(_, r, g, b, a)
-							db.borderColor = {r, g, b, a}
-							updateProfile()
-						end,
-						disabled = IsBarStyleNotDefaultOrBorderSetToNone,
-					},
-					borderSize = {
-						type = "range",
-						name = L.borderSize,
-						order = 10,
-						min = 1,
-						max = 32,
-						step = 1,
-						width = 1,
-						disabled = IsBarStyleNotDefaultOrBorderSetToNone,
-					},
-					borderOffset = {
-						type = "range",
-						name = L.borderOffset,
-						order = 11,
-						min = 0,
-						max = 32,
-						step = 1,
-						width = 1,
-						disabled = IsBarStyleNotDefaultOrBorderSetToNone,
-					},
-					borderName = {
-						type = "select",
-						name = L.borderName,
-						order = 12,
-						values = LibSharedMedia:List("border"),
-						get = function()
-							for i, v in next, LibSharedMedia:List("border") do
-								if v == db.borderName then return i end
-							end
-						end,
-						set = function(_, value)
-							local list = LibSharedMedia:List("border")
-							db.borderName = list[value]
-							updateProfile()
-						end,
-						width = 1,
-						disabled = IsBarStyleNotDefault,
-					},
-					header2 = {
+					textHeader = {
 						type = "header",
-						name = "",
-						order = 13,
+						name = L.text,
+						order = 5,
 					},
 					text = {
 						type = "toggle",
 						name = L.text,
 						desc = L.textDesc,
-						order = 14,
+						order = 6,
+						width = 1.5,
 					},
 					alignText = {
 						type = "select",
 						name = L.alignText,
-						order = 15,
+						order = 7,
+						width = 1.5,
 						values = {
 							LEFT = L.LEFT,
 							CENTER = L.CENTER,
 							RIGHT = L.RIGHT,
 						},
+						disabled = function() return not db.text end,
 					},
-					textSpacer = {
+					textOffsetX = {
+						type = "range",
+						name = L.positionX,
+						desc = L.positionDesc,
+						order = 8,
+						width = 1.5,
+						min = -100,
+						max = 100,
+						step = 1,
+						disabled = IsBarStyleNotModernOrTextDisabled,
+					},
+					textOffsetY = {
+						type = "range",
+						name = L.positionY,
+						desc = L.positionDesc,
+						order = 9,
+						width = 1.5,
+						min = -100,
+						max = 100,
+						step = 1,
+						disabled = IsBarStyleNotModernOrTextDisabled,
+					},
+					timeSpacer = {
 						type = "description",
-						name = " ",
-						order = 16,
+						name = "\n\n",
+						order = 10,
+						width = "full",
+					},
+					timeHeader = {
+						type = "header",
+						name = L.time,
+						order = 11,
 					},
 					time = {
 						type = "toggle",
 						name = L.time,
 						desc = L.timeDesc,
-						order = 17,
+						order = 12,
+						width = 1.5,
 					},
 					alignTime = {
 						type = "select",
 						name = L.alignTime,
-						order = 18,
+						order = 13,
+						width = 1.5,
 						values = {
 							LEFT = L.LEFT,
 							CENTER = L.CENTER,
 							RIGHT = L.RIGHT,
 						},
+						disabled = function() return not db.time end,
 					},
-					timeSpacer = {
+					timeOffsetX = {
+						type = "range",
+						name = L.positionX,
+						desc = L.positionDesc,
+						order = 14,
+						width = 1.5,
+						min = -100,
+						max = 100,
+						step = 1,
+						disabled = IsBarStyleNotModernOrTimeDisabled,
+					},
+					timeOffsetY = {
+						type = "range",
+						name = L.positionY,
+						desc = L.positionDesc,
+						order = 15,
+						width = 1.5,
+						min = -100,
+						max = 100,
+						step = 1,
+						disabled = IsBarStyleNotModernOrTimeDisabled,
+					},
+					resetSpacer = {
 						type = "description",
-						name = " ",
-						order = 19,
+						name = "\n\n",
+						order = 16,
+						width = "full",
 					},
+					resetHeader = {
+						type = "header",
+						name = "",
+						order = 17,
+					},
+					reset = {
+						type = "execute",
+						name = L.reset,
+						desc = L.resetDesc,
+						func = function()
+							db.fontName = plugin.defaultDB.fontName
+							db.outline = plugin.defaultDB.outline
+							db.monochrome = plugin.defaultDB.monochrome
+							db.text = plugin.defaultDB.text
+							db.alignText = plugin.defaultDB.alignText
+							db.textOffsetX = plugin.defaultDB.textOffsetX
+							db.textOffsetY = plugin.defaultDB.textOffsetY
+							db.time = plugin.defaultDB.time
+							db.alignTime = plugin.defaultDB.alignTime
+							db.timeOffsetX = plugin.defaultDB.timeOffsetX
+							db.timeOffsetY = plugin.defaultDB.timeOffsetY
+							updateProfile()
+						end,
+						order = 18,
+					},
+				},
+			},
+			icon = {
+				type = "group",
+				name = L.icon,
+				order = 3,
+				args = {
 					icon = {
 						type = "toggle",
 						name = L.icon,
 						desc = L.iconDesc,
-						order = 20,
+						order = 1,
+						width = 1,
+					},
+					iconTooltip = {
+						type = "toggle",
+						name = L.iconTooltip,
+						desc = L.iconTooltipDesc,
+						order = 2,
+						width = 1,
+						disabled = function() return not db.icon end,
+					},
+					iconKeepAspectRatio = {
+						type = "toggle",
+						name = L.keepAspectRatio,
+						desc = L.keepAspectRatioDesc,
+						order = 3,
+						width = 1,
+						disabled = IsBarStyleNotModernOrIconDisabled,
 					},
 					iconPosition = {
 						type = "select",
 						name = L.iconPosition,
 						desc = L.iconPositionDesc,
-						order = 21,
+						order = 4,
+						width = 1,
 						values = {
 							LEFT = L.LEFT,
 							RIGHT = L.RIGHT,
 						},
 						disabled = function() return not db.icon end,
 					},
-					iconTooltip = {
+					iconWidthOffset = {
+						type = "range",
+						name = L.iconWidthOffset,
+						order = 5,
+						width = 1,
+						min = -50,
+						max = 50,
+						step = 1,
+						disabled = IsBarStyleNotModernOrIconDisabled,
+					},
+					iconZoom = {
+						type = "range",
+						name = L.zoom,
+						desc = L.zoomDesc,
+						order = 6,
+						width = 1,
+						min = 0,
+						max = 0.5,
+						step = 0.01,
+						isPercent = true,
+						disabled = IsBarStyleNotModernOrIconDisabled,
+					},
+					detachedIcon = {
 						type = "toggle",
-						name = L.iconTooltip,
-						desc = L.iconTooltipDesc,
-						order = 22,
-						disabled = function() return not db.icon end,
+						name = L.detachedIcon,
+						order = 7,
+						width = 1.5,
+						disabled = IsBarStyleNotModernOrIconDisabled,
+					},
+					iconOffset = {
+						type = "range",
+						name = L.iconOffset,
+						desc = L.positionDesc,
+						order = 8,
+						width = 1.5,
+						min = 1,
+						max = 100,
+						step = 1,
+						disabled = IsDetachedIconDisabled,
+					},
+					spellIndicatorsSpacer = {
+						type = "description",
+						name = "\n\n",
+						order = 9,
+						width = "full",
+						hidden = HiddenOnRetail,
+					},
+					spellIndicatorsHeader = {
+						type = "header",
+						name = L.indicatorTitle,
+						order = 10,
+						hidden = HiddenOnRetail,
 					},
 					spellIndicators = {
 						type = "multiselect",
 						name = L.indicatorTitle,
-						order = 23,
-						width = 2,
+						order = 11,
+						width = 1.5,
 						control = "Dropdown",
 						values = {
 							[1] = "|A:icons_16x16_deadly:16:16|a " .. L.indicatorType_Deadly,
@@ -885,7 +1582,8 @@ do
 					spellIndicatorsSize = {
 						type = "select",
 						name = L.spellIndicatorSize,
-						order = 24,
+						order = 12,
+						width = 1.5,
 						values = {
 							L.spellIndicatorSizeDropdown_Large1,
 							L.spellIndicatorSizeDropdown_Large2,
@@ -899,8 +1597,8 @@ do
 						type = "select",
 						name = L.spellIndicatorsPosition,
 						desc = L.spellIndicatorsPositionDesc,
-						order = 25,
-						width = 2,
+						order = 13,
+						width = 1.5,
 						values = {
 							LEFT = L.LEFT,
 							RIGHT = L.RIGHT,
@@ -911,43 +1609,64 @@ do
 						type = "range",
 						name = L.spellIndicatorsOffset,
 						desc = L.positionDesc,
-						order = 26,
+						order = 14,
+						width = 1.5,
 						max = 100,
 						min = 0,
 						step = 1,
 						hidden = HiddenOnRetail,
 					},
+					resetSpacer = {
+						type = "description",
+						name = "\n\n",
+						order = 15,
+						width = "full",
+					},
 					resetHeader = {
 						type = "header",
 						name = "",
-						order = 27,
+						order = 16,
 					},
 					reset = {
 						type = "execute",
-						name = L.resetAll,
-						desc = L.resetBarsDesc,
-						func = function() plugin.db:ResetProfile() updateProfile() end,
-						order = 28,
+						name = L.reset,
+						desc = L.resetDesc,
+						func = function()
+							db.icon = plugin.defaultDB.icon
+							db.iconTooltip = plugin.defaultDB.iconTooltip
+							db.iconKeepAspectRatio = plugin.defaultDB.iconKeepAspectRatio
+							db.iconPosition = plugin.defaultDB.iconPosition
+							db.iconWidthOffset = plugin.defaultDB.iconWidthOffset
+							db.iconZoom = plugin.defaultDB.iconZoom
+							db.detachedIcon = plugin.defaultDB.detachedIcon
+							db.iconOffset = plugin.defaultDB.iconOffset
+							db.spellIndicators = plugin.defaultDB.spellIndicators
+							db.spellIndicatorsSize = plugin.defaultDB.spellIndicatorsSize
+							db.spellIndicatorsPosition = plugin.defaultDB.spellIndicatorsPosition
+							db.spellIndicatorsOffset = plugin.defaultDB.spellIndicatorsOffset
+							updateProfile()
+						end,
+						order = 17,
 					},
 				},
 			},
 			normal = {
 				type = "group",
 				name = L.bars,
-				order = 2,
+				order = 4,
 				args = {
 					growup = {
 						type = "toggle",
 						name = L.growingUpwards,
 						desc = L.growingUpwardsDesc,
 						order = 1,
-						width = 2,
+						width = 1,
 					},
 					fontSize = {
 						type = "range",
 						name = L.fontSize,
 						desc = L.fontSizeDesc,
-						width = 2,
+						width = 1,
 						order = 2,
 						softMax = 100, max = 200, min = 10, step = 1,
 					},
@@ -955,372 +1674,541 @@ do
 						type = "range",
 						name = L.visibleBarLimit,
 						desc = L.visibleBarLimitDesc,
-						width = 2,
+						width = 1,
 						order = 3,
 						max = 100,
 						min = 1,
 						step = 1,
+					},
+					sizeSpacer = {
+						type = "description",
+						name = "\n\n",
+						order = 4,
+						width = "full",
+					},
+					sizeHeader = {
+						type = "header",
+						name = L.size,
+						order = 5,
+					},
+					normalWidth = {
+						type = "range",
+						name = L.width,
+						desc = L.sizeDesc,
+						min = minBarWidth,
+						max = maxBarWidth,
+						step = 1,
+						order = 6,
+						width = 1,
+					},
+					normalHeight = {
+						type = "range",
+						name = L.height,
+						desc = L.sizeDesc,
+						min = minBarHeight,
+						max = maxBarHeight,
+						step = 1,
+						order = 7,
+						width = 1,
+					},
+					normalBarHeightOffset = {
+						type = "range",
+						name = L.barHeightOffset,
+						min = -100,
+						max = 0,
+						step = 1,
+						order = 8,
+						width = 1,
+						disabled = IsDetachedIconDisabled,
+					},
+					positionSpacer = {
+						type = "description",
+						name = "\n\n",
+						order = 9,
+						width = "full",
+					},
+					positionHeader = {
+						type = "header",
+						name = L.positionExact,
+						order = 10,
+					},
+					posx = {
+						type = "range",
+						name = L.positionX,
+						desc = L.positionDesc,
+						min = -2048,
+						max = 2048,
+						step = 1,
+						order = 11,
+						width = 1.5,
+						get = function()
+							return db.normalPosition[3]
+						end,
+						set = function(_, value)
+							db.normalPosition[3] = value
+							normalAnchor:RefixPosition()
+						end,
+					},
+					posy = {
+						type = "range",
+						name = L.positionY,
+						desc = L.positionDesc,
+						min = -2048,
+						max = 2048,
+						step = 1,
+						order = 12,
+						width = 1.5,
+						get = function()
+							return db.normalPosition[4]
+						end,
+						set = function(_, value)
+							db.normalPosition[4] = value
+							normalAnchor:RefixPosition()
+						end,
+					},
+					normalCustomAnchorPoint = {
+						type = "input",
+						get = function()
+							return db.normalPosition[5]
+						end,
+						set = function(_, value)
+							if value ~= plugin.defaultDB.normalPosition[5] then
+								db.normalPosition[1] = "CENTER"
+								db.normalPosition[2] = "CENTER"
+								db.normalPosition[3] = 0
+								db.normalPosition[4] = 0
+								db.normalPosition[5] = value
+							else
+								db.normalPosition[1] = plugin.defaultDB.normalPosition[1]
+								db.normalPosition[2] = plugin.defaultDB.normalPosition[2]
+								db.normalPosition[3] = plugin.defaultDB.normalPosition[3]
+								db.normalPosition[4] = plugin.defaultDB.normalPosition[4]
+								db.normalPosition[5] = plugin.defaultDB.normalPosition[5]
+								if db.normalCopyCustomAnchorWidth then
+									db.normalCopyCustomAnchorWidth = plugin.defaultDB.normalCopyCustomAnchorWidth
+									db.normalWidth = plugin.defaultDB.normalWidth
+								end
+							end
+							updateProfile()
+						end,
+						validate = function(_, frameName)
+							return BigWigsAPI.IsValidFrame(frameName)
+						end,
+						name = L.customAnchorPoint,
+						order = 13,
+						width = 1,
+					},
+					normalCustomAnchorPointSource = {
+						type = "select",
+						get = function()
+							return db.normalPosition[1]
+						end,
+						set = function(_, value)
+							if BigWigsAPI.IsValidFramePoint(value) then
+								db.normalPosition[1] = value
+								updateProfile()
+							end
+						end,
+						values = BigWigsAPI.GetFramePointList(),
+						name = L.sourcePoint,
+						order = 14,
+						width = 1,
+						disabled = IsNormalAnchorPointDefault,
+					},
+					normalCustomAnchorPointDestination = {
+						type = "select",
+						get = function()
+							return db.normalPosition[2]
+						end,
+						set = function(_, value)
+							if BigWigsAPI.IsValidFramePoint(value) then
+								db.normalPosition[2] = value
+								updateProfile()
+							end
+						end,
+						values = BigWigsAPI.GetFramePointList(),
+						name = L.destinationPoint,
+						order = 15,
+						width = 1,
+						disabled = IsNormalAnchorPointDefault,
+					},
+					normalCopyCustomAnchorWidth = {
+						type = "toggle",
+						name = L.copyCustomAnchorWidth,
+						desc = L.copyCustomAnchorWidthDesc,
+						width = "full",
+						set = function(_, value)
+							if not value then
+								db.normalWidth = plugin.defaultDB.normalWidth
+							end
+							db.normalCopyCustomAnchorWidth = value
+							updateProfile()
+						end,
+						order = 16,
+						disabled = IsNormalAnchorPointDefault,
+					},
+					resetSpacer = {
+						type = "description",
+						name = "\n\n",
+						order = 17,
+						width = "full",
+					},
+					resetHeader = {
+						type = "header",
+						name = "",
+						order = 18,
+					},
+					reset = {
+						type = "execute",
+						name = L.reset,
+						desc = L.resetDesc,
+						func = function()
+							db.growup = plugin.defaultDB.growup
+							db.fontSize = plugin.defaultDB.fontSize
+							db.visibleBarLimit = plugin.defaultDB.visibleBarLimit
+							db.normalWidth = plugin.defaultDB.normalWidth
+							db.normalHeight = plugin.defaultDB.normalHeight
+							db.normalBarHeightOffset = plugin.defaultDB.normalBarHeightOffset
+							db.normalPosition = {
+								plugin.defaultDB.normalPosition[1],
+								plugin.defaultDB.normalPosition[2],
+								plugin.defaultDB.normalPosition[3],
+								plugin.defaultDB.normalPosition[4],
+								plugin.defaultDB.normalPosition[5],
+							}
+							db.normalCopyCustomAnchorWidth = plugin.defaultDB.normalCopyCustomAnchorWidth
+							updateProfile()
+						end,
+						order = 19,
 					},
 				},
 			},
 			emphasize = {
 				type = "group",
 				name = L.emphasizedBars,
-				order = 3,
+				order = 5,
 				args = {
 					emphasize = {
 						type = "toggle",
 						name = L.enable,
 						order = 1,
-					},
-					emphasizeRestart = {
-						type = "toggle",
-						name = L.restart,
-						desc = L.restartDesc,
-						order = 2,
-					},
-					emphasizeGrowup = {
-						type = "toggle",
-						name = L.growingUpwards,
-						desc = L.growingUpwardsDesc,
-						order = 3,
-						disabled = function() return not db.emphasizeMove end, -- Disable when using 1 anchor
+						width = 1.5,
 					},
 					emphasizeMove = {
 						type = "toggle",
 						name = L.move,
 						desc = L.moveDesc,
-						order = 4,
+						order = 2,
+						width = 1.5,
+						disabled = IsEmphasizeDisabled,
 					},
-					emphasizeMultiplier = {
-						type = "range",
-						name = L.emphasizeMultiplier,
-						desc = L.emphasizeMultiplierDesc,
-						width = 2,
-						order = 5,
-						max = 3,
-						min = 1,
-						step = 0.01,
-						disabled = function() return db.emphasizeMove end, -- Disable when using 2 anchors
+					emphasizeRestart = {
+						type = "toggle",
+						name = L.restart,
+						desc = L.restartDesc,
+						order = 3,
+						width = 1.5,
+						disabled = IsEmphasizeDisabled,
+					},
+					emphasizeGrowup = {
+						type = "toggle",
+						name = L.growingUpwards,
+						desc = L.growingUpwardsDesc,
+						order = 4,
+						width = 1.5,
+						disabled = function() return not db.emphasizeMove or not db.emphasize end, -- Disable when using 1 anchor or when emphasize is disabled
 					},
 					emphasizeTime = {
 						type = "range",
 						name = L.emphasizeAt,
-						width = 2,
-						order = 6,
+						width = 1,
+						order = 5,
 						min = 6,
 						max = 60, softMax = 30, -- Don't encourage bars longer than 30s in the GUI
 						step = 1,
+						disabled = IsEmphasizeDisabled,
 					},
 					fontSizeEmph = {
 						type = "range",
 						name = L.fontSize,
 						desc = L.fontSizeDesc,
-						width = 2,
-						order = 7,
+						width = 1,
+						order = 6,
 						softMax = 100, max = 200, min = 10, step = 1,
+						disabled = IsEmphasizeDisabled,
 					},
 					visibleBarLimitEmph = {
 						type = "range",
 						name = L.visibleBarLimit,
 						desc = L.visibleBarLimitDesc,
-						width = 2,
-						order = 8,
+						width = 1,
+						order = 7,
 						max = 100,
 						min = 1,
 						step = 1,
+						disabled = IsEmphasizeDisabled,
 					},
-				},
-			},
-			exactPositioning = {
-				type = "group",
-				name = L.positionExact,
-				order = 4,
-				childGroups = "tab",
-				args = {
-					normalPositioning = {
-						type = "group",
-						name = L.bars,
-						order = 1,
-						args = {
-							posx = {
-								type = "range",
-								name = L.positionX,
-								desc = L.positionDesc,
-								min = -2048,
-								max = 2048,
-								step = 1,
-								order = 1,
-								width = 3,
-								get = function()
-									return db.normalPosition[3]
-								end,
-								set = function(_, value)
-									db.normalPosition[3] = value
-									normalAnchor:RefixPosition()
-								end,
-							},
-							posy = {
-								type = "range",
-								name = L.positionY,
-								desc = L.positionDesc,
-								min = -2048,
-								max = 2048,
-								step = 1,
-								order = 2,
-								width = 3,
-								get = function()
-									return db.normalPosition[4]
-								end,
-								set = function(_, value)
-									db.normalPosition[4] = value
-									normalAnchor:RefixPosition()
-								end,
-							},
-							normalWidth = {
-								type = "range",
-								name = L.width,
-								desc = L.sizeDesc,
-								min = minBarWidth,
-								max = maxBarWidth,
-								step = 1,
-								order = 3,
-								width = 1.5,
-							},
-							normalHeight = {
-								type = "range",
-								name = L.height,
-								desc = L.sizeDesc,
-								min = minBarHeight,
-								max = maxBarHeight,
-								step = 1,
-								order = 4,
-								width = 1.5,
-							},
-							normalCustomAnchorPoint = {
-								type = "input",
-								get = function()
-									return db.normalPosition[5]
-								end,
-								set = function(_, value)
-									if value ~= plugin.defaultDB.normalPosition[5] then
-										db.normalPosition[1] = "CENTER"
-										db.normalPosition[2] = "CENTER"
-										db.normalPosition[3] = 0
-										db.normalPosition[4] = 0
-										db.normalPosition[5] = value
-									else
-										db.normalPosition[1] = plugin.defaultDB.normalPosition[1]
-										db.normalPosition[2] = plugin.defaultDB.normalPosition[2]
-										db.normalPosition[3] = plugin.defaultDB.normalPosition[3]
-										db.normalPosition[4] = plugin.defaultDB.normalPosition[4]
-										db.normalPosition[5] = plugin.defaultDB.normalPosition[5]
-										if db.normalCopyCustomAnchorWidth then
-											db.normalCopyCustomAnchorWidth = plugin.defaultDB.normalCopyCustomAnchorWidth
-											db.normalWidth = plugin.defaultDB.normalWidth
-										end
-									end
-									updateProfile()
-								end,
-								validate = function(_, frameName)
-									return BigWigsAPI.IsValidFrame(frameName)
-								end,
-								name = L.customAnchorPoint,
-								order = 5,
-								width = 3,
-							},
-							normalCustomAnchorPointSource = {
-								type = "select",
-								get = function()
-									return db.normalPosition[1]
-								end,
-								set = function(_, value)
-									if BigWigsAPI.IsValidFramePoint(value) then
-										db.normalPosition[1] = value
-										updateProfile()
-									end
-								end,
-								values = BigWigsAPI.GetFramePointList(),
-								name = L.sourcePoint,
-								order = 6,
-								width = 1.5,
-								disabled = IsNormalAnchorPointDefault,
-							},
-							normalCustomAnchorPointDestination = {
-								type = "select",
-								get = function()
-									return db.normalPosition[2]
-								end,
-								set = function(_, value)
-									if BigWigsAPI.IsValidFramePoint(value) then
-										db.normalPosition[2] = value
-										updateProfile()
-									end
-								end,
-								values = BigWigsAPI.GetFramePointList(),
-								name = L.destinationPoint,
-								order = 7,
-								width = 1.5,
-								disabled = IsNormalAnchorPointDefault,
-							},
-							normalCopyCustomAnchorWidth = {
-								type = "toggle",
-								name = L.copyCustomAnchorWidth,
-								desc = L.copyCustomAnchorWidthDesc,
-								width = "full",
-								set = function(_, value)
-									if not value then
-										db.normalWidth = plugin.defaultDB.normalWidth
-									end
-									db.normalCopyCustomAnchorWidth = value
-									updateProfile()
-								end,
-								order = 8,
-								disabled = IsNormalAnchorPointDefault,
-							},
-						},
+					sizeSpacer = {
+						type = "description",
+						name = "\n\n",
+						order = 8,
+						width = "full",
 					},
-					expPositioning = {
-						type = "group",
-						name = L.emphasizedBars,
-						order = 2,
-						args = {
-							posx = {
-								type = "range",
-								name = L.positionX,
-								desc = L.positionDesc,
-								min = -2048,
-								max = 2048,
-								step = 1,
-								order = 1,
-								width = 3,
-								get = function()
-									return plugin.db.profile.expPosition[3]
-								end,
-								set = function(_, value)
-									plugin.db.profile.expPosition[3] = value
-									emphasizeAnchor:RefixPosition()
-								end,
-							},
-							posy = {
-								type = "range",
-								name = L.positionY,
-								desc = L.positionDesc,
-								min = -2048,
-								max = 2048,
-								step = 1,
-								order = 2,
-								width = 3,
-								get = function()
-									return plugin.db.profile.expPosition[4]
-								end,
-								set = function(_, value)
-									plugin.db.profile.expPosition[4] = value
-									emphasizeAnchor:RefixPosition()
-								end,
-							},
-							expWidth = {
-								type = "range",
-								name = L.width,
-								desc = L.sizeDesc,
-								min = minBarWidth,
-								max = maxBarWidth,
-								step = 1,
-								order = 3,
-								width = 1.5,
-							},
-							expHeight = {
-								type = "range",
-								name = L.height,
-								desc = L.sizeDesc,
-								min = minBarHeight,
-								max = maxBarHeight,
-								step = 1,
-								order = 4,
-								width = 1.5,
-							},
-							expCustomAnchorPoint = {
-								type = "input",
-								get = function()
-									return db.expPosition[5]
-								end,
-								set = function(_, value)
-									if value ~= plugin.defaultDB.expPosition[5] then
-										db.expPosition[1] = "CENTER"
-										db.expPosition[2] = "CENTER"
-										db.expPosition[3] = 0
-										db.expPosition[4] = 0
-										db.expPosition[5] = value
-									else
-										db.expPosition[1] = plugin.defaultDB.expPosition[1]
-										db.expPosition[2] = plugin.defaultDB.expPosition[2]
-										db.expPosition[3] = plugin.defaultDB.expPosition[3]
-										db.expPosition[4] = plugin.defaultDB.expPosition[4]
-										db.expPosition[5] = plugin.defaultDB.expPosition[5]
-										if db.expCopyCustomAnchorWidth then
-											db.expCopyCustomAnchorWidth = plugin.defaultDB.expCopyCustomAnchorWidth
-											db.expWidth = plugin.defaultDB.expWidth
-										end
-									end
-									updateProfile()
-								end,
-								validate = function(_, frameName)
-									return BigWigsAPI.IsValidFrame(frameName)
-								end,
-								name = L.customAnchorPoint,
-								order = 5,
-								width = 3,
-							},
-							expCustomAnchorPointSource = {
-								type = "select",
-								get = function()
-									return db.expPosition[1]
-								end,
-								set = function(_, value)
-									if BigWigsAPI.IsValidFramePoint(value) then
-										db.expPosition[1] = value
-										updateProfile()
-									end
-								end,
-								values = BigWigsAPI.GetFramePointList(),
-								name = L.sourcePoint,
-								order = 6,
-								width = 1.5,
-								disabled = IsExpAnchorPointDefault,
-							},
-							expCustomAnchorPointDestination = {
-								type = "select",
-								get = function()
-									return db.expPosition[2]
-								end,
-								set = function(_, value)
-									if BigWigsAPI.IsValidFramePoint(value) then
-										db.expPosition[2] = value
-										updateProfile()
-									end
-								end,
-								values = BigWigsAPI.GetFramePointList(),
-								name = L.destinationPoint,
-								order = 7,
-								width = 1.5,
-								disabled = IsExpAnchorPointDefault,
-							},
-							expCopyCustomAnchorWidth = {
-								type = "toggle",
-								name = L.copyCustomAnchorWidth,
-								desc = L.copyCustomAnchorWidthDesc,
-								order = 8,
-								width = "full",
-								set = function(_, value)
-									if not value then
+					sizeHeader = {
+						type = "header",
+						name = L.size,
+						order = 9,
+					},
+					expWidth = {
+						type = "range",
+						name = L.width,
+						desc = L.sizeDesc,
+						min = minBarWidth,
+						max = maxBarWidth,
+						step = 1,
+						order = 10,
+						width = 1,
+						disabled = IsEmphasizeDisabled,
+					},
+					expHeight = {
+						type = "range",
+						name = L.height,
+						desc = L.sizeDesc,
+						min = minBarHeight,
+						max = maxBarHeight,
+						step = 1,
+						order = 11,
+						width = 1,
+						disabled = IsEmphasizeDisabled,
+					},
+					expBarHeightOffset = {
+						type = "range",
+						name = L.barHeightOffset,
+						min = -100,
+						max = 0,
+						step = 1,
+						order = 12,
+						width = 1,
+						disabled = function() return not db.emphasize or IsDetachedIconDisabled() end,
+					},
+					positionSpacer = {
+						type = "description",
+						name = "\n\n",
+						order = 13,
+						width = "full",
+					},
+					positionHeader = {
+						type = "header",
+						name = L.positionExact,
+						order = 14,
+					},
+					posx = {
+						type = "range",
+						name = L.positionX,
+						desc = L.positionDesc,
+						min = -2048,
+						max = 2048,
+						step = 1,
+						order = 15,
+						width = 1.5,
+						get = function()
+							return db.emphasizeMove and db.expPosition[3] or db.normalPosition[3]
+						end,
+						set = function(_, value)
+							if db.emphasizeMove then
+								db.expPosition[3] = value
+								emphasizeAnchor:RefixPosition()
+							else
+								db.normalPosition[3] = value
+								normalAnchor:RefixPosition()
+							end
+						end,
+						disabled = IsEmphasizeDisabled,
+					},
+					posy = {
+						type = "range",
+						name = L.positionY,
+						desc = L.positionDesc,
+						min = -2048,
+						max = 2048,
+						step = 1,
+						order = 16,
+						width = 1.5,
+						get = function()
+							return db.emphasizeMove and db.expPosition[4] or db.normalPosition[4]
+						end,
+						set = function(_, value)
+							if db.emphasizeMove then
+								db.expPosition[4] = value
+								emphasizeAnchor:RefixPosition()
+							else
+								db.normalPosition[4] = value
+								normalAnchor:RefixPosition()
+							end
+						end,
+						disabled = IsEmphasizeDisabled,
+					},
+					expCustomAnchorPoint = {
+						type = "input",
+						get = function()
+							return db.emphasizeMove and db.expPosition[5] or db.normalPosition[5]
+						end,
+						set = function(_, value)
+							if db.emphasizeMove then
+								if value ~= plugin.defaultDB.expPosition[5] then
+									db.expPosition[1] = "CENTER"
+									db.expPosition[2] = "CENTER"
+									db.expPosition[3] = 0
+									db.expPosition[4] = 0
+									db.expPosition[5] = value
+								else
+									db.expPosition[1] = plugin.defaultDB.expPosition[1]
+									db.expPosition[2] = plugin.defaultDB.expPosition[2]
+									db.expPosition[3] = plugin.defaultDB.expPosition[3]
+									db.expPosition[4] = plugin.defaultDB.expPosition[4]
+									db.expPosition[5] = plugin.defaultDB.expPosition[5]
+									if db.expCopyCustomAnchorWidth then
+										db.expCopyCustomAnchorWidth = plugin.defaultDB.expCopyCustomAnchorWidth
 										db.expWidth = plugin.defaultDB.expWidth
 									end
-									db.expCopyCustomAnchorWidth = value
-									updateProfile()
-								end,
-								disabled = IsExpAnchorPointDefault,
-							},
-						},
+								end
+							else
+								if value ~= plugin.defaultDB.normalPosition[5] then
+									db.normalPosition[1] = "CENTER"
+									db.normalPosition[2] = "CENTER"
+									db.normalPosition[3] = 0
+									db.normalPosition[4] = 0
+									db.normalPosition[5] = value
+								else
+									db.normalPosition[1] = plugin.defaultDB.normalPosition[1]
+									db.normalPosition[2] = plugin.defaultDB.normalPosition[2]
+									db.normalPosition[3] = plugin.defaultDB.normalPosition[3]
+									db.normalPosition[4] = plugin.defaultDB.normalPosition[4]
+									db.normalPosition[5] = plugin.defaultDB.normalPosition[5]
+									if db.normalCopyCustomAnchorWidth then
+										db.normalCopyCustomAnchorWidth = plugin.defaultDB.normalCopyCustomAnchorWidth
+										db.normalWidth = plugin.defaultDB.normalWidth
+									end
+								end
+							end
+							updateProfile()
+						end,
+						validate = function(_, frameName)
+							return BigWigsAPI.IsValidFrame(frameName)
+						end,
+						name = L.customAnchorPoint,
+						order = 17,
+						width = 1,
+						disabled = IsEmphasizeDisabled,
+					},
+					expCustomAnchorPointSource = {
+						type = "select",
+						get = function()
+							return db.emphasizeMove and db.expPosition[1] or db.normalPosition[1]
+						end,
+						set = function(_, value)
+							if BigWigsAPI.IsValidFramePoint(value) then
+								if db.emphasizeMove then
+									db.expPosition[1] = value
+								else
+									db.normalPosition[1] = value
+								end
+								updateProfile()
+							end
+						end,
+						values = BigWigsAPI.GetFramePointList(),
+						name = L.sourcePoint,
+						order = 18,
+						width = 1,
+						disabled = IsExpAnchorPointDefault,
+					},
+					expCustomAnchorPointDestination = {
+						type = "select",
+						get = function()
+							return db.emphasizeMove and db.expPosition[2] or db.normalPosition[2]
+						end,
+						set = function(_, value)
+							if BigWigsAPI.IsValidFramePoint(value) then
+								if db.emphasizeMove then
+									db.expPosition[2] = value
+								else
+									db.normalPosition[2] = value
+								end
+								updateProfile()
+							end
+						end,
+						values = BigWigsAPI.GetFramePointList(),
+						name = L.destinationPoint,
+						order = 19,
+						width = 1,
+						disabled = IsExpAnchorPointDefault,
+					},
+					expCopyCustomAnchorWidth = {
+						type = "toggle",
+						name = L.copyCustomAnchorWidth,
+						desc = L.copyCustomAnchorWidthDesc,
+						order = 20,
+						width = "full",
+						get = function()
+							if db.emphasizeMove then
+								return db.expCopyCustomAnchorWidth
+							else
+								return db.normalCopyCustomAnchorWidth
+							end
+						end,
+						set = function(_, value)
+							if db.emphasizeMove then
+								if not value then
+									db.expWidth = plugin.defaultDB.expWidth
+								end
+								db.expCopyCustomAnchorWidth = value
+							else
+								if not value then
+									db.normalWidth = plugin.defaultDB.normalWidth
+								end
+								db.normalCopyCustomAnchorWidth = value
+							end
+							updateProfile()
+						end,
+						disabled = IsExpAnchorPointDefault,
+					},
+					resetSpacer = {
+						type = "description",
+						name = "\n\n",
+						order = 21,
+						width = "full",
+					},
+					resetHeader = {
+						type = "header",
+						name = "",
+						order = 22,
+					},
+					reset = {
+						type = "execute",
+						name = L.reset,
+						desc = L.resetDesc,
+						func = function()
+							db.emphasize = plugin.defaultDB.emphasize
+							db.emphasizeMove = plugin.defaultDB.emphasizeMove
+							db.emphasizeRestart = plugin.defaultDB.emphasizeRestart
+							db.emphasizeGrowup = plugin.defaultDB.emphasizeGrowup
+							db.emphasizeTime = plugin.defaultDB.emphasizeTime
+							db.fontSizeEmph = plugin.defaultDB.fontSizeEmph
+							db.visibleBarLimitEmph = plugin.defaultDB.visibleBarLimitEmph
+							db.expWidth = plugin.defaultDB.expWidth
+							db.expHeight = plugin.defaultDB.expHeight
+							db.expBarHeightOffset = plugin.defaultDB.expBarHeightOffset
+							db.expPosition = {
+								plugin.defaultDB.expPosition[1],
+								plugin.defaultDB.expPosition[2],
+								plugin.defaultDB.expPosition[3],
+								plugin.defaultDB.expPosition[4],
+								plugin.defaultDB.expPosition[5],
+							}
+							db.expCopyCustomAnchorWidth = plugin.defaultDB.expCopyCustomAnchorWidth
+							updateProfile()
+						end,
+						order = 23,
 					},
 				},
 			},
@@ -1334,70 +2222,86 @@ end
 
 do
 	local function barSorter(a, b)
-		return a.remaining < b.remaining and true or false
+		return a.remaining < b.remaining
 	end
+	local sortedTable = {}
 	rearrangeBars = function(anchor)
-		if not anchor or not next(anchor.bars) then return end
-
-		local tmp = {}
 		for bar in next, anchor.bars do
-			tmp[#tmp + 1] = bar
+			sortedTable[#sortedTable + 1] = bar
 		end
-		table.sort(tmp, barSorter)
+		if not sortedTable[1] then return end
+
+		table.sort(sortedTable, barSorter)
 		local lastBar = nil
-		local up, barLimit
-		if anchor == normalAnchor then
-			up = db.growup
-			barLimit = db.visibleBarLimit
-		else
+		local up
+		if anchor == emphasizeAnchor then
 			up = db.emphasizeGrowup
-			barLimit = db.visibleBarLimitEmph
+		else
+			up = db.growup
 		end
-		for i = 1, #tmp do
-			local bar = tmp[i]
-			if i > barLimit then
+		local spacing = db.spacing
+		local numEmp, numNormal = 0, 0
+		for i = 1, #sortedTable do
+			local bar = sortedTable[i]
+			sortedTable[i] = nil
+			local hideBar
+			if bar:Get("bigwigs:emphasized") then
+				numEmp = numEmp + 1
+				if numEmp > db.visibleBarLimitEmph then
+					hideBar = true
+				end
+			else
+				numNormal = numNormal + 1
+				if numNormal > db.visibleBarLimit then
+					hideBar = true
+				end
+			end
+			bar:ClearAllPoints()
+			if hideBar then
 				bar:SetAlpha(0)
 				if bar:Get("bigwigs:tooltip") then -- Icon tooltips are enabled and one exists for this bar
 					bar.candyBarIconFrame:EnableMouse(false)
 				end
 				bar:Set("bigwigs:notvisible", true)
-			elseif bar:Get("bigwigs:notvisible") then
-				bar:SetAlpha(1)
-				if bar:Get("bigwigs:tooltip") then
-					bar.candyBarIconFrame:EnableMouse(true)
-				end
-				bar:Set("bigwigs:notvisible", nil)
-			end
-			local spacing = currentBarStyler.GetSpacing(bar) or db.spacing
-			bar:ClearAllPoints()
-			if up then
-				if lastBar then -- Growing from a bar
-					bar:SetPoint("BOTTOMLEFT", lastBar, "TOPLEFT", 0, spacing)
-				else -- Growing from the anchor
-					bar:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT")
-				end
-				lastBar = bar
+				bar:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT")
 			else
-				if lastBar then -- Growing from a bar
-					bar:SetPoint("TOPLEFT", lastBar, "BOTTOMLEFT", 0, -spacing)
-				else -- Growing from the anchor
-					bar:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT")
+				if bar:Get("bigwigs:notvisible") then
+					bar:SetAlpha(1)
+					if bar:Get("bigwigs:tooltip") then
+						bar.candyBarIconFrame:EnableMouse(true)
+					end
+					bar:Set("bigwigs:notvisible", nil)
 				end
-				lastBar = bar
+				if up then
+					if lastBar then -- Growing from a bar
+						bar:SetPoint("BOTTOMLEFT", lastBar, "TOPLEFT", 0, spacing)
+					else -- Growing from the anchor
+						bar:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT")
+					end
+					lastBar = bar
+				else
+					if lastBar then -- Growing from a bar
+						bar:SetPoint("TOPLEFT", lastBar, "BOTTOMLEFT", 0, -spacing)
+					else -- Growing from the anchor
+						bar:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT")
+					end
+					lastBar = bar
+				end
 			end
 		end
 	end
 end
 
 local function barStopped(_, bar)
-	bar.candyBarIconFrame.bwID = nil
+	if bar.candyBarIconFrame.bwID then
+		bar.candyBarIconFrame.bwID = nil
+		bar.candyBarIconFrame:SetScript("OnEnter", nil)
+		bar.candyBarIconFrame:SetScript("OnLeave", nil)
+		bar.candyBarIconFrame:EnableMouse(false)
+	end
 	local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
 	if indicatorFrame then
 		indicatorFrame:RemoveIndicators()
-	end
-	local borderFrame = bar:Get("bigwigs:borderFrame")
-	if borderFrame then
-		borderFrame:RemoveBorder()
 	end
 	local anchorText = bar:Get("bigwigs:anchor")
 	if anchorText then
@@ -1416,7 +2320,7 @@ end
 
 do
 	local function OnSizeChanged(self, width, height)
-		if not self:IsShown() then return end
+		if not self:IsShown() and ((self == normalAnchor and not activeFrameNormal) or (self == emphasizeAnchor and not activeFrameExp)) then return end
 		width = math.floor(width+0.5)
 		height = math.floor(height+0.5)
 		if self == normalAnchor then
@@ -1426,39 +2330,86 @@ do
 			db.expWidth = width
 			db.expHeight = height
 		end
-		for k in next, self.bars do
+		for k in next, (db.emphasizeMove and self.bars or normalAnchor.bars) do
 			currentBarStyler.BarStopped(k)
 			local indicatorFrame = k:Get("bigwigs:indicatorFrame")
-			if db.emphasizeMove then
-				if self == normalAnchor then
-					k:SetSize(db.normalWidth, db.normalHeight)
-					if indicatorFrame then
-						indicatorFrame:SetIndicatorSize(db.normalHeight)
-					end
+			local barHeight, barHeightOffset
+			if k:Get("bigwigs:emphasized") then
+				barHeight = db.expHeight
+				barHeightOffset = db.expBarHeightOffset
+				k:SetSize(db.expWidth, barHeight)
+			else
+				barHeight = db.normalHeight
+				barHeightOffset = db.normalBarHeightOffset
+				k:SetSize(db.normalWidth, barHeight)
+			end
+			if indicatorFrame then
+				indicatorFrame:SetIndicatorSize(barHeight)
+			end
+			local iconWidth = barHeight
+			if db.icon and currentBarStyler.modernStyle and db.iconWidthOffset ~= 0 then
+				iconWidth = math.max(barHeight + db.iconWidthOffset, 1)
+				k.candyBarIconFrame:SetWidth(iconWidth)
+			end
+			if db.icon and db.detachedIcon then
+				if -barHeightOffset >= barHeight then
+					barHeightOffset = 0
+				end
+				k.candyBarIconFrame:ClearAllPoints()
+				k.candyBarBar:ClearAllPoints()
+				if db.iconPosition == "LEFT" then
+					k.candyBarIconFrame:SetPoint("TOPLEFT", k, "TOPLEFT", -db.iconOffset, 0)
+					k.candyBarIconFrame:SetPoint("BOTTOMLEFT", k, "BOTTOMLEFT", -db.iconOffset, 0)
+					k.candyBarBar:SetPoint("TOPLEFT", k, "TOPLEFT", iconWidth, barHeightOffset)
+					k.candyBarBar:SetPoint("BOTTOMLEFT", k, "BOTTOMLEFT", iconWidth, 0)
+					k.candyBarBar:SetPoint("TOPRIGHT", k, "TOPRIGHT", 0, barHeightOffset)
+					k.candyBarBar:SetPoint("BOTTOMRIGHT", k, "BOTTOMRIGHT", 0, 0)
 				else
-					k:SetSize(db.expWidth, db.expHeight)
-					if indicatorFrame then
-						indicatorFrame:SetIndicatorSize(db.expHeight)
+					k.candyBarIconFrame:SetPoint("TOPRIGHT", k, "TOPRIGHT", db.iconOffset, 0)
+					k.candyBarIconFrame:SetPoint("BOTTOMRIGHT", k, "BOTTOMRIGHT", db.iconOffset, 0)
+					k.candyBarBar:SetPoint("TOPRIGHT", k, "TOPRIGHT", -iconWidth, barHeightOffset)
+					k.candyBarBar:SetPoint("BOTTOMRIGHT", k, "BOTTOMRIGHT", -iconWidth, 0)
+					k.candyBarBar:SetPoint("TOPLEFT", k, "TOPLEFT", 0, barHeightOffset)
+					k.candyBarBar:SetPoint("BOTTOMLEFT", k, "BOTTOMLEFT", 0, 0)
+				end
+				if db.borderName ~= "None" or db.backgroundName ~= "None" then
+					local borderOffset = db.borderName ~= "None" and db.borderOffset or 0
+					local iconBorder = k.candyBarIconFrameBackdrop
+					if db.iconPosition == "LEFT" then
+						iconBorder:SetPoint("TOPLEFT", k, "TOPLEFT", -db.iconOffset - borderOffset, borderOffset)
+						iconBorder:SetPoint("BOTTOMRIGHT", k, "BOTTOMLEFT", -db.iconOffset + iconWidth + borderOffset, -borderOffset)
+					else
+						iconBorder:SetPoint("TOPLEFT", k, "TOPRIGHT", db.iconOffset - iconWidth - borderOffset, borderOffset)
+						iconBorder:SetPoint("BOTTOMRIGHT", k, "BOTTOMRIGHT", db.iconOffset + borderOffset, -borderOffset)
 					end
 				end
-			elseif self == normalAnchor then
-				-- Move is disabled and we are configuring the normal anchor. Don't apply normal bar sizes to emphasized bars
-				if k:Get("bigwigs:emphasized") then
-					local newHeight = db.normalHeight * db.emphasizeMultiplier
-					k:SetSize(db.normalWidth * db.emphasizeMultiplier, newHeight)
-					if indicatorFrame then
-						indicatorFrame:SetIndicatorSize(newHeight)
-					end
-				else
-					k:SetSize(db.normalWidth, db.normalHeight)
-					if indicatorFrame then
-						indicatorFrame:SetIndicatorSize(db.normalHeight)
+			else
+				barHeightOffset = 0
+				if db.icon and currentBarStyler.modernStyle and db.iconWidthOffset ~= 0 then
+					k.candyBarBar:ClearAllPoints()
+					if db.iconPosition == "LEFT" then
+						k.candyBarBar:SetPoint("TOPLEFT", k, "TOPLEFT", iconWidth, 0)
+						k.candyBarBar:SetPoint("BOTTOMLEFT", k, "BOTTOMLEFT", iconWidth, 0)
+						k.candyBarBar:SetPoint("TOPRIGHT", k, "TOPRIGHT", 0, 0)
+						k.candyBarBar:SetPoint("BOTTOMRIGHT", k, "BOTTOMRIGHT", 0, 0)
+					else
+						k.candyBarBar:SetPoint("TOPRIGHT", k, "TOPRIGHT", -iconWidth, 0)
+						k.candyBarBar:SetPoint("BOTTOMRIGHT", k, "BOTTOMRIGHT", -iconWidth, 0)
+						k.candyBarBar:SetPoint("TOPLEFT", k, "TOPLEFT", 0, 0)
+						k.candyBarBar:SetPoint("BOTTOMLEFT", k, "BOTTOMLEFT", 0, 0)
 					end
 				end
 			end
+			k.candyBarLabel:ClearAllPoints()
+			k.candyBarLabel:SetPoint("TOPLEFT", k.candyBarBar, "TOPLEFT", 2 + db.textOffsetX, -barHeightOffset / 2 + db.textOffsetY)
+			k.candyBarLabel:SetPoint("BOTTOMRIGHT", k.candyBarBar, "BOTTOMRIGHT", -2 + db.textOffsetX, barHeightOffset / 2 + db.textOffsetY)
+			k.candyBarDuration:ClearAllPoints()
+			k.candyBarDuration:SetPoint("TOPLEFT", k.candyBarBar, "TOPLEFT", 2 + db.timeOffsetX, -barHeightOffset / 2 + db.timeOffsetY)
+			k.candyBarDuration:SetPoint("BOTTOMRIGHT", k.candyBarBar, "BOTTOMRIGHT", -2 + db.timeOffsetX, barHeightOffset / 2 + db.timeOffsetY)
 			currentBarStyler.ApplyStyle(k)
-			rearrangeBars(self)
+			k.candyBarIconFrame:SetTexCoord(GetIconTexCoord(iconWidth, barHeight))
 		end
+		rearrangeBars(self)
 	end
 
 	local positionDBToUse = {}
@@ -1562,7 +2513,9 @@ local function showAnchors(_, mode)
 	if not mode or mode == "Bars" then
 		inConfigureMode = true
 		normalAnchor:Show()
-		emphasizeAnchor:Show()
+		if db.emphasizeMove then
+			emphasizeAnchor:Show()
+		end
 	end
 end
 
@@ -1575,13 +2528,12 @@ local function hideAnchors(_, mode)
 end
 
 function getBar(anchor, module, text, eventId)
-	if not anchor then return end
 	for bar in next, anchor.bars do
 		if eventId then
 			if bar:Get("bigwigs:eventId") == eventId then
 				return bar
 			end
-		elseif text and bar:Get("bigwigs:module") == module and bar:GetLabel() == text then
+		elseif text and not bar:Get("bigwigs:eventId") and bar:Get("bigwigs:module") == module and bar:GetLabel() == text then
 			return bar
 		end
 	end
@@ -1623,53 +2575,10 @@ function plugin:OnPluginDisable()
 end
 
 --------------------------------------------------------------------------------
--- Bar styles API
---
-
-do
-	local errorNoStyle = "No style with the ID %q has been registered. Reverting to default style."
-	function SetBarStyle(styleName)
-		local style = BigWigsAPI:GetBarStyle(styleName)
-		if not style then
-			BigWigs:Print(errorNoStyle:format(styleName))
-			styleName = "Default"
-		end
-		style = BigWigsAPI:GetBarStyle(styleName)
-
-		-- Iterate all running bars
-		if currentBarStyler then
-			if normalAnchor then
-				for bar in next, normalAnchor.bars do
-					currentBarStyler.BarStopped(bar)
-					bar.candyBarBackdrop:Hide()
-					style.ApplyStyle(bar)
-				end
-			end
-			if emphasizeAnchor then
-				for bar in next, emphasizeAnchor.bars do
-					currentBarStyler.BarStopped(bar)
-					bar.candyBarBackdrop:Hide()
-					style.ApplyStyle(bar)
-				end
-			end
-		end
-		currentBarStyler = style
-
-		rearrangeBars(normalAnchor)
-		rearrangeBars(emphasizeAnchor)
-
-		if db then
-			db.barStyle = styleName
-		end
-	end
-end
-
---------------------------------------------------------------------------------
 -- Pausing bars
 --
 
 function plugin:PauseBar(_, module, text, eventId)
-	if not normalAnchor then return end
 	local bar = getBar(normalAnchor, module, text, eventId)
 	if bar then
 		bar:Pause()
@@ -1683,7 +2592,6 @@ function plugin:PauseBar(_, module, text, eventId)
 end
 
 function plugin:ResumeBar(_, module, text, eventId)
-	if not normalAnchor then return end
 	local bar = getBar(normalAnchor, module, text, eventId)
 	if bar then
 		bar:Resume()
@@ -1701,7 +2609,6 @@ end
 --
 
 function plugin:StopSpecificBar(_, module, text, eventId)
-	if not normalAnchor then return end
 	local bar = getBar(normalAnchor, module, text, eventId)
 	if bar then
 		bar:Stop()
@@ -1715,7 +2622,6 @@ function plugin:StopSpecificBar(_, module, text, eventId)
 end
 
 function plugin:StopModuleBars(_, module)
-	if not normalAnchor then return end
 	for k in next, normalAnchor.bars do
 		if k:Get("bigwigs:module") == module then
 			k:Stop()
@@ -1743,15 +2649,13 @@ function plugin:HasActiveBars()
 end
 
 function plugin:GetBarTimeLeft(module, text, eventId)
-	if normalAnchor then
-		local bar = getBar(normalAnchor, module, text, eventId)
-		if bar then
-			return bar.remaining
-		end
-		bar = getBar(emphasizeAnchor, module, text, eventId)
-		if bar then
-			return bar.remaining
-		end
+	local bar = getBar(normalAnchor, module, text, eventId)
+	if bar then
+		return bar.remaining
+	end
+	bar = getBar(emphasizeAnchor, module, text, eventId)
+	if bar then
+		return bar.remaining
 	end
 	return 0
 end
@@ -1792,7 +2696,7 @@ do
 		end
 
 		local indicatorList = {}
-		local function UpdateAllIndicatorPoints()
+		function UpdateAllIndicatorPoints()
 			if db.spellIndicatorsSize >= 4 then
 				if db.spellIndicatorsPosition == "LEFT" then
 					for indicatorCount = 1, #indicatorList do
@@ -1853,6 +2757,7 @@ do
 			self:ClearTextures()
 			self:ClearAllPoints()
 			self:SetParent(UIParent)
+			self:Hide()
 			self.bar = nil
 			indicatorCache[#indicatorCache+1] = self
 		end
@@ -1872,7 +2777,6 @@ do
 				indicatorFrame.RemoveIndicators = RemoveIndicators
 				indicatorFrame.SetIndicatorSize = SetIndicatorSize
 				indicatorFrame.AddIndicators = AddIndicators
-				indicatorFrame.UpdateAllIndicatorPoints = UpdateAllIndicatorPoints
 
 				local indicatorTexture1 = indicatorFrame:CreateTexture()
 				indicatorTexture1:SetSnapToPixelGrid(false)
@@ -1933,48 +2837,8 @@ do
 		end
 	end
 
-	do
-		local function AddBorder(self, bar)
-			self:SetParent(bar)
-			self:SetFrameLevel(bar.candyBarBar:GetFrameLevel()+1)
-			self:ClearAllPoints()
-			self:SetBackdrop({
-				edgeFile = LibSharedMedia:Fetch("border", db.borderName),
-				edgeSize = db.borderSize,
-			})
-			self:SetBackdropBorderColor(db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4])
-			self:SetPoint("TOPLEFT", bar, "TOPLEFT", -db.borderOffset, db.borderOffset)
-			self:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", db.borderOffset, -db.borderOffset)
-			self:Show()
-		end
-
-		local borderCache = {}
-		local function RemoveBorder(self)
-			self:ClearBackdrop()
-			self:ClearAllPoints()
-			self:SetParent(UIParent)
-			self:Hide()
-			borderCache[#borderCache+1] = self
-		end
-
-		function GetBarBorderFrame()
-			local borderFrame
-
-			if next(borderCache) then
-				borderFrame = table.remove(borderCache)
-			else
-				borderFrame = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
-				borderFrame:Hide()
-				borderFrame.AddBorder = AddBorder
-				borderFrame.RemoveBorder = RemoveBorder
-			end
-
-			return borderFrame
-		end
-	end
-
 	local initial = true
-	function plugin:CreateBar(module, key, text, time, icon, eventId, spellIndicators)
+	function plugin:CreateBar(module, key, text, time, eventId, spellIndicators)
 		local width, height
 		width = db.normalWidth
 		height = db.normalHeight
@@ -1997,7 +2861,6 @@ do
 		end
 		bar:Set("bigwigs:anchor", "normalPosition")
 		bar:SetIconVisibility(db.icon)
-		bar:SetIcon(icon)
 		bar:SetColor(colors:GetColor("barColor", module, key))
 		bar:SetBackgroundColor(colors:GetColor("barBackground", module, key))
 		bar:SetTextColor(colors:GetColor("barText", module, key))
@@ -2009,7 +2872,6 @@ do
 		bar:SetLabelVisibility(db.text)
 		bar:SetIconPosition(db.iconPosition)
 		bar:SetFill(db.fill)
-		bar:SetLabel(text)
 		local indicators = spellIndicators or eventId
 		if indicators then
 			local indicatorFrame = GetBarIndicatorFrame()
@@ -2021,17 +2883,12 @@ do
 			bar:Set("bigwigs:indicatorFrame", indicatorFrame)
 			bar:Set("bigwigs:indicators", indicators)
 		end
-		if db.borderName ~= "None" then
-			local borderFrame = GetBarBorderFrame()
-			borderFrame:AddBorder(bar)
-			bar:Set("bigwigs:borderFrame", borderFrame)
-		end
 		normalAnchor.bars[bar] = true
 		if initial then
 			-- Workaround for wow custom font loading issues
 			self:SimpleTimer(function()
 				initial = false
-				if (not self:IsSecret(text) and not self:IsSecret(bar:GetLabel()) and bar:GetLabel() == text) or (eventId and bar:Get("bigwigs:eventId") == eventId) then
+				if time > 1 and bar.running and ((not self:IsSecret(text) and not self:IsSecret(bar:GetLabel()) and bar:GetLabel() == text) or (eventId and bar:Get("bigwigs:eventId") == eventId)) then
 					bar:SetLabel("-1")
 					bar:SetLabel(text)
 				end
@@ -2054,17 +2911,6 @@ do
 		rearrangeBars(emphasizeAnchor)
 	end
 
-	local function OnEnterIcon(self)
-		if self.bwID then
-			bwTooltip:SetOwner(self, "ANCHOR_TOP")
-			bwTooltip:SetSpellByID(self.bwID, false, true)
-			bwTooltip:Show()
-		end
-	end
-	local function OnLeaveIcon(self)
-		bwTooltip:Hide()
-	end
-
 	function plugin:BigWigs_StartBar(_, module, key, text, time, icon, maxQueueDuration, maxTime, eventId, spellIndicators)
 		if not text then text = "" end
 		if not eventId and self:IsSecret(text) then
@@ -2072,12 +2918,14 @@ do
 			return
 		end
 		self:StopSpecificBar(nil, module, text, eventId)
-		local bar = self:CreateBar(module, key, text, time, icon, eventId, spellIndicators)
-		if db.iconTooltip and type(key) == "number" and key > 0 then
+		local bar = self:CreateBar(module, key, text, time, eventId, spellIndicators)
+		bar:Set("bigwigs:move", moveBar)
+		if db.icon and db.iconTooltip and type(key) == "number" and key > 0 then
 			bar.candyBarIconFrame.bwID = key
 			bar:Set("bigwigs:tooltip", key)
 			bar.candyBarIconFrame:SetScript("OnEnter", OnEnterIcon)
 			bar.candyBarIconFrame:SetScript("OnLeave", OnLeaveIcon)
+			bar.candyBarIconFrame:EnableMouse(true)
 		end
 		bar:SetPauseWhenDone(maxQueueDuration)
 		if db.emphasize and time < db.emphasizeTime then
@@ -2089,6 +2937,93 @@ do
 			self:EmphasizeBar(bar, true)
 		else
 			bar:Start(maxTime)
+			local iconWidth = db.normalHeight
+			if db.icon and currentBarStyler.modernStyle and db.iconWidthOffset ~= 0 then
+				iconWidth = math.max(db.normalHeight + db.iconWidthOffset, 1)
+				bar.candyBarIconFrame:SetWidth(iconWidth)
+			end
+			local barHeightOffset = 0
+			if db.icon and db.detachedIcon then
+				barHeightOffset = db.normalBarHeightOffset
+				if -barHeightOffset >= db.normalHeight then
+					barHeightOffset = 0
+				end
+				bar.candyBarIconFrame:ClearAllPoints()
+				bar.candyBarBar:ClearAllPoints()
+				if db.iconPosition == "LEFT" then
+					bar.candyBarIconFrame:SetPoint("TOPLEFT", bar, "TOPLEFT", -db.iconOffset, 0)
+					bar.candyBarIconFrame:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", -db.iconOffset, 0)
+					bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", iconWidth, barHeightOffset)
+					bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", iconWidth, 0)
+					bar.candyBarBar:SetPoint("TOPRIGHT", bar, "TOPRIGHT", 0, barHeightOffset)
+					bar.candyBarBar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 0, 0)
+				else
+					bar.candyBarIconFrame:SetPoint("TOPRIGHT", bar, "TOPRIGHT", db.iconOffset, 0)
+					bar.candyBarIconFrame:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", db.iconOffset, 0)
+					bar.candyBarBar:SetPoint("TOPRIGHT", bar, "TOPRIGHT", -iconWidth, barHeightOffset)
+					bar.candyBarBar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -iconWidth, 0)
+					bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, barHeightOffset)
+					bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 0, 0)
+				end
+			elseif db.icon and currentBarStyler.modernStyle and db.iconWidthOffset ~= 0 then
+				bar.candyBarBar:ClearAllPoints()
+				if db.iconPosition == "LEFT" then
+					bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", iconWidth, 0)
+					bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", iconWidth, 0)
+					bar.candyBarBar:SetPoint("TOPRIGHT", bar, "TOPRIGHT", 0, 0)
+					bar.candyBarBar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 0, 0)
+				else
+					bar.candyBarBar:SetPoint("TOPRIGHT", bar, "TOPRIGHT", -iconWidth, 0)
+					bar.candyBarBar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -iconWidth, 0)
+					bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, 0)
+					bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 0, 0)
+				end
+			end
+			if db.textOffsetX ~= 0 or db.textOffsetY ~= 0 or barHeightOffset ~= 0 then
+				bar.candyBarLabel:ClearAllPoints()
+				bar.candyBarLabel:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", 2 + db.textOffsetX, -barHeightOffset / 2 + db.textOffsetY)
+				bar.candyBarLabel:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", -2 + db.textOffsetX, barHeightOffset / 2 + db.textOffsetY)
+			end
+			if db.timeOffsetX ~= 0 or db.timeOffsetY ~= 0 or barHeightOffset ~= 0 then
+				bar.candyBarDuration:ClearAllPoints()
+				bar.candyBarDuration:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", 2 + db.timeOffsetX, -barHeightOffset / 2 + db.timeOffsetY)
+				bar.candyBarDuration:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", -2 + db.timeOffsetX, barHeightOffset / 2 + db.timeOffsetY)
+			end
+			if db.borderName ~= "None" or db.backgroundName ~= "None" then
+				local border = bar.candyBarBackdrop
+				local borderOffset = db.borderName ~= "None" and db.borderOffset or 0
+				if db.icon and db.detachedIcon then
+					border:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", -borderOffset, borderOffset)
+					border:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", borderOffset, -borderOffset)
+					local iconBorder = bar.candyBarIconFrameBackdrop
+					if db.iconPosition == "LEFT" then
+						iconBorder:SetPoint("TOPLEFT", bar, "TOPLEFT", -db.iconOffset - borderOffset, borderOffset)
+						iconBorder:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", -db.iconOffset + iconWidth + borderOffset, -borderOffset)
+					else
+						iconBorder:SetPoint("TOPLEFT", bar, "TOPRIGHT", db.iconOffset - iconWidth - borderOffset, borderOffset)
+						iconBorder:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", db.iconOffset + borderOffset, -borderOffset)
+					end
+					iconBorder:Show()
+					iconBorder:SetBackdrop(backdropTbl)
+					if db.backgroundName ~= "None" then
+						iconBorder:SetBackdropColor(db.backgroundColor[1], db.backgroundColor[2], db.backgroundColor[3], db.backgroundColor[4])
+					end
+					if db.borderName ~= "None" then
+						iconBorder:SetBackdropBorderColor(db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4])
+					end
+				else
+					border:SetPoint("TOPLEFT", bar, "TOPLEFT", -borderOffset, borderOffset)
+					border:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", borderOffset, -borderOffset)
+				end
+				border:Show()
+				border:SetBackdrop(backdropTbl)
+				if db.backgroundName ~= "None" then
+					border:SetBackdropColor(db.backgroundColor[1], db.backgroundColor[2], db.backgroundColor[3], db.backgroundColor[4])
+				end
+				if db.borderName ~= "None" then
+					border:SetBackdropBorderColor(db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4])
+				end
+			end
 			currentBarStyler.ApplyStyle(bar)
 			if db.emphasize then
 				bar:SetTimeCallback(moveBar, db.emphasizeTime)
@@ -2096,6 +3031,11 @@ do
 		end
 		local anchor = bar:Get("bigwigs:anchor") == "expPosition" and emphasizeAnchor or normalAnchor
 		rearrangeBars(anchor)
+		local height = bar:Get("bigwigs:emphasized") and db.expHeight or db.normalHeight
+		local iconWidth = (db.icon and currentBarStyler.modernStyle and db.iconWidthOffset ~= 0) and math.max(height + db.iconWidthOffset, 1) or height
+		-- Text and icon can potentially be secret so apply them last
+		bar:SetLabel(text)
+		bar:SetIcon(icon, GetIconTexCoord(iconWidth, height))
 		if isRetail or isForever then -- The following callbacks are now deprecated and will eventually be entirely removed
 			self:SendMessage("BigWigs_BarCreated", self, bar, module, key, text, time, icon, maxQueueDuration)
 			-- Check if :EmphasizeBar(bar) was run and trigger the callback.
@@ -2138,28 +3078,117 @@ function plugin:EmphasizeBar(bar, freshBar)
 	bar:SetFont(f, db.fontSizeEmph, flags)
 
 	bar:SetColor(colors:GetColor("barEmphasized", module, key))
+	local height = db.expHeight
+	local barHeightOffset = db.expBarHeightOffset
+	bar:SetSize(db.expWidth, height)
 	local indicatorFrame = bar:Get("bigwigs:indicatorFrame")
-	if db.emphasizeMove then
-		local height = db.expHeight
-		bar:SetHeight(height)
-		bar:SetWidth(db.expWidth)
-		if indicatorFrame then
-			indicatorFrame:SetIndicatorSize(height)
+	if indicatorFrame then
+		indicatorFrame:SetIndicatorSize(height)
+	end
+	local iconWidth = height
+	if db.icon and currentBarStyler.modernStyle and db.iconWidthOffset ~= 0 then
+		iconWidth = math.max(height + db.iconWidthOffset, 1)
+		bar.candyBarIconFrame:SetWidth(iconWidth)
+	end
+	if db.icon and db.detachedIcon then
+		if -barHeightOffset >= height then
+			barHeightOffset = 0
+		end
+		bar.candyBarIconFrame:ClearAllPoints()
+		bar.candyBarBar:ClearAllPoints()
+		if db.iconPosition == "LEFT" then
+			bar.candyBarIconFrame:SetPoint("TOPLEFT", bar, "TOPLEFT", -db.iconOffset, 0)
+			bar.candyBarIconFrame:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", -db.iconOffset, 0)
+			bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", iconWidth, barHeightOffset)
+			bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", iconWidth, 0)
+			bar.candyBarBar:SetPoint("TOPRIGHT", bar, "TOPRIGHT", 0, barHeightOffset)
+			bar.candyBarBar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 0, 0)
+		else
+			bar.candyBarIconFrame:SetPoint("TOPRIGHT", bar, "TOPRIGHT", db.iconOffset, 0)
+			bar.candyBarIconFrame:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", db.iconOffset, 0)
+			bar.candyBarBar:SetPoint("TOPRIGHT", bar, "TOPRIGHT", -iconWidth, barHeightOffset)
+			bar.candyBarBar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -iconWidth, 0)
+			bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, barHeightOffset)
+			bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 0, 0)
 		end
 	else
-		local height = db.normalHeight * db.emphasizeMultiplier
-		bar:SetHeight(height)
-		bar:SetWidth(db.normalWidth * db.emphasizeMultiplier)
-		if indicatorFrame then
-			indicatorFrame:SetIndicatorSize(height)
+		barHeightOffset = 0
+		if db.icon and currentBarStyler.modernStyle and db.iconWidthOffset ~= 0 then
+			bar.candyBarBar:ClearAllPoints()
+			if db.iconPosition == "LEFT" then
+				bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", iconWidth, 0)
+				bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", iconWidth, 0)
+				bar.candyBarBar:SetPoint("TOPRIGHT", bar, "TOPRIGHT", 0, 0)
+				bar.candyBarBar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 0, 0)
+			else
+				bar.candyBarBar:SetPoint("TOPRIGHT", bar, "TOPRIGHT", -iconWidth, 0)
+				bar.candyBarBar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -iconWidth, 0)
+				bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, 0)
+				bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 0, 0)
+			end
+		end
+	end
+	if not freshBar or db.textOffsetX ~= 0 or db.textOffsetY ~= 0 or barHeightOffset ~= 0 then
+		bar.candyBarLabel:ClearAllPoints()
+		bar.candyBarLabel:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", 2 + db.textOffsetX, -barHeightOffset / 2 + db.textOffsetY)
+		bar.candyBarLabel:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", -2 + db.textOffsetX, barHeightOffset / 2 + db.textOffsetY)
+	end
+	if not freshBar or db.timeOffsetX ~= 0 or db.timeOffsetY ~= 0 or barHeightOffset ~= 0 then
+		bar.candyBarDuration:ClearAllPoints()
+		bar.candyBarDuration:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", 2 + db.timeOffsetX, -barHeightOffset / 2 + db.timeOffsetY)
+		bar.candyBarDuration:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", -2 + db.timeOffsetX, barHeightOffset / 2 + db.timeOffsetY)
+	end
+	if db.borderName ~= "None" or db.backgroundName ~= "None" then
+		local borderOffset = db.borderName ~= "None" and db.borderOffset or 0
+		if freshBar then
+			local border = bar.candyBarBackdrop
+			if db.icon and db.detachedIcon then
+				border:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", -borderOffset, borderOffset)
+				border:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", borderOffset, -borderOffset)
+				local iconBorder = bar.candyBarIconFrameBackdrop
+				if db.iconPosition == "LEFT" then
+					iconBorder:SetPoint("TOPLEFT", bar, "TOPLEFT", -db.iconOffset - borderOffset, borderOffset)
+					iconBorder:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", -db.iconOffset + iconWidth + borderOffset, -borderOffset)
+				else
+					iconBorder:SetPoint("TOPLEFT", bar, "TOPRIGHT", db.iconOffset - iconWidth - borderOffset, borderOffset)
+					iconBorder:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", db.iconOffset + borderOffset, -borderOffset)
+				end
+				iconBorder:Show()
+				iconBorder:SetBackdrop(backdropTbl)
+				if db.backgroundName ~= "None" then
+					iconBorder:SetBackdropColor(db.backgroundColor[1], db.backgroundColor[2], db.backgroundColor[3], db.backgroundColor[4])
+				end
+				if db.borderName ~= "None" then
+					iconBorder:SetBackdropBorderColor(db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4])
+				end
+			else
+				border:SetPoint("TOPLEFT", bar, "TOPLEFT", -borderOffset, borderOffset)
+				border:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", borderOffset, -borderOffset)
+			end
+			border:Show()
+			border:SetBackdrop(backdropTbl)
+			if db.backgroundName ~= "None" then
+				border:SetBackdropColor(db.backgroundColor[1], db.backgroundColor[2], db.backgroundColor[3], db.backgroundColor[4])
+			end
+			if db.borderName ~= "None" then
+				border:SetBackdropBorderColor(db.borderColor[1], db.borderColor[2], db.borderColor[3], db.borderColor[4])
+			end
+		elseif db.icon and db.detachedIcon then
+			local iconBorder = bar.candyBarIconFrameBackdrop
+			if db.iconPosition == "LEFT" then
+				iconBorder:SetPoint("TOPLEFT", bar, "TOPLEFT", -db.iconOffset - borderOffset, borderOffset)
+				iconBorder:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", -db.iconOffset + iconWidth + borderOffset, -borderOffset)
+			else
+				iconBorder:SetPoint("TOPLEFT", bar, "TOPRIGHT", db.iconOffset - iconWidth - borderOffset, borderOffset)
+				iconBorder:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", db.iconOffset + borderOffset, -borderOffset)
+			end
 		end
 	end
 	bar:SetFrameLevel(105) -- Put emphasized bars just above normal bars (LibCandyBar 100)
-	local borderFrame = bar:Get("bigwigs:borderFrame")
-	if borderFrame then
-		borderFrame:SetFrameLevel(bar.candyBarBar:GetFrameLevel()+1)
-	end
 	currentBarStyler.ApplyStyle(bar)
+	if not freshBar then
+		bar.candyBarIconFrame:SetTexCoord(GetIconTexCoord(iconWidth, height))
+	end
 	bar:Set("bigwigs:emphasized", true)
 end
 
@@ -2200,8 +3229,6 @@ do
 		local id = tonumber(msg)
 		if id and id >= 1 and id <= 8 then
 			return markerIcons[id]
-		else
-			("{rt%s}"):format(msg)
 		end
 	end
 end
