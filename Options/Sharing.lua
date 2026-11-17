@@ -565,9 +565,10 @@ local function isBattleResDisabled()
 	return plugin and plugin.db.profile.disabled and true or false
 end
 
+-- Only the personal ("player") auras count: the "other" auras are disabled by default.
 local function isAurasDisabled()
 	local plugin = BigWigs:GetPlugin("Auras", true)
-	return plugin and plugin.db.profile.player.disabled and plugin.db.profile.other.disabled and true or false
+	return plugin and plugin.db.profile.player.disabled and true or false
 end
 
 local function isCombatTimerDisabled()
@@ -1356,8 +1357,7 @@ end
 
 local function willImportDisableAuras()
 	local data = importedTableData and importedTableData.aurasSettings
-	return type(data) == "table" and type(data.player) == "table" and type(data.other) == "table"
-		and data.player.disabled and data.other.disabled and true or false
+	return type(data) == "table" and type(data.player) == "table" and data.player.disabled and true or false
 end
 
 local function willImportDisableCombatTimer()
