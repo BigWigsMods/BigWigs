@@ -463,8 +463,6 @@ do
 			insets = { left = inset, right = inset, top = inset, bottom = inset },
 		}
 
-		candy:SetDecimalsThreshold(db.timeDecimals)
-
 		if not db.emphasizeMove or not db.emphasize then
 			for bar in next, emphasizeAnchor.bars do
 				normalAnchor.bars[bar] = true
@@ -512,6 +510,7 @@ do
 			bar:SetLabelVisibility(db.text)
 			bar.candyBarLabel:SetJustifyH(db.alignText)
 			bar:SetTimeVisibility(db.time)
+			bar:SetDecimalsThreshold(db.timeDecimals)
 			bar.candyBarDuration:SetJustifyH(db.alignTime)
 			bar:SetIconVisibility(db.icon)
 			bar:SetIconPosition(db.iconPosition)
@@ -573,9 +572,14 @@ do
 					bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 0, 0)
 				end
 			end
+			-- For SetJustifyH to update, it requires a SetText with different text.
+			-- So we store the value, reset the text, and set it again.
+			local labelText = bar:GetLabel()
+			bar.candyBarLabel:ClearText()
 			bar.candyBarLabel:ClearAllPoints()
 			bar.candyBarLabel:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", 2 + db.textOffsetX, -barHeightOffset / 2 + db.textOffsetY)
 			bar.candyBarLabel:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", -2 + db.textOffsetX, barHeightOffset / 2 + db.textOffsetY)
+			bar:SetLabel(labelText)
 			bar.candyBarDuration:ClearAllPoints()
 			bar.candyBarDuration:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", 2 + db.timeOffsetX, -barHeightOffset / 2 + db.timeOffsetY)
 			bar.candyBarDuration:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", -2 + db.timeOffsetX, barHeightOffset / 2 + db.timeOffsetY)
@@ -645,6 +649,7 @@ do
 			bar:SetLabelVisibility(db.text)
 			bar.candyBarLabel:SetJustifyH(db.alignText)
 			bar:SetTimeVisibility(db.time)
+			bar:SetDecimalsThreshold(db.timeDecimals)
 			bar.candyBarDuration:SetJustifyH(db.alignTime)
 			bar:SetIconVisibility(db.icon)
 			bar:SetIconPosition(db.iconPosition)
@@ -707,9 +712,14 @@ do
 					bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 0, 0)
 				end
 			end
+			-- For SetJustifyH to update, it requires a SetText with different text.
+			-- So we store the value, reset the text, and set it again.
+			local labelText = bar:GetLabel()
+			bar.candyBarLabel:ClearText()
 			bar.candyBarLabel:ClearAllPoints()
 			bar.candyBarLabel:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", 2 + db.textOffsetX, -barHeightOffset / 2 + db.textOffsetY)
 			bar.candyBarLabel:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", -2 + db.textOffsetX, barHeightOffset / 2 + db.textOffsetY)
+			bar:SetLabel(labelText)
 			bar.candyBarDuration:ClearAllPoints()
 			bar.candyBarDuration:SetPoint("TOPLEFT", bar.candyBarBar, "TOPLEFT", 2 + db.timeOffsetX, -barHeightOffset / 2 + db.timeOffsetY)
 			bar.candyBarDuration:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "BOTTOMRIGHT", -2 + db.timeOffsetX, barHeightOffset / 2 + db.timeOffsetY)
@@ -2978,6 +2988,7 @@ do
 		bar.candyBarDuration:SetJustifyH(db.alignTime)
 
 		bar:SetTimeVisibility(db.time)
+		bar:SetDecimalsThreshold(db.timeDecimals)
 		bar:SetLabelVisibility(db.text)
 		bar:SetIconPosition(db.iconPosition)
 		bar:SetFill(db.fill)
