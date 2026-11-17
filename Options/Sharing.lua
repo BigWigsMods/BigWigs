@@ -337,7 +337,7 @@ local aurasSettingsToExport = {
 	"otherPlayerType",
 	"onlyWhenYouAreTank",
 	-- "otherPlayerName", -- Not exporting character specific settings
-	-- "sounds", -- Not exporting user created auras
+	-- "sounds", -- Old location, custom aura sounds are exported from the AuraSounds namespace
 }
 
 local aurasPositionSettingsToExport = { -- Applied to both the "player" and "other" tables
@@ -507,6 +507,7 @@ local sharingExportOptionsSettings = {
 	exportNameplateSettings = true,
 	exportMythicPlusSettings = true,
 	exportAurasPositions = true,
+	exportAurasSounds = true,
 	-- BattleRes, Auras settings, CombatTimer are deliberately left out: their default depends on whether
 	-- the plugin is currently switched off. See IsExportSectionSelected().
 }
@@ -677,6 +678,13 @@ do
 				export.player = exportProfileSettings(aurasUnitSettingsToExport, plugin.db.profile.player)
 				export.other = exportProfileSettings(aurasUnitSettingsToExport, plugin.db.profile.other)
 				exportOptions["aurasSettings"] = export
+			end
+		end
+
+		if requestAll or sharingExportOptionsSettings.exportAurasSounds then
+			local db = BigWigsLoader.db:GetNamespace("AuraSounds", true)
+			if db and next(db.profile.sounds) then -- Don't wipe the importer's sounds with an empty list
+				exportOptions["aurasSounds"] = db.profile.sounds
 			end
 		end
 
@@ -874,7 +882,7 @@ local function IsOptionGroupAvailable(group)
 		end
 	end
 	if group == "auras" then
-		if IsOptionInString("aurasPositions") or IsOptionInString("aurasSettings") then
+		if IsOptionInString("aurasPositions") or IsOptionInString("aurasSettings") or IsOptionInString("aurasSounds") then
 			return true
 		end
 	end
@@ -1091,6 +1099,14 @@ do
 			if plugin then
 				importAurasPositions("importAurasPositions", "aurasPositions", plugin, L.imported_auras_positions)
 				importAurasSettings("importAurasSettings", "aurasSettings", plugin, L.imported_auras_settings)
+			end
+		end
+		do
+			-- Replaces the full list, the AuraSounds module validates every entry on BigWigs_ProfileUpdate
+			local db = BigWigsLoader.db:GetNamespace("AuraSounds", true)
+			if db and sharingImportOptionsSettings.importAurasSounds and type(data.aurasSounds) == "table" then
+				db.profile.sounds = CopyTable(data.aurasSounds)
+				table.insert(chatMessages, L.imported_auras_sounds)
 			end
 		end
 		do
@@ -1312,6 +1328,9 @@ do
 		end
 		if IsOptionInString("aurasSettings") then
 			sharingImportOptionsSettings.importAurasSettings = true
+		end
+		if IsOptionInString("aurasSounds") then
+			sharingImportOptionsSettings.importAurasSounds = true
 		end
 		if IsOptionInString("combatTimerSettings") then
 			sharingImportOptionsSettings.importCombatTimerSettings = true
@@ -1573,7 +1592,7 @@ local sharingOptions = {
 						desc = L.auras_custom_sounds_import_desc,
 						order = 10,
 						width = 1,
-						disabled = true, -- Not yet implemented
+						disabled = function() return not IsOptionInString("aurasSounds") or not BigWigsLoader.db:GetNamespace("AuraSounds", true) end,
 					},
 				},
 			},
@@ -1748,7 +1767,7 @@ local sharingOptions = {
 						desc = L.auras_custom_sounds_export_desc,
 						order = 10,
 						width = 1,
-						disabled = true, -- Not yet implemented
+						hidden = function() return not BigWigsLoader.db:GetNamespace("AuraSounds", true) end,
 					},
 				},
 			},
