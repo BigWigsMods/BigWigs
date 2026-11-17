@@ -57,6 +57,7 @@ ignore:
   - Media/Sounds/Jim/countdown.wav
   - Media/Icons/Source
   - Media/Icons/Menus/Source
+  - Media/Textures/Beautycase_Original.tga
   - Options/Libs/AceConfigRegistry-3.0/AceConfigRegistry-3.0.xml
   - Options/Libs/AceConfigDialog-3.0/AceConfigDialog-3.0.xml
   - Options/Libs/AceDBOptions-3.0/AceDBOptions-3.0.xml

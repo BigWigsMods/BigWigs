@@ -59,6 +59,7 @@ end
 do
 	local BORDER = media.MediaType and media.MediaType.BORDER or "border"
 	media:Register(BORDER, "Solid", "Interface\\Buttons\\WHITE8X8")
+	media:Register(BORDER, "Beautycase", "Interface\\AddOns\\BigWigs\\Media\\Textures\\Beautycase")
 end
 
 -- Countdowns
