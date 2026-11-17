@@ -46,24 +46,19 @@ local function OnLeaveIcon()
 end
 
 local function GetIconTexCoord(width, height)
-	if currentBarStyler.barDecorationEnabled and (db.iconZoom ~= 0 or (db.iconKeepAspectRatio and width ~= height)) then
-		local baseZoom = 0.86 -- (0.07, 0.93, 0.07, 0.93) is the default texture coords
-		local zoom = baseZoom * (1 - db.iconZoom)
-		local zoomedOffset = 1 - ((1 - zoom) / 2)
-		local offsetX, offsetY = zoomedOffset, zoomedOffset
+	local zoom = 1 - db.iconZoom
+	local zoomedOffset = 1 - ((1 - zoom) / 2)
+	local offsetX, offsetY = zoomedOffset, zoomedOffset
 
-		if db.iconKeepAspectRatio then
-			if width > height then
-				offsetY = 1 - (1 - (height / width) * zoom) / 2
-			elseif height > width then
-				offsetX = 1 - (1 - (width / height) * zoom) / 2
-			end
+	if db.iconKeepAspectRatio then
+		if width > height then
+			offsetY = 1 - (1 - (height / width) * zoom) / 2
+		elseif height > width then
+			offsetX = 1 - (1 - (width / height) * zoom) / 2
 		end
-
-		return 1 - offsetX, offsetX, 1 - offsetY, offsetY
-	else
-		return 0.07, 0.93, 0.07, 0.93
 	end
+
+	return 1 - offsetX, offsetX, 1 - offsetY, offsetY
 end
 
 --------------------------------------------------------------------------------
@@ -89,13 +84,14 @@ do
 		textOffsetY = 0,
 		timeOffsetX = 0,
 		timeOffsetY = 0,
+		timeDecimals = 10,
 		icon = true,
 		iconTooltip = true,
 		iconPosition = "LEFT",
 		detachedIcon = false,
 		iconOffset = 2,
 		iconWidthOffset = 0,
-		iconZoom = 0,
+		iconZoom = 0.14,
 		iconKeepAspectRatio = true,
 		fill = false,
 		barStyle = "Default",
@@ -269,6 +265,9 @@ do
 		end
 		if db.timeOffsetY < -100 or db.timeOffsetY > 100 or math.floor(db.timeOffsetY+0.5) ~= db.timeOffsetY then
 			db.timeOffsetY = plugin.defaultDB.timeOffsetY
+		end
+		if db.timeDecimals < 0 or db.timeDecimals > 60 or math.floor(db.timeDecimals+0.5) ~= db.timeDecimals then
+			db.timeDecimals = plugin.defaultDB.timeDecimals
 		end
 		if db.emphasizeTime < 6 or db.emphasizeTime > 60 or math.floor(db.emphasizeTime+0.5) ~= db.emphasizeTime then
 			db.emphasizeTime = plugin.defaultDB.emphasizeTime
@@ -456,9 +455,15 @@ do
 		end
 		local font = LibSharedMedia:Fetch(FONT, db.fontName)
 		local texture = LibSharedMedia:Fetch(STATUSBAR, db.texture)
-		backdropTbl.bgFile = db.backgroundName ~= "None" and LibSharedMedia:Fetch(BACKGROUND, db.backgroundName) or nil
-		backdropTbl.edgeFile = db.borderName ~= "None" and LibSharedMedia:Fetch(BORDER, db.borderName) or nil
-		backdropTbl.edgeSize = db.borderName ~= "None" and db.borderSize or nil
+		local inset = db.borderName ~= "None" and math.floor(db.borderSize / 4) or 0
+		backdropTbl = {
+			bgFile = db.backgroundName ~= "None" and LibSharedMedia:Fetch(BACKGROUND, db.backgroundName) or nil,
+			edgeFile = db.borderName ~= "None" and LibSharedMedia:Fetch(BORDER, db.borderName) or nil,
+			edgeSize = db.borderName ~= "None" and db.borderSize or nil,
+			insets = { left = inset, right = inset, top = inset, bottom = inset },
+		}
+
+		candy:SetDecimalsThreshold(db.timeDecimals)
 
 		if not db.emphasizeMove or not db.emphasize then
 			for bar in next, emphasizeAnchor.bars do
@@ -1036,6 +1041,16 @@ do
 								else
 									db.iconKeepAspectRatio = plugin.defaultDB.iconKeepAspectRatio
 								end
+								if style.alignText == "LEFT" or style.alignText == "CENTER" or style.alignText == "RIGHT" then
+									db.alignText = style.alignText
+								else
+									db.alignText = plugin.defaultDB.alignText
+								end
+								if style.alignTime == "LEFT" or style.alignTime == "CENTER" or style.alignTime == "RIGHT" then
+									db.alignTime = style.alignTime
+								else
+									db.alignTime = plugin.defaultDB.alignTime
+								end
 								if type(style.textOffsetX) == "number" and style.textOffsetX >= -100 and style.textOffsetX <= 100 then
 									db.textOffsetX = style.textOffsetX
 								else
@@ -1076,6 +1091,48 @@ do
 								end
 								if type(style.texture) == "string" and LibSharedMedia:IsValid(STATUSBAR, style.texture) and BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(STATUSBAR, style.texture)) then
 									db.texture = style.texture
+								end
+								if type(style.barColor) == "table"
+								and type(style.barColor[1]) == "number" and style.barColor[1] >= 0 and style.barColor[1] <= 1
+								and type(style.barColor[2]) == "number" and style.barColor[2] >= 0 and style.barColor[2] <= 1
+								and type(style.barColor[3]) == "number" and style.barColor[3] <= 1 and style.barColor[3] >= 0
+								and type(style.barColor[4]) == "number" and style.barColor[4] >= 0 and style.barColor[4] <= 1 then
+									colors.db.profile.barColor.BigWigs_Plugins_Colors.default = {
+										style.barColor[1],
+										style.barColor[2],
+										style.barColor[3],
+										style.barColor[4],
+									}
+								else
+									colors.db.profile.barColor.BigWigs_Plugins_Colors.default = nil
+								end
+								if type(style.barEmphasized) == "table"
+								and type(style.barEmphasized[1]) == "number" and style.barEmphasized[1] >= 0 and style.barEmphasized[1] <= 1
+								and type(style.barEmphasized[2]) == "number" and style.barEmphasized[2] >= 0 and style.barEmphasized[2] <= 1
+								and type(style.barEmphasized[3]) == "number" and style.barEmphasized[3] >= 0 and style.barEmphasized[3] <= 1
+								and type(style.barEmphasized[4]) == "number" and style.barEmphasized[4] >= 0 and style.barEmphasized[4] <= 1 then
+									colors.db.profile.barEmphasized.BigWigs_Plugins_Colors.default = {
+										style.barEmphasized[1],
+										style.barEmphasized[2],
+										style.barEmphasized[3],
+										style.barEmphasized[4],
+									}
+								else
+									colors.db.profile.barEmphasized.BigWigs_Plugins_Colors.default = nil
+								end
+								if type(style.barBackground) == "table"
+								and type(style.barBackground[1]) == "number" and style.barBackground[1] >= 0 and style.barBackground[1] <= 1
+								and type(style.barBackground[2]) == "number" and style.barBackground[2] >= 0 and style.barBackground[2] <= 1
+								and type(style.barBackground[3]) == "number" and style.barBackground[3] >= 0 and style.barBackground[3] <= 1
+								and type(style.barBackground[4]) == "number" and style.barBackground[4] >= 0 and style.barBackground[4] <= 1 then
+									colors.db.profile.barBackground.BigWigs_Plugins_Colors.default = {
+										style.barBackground[1],
+										style.barBackground[2],
+										style.barBackground[3],
+										style.barBackground[4],
+									}
+								else
+									colors.db.profile.barBackground.BigWigs_Plugins_Colors.default = nil
 								end
 							end
 							updateProfile()
@@ -1262,6 +1319,9 @@ do
 								plugin.defaultDB.backgroundColor[3],
 								plugin.defaultDB.backgroundColor[4],
 							}
+							colors.db.profile.barColor.BigWigs_Plugins_Colors.default = nil
+							colors.db.profile.barEmphasized.BigWigs_Plugins_Colors.default = nil
+							colors.db.profile.barBackground.BigWigs_Plugins_Colors.default = nil
 							updateProfile()
 						end,
 						order = 17,
@@ -1270,7 +1330,14 @@ do
 						type = "execute",
 						name = L.resetAll,
 						desc = L.resetBarsDesc,
-						func = function() plugin.db:ResetProfile() updateProfile() end,
+						func = function()
+							plugin.db:ResetProfile()
+							-- Since we are resetting the bar style, we also need to reset the colors that those styles might have changed
+							colors.db.profile.barColor.BigWigs_Plugins_Colors.default = nil
+							colors.db.profile.barEmphasized.BigWigs_Plugins_Colors.default = nil
+							colors.db.profile.barBackground.BigWigs_Plugins_Colors.default = nil
+							updateProfile()
+						end,
 						order = 18,
 					},
 				},
@@ -1344,6 +1411,11 @@ do
 							CENTER = L.CENTER,
 							RIGHT = L.RIGHT,
 						},
+						set = function(_, value)
+							db.alignText = value
+							db.textOffsetX = plugin.defaultDB.textOffsetX
+							updateProfile()
+						end,
 						disabled = function() return not db.text end,
 					},
 					textOffsetX = {
@@ -1396,6 +1468,11 @@ do
 							CENTER = L.CENTER,
 							RIGHT = L.RIGHT,
 						},
+						set = function(_, value)
+							db.alignTime = value
+							db.timeOffsetX = plugin.defaultDB.textOffsetX
+							updateProfile()
+						end,
 						disabled = function() return not db.time end,
 					},
 					timeOffsetX = {
@@ -1420,16 +1497,27 @@ do
 						step = 1,
 						disabled = IsBarDecorationDisabledOrTimeDisabled,
 					},
+					timeDecimals = {
+						type = "range",
+						name = L.cooldownDecimalsThreshold,
+						desc = L.cooldownDecimalsThresholdDesc,
+						order = 16,
+						width = 3,
+						min = 0,
+						max = 60,
+						step = 1,
+						disabled = function() return not db.time end,
+					},
 					resetSpacer = {
 						type = "description",
 						name = "\n\n",
-						order = 16,
+						order = 17,
 						width = "full",
 					},
 					resetHeader = {
 						type = "header",
 						name = "",
-						order = 17,
+						order = 18,
 					},
 					reset = {
 						type = "execute",
@@ -1447,9 +1535,10 @@ do
 							db.alignTime = plugin.defaultDB.alignTime
 							db.timeOffsetX = plugin.defaultDB.timeOffsetX
 							db.timeOffsetY = plugin.defaultDB.timeOffsetY
+							db.timeDecimals = plugin.defaultDB.timeDecimals
 							updateProfile()
 						end,
-						order = 18,
+						order = 19,
 					},
 				},
 			},
@@ -2220,7 +2309,7 @@ end
 
 do
 	local function barSorter(a, b)
-		return a.remaining < b.remaining
+		return a:GetRemainingTime() < b:GetRemainingTime()
 	end
 	local sortedTable = {}
 	rearrangeBars = function(anchor)
@@ -2539,26 +2628,52 @@ end
 -- Initialization
 --
 
-function plugin:OnPluginEnable()
-	colors = BigWigs:GetPlugin("Colors")
-	updateProfile()
-	candy.RegisterCallback(self, "LibCandyBar_Stop", barStopped)
+do
+	local function updateColors()
+		for bar in next, normalAnchor.bars do
+			local module = bar:Get("bigwigs:module")
+			local key = bar:Get("bigwigs:option")
+			if bar:Get("bigwigs:emphasized") and db.emphasize then
+				bar:SetColor(colors:GetColor("barEmphasized", module, key))
+			else
+				bar:SetColor(colors:GetColor("barColor", module, key))
+			end
+			bar:SetBackgroundColor(colors:GetColor("barBackground", module, key))
+			bar:SetTextColor(colors:GetColor("barText", module, key))
+			bar:SetShadowColor(colors:GetColor("barTextShadow", module, key))
+		end
+		for bar in next, emphasizeAnchor.bars do
+			local module = bar:Get("bigwigs:module")
+			local key = bar:Get("bigwigs:option")
+			bar:SetColor(colors:GetColor("barEmphasized", module, key))
+			bar:SetBackgroundColor(colors:GetColor("barBackground", module, key))
+			bar:SetTextColor(colors:GetColor("barText", module, key))
+			bar:SetShadowColor(colors:GetColor("barTextShadow", module, key))
+		end
+	end
 
-	self:RegisterMessage("BigWigs_StartBar")
-	self:RegisterMessage("BigWigs_PauseBar", "PauseBar")
-	self:RegisterMessage("BigWigs_ResumeBar", "ResumeBar")
-	self:RegisterMessage("BigWigs_StopBar", "StopSpecificBar")
-	self:RegisterMessage("BigWigs_StopBars", "StopModuleBars")
-	self:RegisterMessage("BigWigs_OnBossDisable", "StopModuleBars")
-	self:RegisterMessage("BigWigs_OnBossWipe", "StopModuleBars")
-	self:RegisterMessage("BigWigs_OnPluginDisable", "StopModuleBars")
-	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
-	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
-	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	function plugin:OnPluginEnable()
+		colors = BigWigs:GetPlugin("Colors")
+		updateProfile()
+		candy.RegisterCallback(self, "LibCandyBar_Stop", barStopped)
 
-	-- custom bars
-	self:RegisterMessage("BigWigs_PluginComm")
-	self:RegisterMessage("DBM_AddonMessage")
+		self:RegisterMessage("BigWigs_StartBar")
+		self:RegisterMessage("BigWigs_PauseBar", "PauseBar")
+		self:RegisterMessage("BigWigs_ResumeBar", "ResumeBar")
+		self:RegisterMessage("BigWigs_StopBar", "StopSpecificBar")
+		self:RegisterMessage("BigWigs_StopBars", "StopModuleBars")
+		self:RegisterMessage("BigWigs_OnBossDisable", "StopModuleBars")
+		self:RegisterMessage("BigWigs_OnBossWipe", "StopModuleBars")
+		self:RegisterMessage("BigWigs_OnPluginDisable", "StopModuleBars")
+		self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
+		self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
+		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+		self:RegisterMessage("BigWigs_UpdateColors", updateColors)
+
+		-- custom bars
+		self:RegisterMessage("BigWigs_PluginComm")
+		self:RegisterMessage("DBM_AddonMessage")
+	end
 end
 
 function plugin:OnPluginDisable()
@@ -2647,11 +2762,11 @@ end
 function plugin:GetBarTimeLeft(module, text, eventId)
 	local bar = getBar(normalAnchor, module, text, eventId)
 	if bar then
-		return bar.remaining
+		return bar:GetRemainingTime()
 	end
 	bar = getBar(emphasizeAnchor, module, text, eventId)
 	if bar then
-		return bar.remaining
+		return bar:GetRemainingTime()
 	end
 	return 0
 end
