@@ -60,12 +60,14 @@ local function get(info) return plugin:GetColor(info[#info], unpack(info.arg)) e
 local function set(info, r, g, b, a)
 	local name, key = unpack(info.arg)
 	plugin.db.profile[info[#info]][name][key] = {r, g, b, a}
+	plugin:SendMessage("BigWigs_UpdateColors")
 end
 local function reset(info)
 	local name, key = unpack(info.arg)
 	for k in next, plugin.db.profile do
 		plugin.db.profile[k][name][key] = nil
 	end
+	plugin:SendMessage("BigWigs_UpdateColors")
 end
 local function hidden(info)
 	local name, key = unpack(info.arg)
@@ -92,6 +94,7 @@ end
 
 local function resetAll()
 	plugin.db:ResetProfile()
+	plugin:SendMessage("BigWigs_UpdateColors")
 end
 
 local colorOptions = {
