@@ -232,6 +232,8 @@ do
 	secondsFormatter:SetDefaultAbbreviation(2) -- Enum.SecondsFormatterAbbreviation.OneLetter = 2
 	secondsFormatter:SetMinInterval(0) -- Enum.SecondsFormatterInterval.Seconds = 0
 	secondsFormatter:SetMillisecondsThreshold(60)
+	secondsFormatter:SetStripIntervalWhitespace(2) -- Enum.SecondsFormatterIntervalWhitespace.StripIgnoreLocale = 2
+	secondsFormatter:SetDesiredUnitCount(1)
 	for i = 1, 20 do
 		local text = display:CreateFontString(nil, "OVERLAY")
 		text:SetFont(plugin:GetDefaultFont(12))
