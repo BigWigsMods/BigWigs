@@ -46,7 +46,7 @@ local function OnLeaveIcon()
 end
 
 local function GetIconTexCoord(width, height)
-	if currentBarStyler.modernStyle then
+	if currentBarStyler.barDecorationEnabled and (db.iconZoom ~= 0 or (db.iconKeepAspectRatio and width ~= height)) then
 		local baseZoom = 0.86 -- (0.07, 0.93, 0.07, 0.93) is the default texture coords
 		local zoom = baseZoom * (1 - db.iconZoom)
 		local zoomedOffset = 1 - ((1 - zoom) / 2)
@@ -426,13 +426,11 @@ do
 
 		local normalFunc = normalAnchor:GetScript("OnSizeChanged")
 		normalAnchor:SetScript("OnSizeChanged", nil)
-		normalAnchor:SetWidth(db.normalWidth)
-		normalAnchor:SetHeight(db.normalHeight)
+		normalAnchor:SetSize(db.normalWidth, db.normalHeight)
 
 		local expFunc = emphasizeAnchor:GetScript("OnSizeChanged")
 		emphasizeAnchor:SetScript("OnSizeChanged", nil)
-		emphasizeAnchor:SetWidth(db.expWidth)
-		emphasizeAnchor:SetHeight(db.expHeight)
+		emphasizeAnchor:SetSize(db.expWidth, db.expHeight)
 
 		normalAnchor:RefixPosition()
 		emphasizeAnchor:RefixPosition()
@@ -529,7 +527,7 @@ do
 				bar.candyBarIconFrame:EnableMouse(false)
 			end
 			local iconWidth = height
-			if db.icon and styleToApply.modernStyle and db.iconWidthOffset ~= 0 then
+			if db.icon and styleToApply.barDecorationEnabled and db.iconWidthOffset ~= 0 then
 				iconWidth = math.max(height + db.iconWidthOffset, 1)
 				bar.candyBarIconFrame:SetWidth(iconWidth)
 			end
@@ -556,7 +554,7 @@ do
 					bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, barHeightOffset)
 					bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 0, 0)
 				end
-			elseif db.icon and styleToApply.modernStyle and db.iconWidthOffset ~= 0 then
+			elseif db.icon and styleToApply.barDecorationEnabled and db.iconWidthOffset ~= 0 then
 				bar.candyBarBar:ClearAllPoints()
 				if db.iconPosition == "LEFT" then
 					bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", iconWidth, 0)
@@ -663,7 +661,7 @@ do
 				bar.candyBarIconFrame:EnableMouse(false)
 			end
 			local iconWidth = db.expHeight
-			if db.icon and styleToApply.modernStyle and db.iconWidthOffset ~= 0 then
+			if db.icon and styleToApply.barDecorationEnabled and db.iconWidthOffset ~= 0 then
 				iconWidth = math.max(db.expHeight + db.iconWidthOffset, 1)
 				bar.candyBarIconFrame:SetWidth(iconWidth)
 			end
@@ -690,7 +688,7 @@ do
 					bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, barHeightOffset)
 					bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 0, 0)
 				end
-			elseif db.icon and styleToApply.modernStyle and db.iconWidthOffset ~= 0 then
+			elseif db.icon and styleToApply.barDecorationEnabled and db.iconWidthOffset ~= 0 then
 				bar.candyBarBar:ClearAllPoints()
 				if db.iconPosition == "LEFT" then
 					bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", iconWidth, 0)
@@ -796,13 +794,13 @@ do
 		return db.expPosition[5] == plugin.defaultDB.expPosition[5]
 	end
 	local function IsEmphasizeDisabled() return not db.emphasize end
-	local function IsBarStyleNotModern() return not currentBarStyler.modernStyle end
-	local function IsBarStyleNotModernOrBorderSetToNone() return not currentBarStyler.modernStyle or db.borderName == "None" end
-	local function IsBarStyleNotModernOrBackgroundSetToNone() return not currentBarStyler.modernStyle or db.backgroundName == "None" end
-	local function IsBarStyleNotModernOrTextDisabled() return not db.text or not currentBarStyler.modernStyle end
-	local function IsBarStyleNotModernOrTimeDisabled() return not db.time or not currentBarStyler.modernStyle end
-	local function IsBarStyleNotModernOrIconDisabled() return not db.icon or not currentBarStyler.modernStyle end
-	local function IsDetachedIconDisabled() return not db.icon or not db.detachedIcon or not currentBarStyler.modernStyle end
+	local function IsBarDecorationDisabled() return not currentBarStyler.barDecorationEnabled end
+	local function IsBarDecorationDisabledOrBorderSetToNone() return not currentBarStyler.barDecorationEnabled or db.borderName == "None" end
+	local function IsBarDecorationDisabledOrBackgroundSetToNone() return not currentBarStyler.barDecorationEnabled or db.backgroundName == "None" end
+	local function IsBarDecorationDisabledOrTextDisabled() return not db.text or not currentBarStyler.barDecorationEnabled end
+	local function IsBarDecorationDisabledOrTimeDisabled() return not db.time or not currentBarStyler.barDecorationEnabled end
+	local function IsBarDecorationDisabledOrIconDisabled() return not db.icon or not currentBarStyler.barDecorationEnabled end
+	local function IsDetachedIconDisabled() return not db.icon or not db.detachedIcon or not currentBarStyler.barDecorationEnabled end
 
 	local inTestMode = false
 	local StartTest, StopTest
@@ -1147,7 +1145,7 @@ do
 							updateProfile()
 						end,
 						width = 1.5,
-						disabled = IsBarStyleNotModern,
+						disabled = IsBarDecorationDisabled,
 					},
 					borderColor = {
 						type = "color",
@@ -1162,7 +1160,7 @@ do
 							db.borderColor = {r, g, b, a}
 							updateProfile()
 						end,
-						disabled = IsBarStyleNotModernOrBorderSetToNone,
+						disabled = IsBarDecorationDisabledOrBorderSetToNone,
 					},
 					borderSize = {
 						type = "range",
@@ -1172,7 +1170,7 @@ do
 						max = 32,
 						step = 1,
 						width = 1.5,
-						disabled = IsBarStyleNotModernOrBorderSetToNone,
+						disabled = IsBarDecorationDisabledOrBorderSetToNone,
 					},
 					borderOffset = {
 						type = "range",
@@ -1182,7 +1180,7 @@ do
 						max = 32,
 						step = 1,
 						width = 1.5,
-						disabled = IsBarStyleNotModernOrBorderSetToNone,
+						disabled = IsBarDecorationDisabledOrBorderSetToNone,
 					},
 					backgroundSpacer = {
 						type = "description",
@@ -1211,7 +1209,7 @@ do
 							updateProfile()
 						end,
 						width = 1.5,
-						disabled = IsBarStyleNotModern,
+						disabled = IsBarDecorationDisabled,
 					},
 					backgroundColor = {
 						type = "color",
@@ -1226,7 +1224,7 @@ do
 							db.backgroundColor = {r, g, b, a}
 							updateProfile()
 						end,
-						disabled = IsBarStyleNotModernOrBackgroundSetToNone,
+						disabled = IsBarDecorationDisabledOrBackgroundSetToNone,
 					},
 					resetSpacer = {
 						type = "description",
@@ -1357,7 +1355,7 @@ do
 						min = -100,
 						max = 100,
 						step = 1,
-						disabled = IsBarStyleNotModernOrTextDisabled,
+						disabled = IsBarDecorationDisabledOrTextDisabled,
 					},
 					textOffsetY = {
 						type = "range",
@@ -1368,7 +1366,7 @@ do
 						min = -100,
 						max = 100,
 						step = 1,
-						disabled = IsBarStyleNotModernOrTextDisabled,
+						disabled = IsBarDecorationDisabledOrTextDisabled,
 					},
 					timeSpacer = {
 						type = "description",
@@ -1409,7 +1407,7 @@ do
 						min = -100,
 						max = 100,
 						step = 1,
-						disabled = IsBarStyleNotModernOrTimeDisabled,
+						disabled = IsBarDecorationDisabledOrTimeDisabled,
 					},
 					timeOffsetY = {
 						type = "range",
@@ -1420,7 +1418,7 @@ do
 						min = -100,
 						max = 100,
 						step = 1,
-						disabled = IsBarStyleNotModernOrTimeDisabled,
+						disabled = IsBarDecorationDisabledOrTimeDisabled,
 					},
 					resetSpacer = {
 						type = "description",
@@ -1481,7 +1479,7 @@ do
 						desc = L.keepAspectRatioDesc,
 						order = 3,
 						width = 1,
-						disabled = IsBarStyleNotModernOrIconDisabled,
+						disabled = IsBarDecorationDisabledOrIconDisabled,
 					},
 					iconPosition = {
 						type = "select",
@@ -1503,7 +1501,7 @@ do
 						min = -50,
 						max = 50,
 						step = 1,
-						disabled = IsBarStyleNotModernOrIconDisabled,
+						disabled = IsBarDecorationDisabledOrIconDisabled,
 					},
 					iconZoom = {
 						type = "range",
@@ -1515,14 +1513,14 @@ do
 						max = 0.5,
 						step = 0.01,
 						isPercent = true,
-						disabled = IsBarStyleNotModernOrIconDisabled,
+						disabled = IsBarDecorationDisabledOrIconDisabled,
 					},
 					detachedIcon = {
 						type = "toggle",
 						name = L.detachedIcon,
 						order = 7,
 						width = 1.5,
-						disabled = IsBarStyleNotModernOrIconDisabled,
+						disabled = IsBarDecorationDisabledOrIconDisabled,
 					},
 					iconOffset = {
 						type = "range",
@@ -2347,7 +2345,7 @@ do
 				indicatorFrame:SetIndicatorSize(barHeight)
 			end
 			local iconWidth = barHeight
-			if db.icon and currentBarStyler.modernStyle and db.iconWidthOffset ~= 0 then
+			if db.icon and currentBarStyler.barDecorationEnabled and db.iconWidthOffset ~= 0 then
 				iconWidth = math.max(barHeight + db.iconWidthOffset, 1)
 				k.candyBarIconFrame:SetWidth(iconWidth)
 			end
@@ -2385,7 +2383,7 @@ do
 				end
 			else
 				barHeightOffset = 0
-				if db.icon and currentBarStyler.modernStyle and db.iconWidthOffset ~= 0 then
+				if db.icon and currentBarStyler.barDecorationEnabled and db.iconWidthOffset ~= 0 then
 					k.candyBarBar:ClearAllPoints()
 					if db.iconPosition == "LEFT" then
 						k.candyBarBar:SetPoint("TOPLEFT", k, "TOPLEFT", iconWidth, 0)
@@ -2465,8 +2463,7 @@ do
 		display:SetFixedFrameStrata(true)
 		display:SetFrameLevel(frameLevel)
 		display:SetFixedFrameLevel(true)
-		display:SetWidth(width)
-		display:SetHeight(height)
+		display:SetSize(width, height)
 		positionDBToUse[display] = position
 		local bg = display:CreateTexture(nil, "BACKGROUND")
 		bg:SetAllPoints(display)
@@ -2481,8 +2478,7 @@ do
 		header:SetJustifyH("CENTER")
 		header:SetJustifyV("MIDDLE")
 		local drag = CreateFrame("Frame", nil, display)
-		drag:SetWidth(16)
-		drag:SetHeight(16)
+		drag:SetSize(16, 16)
 		drag:SetPoint("BOTTOMRIGHT", -1, 1)
 		drag:EnableMouse(true)
 		drag:SetScript("OnMouseDown", OnMouseDown)
@@ -2839,9 +2835,7 @@ do
 
 	local initial = true
 	function plugin:CreateBar(module, key, text, time, eventId, spellIndicators)
-		local width, height
-		width = db.normalWidth
-		height = db.normalHeight
+		local width, height = db.normalWidth, db.normalHeight
 		local bar = candy:New(LibSharedMedia:Fetch(STATUSBAR, db.texture), width, height)
 		bar:SetDuration(time)
 		local flags = nil
@@ -2938,7 +2932,7 @@ do
 		else
 			bar:Start(maxTime)
 			local iconWidth = db.normalHeight
-			if db.icon and currentBarStyler.modernStyle and db.iconWidthOffset ~= 0 then
+			if db.icon and currentBarStyler.barDecorationEnabled and db.iconWidthOffset ~= 0 then
 				iconWidth = math.max(db.normalHeight + db.iconWidthOffset, 1)
 				bar.candyBarIconFrame:SetWidth(iconWidth)
 			end
@@ -2965,7 +2959,7 @@ do
 					bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, barHeightOffset)
 					bar.candyBarBar:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 0, 0)
 				end
-			elseif db.icon and currentBarStyler.modernStyle and db.iconWidthOffset ~= 0 then
+			elseif db.icon and currentBarStyler.barDecorationEnabled and db.iconWidthOffset ~= 0 then
 				bar.candyBarBar:ClearAllPoints()
 				if db.iconPosition == "LEFT" then
 					bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", iconWidth, 0)
@@ -3032,7 +3026,7 @@ do
 		local anchor = bar:Get("bigwigs:anchor") == "expPosition" and emphasizeAnchor or normalAnchor
 		rearrangeBars(anchor)
 		local height = bar:Get("bigwigs:emphasized") and db.expHeight or db.normalHeight
-		local iconWidth = (db.icon and currentBarStyler.modernStyle and db.iconWidthOffset ~= 0) and math.max(height + db.iconWidthOffset, 1) or height
+		local iconWidth = (db.icon and currentBarStyler.barDecorationEnabled and db.iconWidthOffset ~= 0) and math.max(height + db.iconWidthOffset, 1) or height
 		-- Text and icon can potentially be secret so apply them last
 		bar:SetLabel(text)
 		bar:SetIcon(icon, GetIconTexCoord(iconWidth, height))
@@ -3086,7 +3080,7 @@ function plugin:EmphasizeBar(bar, freshBar)
 		indicatorFrame:SetIndicatorSize(height)
 	end
 	local iconWidth = height
-	if db.icon and currentBarStyler.modernStyle and db.iconWidthOffset ~= 0 then
+	if db.icon and currentBarStyler.barDecorationEnabled and db.iconWidthOffset ~= 0 then
 		iconWidth = math.max(height + db.iconWidthOffset, 1)
 		bar.candyBarIconFrame:SetWidth(iconWidth)
 	end
@@ -3113,7 +3107,7 @@ function plugin:EmphasizeBar(bar, freshBar)
 		end
 	else
 		barHeightOffset = 0
-		if db.icon and currentBarStyler.modernStyle and db.iconWidthOffset ~= 0 then
+		if db.icon and currentBarStyler.barDecorationEnabled and db.iconWidthOffset ~= 0 then
 			bar.candyBarBar:ClearAllPoints()
 			if db.iconPosition == "LEFT" then
 				bar.candyBarBar:SetPoint("TOPLEFT", bar, "TOPLEFT", iconWidth, 0)
@@ -3267,7 +3261,10 @@ do
 		if seconds == 0 then
 			plugin:SendMessage("BigWigs_StopBar", plugin, nick..": "..barText)
 		else
-			timers[id] = plugin:ScheduleTimer(function() plugin:SendMessage("BigWigs_Message", plugin, false, L.timerFinished:format(nick, barText), "yellow", 134376) end, seconds)
+			timers[id] = plugin:ScheduleTimer(function()
+				timers[id] = nil
+				plugin:SendMessage("BigWigs_Message", plugin, false, L.timerFinished:format(nick, barText), "yellow", 134376)
+			end, seconds)
 			local text = nick..": "..barText
 			plugin:SendMessage("BigWigs_StartBar", plugin, id, text, seconds, 134376) -- 134376 = "Interface\\Icons\\INV_Misc_PocketWatch_01"
 			plugin:SendMessage("BigWigs_Timer", plugin, id, 9, 9, text, 0, 134376, false, true)

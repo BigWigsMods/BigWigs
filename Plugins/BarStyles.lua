@@ -8,7 +8,7 @@ do
 	BigWigsAPI:RegisterBarStyle("Default", {
 		apiVersion = 1,
 		version = 1,
-		modernStyle = true,
+		barDecorationEnabled = true,
 		--barSpacing = 1,
 		--barHeight = 18,
 		--expBarHeight = 22,
@@ -301,7 +301,7 @@ do
 	BigWigsAPI:RegisterBarStyle("MonoUI", {
 		apiVersion = 1,
 		version = 10,
-		modernStyle = true,
+		barDecorationEnabled = true,
 		barSpacing = 6,
 		barHeight = 20,
 		expBarHeight = 22,
@@ -329,7 +329,7 @@ do
 	BigWigsAPI:RegisterBarStyle("NaowhUI", {
 		apiVersion = 1,
 		version = 10,
-		modernStyle = true,
+		barDecorationEnabled = true,
 		barSpacing = 4,
 		barHeight = 20,
 		expBarHeight = 22,
@@ -425,7 +425,7 @@ do
 	BigWigsAPI:RegisterBarStyle("TukUI", {
 		apiVersion = 1,
 		version = 10,
-		modernStyle = true,
+		barDecorationEnabled = true,
 		barSpacing = 7,
 		borderName = "Solid",
 		borderColor = { 0.5, 0.5, 0.5, 1 },
@@ -445,7 +445,7 @@ do
 	BigWigsAPI:RegisterBarStyle("ElvUI", {
 		apiVersion = 1,
 		version = 10,
-		modernStyle = true,
+		barDecorationEnabled = true,
 		barSpacing = 4,
 		barHeight = 20,
 		expBarHeight = 22,
