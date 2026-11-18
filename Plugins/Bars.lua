@@ -1475,7 +1475,7 @@ do
 					resetAll = {
 						type = "execute",
 						name = L.resetAll,
-						desc = L.resetBarsDesc,
+						desc = L.resetAllDesc:format(L.bars),
 						func = function()
 							plugin.db:ResetProfile()
 							-- Since we are resetting the bar style, we also need to reset the colors that those styles might have changed

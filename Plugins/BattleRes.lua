@@ -353,6 +353,13 @@ do
 		plugin.db.profile.cooldownSwipe = defaultDB.cooldownSwipe
 		plugin.db.profile.cooldownInverse = defaultDB.cooldownInverse
 	end
+	ProfileUtils.ResetPositionSettings = function()
+		plugin.db.profile.position[1] = defaultDB.position[1]
+		plugin.db.profile.position[2] = defaultDB.position[2]
+		plugin.db.profile.position[3] = defaultDB.position[3]
+		plugin.db.profile.position[4] = defaultDB.position[4]
+		plugin.db.profile.position[5] = defaultDB.position[5]
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -778,7 +785,7 @@ do
 						name = L.reset,
 						desc = L.resetDesc,
 						func = function()
-							ProfileUtils.ResetSettings()
+							ProfileUtils.ResetGeneralSettings()
 							UpdateWidgets()
 						end,
 						order = 14,
@@ -787,7 +794,7 @@ do
 					resetAll = {
 						type = "execute",
 						name = L.resetAll,
-						desc = L.battleResResetAll,
+						desc = L.resetAllDesc:format(L.battleResTitle),
 						func = function()
 							ProfileUtils.ResetSettings()
 							UpdateWidgets()
@@ -1221,11 +1228,7 @@ do
 								plugin.db.profile.position[4] = 0
 								plugin.db.profile.position[5] = value
 							else
-								plugin.db.profile.position[1] = plugin.defaultDB.position[1]
-								plugin.db.profile.position[2] = plugin.defaultDB.position[2]
-								plugin.db.profile.position[3] = plugin.defaultDB.position[3]
-								plugin.db.profile.position[4] = plugin.defaultDB.position[4]
-								plugin.db.profile.position[5] = plugin.defaultDB.position[5]
+								ProfileUtils.ResetPositionSettings()
 							end
 							UpdateWidgets()
 						end,
@@ -1270,6 +1273,22 @@ do
 						order = 5,
 						width = 1.5,
 						disabled = IsDisabledOrAnchorPointIsDefault,
+					},
+					resetHeader = {
+						type = "header",
+						name = "",
+						order = 6,
+					},
+					reset = {
+						type = "execute",
+						name = L.reset,
+						desc = L.resetDesc,
+						func = function()
+							ProfileUtils.ResetPositionSettings()
+							UpdateWidgets()
+						end,
+						order = 7,
+						disabled = IsDisabled,
 					},
 				},
 			},

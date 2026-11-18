@@ -1115,7 +1115,7 @@ do
 							reset = {
 								type = "execute",
 								name = L.resetAll,
-								desc = L.resetNameplateIconsDesc,
+								desc = L.resetAllDesc:format(L.nameplateIconSettings),
 								func = function()
 									setDefaults(iconDefaults)
 									if plugin:UnitGUID("target") then
@@ -1636,7 +1636,7 @@ do
 					reset = {
 						type = "execute",
 						name = L.resetAll,
-						desc = L.resetNameplateTextDesc,
+						desc = L.resetAllDesc:format(L.nameplateTextSettings),
 						func = function()
 							setDefaults(textDefaults)
 							if plugin:UnitGUID("target") then

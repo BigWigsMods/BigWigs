@@ -810,7 +810,7 @@ end
 --			reset = {
 --				type = "execute",
 --				name = L.resetAll,
---				desc = L.resetProximityDesc,
+--				desc = L.resetAllDesc:format(L.proximity_name),
 --				func = function()
 --					plugin.db:ResetProfile()
 --				end,

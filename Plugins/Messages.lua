@@ -544,7 +544,7 @@ do
 					reset = {
 						type = "execute",
 						name = L.resetAll,
-						desc = L.resetMessagesDesc,
+						desc = L.resetAllDesc:format(L.messages),
 						func = function() plugin.db:ResetProfile() updateProfile() end,
 						order = 16,
 					},

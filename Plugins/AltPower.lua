@@ -383,7 +383,7 @@ do
 					reset = {
 						type = "execute",
 						name = L.resetAll,
-						desc = L.resetAltPowerDesc,
+						desc = L.resetAllDesc:format(L.altPowerTitle),
 						func = function()
 							plugin:Contract()
 							plugin.db:ResetProfile()
