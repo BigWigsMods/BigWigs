@@ -710,6 +710,7 @@ L.comma = ", "
 L.reset = "Restablecer"
 L.resetDesc = "Restablece la configuración anterior a sus valores predeterminados."
 L.resetAll = "Restablecer todo"
+--L.resetAllDesc = "Reset all the settings related to '%s' including any anchor positioning."
 L.startTest = "Empezar test"
 L.stopTest = "Parar test"
 L.always = "Siempre"
@@ -781,7 +782,8 @@ L.disableAltPowerDesc = "Desactiva globalmente el marco de Poder alternativo, nu
 
 L.auras = "Auras" -- Buffs/Debuffs
 L.aurasDesc = "BigWigs puede ayudarte a ver cuando un jefe te aplica perjuicios mostrándotelos como iconos.\n|cFF33FF99Esto te puede ayudar a mostrar por separado los perjuicios más importantes de los comunes.|r\n\n"
-L.disabledDuringTrash = "Deshabilitado en los esbirros entre jefe y jefe"
+--L.onlyActiveDuringBosses = "Only active during bosses"
+--L.onlyActiveDuringBossesDesc = "Enabling this option means you will only ever see debuffs during a boss encounter, and not during trash fights."
 
 L.createTestAura = "Crear aura de prueba"
 L.showDispelType = "Mostrar indicador de tipo de disipación"

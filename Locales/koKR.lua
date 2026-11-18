@@ -710,6 +710,7 @@ L.comma = ", "
 L.reset = "초기화"
 L.resetDesc = "위의 설정을 기본값으로 초기화합니다."
 L.resetAll = "모두 초기화"
+--L.resetAllDesc = "Reset all the settings related to '%s' including any anchor positioning."
 L.startTest = "테스트 시작"
 L.stopTest = "테스트 중지"
 L.always = "항상"
@@ -781,7 +782,8 @@ L.disableAltPowerDesc = "전역 옵션으로 보조 자원 디스플레이를 �
 
 L.auras = "오라" -- Buffs/Debuffs
 L.aurasDesc = "BigWigs는 보스 디버프가 적용되었을 때 이를 아이콘으로 표시하여 확인하는 데 도움을 줍니다.\n|cFF33FF99이를 통해 치명적인 디버프를 일반 디버프와 별도로 표시하여 유용하게 활용할 수 있습니다.|r\n\n"
-L.disabledDuringTrash = "휴지통 이동 중 비활성화됨"
+--L.onlyActiveDuringBosses = "Only active during bosses"
+--L.onlyActiveDuringBossesDesc = "Enabling this option means you will only ever see debuffs during a boss encounter, and not during trash fights."
 
 L.createTestAura = "테스트 오라 생성"
 L.showDispelType = "해제 유형 표시기 표시"

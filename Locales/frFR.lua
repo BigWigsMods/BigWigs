@@ -710,6 +710,7 @@ L.comma = ", "
 L.reset = "Réinitialiser"
 L.resetDesc = "Réinitialise les paramètres ci-dessus à leur valeur d'origine."
 L.resetAll = "Tout réinitialiser"
+--L.resetAllDesc = "Reset all the settings related to '%s' including any anchor positioning."
 L.startTest = "Démarrer le test"
 L.stopTest = "Arrêter le test"
 L.always = "Toujours"
@@ -781,7 +782,8 @@ L.disableAltPowerDesc = "Désactive l'affichage de la ressource alternative de m
 
 L.auras = "Auras" -- Buffs/Debuffs
 L.aurasDesc = "BigWigs peut vous aider à traquer les affaiblissements que les boss peuvent vous appliquer en tant qu'icônes.\n|cFF33FF99Cela peut vous aider à afficher les affaiblissements critiques, séparément de vos affaiblissements normaux.|r\n\n"
-L.disabledDuringTrash = "Désactivé pendant les Trash"
+--L.onlyActiveDuringBosses = "Only active during bosses"
+--L.onlyActiveDuringBossesDesc = "Enabling this option means you will only ever see debuffs during a boss encounter, and not during trash fights."
 
 L.createTestAura = "Créer une Aura de Test"
 L.showDispelType = "Afficher l'indicateur du type de dissipation"

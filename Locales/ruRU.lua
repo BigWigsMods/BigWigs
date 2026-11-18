@@ -710,6 +710,7 @@ L.comma = ", "
 L.reset = "Сброс"
 L.resetDesc = "Сбросить настройки выше к их стандартным значениям."
 L.resetAll = "Сбросить все"
+--L.resetAllDesc = "Reset all the settings related to '%s' including any anchor positioning."
 L.startTest = "Начать тест"
 L.stopTest = "Остановить тест"
 L.always = "Всегда"
@@ -1056,7 +1057,8 @@ L.messagesOptInWarning = "|cffff4411ВНИМАНИЕ!|r\n\nВключение р
 
 L.auras = "Ауры" -- Buffs/Debuffs
 L.aurasDesc = "BigWigs может помочь Вам отслеживать дебаффы босса, если они будут наложены на Вас, отображая их как иконки.\n|cFF33FF99Это может помочь Вам с отображением важных дебаффов отдельно от обычных.|r\n\n"
-L.disabledDuringTrash = "Отключить на трэше"
+--L.onlyActiveDuringBosses = "Only active during bosses"
+--L.onlyActiveDuringBossesDesc = "Enabling this option means you will only ever see debuffs during a boss encounter, and not during trash fights."
 
 L.createTestAura = "Создать тестовую ауру"
 L.showDispelType = "Показывать индикатор типа рассеивания"

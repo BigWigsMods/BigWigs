@@ -710,6 +710,7 @@ L.comma = "，"
 L.reset = "重置"
 L.resetDesc = "将上述设置重置为默认。"
 L.resetAll = "重置所有"
+--L.resetAllDesc = "Reset all the settings related to '%s' including any anchor positioning."
 L.startTest = "开始测试"
 L.stopTest = "停止测试"
 L.always = "总是" -- ALWAYS
@@ -781,7 +782,8 @@ L.disableAltPowerDesc = "全局禁用交替能量显示，此后任何首领战�
 
 L.auras = "光环" -- Buffs/Debuffs
 L.aurasDesc = "BigWigs 可以将你身上的首领减益以图标形式显示，方便你追踪。\n|cFF33FF99这样能把关键减益与普通减益分开显示，让你更直观地掌握自身状态。|r\n\n"
-L.disabledDuringTrash = "小怪期间禁用"
+--L.onlyActiveDuringBosses = "Only active during bosses"
+--L.onlyActiveDuringBossesDesc = "Enabling this option means you will only ever see debuffs during a boss encounter, and not during trash fights."
 
 L.createTestAura = "创建测试光环"
 L.showDispelType = "显示驱散类型指示器"

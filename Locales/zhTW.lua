@@ -710,6 +710,7 @@ L.comma = "，"
 L.reset = "重置"
 L.resetDesc = "將上方設定重設為預設值。"
 L.resetAll = "重置所有"
+--L.resetAllDesc = "Reset all the settings related to '%s' including any anchor positioning."
 L.startTest = "開始測試"
 L.stopTest = "停止測試"
 L.always = "總是"
@@ -781,7 +782,8 @@ L.disableAltPowerDesc = "全局停用替代能量框架，啟用此選項將使�
 
 L.auras = "光環" -- Buffs/Debuffs
 L.aurasDesc = "BigWigs 使用獨立且醒目的大圖示來追蹤首領對你施放的減益效果。\n|cFF33FF99這能將關鍵的減益狀態與一般的負面效果區分開來，讓你迅速掌握自身狀況。|r\n\n"
-L.disabledDuringTrash = "小怪戰鬥期間停用"
+--L.onlyActiveDuringBosses = "Only active during bosses"
+--L.onlyActiveDuringBossesDesc = "Enabling this option means you will only ever see debuffs during a boss encounter, and not during trash fights."
 
 L.createTestAura = "創建測試光環"
 L.showDispelType = "顯示驅散類型圖示"

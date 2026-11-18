@@ -709,6 +709,7 @@ L.comma = ", "
 L.reset = "Reset"
 L.resetDesc = "Reset the above settings to their default values."
 L.resetAll = "Reset all"
+L.resetAllDesc = "Reset all the settings related to '%s' including any anchor positioning."
 L.startTest = "Start Test"
 L.stopTest = "Stop Test"
 L.always = "Always"
@@ -780,7 +781,8 @@ L.disableAltPowerDesc = "Globally disable the AltPower display, it will never sh
 
 L.auras = "Auras" -- Buffs/Debuffs
 L.aurasDesc = "BigWigs can help you keep track of when boss debuffs are applied to you by displaying them as icons.\n|cFF33FF99This can help you by displaying critical debuffs separately from your normal debuffs.|r\n\n"
-L.disabledDuringTrash = "Disabled During Trash"
+L.onlyActiveDuringBosses = "Only active during bosses"
+L.onlyActiveDuringBossesDesc = "Enabling this option means you will only ever see debuffs during a boss encounter, and not during trash fights."
 
 L.createTestAura = "Create Test Aura"
 L.showDispelType = "Show Dispel Type Indicator"
