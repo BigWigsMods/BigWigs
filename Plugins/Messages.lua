@@ -536,17 +536,39 @@ do
 						width = 1.5,
 						disabled = function() return not plugin.db.profile.chat end,
 					},
-					header1 = {
+					resetHeader = {
 						type = "header",
 						name = "",
 						order = 15,
 					},
 					reset = {
 						type = "execute",
+						name = L.reset,
+						desc = L.resetDesc,
+						func = function()
+							db.fontName = plugin.defaultDB.fontName
+							db.outline = plugin.defaultDB.outline
+							db.monochrome = plugin.defaultDB.monochrome
+							db.slugRendering = plugin.defaultDB.slugRendering
+							db.fontSize = plugin.defaultDB.fontSize
+							db.align = plugin.defaultDB.align
+							db.useicons = plugin.defaultDB.useicons
+							db.classcolor = plugin.defaultDB.classcolor
+							db.growUpwards = plugin.defaultDB.growUpwards
+							db.displaytime = plugin.defaultDB.displaytime
+							db.fadetime = plugin.defaultDB.fadetime
+							db.chat = plugin.defaultDB.chat
+							db.chatOutput = plugin.defaultDB.chatOutput
+							updateProfile()
+						end,
+						order = 16,
+					},
+					resetAll = {
+						type = "execute",
 						name = L.resetAll,
 						desc = L.resetAllDesc:format(L.messages),
 						func = function() plugin.db:ResetProfile() updateProfile() end,
-						order = 16,
+						order = 17,
 					},
 				},
 			},
@@ -619,6 +641,26 @@ do
 						name = L.slugRendering,
 						desc = L.slugRenderingDesc,
 						order = 7,
+					},
+					resetHeader = {
+						type = "header",
+						name = "",
+						order = 8,
+					},
+					reset = {
+						type = "execute",
+						name = L.reset,
+						desc = L.resetDesc,
+						func = function()
+							db.emphFontName = plugin.defaultDB.emphFontName
+							db.emphOutline = plugin.defaultDB.emphOutline
+							db.emphFontSize = plugin.defaultDB.emphFontSize
+							db.emphMonochrome = plugin.defaultDB.emphMonochrome
+							db.emphUppercase = plugin.defaultDB.emphUppercase
+							db.emphSlugRendering = plugin.defaultDB.emphSlugRendering
+							updateProfile()
+						end,
+						order = 9,
 					},
 				},
 			},
@@ -711,6 +753,32 @@ do
 								end,
 							},
 						},
+					},
+					resetHeader = {
+						type = "header",
+						name = "",
+						order = 3,
+					},
+					reset = {
+						type = "execute",
+						name = L.reset,
+						desc = L.resetDesc,
+						func = function()
+							db.normalPosition = {
+								plugin.defaultDB.normalPosition[1],
+								plugin.defaultDB.normalPosition[2],
+								plugin.defaultDB.normalPosition[3],
+								plugin.defaultDB.normalPosition[4],
+							}
+							db.emphPosition = {
+								plugin.defaultDB.emphPosition[1],
+								plugin.defaultDB.emphPosition[2],
+								plugin.defaultDB.emphPosition[3],
+								plugin.defaultDB.emphPosition[4],
+							}
+							updateProfile()
+						end,
+						order = 4,
 					},
 				},
 			},

@@ -225,6 +225,7 @@ plugin.defaultDB = {
 	showBar = false,
 }
 
+local updateProfile
 do
 	local function checkDisabled() return plugin.db.profile.disabled end
 	plugin.pluginOptions = {
@@ -305,6 +306,26 @@ do
 				end,
 				width = "full",
 			},
+			resetHeader = {
+				type = "header",
+				name = "",
+				order = 6,
+			},
+			reset = {
+				type = "execute",
+				name = L.reset,
+				desc = L.resetDesc,
+				func = function()
+					local wasDisabled = plugin.db.profile.disabled
+					plugin.db:ResetProfile()
+					updateProfile()
+					if wasDisabled then
+						plugin:Disable()
+						plugin:Enable()
+					end
+				end,
+				order = 7,
+			},
 		},
 	}
 end
@@ -320,7 +341,7 @@ function plugin:OnRegister()
 end
 
 do
-	local function updateProfile()
+	function updateProfile()
 		local db = plugin.db.profile
 
 		for k, v in next, db do

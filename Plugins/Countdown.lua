@@ -455,6 +455,26 @@ do
 							countdownAnchor:RefixPosition()
 						end,
 					},
+					resetHeader = {
+						type = "header",
+						name = "",
+						order = 3,
+					},
+					reset = {
+						type = "execute",
+						name = L.reset,
+						desc = L.resetDesc,
+						func = function()
+							plugin.db.profile.position = {
+								plugin.defaultDB.position[1],
+								plugin.defaultDB.position[2],
+								plugin.defaultDB.position[3],
+								plugin.defaultDB.position[4],
+							}
+							updateProfile()
+						end,
+						order = 4,
+					},
 				},
 			},
 		},

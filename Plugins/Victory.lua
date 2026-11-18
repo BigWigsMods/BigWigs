@@ -11,6 +11,7 @@ if not plugin then return end
 
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local SOUND = LibSharedMedia.MediaType and LibSharedMedia.MediaType.SOUND or "sound"
+local updateProfile
 
 -------------------------------------------------------------------------------
 -- Options
@@ -89,6 +90,21 @@ plugin.pluginOptions = {
 				},
 			},
 		},
+		resetHeader = {
+			type = "header",
+			name = "",
+			order = 4,
+		},
+		reset = {
+			type = "execute",
+			name = L.reset,
+			desc = L.resetDesc,
+			func = function()
+				plugin.db:ResetProfile()
+				updateProfile()
+			end,
+			order = 5,
+		},
 	},
 }
 
@@ -98,7 +114,7 @@ plugin.pluginOptions = {
 
 do
 	local shouldRestoreBanner = false
-	local function updateProfile()
+	function updateProfile()
 		if shouldRestoreBanner then
 			shouldRestoreBanner = false
 			BossBanner:RegisterEvent("BOSS_KILL")

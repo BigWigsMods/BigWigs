@@ -11,6 +11,7 @@ if not plugin then return end
 
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local SOUND = LibSharedMedia.MediaType and LibSharedMedia.MediaType.SOUND or "sound"
+local updateProfile
 
 -------------------------------------------------------------------------------
 -- Options
@@ -64,6 +65,21 @@ plugin.pluginOptions = {
 			order = 2,
 			width = "full",
 		},
+		resetHeader = {
+			type = "header",
+			name = "",
+			order = 3,
+		},
+		reset = {
+			type = "execute",
+			name = L.reset,
+			desc = L.resetDesc,
+			func = function()
+				plugin.db:ResetProfile()
+				updateProfile()
+			end,
+			order = 4,
+		},
 	},
 }
 
@@ -72,7 +88,7 @@ plugin.pluginOptions = {
 --
 
 do
-	local function updateProfile()
+	function updateProfile()
 		local db = plugin.db.profile
 
 		for k, v in next, db do

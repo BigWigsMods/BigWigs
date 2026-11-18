@@ -221,6 +221,42 @@ plugin.pluginOptions = {
 						},
 					},
 				},
+				resetHeader = {
+					type = "header",
+					name = "",
+					order = 12,
+				},
+				reset = {
+					type = "execute",
+					name = L.reset,
+					desc = L.resetDesc,
+					func = function()
+						plugin.db.profile.blockEmotes = plugin.defaultDB.blockEmotes
+						plugin.db.profile.blockMovies = plugin.defaultDB.blockMovies
+						plugin.db.profile.blockGarrison = plugin.defaultDB.blockGarrison
+						plugin.db.profile.blockGuildChallenge = plugin.defaultDB.blockGuildChallenge
+						plugin.db.profile.blockSpellErrors = plugin.defaultDB.blockSpellErrors
+						plugin.db.profile.blockZoneChanges = plugin.defaultDB.blockZoneChanges
+						plugin.db.profile.blockTooltipQuestText = plugin.defaultDB.blockTooltipQuestText
+						plugin.db.profile.blockObjectiveTracker = plugin.defaultDB.blockObjectiveTracker
+						plugin.db.profile.blockTalkingHeads = {
+							plugin.defaultDB.blockTalkingHeads[1],
+							plugin.defaultDB.blockTalkingHeads[2],
+							plugin.defaultDB.blockTalkingHeads[3],
+							plugin.defaultDB.blockTalkingHeads[4],
+							plugin.defaultDB.blockTalkingHeads[5],
+							plugin.defaultDB.blockTalkingHeads[6],
+						}
+						plugin.db.profile.blockZoneInToasts = plugin.defaultDB.blockZoneInToasts
+						plugin.db.profile.redirectTheToasts = plugin.defaultDB.redirectTheToasts
+						plugin.db.profile.toastsColor = {
+							plugin.defaultDB.toastsColor[1],
+							plugin.defaultDB.toastsColor[2],
+							plugin.defaultDB.toastsColor[3],
+						}
+					end,
+					order = 13,
+				},
 			},
 		},
 		audio = {
@@ -290,6 +326,23 @@ plugin.pluginOptions = {
 							return true
 						end
 					end,
+				},
+				resetHeader = {
+					type = "header",
+					name = "",
+					order = 5,
+				},
+				reset = {
+					type = "execute",
+					name = L.reset,
+					desc = L.resetDesc,
+					func = function()
+						plugin.db.profile.disableMusic = plugin.defaultDB.disableMusic
+						plugin.db.profile.disableAmbience = plugin.defaultDB.disableAmbience
+						plugin.db.profile.disableErrorSpeech = plugin.defaultDB.disableErrorSpeech
+						plugin.db.profile.disableSfx = plugin.defaultDB.disableSfx
+					end,
+					order = 6,
 				},
 			},
 		},

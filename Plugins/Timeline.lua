@@ -206,6 +206,28 @@ do
 						end,
 						order = 6,
 					},
+					resetHeader = {
+						type = "header",
+						name = "",
+						order = 7,
+					},
+					reset = {
+						type = "execute",
+						name = L.reset,
+						desc = L.resetDesc,
+						func = function()
+							C_CVar.SetCVar("encounterTimelineHideLongCountdowns", C_CVar.GetCVarDefault("encounterTimelineHideLongCountdowns"))
+							C_CVar.SetCVar("encounterTimelineHideQueuedCountdowns", C_CVar.GetCVarDefault("encounterTimelineHideQueuedCountdowns"))
+							C_CVar.SetCVar("encounterTimelineHideForOtherRoles", C_CVar.GetCVarDefault("encounterTimelineHideForOtherRoles"))
+							C_CVar.SetCVar("encounterTimelineIconographyEnabled", C_CVar.GetCVarDefault("encounterTimelineIconographyEnabled"))
+							C_CVar.SetCVar("encounterTimelineIconographyHiddenMask", C_CVar.GetCVarDefault("encounterTimelineIconographyHiddenMask"))
+							if db.blizzTimeline ~= plugin.defaultDB.blizzTimeline then
+								db.blizzTimeline = plugin.defaultDB.blizzTimeline
+								C_UI.Reload()
+							end
+						end,
+						order = 8,
+					},
 				},
 			},
 		},
