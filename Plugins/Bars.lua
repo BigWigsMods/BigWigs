@@ -123,6 +123,7 @@ do
 		expPosition = {"CENTER", "CENTER", 0, -100, "UIParent"},
 		normalCopyCustomAnchorWidth = false,
 		expCopyCustomAnchorWidth = false,
+		barStyleMigrated = false, -- XXX temp 12.1.5
 	}
 
 	local function HookScriptNormal(self, width)
@@ -204,6 +205,117 @@ do
 		if not styleToApply then
 			db.barStyle = plugin.defaultDB.barStyle
 			styleToApply = BigWigsAPI:GetBarStyle(db.barStyle)
+		end
+
+		if not db.barStyleMigrated then -- XXX temp 12.1.5
+			db.barStyleMigrated = true
+			if db.barStyle ~= "Default" then
+				if type(styleToApply.barHeightOffset) == "number" and styleToApply.barHeightOffset <= 0 and styleToApply.barHeightOffset >= -100 then
+					db.normalBarHeightOffset = styleToApply.barHeightOffset
+				end
+				if type(styleToApply.expBarHeightOffset) == "number" and styleToApply.expBarHeightOffset <= 0 and styleToApply.expBarHeightOffset >= -100 then
+					db.expBarHeightOffset = styleToApply.expBarHeightOffset
+				end
+				if type(styleToApply.borderName) == "string" and LibSharedMedia:IsValid(BORDER, styleToApply.borderName) and (styleToApply.borderName == "None" or BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(BORDER, styleToApply.borderName))) then
+					db.borderName = styleToApply.borderName
+				end
+				if type(styleToApply.borderColor) == "table"
+				and type(styleToApply.borderColor[1]) == "number" and styleToApply.borderColor[1] >= 0 and styleToApply.borderColor[1] <= 1
+				and type(styleToApply.borderColor[2]) == "number" and styleToApply.borderColor[2] >= 0 and styleToApply.borderColor[2] <= 1
+				and type(styleToApply.borderColor[3]) == "number" and styleToApply.borderColor[3] >= 0 and styleToApply.borderColor[3] <= 1
+				and type(styleToApply.borderColor[4]) == "number" and styleToApply.borderColor[4] >= 0 and styleToApply.borderColor[4] <= 1 then
+					db.borderColor = {
+						styleToApply.borderColor[1],
+						styleToApply.borderColor[2],
+						styleToApply.borderColor[3],
+						styleToApply.borderColor[4],
+					}
+				end
+				if type(styleToApply.borderOffset) == "number" and styleToApply.borderOffset >= 0 and styleToApply.borderOffset <= 32 then
+					db.borderOffset = styleToApply.borderOffset
+				end
+				if type(styleToApply.borderSize) == "number" and styleToApply.borderSize >= 1 and styleToApply.borderSize <= 32 then
+					db.borderSize = styleToApply.borderSize
+				end
+				if type(styleToApply.backgroundName) == "string" and LibSharedMedia:IsValid(BACKGROUND, styleToApply.backgroundName) and (styleToApply.backgroundName == "None" or BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(BACKGROUND, styleToApply.backgroundName))) then
+					db.backgroundName = styleToApply.backgroundName
+				end
+				if type(styleToApply.backgroundColor) == "table"
+				and type(styleToApply.backgroundColor[1]) == "number" and styleToApply.backgroundColor[1] >= 0 and styleToApply.backgroundColor[1] <= 1
+				and type(styleToApply.backgroundColor[2]) == "number" and styleToApply.backgroundColor[2] >= 0 and styleToApply.backgroundColor[2] <= 1
+				and type(styleToApply.backgroundColor[3]) == "number" and styleToApply.backgroundColor[3] >= 0 and styleToApply.backgroundColor[3] <= 1
+				and type(styleToApply.backgroundColor[4]) == "number" and styleToApply.backgroundColor[4] >= 0 and styleToApply.backgroundColor[4] <= 1 then
+					db.backgroundColor = {
+						styleToApply.backgroundColor[1],
+						styleToApply.backgroundColor[2],
+						styleToApply.backgroundColor[3],
+						styleToApply.backgroundColor[4],
+					}
+				end
+				if type(styleToApply.detachedIcon) == "boolean" then
+					db.detachedIcon = styleToApply.detachedIcon
+				end
+				if type(styleToApply.iconOffset) == "number" and styleToApply.iconOffset >= 1 and styleToApply.iconOffset <= 100 then
+					db.iconOffset = styleToApply.iconOffset
+				end
+				if type(styleToApply.iconWidthOffset) == "number" and styleToApply.iconWidthOffset >= -50 and styleToApply.iconWidthOffset <= 50 then
+					db.iconWidthOffset = styleToApply.iconWidthOffset
+				end
+				if type(styleToApply.iconZoom) == "number" and styleToApply.iconZoom >= 0 and styleToApply.iconZoom <= 0.5 then
+					db.iconZoom = styleToApply.iconZoom
+				end
+				if type(styleToApply.iconKeepAspectRatio) == "boolean" then
+					db.iconKeepAspectRatio = styleToApply.iconKeepAspectRatio
+				end
+				if type(styleToApply.textOffsetX) == "number" and styleToApply.textOffsetX >= -100 and styleToApply.textOffsetX <= 100 then
+					db.textOffsetX = styleToApply.textOffsetX
+				end
+				if type(styleToApply.textOffsetY) == "number" and styleToApply.textOffsetY >= -100 and styleToApply.textOffsetY <= 100 then
+					db.textOffsetY = styleToApply.textOffsetY
+				end
+				if type(styleToApply.timeOffsetX) == "number" and styleToApply.timeOffsetX >= -100 and styleToApply.timeOffsetX <= 100 then
+					db.timeOffsetX = styleToApply.timeOffsetX
+				end
+				if type(styleToApply.timeOffsetY) == "number" and styleToApply.timeOffsetY >= -100 and styleToApply.timeOffsetY <= 100 then
+					db.timeOffsetY = styleToApply.timeOffsetY
+				end
+				if type(styleToApply.barColor) == "table"
+				and type(styleToApply.barColor[1]) == "number" and styleToApply.barColor[1] >= 0 and styleToApply.barColor[1] <= 1
+				and type(styleToApply.barColor[2]) == "number" and styleToApply.barColor[2] >= 0 and styleToApply.barColor[2] <= 1
+				and type(styleToApply.barColor[3]) == "number" and styleToApply.barColor[3] <= 1 and styleToApply.barColor[3] >= 0
+				and type(styleToApply.barColor[4]) == "number" and styleToApply.barColor[4] >= 0 and styleToApply.barColor[4] <= 1 then
+					colors.db.profile.barColor.BigWigs_Plugins_Colors.default = {
+						styleToApply.barColor[1],
+						styleToApply.barColor[2],
+						styleToApply.barColor[3],
+						styleToApply.barColor[4],
+					}
+				end
+				if type(styleToApply.barEmphasized) == "table"
+				and type(styleToApply.barEmphasized[1]) == "number" and styleToApply.barEmphasized[1] >= 0 and styleToApply.barEmphasized[1] <= 1
+				and type(styleToApply.barEmphasized[2]) == "number" and styleToApply.barEmphasized[2] >= 0 and styleToApply.barEmphasized[2] <= 1
+				and type(styleToApply.barEmphasized[3]) == "number" and styleToApply.barEmphasized[3] >= 0 and styleToApply.barEmphasized[3] <= 1
+				and type(styleToApply.barEmphasized[4]) == "number" and styleToApply.barEmphasized[4] >= 0 and styleToApply.barEmphasized[4] <= 1 then
+					colors.db.profile.barEmphasized.BigWigs_Plugins_Colors.default = {
+						styleToApply.barEmphasized[1],
+						styleToApply.barEmphasized[2],
+						styleToApply.barEmphasized[3],
+						styleToApply.barEmphasized[4],
+					}
+				end
+				if type(styleToApply.barBackground) == "table"
+				and type(styleToApply.barBackground[1]) == "number" and styleToApply.barBackground[1] >= 0 and styleToApply.barBackground[1] <= 1
+				and type(styleToApply.barBackground[2]) == "number" and styleToApply.barBackground[2] >= 0 and styleToApply.barBackground[2] <= 1
+				and type(styleToApply.barBackground[3]) == "number" and styleToApply.barBackground[3] >= 0 and styleToApply.barBackground[3] <= 1
+				and type(styleToApply.barBackground[4]) == "number" and styleToApply.barBackground[4] >= 0 and styleToApply.barBackground[4] <= 1 then
+					colors.db.profile.barBackground.BigWigs_Plugins_Colors.default = {
+						styleToApply.barBackground[1],
+						styleToApply.barBackground[2],
+						styleToApply.barBackground[3],
+						styleToApply.barBackground[4],
+					}
+				end
+			end
 		end
 		if not LibSharedMedia:IsValid(FONT, db.fontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(FONT, db.fontName)) then
 			db.fontName = plugin.defaultDB.fontName
@@ -968,6 +1080,16 @@ do
 								else
 									db.outline = plugin.defaultDB.outline
 								end
+								if type(style.monochrome) == "boolean" then
+									db.monochrome = style.monochrome
+								else
+									db.monochrome = plugin.defaultDB.monochrome
+								end
+								if type(style.fill) == "boolean" then
+									db.fill = style.fill
+								else
+									db.fill = plugin.defaultDB.fill
+								end
 								if type(style.borderName) == "string" and LibSharedMedia:IsValid(BORDER, style.borderName) and (style.borderName == "None" or BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(BORDER, style.borderName))) then
 									db.borderName = style.borderName
 								else
@@ -1025,6 +1147,11 @@ do
 										plugin.defaultDB.backgroundColor[3],
 										plugin.defaultDB.backgroundColor[4],
 									}
+								end
+								if type(style.icon) == "boolean" then
+									db.icon = style.icon
+								else
+									db.icon = plugin.defaultDB.icon
 								end
 								if type(style.detachedIcon) == "boolean" then
 									db.detachedIcon = style.detachedIcon
@@ -1086,6 +1213,11 @@ do
 								else
 									db.spellIndicatorsOffset = plugin.defaultDB.spellIndicatorsOffset
 								end
+								if type(style.spellIndicatorsSize) == "number" and style.spellIndicatorsSize >= 1 and style.spellIndicatorsSize <= 5 then
+									db.spellIndicatorsSize = style.spellIndicatorsSize
+								else
+									db.spellIndicatorsSize = plugin.defaultDB.spellIndicatorsSize
+								end
 								if style.iconPosition == "RIGHT" then
 									db.iconPosition = style.iconPosition
 								else
@@ -1098,9 +1230,13 @@ do
 								end
 								if type(style.fontName) == "string" and LibSharedMedia:IsValid(FONT, style.fontName) and BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(FONT, style.fontName)) then
 									db.fontName = style.fontName
+								else
+									db.fontName = plugin.defaultDB.fontName
 								end
 								if type(style.texture) == "string" and LibSharedMedia:IsValid(STATUSBAR, style.texture) and BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch(STATUSBAR, style.texture)) then
 									db.texture = style.texture
+								else
+									db.texture = plugin.defaultDB.texture
 								end
 								if type(style.barColor) == "table"
 								and type(style.barColor[1]) == "number" and style.barColor[1] >= 0 and style.barColor[1] <= 1
