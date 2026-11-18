@@ -516,6 +516,18 @@ end
 
 do
 	local bwTooltip = CreateFrame("GameTooltip", "BigWigsTooltip", UIParent, "GameTooltipTemplate")
+	bwTooltip:SetScript("OnUpdate", function(self, elapsed)
+		self.updateTooltipTimer = (self.updateTooltipTimer or 0.2) - elapsed
+		if self.updateTooltipTimer > 0 then return end
+		self.updateTooltipTimer = 0.2
+
+		local owner = self:GetOwner()
+		if owner and owner.UpdateTooltip then
+			owner:UpdateTooltip()
+		elseif self.shouldRefreshData then -- TOOLTIP_DATA_UPDATE
+			self:RefreshData()
+		end
+	end)
 	function API.GetTooltip()
 		return bwTooltip
 	end
