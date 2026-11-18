@@ -550,7 +550,7 @@ do
 		emphasizeAnchor:SetScript("OnSizeChanged", expFunc)
 
 		if inConfigureMode then
-			if db.emphasizeMove then
+			if db.emphasize and db.emphasizeMove then
 				emphasizeAnchor:Show()
 			else
 				emphasizeAnchor:Hide()
@@ -2744,7 +2744,7 @@ local function showAnchors(_, mode)
 	if not mode or mode == "Bars" then
 		inConfigureMode = true
 		normalAnchor:Show()
-		if db.emphasizeMove then
+		if db.emphasize and db.emphasizeMove then
 			emphasizeAnchor:Show()
 		end
 	end
