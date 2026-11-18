@@ -350,6 +350,7 @@ local aurasPositionSettingsToExport = { -- Applied to both the "player" and "oth
 
 local aurasUnitSettingsToExport = { -- Applied to both the "player" and "other" tables
 	"disabled",
+	"onlyActiveDuringBosses",
 	"width",
 	"height",
 	"keepAspectRatio",
@@ -361,14 +362,12 @@ local aurasUnitSettingsToExport = { -- Applied to both the "player" and "other" 
 	"showDispelType",
 	"dispelTypeSize",
 	"dispelTypeAnchorPoint",
-	"dispelTypeAnchorRelPoint",
 	"dispelTypeAnchorXOffset",
 	"dispelTypeAnchorYOffset",
 
 	"showTankIndicator", -- Only exists in the "other" table
 	"tankIndicatorSize",
 	"tankIndicatorAnchorPoint",
-	"tankIndicatorAnchorRelPoint",
 	"tankIndicatorAnchorXOffset",
 	"tankIndicatorAnchorYOffset",
 
@@ -384,7 +383,6 @@ local aurasUnitSettingsToExport = { -- Applied to both the "player" and "other" 
 	"cooldownTextOutline",
 	"cooldownTextMonochrome",
 	"cooldownTextSlug",
-	"cooldownTextMillisecondsThreshold",
 	"cooldownTextAnchorPoint",
 	"cooldownTextAnchorXOffset",
 	"cooldownTextAnchorYOffset",
@@ -572,6 +570,11 @@ local function isAurasDisabled()
 	return plugin and plugin.db.profile.player.disabled and true or false
 end
 
+local function hasAuraSoundsConfigured()
+	local db = BigWigsLoader.db:GetNamespace("AuraSounds", true)
+	return db and type(db.profile.sounds) == "table" and next(db.profile.sounds) and true or false
+end
+
 local function isCombatTimerDisabled()
 	local db = BigWigsLoader.db:GetNamespace("CombatTimer", true)
 	return db and db.profile.anyCombatDisabled and db.profile.bossCombatDisabled and db.profile.bossStagesDisabled and true or false
@@ -681,11 +684,10 @@ do
 			end
 		end
 
-		if requestAll or sharingExportOptionsSettings.exportAurasSounds then
+		-- Never export an empty list, it would wipe the importer's sounds
+		if (requestAll or sharingExportOptionsSettings.exportAurasSounds) and hasAuraSoundsConfigured() then
 			local db = BigWigsLoader.db:GetNamespace("AuraSounds", true)
-			if db and next(db.profile.sounds) then -- Don't wipe the importer's sounds with an empty list
-				exportOptions["aurasSounds"] = db.profile.sounds
-			end
+			exportOptions["aurasSounds"] = db.profile.sounds
 		end
 
 		if requestAll or IsExportSectionSelected("exportCombatTimerSettings") then
@@ -948,6 +950,10 @@ do
 		for k in next, data do
 			importStringOptions[k] = true
 		end
+		-- An empty list of custom aura sounds would wipe the importer's sounds, treat it as not being in the string
+		if type(data.aurasSounds) ~= "table" or not next(data.aurasSounds) then
+			importStringOptions.aurasSounds = nil
+		end
 		if data.bossExport then
 			setupBossOptions(data)
 		end
@@ -1104,7 +1110,7 @@ do
 		do
 			-- Replaces the full list, the AuraSounds module validates every entry on BigWigs_ProfileUpdate
 			local db = BigWigsLoader.db:GetNamespace("AuraSounds", true)
-			if db and sharingImportOptionsSettings.importAurasSounds and type(data.aurasSounds) == "table" then
+			if db and sharingImportOptionsSettings.importAurasSounds and type(data.aurasSounds) == "table" and next(data.aurasSounds) then
 				db.profile.sounds = CopyTable(data.aurasSounds)
 				table.insert(chatMessages, L.imported_auras_sounds)
 			end
@@ -1767,6 +1773,8 @@ local sharingOptions = {
 						desc = L.auras_custom_sounds_export_desc,
 						order = 10,
 						width = 1,
+						get = function(i) return hasAuraSoundsConfigured() and sharingExportOptionsSettings[i[#i]] end,
+						disabled = function() return not hasAuraSoundsConfigured() end,
 						hidden = function() return not BigWigsLoader.db:GetNamespace("AuraSounds", true) end,
 					},
 				},
