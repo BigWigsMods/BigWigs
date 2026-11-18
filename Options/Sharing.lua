@@ -93,6 +93,7 @@ local barSettingsToExport = {
 	"timeOffsetY",
 	"timeDecimals",
 	"icon",
+	"iconTooltip",
 	"iconPosition",
 	"detachedIcon",
 	"iconOffset",
