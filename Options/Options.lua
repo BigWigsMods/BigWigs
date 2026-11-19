@@ -237,7 +237,7 @@ do
 						set = function() end,
 						name = "Discord",
 						order = 52,
-						width = 0.75,
+						width = 0.9,
 					},
 					github = {
 						type = "input",
