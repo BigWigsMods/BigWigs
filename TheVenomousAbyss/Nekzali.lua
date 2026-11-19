@@ -263,7 +263,7 @@ function mod:OnTimelineEventChanged(barInfo, eventID, state)
 		if self:Mythic() then
 			self:CancelTimer(repeaters[1293212])
 			self:StopBar(CL.count:format(self:GetRename(1293212), graspingDepthsCount)) -- Grasping Depths
-	 	end
+		end
 	end
 
 	if barInfo and barInfo.gapTimer and state == 2 then -- Finished (reuse the eventID to set the spell indicator for the next bar)
