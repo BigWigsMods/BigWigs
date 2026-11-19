@@ -44,7 +44,7 @@ mod:SetRenames({
 	[1304930] = {CL.tank_bomb, CL.cast:format(CL.tank_bomb), notes = {CL.generalNote, CL.castTimerNote}, original = {mod:SpellName(1304930), CL.cast:format(mod:SpellName(1304930))}}, -- Dark Devastation
 	[1304424] = {1304424}, -- Extinguish
 	[1304508] = {CL.orbs}, -- Light's Embrace
-	[1304045] = {CL.debuffs}, -- Unspeakable Horrors
+	[1304045] = {CL.debuffs, CL.you:format(CL.debuff), notes = {CL.generalNote, CL.messageOnYouNote}, original = {mod:SpellName(1304045), CL.you:format(mod:SpellName(1304045))}}, -- Unspeakable Horrors
 	[1302951] = {CL.intermission}, -- Suffocating Darkness XXX Full Energy?
 	[1303169] = {CL.stage:format(1)}, -- Divine Radiance XXX Full Energy? Weakened? Boss Stunned?
 	[1303406] = {CL.heal_absorbs}, -- Abyssal Grasp
@@ -637,8 +637,8 @@ function mod:UnspeakableHorrors()
 		msg = barText,
 		key = 1304045,
 		onFinished = function()
-			-- self:PersonalMessageFromBlizzMessage
-			self:Message(1304045, "orange", barText)
+			local timer = self:ScheduleTimer(function() self:Message(1304045, "orange", barText) end, 0.45)
+			self:PersonalMessageFromBlizzMessage(1304045, 0.4, false, self:GetRename(1304045, 2), nil, nil, function() self:CancelTimer(timer) end)
 			if self:Healer() then
 				self:PlaySound(1304045, "alert")
 			end
