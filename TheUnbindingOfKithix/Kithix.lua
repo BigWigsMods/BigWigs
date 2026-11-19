@@ -58,7 +58,7 @@ mod:SetRenames({
 --
 
 mod:SetAuraData({
-	{1304045, soundOnApplied = "alarm", note = CL.preDebuffNote, header = CL.important}, -- Unspeakable Horrors
+	{1304045, soundOnApplied = "warning", note = CL.preDebuffNote, header = CL.important}, -- Unspeakable Horrors
 	{1304046, soundOnApplied = "info", note = CL.postDebuffNote:format(mod:SpellName(1304045)), mechanic = "fleeing"}, -- Overwhelming Fear
 	{1303406, soundOnApplied = "warning"}, -- Abyssal Grasp
 	{1304948, soundOnApplied = "alarm"}, -- Devastated (tank)
@@ -642,11 +642,13 @@ function mod:UnspeakableHorrors()
 		msg = barText,
 		key = 1304045,
 		onFinished = function()
-			local timer = self:ScheduleTimer(function() self:Message(1304045, "orange", barText) end, 0.45)
+			local timer = self:ScheduleTimer(function()
+				self:Message(1304045, "orange", barText)
+				if self:Healer() then
+					self:PlaySound(1304045, "alert")
+				end
+			end, 0.45)
 			self:PersonalMessageFromBlizzMessage(1304045, 0.4, false, self:GetRename(1304045, 2), nil, nil, function() self:CancelTimer(timer) end)
-			if self:Healer() then
-				self:PlaySound(1304045, "alert")
-			end
 		end,
 	}
 end
