@@ -179,7 +179,7 @@ function mod:MythicTimeline(_, eventInfo)
 
 	if stage == 1 then
 		if rounded == 5 then
-			barInfo = self:Voidswarm()
+			barInfo = self:Voidswarm(duration)
 		elseif rounded == 12 or rounded == 15 or rounded == 16 or rounded == 18 then
 			barInfo = self:TwistedAppendage()
 		elseif rounded == 19 or rounded == 20 or rounded == 23 or rounded == 66 then
@@ -216,7 +216,7 @@ function mod:MythicTimeline(_, eventInfo)
 			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
 			local count = durationEventCount[rounded]
 			if count % 2 == 1 then
-				barInfo = self:Voidswarm()
+				barInfo = self:Voidswarm(duration)
 			else
 				barInfo = self:SuffocatingDarkness()
 			end
@@ -258,7 +258,7 @@ function mod:HeroicTimeline(_, eventInfo)
 
 	if stage == 1 then
 		if rounded == 5 then
-			barInfo = self:Voidswarm()
+			barInfo = self:Voidswarm(duration)
 		elseif rounded == 12 or rounded == 15 or rounded == 18 or rounded == 32 then
 			barInfo = self:TwistedAppendage()
 		elseif rounded == 20 or rounded == 22 or rounded == 69 then
@@ -295,7 +295,7 @@ function mod:HeroicTimeline(_, eventInfo)
 			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
 			local count = durationEventCount[rounded]
 			if count % 2 == 1 then
-				barInfo = self:Voidswarm()
+				barInfo = self:Voidswarm(duration)
 			else
 				barInfo = self:SuffocatingDarkness()
 			end
@@ -339,7 +339,7 @@ function mod:EasyTimeline(_, eventInfo)
 
 	if stage == 1 then
 		if rounded == 5 then
-			barInfo = self:Voidswarm()
+			barInfo = self:Voidswarm(duration)
 		elseif rounded == 15 or rounded == 21 or rounded == 34 then
 			barInfo = self:TwistedAppendage()
 		elseif rounded == 20 or rounded == 22 or rounded == 77 then
@@ -374,7 +374,7 @@ function mod:EasyTimeline(_, eventInfo)
 			durationEventCount[rounded] = (durationEventCount[rounded] or 0) + 1
 			local count = durationEventCount[rounded]
 			if count % 2 == 1 then
-				barInfo = self:Voidswarm()
+				barInfo = self:Voidswarm(duration)
 			else
 				barInfo = self:SuffocatingDarkness()
 			end
@@ -560,16 +560,21 @@ end
 
 -- Stage One
 
-function mod:Voidswarm()
+function mod:Voidswarm(duration)
 	local barText = CL.count:format(self:GetRename(1301511), voidswarmCount)
 	voidswarmCount = voidswarmCount + 1
 	return {
 		msg = barText,
 		key = 1301511,
+		timer = self:ShouldShowBars() and self:ScheduleTimer(function() self:StopBlizzMessages(1) end, duration - 0.5), -- block +/- 0.5s around the event, can fire before sometimes but is usually ~0.2 after
 		onFinished = function()
-			self:StopBlizzMessages(1)
 			self:Message(1301511, "cyan", CL.incoming:format(barText))
 			self:PlaySound(1301511, "info")
+		end,
+		onCanceled = function(this)
+			if this.timer then
+				self:CancelTimer(this.timer)
+			end
 		end,
 	}
 end
