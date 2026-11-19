@@ -12,20 +12,20 @@ local strfind = string.find
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 427
+local BIGWIGS_VERSION = 428
 local CONTENT_PACK_VERSIONS = {
-	["LittleWigs"] = {12, 1, 21},
-	["BigWigs_Classic"] = {12, 1, 2},
-	["BigWigs_BurningCrusade"] = {12, 1, 11},
-	["BigWigs_WrathOfTheLichKing"] = {12, 1, 0},
-	["BigWigs_Cataclysm"] = {12, 1, 0},
-	["BigWigs_MistsOfPandaria"] = {12, 1, 0},
-	["BigWigs_WarlordsOfDraenor"] = {12, 1, 0},
-	["BigWigs_Legion"] = {12, 1, 0},
-	["BigWigs_BattleForAzeroth"] = {12, 1, 0},
-	["BigWigs_Shadowlands"] = {12, 1, 0},
-	["BigWigs_Dragonflight"] = {12, 1, 0},
-	["BigWigs_TheWarWithin"] = {12, 1, 0},
+	["LittleWigs"] = {12, 1, 23},
+	["BigWigs_Classic"] = {12, 1, 3},
+	["BigWigs_BurningCrusade"] = {12, 1, 12},
+	["BigWigs_WrathOfTheLichKing"] = {12, 1, 1},
+	["BigWigs_Cataclysm"] = {12, 1, 1},
+	["BigWigs_MistsOfPandaria"] = {12, 1, 1},
+	["BigWigs_WarlordsOfDraenor"] = {12, 1, 1},
+	["BigWigs_Legion"] = {12, 1, 1},
+	["BigWigs_BattleForAzeroth"] = {12, 1, 1},
+	["BigWigs_Shadowlands"] = {12, 1, 1},
+	["BigWigs_Dragonflight"] = {12, 1, 1},
+	["BigWigs_TheWarWithin"] = {12, 1, 1},
 }
 local BIGWIGS_RELEASE_STRING
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
@@ -1689,9 +1689,9 @@ else
 end
 
 do
-	local DBMdotRevision = "20261107040814" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "12.1.20" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20261106000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20261113062802" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "12.1.23" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20261112000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	local protocol = 3
 	local versionPrefix = "V"
 	local PForceDisable = 27
