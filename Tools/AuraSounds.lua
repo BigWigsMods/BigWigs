@@ -12,7 +12,7 @@ end
 
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local SOUND = LibSharedMedia.MediaType and LibSharedMedia.MediaType.SOUND or "sound"
-local AddAllAuraSounds, RemoveAllAuraSounds
+local RefreshAuraSounds
 local GetUnitToken, IterateGroup
 local ProfileUtils = {}
 
@@ -24,6 +24,14 @@ local db
 do
 	local defaults = {
 		sounds = {},
+	}
+
+	local validUnits = {
+		player = true,
+		tank = true,
+		name = true,
+		boss = true,
+		enemy = true,
 	}
 
 	db = BigWigsLoader.db:RegisterNamespace("AuraSounds", {profile = defaults})
@@ -54,10 +62,17 @@ do
 			end
 		end
 
+		local numSounds = #db.profile.sounds
+		for k in next, db.profile.sounds do
+			if type(k) ~= "number" or k < 1 or k > numSounds or math.floor(k+0.5) ~= k then
+				db.profile.sounds[k] = nil
+			end
+		end
+
 		for soundIndex = #db.profile.sounds, 1, -1 do
 			local soundInfo = db.profile.sounds[soundIndex]
 			-- Not a table, or spellID is invalid | XXX temp also remove voice countdown support 12.1.5
-			if type(soundInfo) ~= "table" or type(soundInfo.spellID) ~= "number" or not BigWigsLoader.GetSpellName(soundInfo.spellID) or soundInfo.voice or soundInfo.duration then
+			if type(soundInfo) ~= "table" or type(soundInfo.spellID) ~= "number" or math.floor(soundInfo.spellID+0.5) ~= soundInfo.spellID or not C_Spell.DoesSpellExist(soundInfo.spellID) or not BigWigsLoader.GetSpellName(soundInfo.spellID) or soundInfo.voice or soundInfo.duration then
 				table.remove(db.profile.sounds, soundIndex)
 			else
 				if type(soundInfo.enabled) ~= "boolean" then
@@ -66,14 +81,14 @@ do
 				if type(soundInfo.trigger) ~= "number" or soundInfo.trigger < 0 or soundInfo.trigger > 2 or math.floor(soundInfo.trigger+0.5) ~= soundInfo.trigger then
 					soundInfo.trigger = 0
 				end
-				if type(soundInfo.unit) ~= "string" or (soundInfo.unit ~= "player" and soundInfo.unit ~= "tank" and soundInfo.unit ~= "name") then
+				if type(soundInfo.unit) ~= "string" or not validUnits[soundInfo.unit] then
 					soundInfo.unit = "player"
 				end
-				if soundInfo.unit ~= "name" or (soundInfo.unit == "name" and type(soundInfo.playerName) ~= "string") then
+				if soundInfo.unit ~= "name" or type(soundInfo.playerName) ~= "string" then
 					soundInfo.playerName = nil
-				end
-				if type(soundInfo.sound) ~= "string" or not LibSharedMedia:IsValid("sound", soundInfo.sound) then
-					soundInfo.sound = "None"
+				else
+					local trimmed = string.trim(soundInfo.playerName)
+					soundInfo.playerName = trimmed ~= "" and trimmed or nil
 				end
 				if type(soundInfo.throttleSeconds) ~= "number" then
 					soundInfo.throttleSeconds = 1
@@ -82,6 +97,14 @@ do
 				elseif soundInfo.throttleSeconds < 0 then
 					soundInfo.throttleSeconds = 0
 				end
+			end
+		end
+	end
+	ProfileUtils.ValidateMediaSettings = function()
+		for soundIndex = 1, #db.profile.sounds do
+			local soundInfo = db.profile.sounds[soundIndex]
+			if type(soundInfo.sound) ~= "string" or not LibSharedMedia:IsValid("sound", soundInfo.sound) then
+				soundInfo.sound = "None"
 			end
 		end
 	end
@@ -142,40 +165,73 @@ do
 	end
 	local auraSounds = {}
 	local registeredUnits = {}
+	local bossList = {
+		"boss1", "boss2", "boss3", "boss4", "boss5",
+	}
+	local nameplateList = {
+		"nameplate1", "nameplate2", "nameplate3", "nameplate4", "nameplate5", "nameplate6", "nameplate7", "nameplate8", "nameplate9", "nameplate10",
+		"nameplate11", "nameplate12", "nameplate13", "nameplate14", "nameplate15", "nameplate16", "nameplate17", "nameplate18", "nameplate19", "nameplate20",
+		"nameplate21", "nameplate22", "nameplate23", "nameplate24", "nameplate25", "nameplate26", "nameplate27", "nameplate28", "nameplate29", "nameplate30",
+		"nameplate31", "nameplate32", "nameplate33", "nameplate34", "nameplate35", "nameplate36", "nameplate37", "nameplate38", "nameplate39", "nameplate40",
+	}
 
 	local frame = CreateFrame("Frame")
+	local rosterTimer = nil
+	local lastRosterCheck = 0
+	local function CheckRosterUpdate()
+		rosterTimer = nil
+		if IsAuraSoundRestrictionsActive() then
+			frame:UnregisterEvent("GROUP_ROSTER_UPDATE")
+			frame:RegisterEvent("ADDON_RESTRICTION_STATE_CHANGED")
+			return -- Don't process anything during active restrictions, do it afterwards
+		end
+		lastRosterCheck = GetTime()
+
+		local cacheTank, cachePlayers
+		for index, unit in next, registeredUnits do
+			local auraDB = db.profile.sounds[index]
+			local checkUnit
+			if auraDB.unit == "tank" then
+				if cacheTank ~= nil then
+					checkUnit = cacheTank
+				else
+					checkUnit = GetUnitToken(auraDB.unit) or false
+					cacheTank = checkUnit
+				end
+			else
+				if not cachePlayers then cachePlayers = {} end
+				if cachePlayers[auraDB.playerName] ~= nil then
+					checkUnit = cachePlayers[auraDB.playerName]
+				else
+					checkUnit = GetUnitToken(auraDB.unit, auraDB.playerName) or false
+					cachePlayers[auraDB.playerName] = checkUnit
+				end
+			end
+			if unit ~= checkUnit then
+				RefreshAuraSounds()
+				return
+			end
+		end
+	end
+
 	frame:SetScript("OnEvent", function(self, event)
 		if event == "GROUP_ROSTER_UPDATE" then
 			if IsAuraSoundRestrictionsActive() then
+				if rosterTimer then
+					rosterTimer:Cancel()
+					rosterTimer = nil
+				end
 				self:UnregisterEvent(event)
 				self:RegisterEvent("ADDON_RESTRICTION_STATE_CHANGED")
 				return -- Don't process anything during active restrictions, do it afterwards
 			end
 
-			local cacheTank, cachePlayers
-			for index, unit in next, registeredUnits do
-				local auraDB = db.profile.sounds[index]
-				local checkUnit
-				if auraDB.unit == "tank" then
-					if cacheTank ~= nil then
-						checkUnit = cacheTank
-					else
-						checkUnit = GetUnitToken(auraDB.unit) or false
-						cacheTank = checkUnit
-					end
+			if not rosterTimer then
+				local timeSinceLastCheck = GetTime() - lastRosterCheck
+				if timeSinceLastCheck >= 1 then
+					CheckRosterUpdate()
 				else
-					if not cachePlayers then cachePlayers = {} end
-					if cachePlayers[auraDB.playerName] ~= nil then
-						checkUnit = cachePlayers[auraDB.playerName]
-					else
-						checkUnit = GetUnitToken(auraDB.unit, auraDB.playerName) or false
-						cachePlayers[auraDB.playerName] = checkUnit
-					end
-				end
-				if unit ~= checkUnit then
-					RemoveAllAuraSounds()
-					AddAllAuraSounds()
-					return
+					rosterTimer = BigWigsLoader.CTimerNewTimer(1, CheckRosterUpdate)
 				end
 			end
 		elseif event == "ADDON_RESTRICTION_STATE_CHANGED" then
@@ -183,17 +239,25 @@ do
 				return
 			end
 			self:UnregisterEvent(event)
-			RemoveAllAuraSounds()
-			AddAllAuraSounds()
+			RefreshAuraSounds()
 		end
 	end)
 
-	function AddAllAuraSounds()
-		if IsAuraSoundRestrictionsActive() then
-			frame:RegisterEvent("ADDON_RESTRICTION_STATE_CHANGED")
-			return
+	local function RegisterAuraSound(info, unitToken, soundFile)
+		local auraSoundID = C_UnitAuras.AddAuraSound(info.trigger, {
+			unitToken = unitToken,
+			spellID = info.spellID,
+			soundFileName = type(soundFile) == "string" and soundFile or nil,
+			soundFileID = type(soundFile) == "number" and soundFile or nil,
+			outputChannel = "master",
+			throttleSeconds = info.throttleSeconds,
+		})
+		if auraSoundID then
+			auraSounds[#auraSounds + 1] = auraSoundID
 		end
+	end
 
+	local function AddAllAuraSounds()
 		local cacheTank, cachePlayers
 		for index = 1, #db.profile.sounds do
 			local info = db.profile.sounds[index]
@@ -226,28 +290,47 @@ do
 
 				local soundFile = LibSharedMedia:Fetch("sound", info.sound, true)
 				if unit and soundFile then
-					local auraSoundID = C_UnitAuras.AddAuraSound(info.trigger, {
-						unitToken = unit,
-						spellID = info.spellID,
-						soundFileName = type(soundFile) == "string" and soundFile or nil,
-						soundFileID = type(soundFile) == "number" and soundFile or nil,
-						outputChannel = "master",
-						throttleSeconds = info.throttleSeconds,
-					})
-					if auraSoundID then
-						auraSounds[#auraSounds + 1] = auraSoundID
+					if unit == "boss" then
+						for i = 1, #bossList do
+							RegisterAuraSound(info, bossList[i], soundFile)
+						end
+					elseif unit == "enemy" then
+						for i = 1, #nameplateList do
+							RegisterAuraSound(info, nameplateList[i], soundFile)
+						end
+					else
+						RegisterAuraSound(info, unit, soundFile)
 					end
 				end
 			end
 		end
 	end
 
-	function RemoveAllAuraSounds()
+	local function RemoveAllAuraSounds()
+		if rosterTimer then
+			rosterTimer:Cancel()
+			rosterTimer = nil
+		end
+		frame:UnregisterEvent("GROUP_ROSTER_UPDATE")
 		for i = 1, #auraSounds do
 			C_UnitAuras.RemoveAuraSound(auraSounds[i])
 		end
 		auraSounds = {}
 		registeredUnits = {}
+	end
+
+	function RefreshAuraSounds()
+		if IsAuraSoundRestrictionsActive() then
+			if rosterTimer then
+				rosterTimer:Cancel()
+				rosterTimer = nil
+			end
+			frame:UnregisterEvent("GROUP_ROSTER_UPDATE")
+			frame:RegisterEvent("ADDON_RESTRICTION_STATE_CHANGED")
+			return
+		end
+		RemoveAllAuraSounds()
+		AddAllAuraSounds()
 	end
 end
 
@@ -283,6 +366,7 @@ do
 			name = L.addAuraSpell,
 			get = false,
 			set = function(_, value)
+				value = string.trim(value) -- Trim leading/trailing spaces
 				local spellID = C_Spell.GetSpellIDForSpellIdentifier(value)
 				table.insert(db.profile.sounds, {
 					enabled = true,
@@ -292,10 +376,12 @@ do
 					sound = "None",
 					throttleSeconds = 1,
 				})
-				BigWigsLoader.CTimerAfter(0, function() BigWigsLoader:SendMessage("BigWigs_PluginOptionsUpdate", "Auras") end)
+				BigWigsLoader:SendMessage("BigWigs_PluginOptionsUpdate", "Auras")
 			end,
 			validate = function(_, value)
-				if not C_Spell.GetSpellIDForSpellIdentifier(value) then
+				value = string.trim(value) -- Trim leading/trailing spaces
+				local spellID = C_Spell.GetSpellIDForSpellIdentifier(value)
+				if not spellID or not C_Spell.DoesSpellExist(spellID) or not BigWigsLoader.GetSpellName(spellID) then
 					return ("%s: %s"):format(L.auras, L.invalidSpell)
 				end
 				return true
@@ -303,36 +389,41 @@ do
 			order = 2,
 		}
 
+		local function FindSoundIndex(soundInfo)
+			for i = 1, #db.profile.sounds do
+				if db.profile.sounds[i] == soundInfo then
+					return i
+				end
+			end
+		end
 		local function Get(info)
-			local index = tonumber(info[#info - 1])
-			if not db.profile.sounds[index] then return false end
-			local key = info[#info]
-			return db.profile.sounds[index][key]
+			return info.arg[info[#info]]
 		end
 		local function Set(info, value)
-			local index = tonumber(info[#info - 1])
-			local auraDB = db.profile.sounds[index]
+			local auraDB = info.arg
+			if not FindSoundIndex(auraDB) then return end
 			local key = info[#info]
 			auraDB[key] = value
 			if key == "unit" and value ~= "name" then
 				auraDB.playerName = nil
 			end
-			RemoveAllAuraSounds()
-			AddAllAuraSounds()
+			RefreshAuraSounds()
 		end
 
 		local function RemoveSoundFromConfig(info)
-			local index = tonumber(info[#info - 1])
+			local index = FindSoundIndex(info.arg)
+			if not index then return end
 			table.remove(db.profile.sounds, index)
-			RemoveAllAuraSounds()
-			AddAllAuraSounds()
-			BigWigsLoader.CTimerAfter(0, function() BigWigsLoader:SendMessage("BigWigs_PluginOptionsUpdate", "Auras") end)
+			RefreshAuraSounds()
+			BigWigsLoader:SendMessage("BigWigs_PluginOptionsUpdate", "Auras")
+		end
+		local function ConfirmRemoveSound(info)
+			local soundInfo = info.arg
+			return L.confirmRemoveAuraSound:format(BigWigsLoader.GetSpellName(soundInfo.spellID), soundInfo.spellID)
 		end
 
 		local function GetSound(info)
-			local index = tonumber(info[#info - 1])
-			if not db.profile.sounds[index] then return false end
-			local sound = db.profile.sounds[index].sound
+			local sound = info.arg.sound
 			for i, v in next, LibSharedMedia:List(SOUND) do
 				if v == sound then
 					return i
@@ -343,46 +434,72 @@ do
 			Set(info, LibSharedMedia:List(SOUND)[value])
 		end
 
-		local function PlayerNameValues()
+		local function PlayerNameValues(info)
 			local playerList = {}
 			local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
 			for unit in IterateGroup() do
-				if not UnitInPartyIsAI(unit) then
+				if not UnitIsUnit("player", unit) and not UnitInPartyIsAI(unit) then
 					local name = BigWigsLoader.UnitName(unit)
-					local _, class = UnitClass(unit)
-					local tbl = class and colorTbl[class] or GRAY_FONT_COLOR
-					playerList[name] = ("%s|cFF%02x%02x%02x%s|r"):format(roleIcons[UnitGroupRolesAssigned(unit)], tbl.r*255, tbl.g*255, tbl.b*255, name)
+					if name then
+						local _, class = UnitClass(unit)
+						local tbl = class and colorTbl[class] or GRAY_FONT_COLOR
+						playerList[name] = ("%s|cFF%02x%02x%02x%s|r"):format(roleIcons[UnitGroupRolesAssigned(unit)], tbl.r*255, tbl.g*255, tbl.b*255, name)
+					end
 				end
+			end
+			local soundInfo = info.arg
+			if soundInfo.playerName and not playerList[soundInfo.playerName] then
+				playerList[soundInfo.playerName] = GRAY_FONT_COLOR:WrapTextInColorCode(soundInfo.playerName)
 			end
 			return playerList
 		end
 		local function PlayerNameHidden(info)
-			local index = tonumber(info[#info - 1])
-			if not db.profile.sounds[index] then return false end
-			return db.profile.sounds[index].unit ~= "name"
+			return info.arg.unit ~= "name"
 		end
 
-		local function UnitTargetName()
-			local name = L.none
-			local unit = GetUnitToken("tank")
-			if unit then
-				name = BigWigsLoader.UnitName(unit)
-				local _, class = UnitClass(unit)
-				local color = C_ClassColor.GetClassColor(class) or GRAY_FONT_COLOR
-				name = color:WrapTextInColorCode(name)
+		local function UnitDescName(info)
+			local unitType = info.arg.unit
+			if unitType == "tank" then
+				local name = L.none
+				local unit = GetUnitToken("tank")
+				if unit then
+					local unitName = BigWigsLoader.UnitName(unit)
+					if unitName then
+						local _, class = UnitClass(unit)
+						local color = class and C_ClassColor.GetClassColor(class) or GRAY_FONT_COLOR
+						name = color:WrapTextInColorCode(unitName)
+					end
+				end
+				return L.auraSoundTankDesc:format(name)
+			elseif unitType == "boss" then
+				return L.auraSoundBossDesc
+			elseif unitType == "enemy" then
+				return L.auraSoundEnemyDesc
 			end
-			return "  "..L.currentUnit:format(name)
+			return ""
 		end
-		local function UnitTargetHidden(info)
-			local index = tonumber(info[#info - 1])
-			if not db.profile.sounds[index] then return false end
-			return db.profile.sounds[index].unit ~= "tank"
+		local function UnitDescHidden(info)
+			local unitType = info.arg.unit
+			return unitType ~= "tank" and unitType ~= "boss" and unitType ~= "enemy"
+		end
+		local function GetSpellDesc(info)
+			local desc = BigWigsLoader.GetSpellDescription(info.arg.spellID)
+			if desc then
+				-- Remove stray CR+LF for e.g. 299250 spells that show another spell in their tooltip which isn't part of GetSpellDescription
+				desc = desc:gsub("[\r\n]+$", "")
+				if desc ~= "" then
+					return desc
+				end
+			end
 		end
 
 		local order = 0
 		for soundIndex = #db.profile.sounds, 1, -1 do
 			order = order + 1
 			local soundInfo = db.profile.sounds[soundIndex]
+			if not C_Spell.IsSpellDataCached(soundInfo.spellID) then
+				C_Spell.RequestLoadSpellData(soundInfo.spellID)
+			end
 			options[tostring(soundIndex)] = {
 				type = "group",
 				name = " ",
@@ -393,8 +510,10 @@ do
 				args = {
 					enabled = {
 						type = "toggle",
-						name = ("|cfffed000%s|r (%d)"):format(BigWigsLoader.GetSpellName(soundInfo.spellID) or L.unknown, soundInfo.spellID),
+						name = ("|cfffed000%s|r (%d)"):format(BigWigsLoader.GetSpellName(soundInfo.spellID), soundInfo.spellID),
+						desc = GetSpellDesc,
 						image = BigWigsLoader.GetSpellTexture(soundInfo.spellID) or 134400, -- question mark
+						arg = soundInfo,
 						width = 2.6,
 						order = 1,
 					},
@@ -402,6 +521,8 @@ do
 						type = "execute",
 						name = L.remove,
 						func = RemoveSoundFromConfig,
+						confirm = ConfirmRemoveSound,
+						arg = soundInfo,
 						width = 0.6,
 						order = 2,
 					},
@@ -413,6 +534,7 @@ do
 							[1] = L.onDose,
 							[2] = L.onRemoved,
 						},
+						arg = soundInfo,
 						width = 1,
 						order = 3,
 					},
@@ -424,42 +546,49 @@ do
 						values = LibSharedMedia:List(SOUND),
 						dialogControl = "BigWigsSharedDropdown",
 						itemControl = "DDI-Sound",
+						arg = soundInfo,
 						width = 2,
 						order = 4,
 					},
 					unit = {
 						type = "select",
-						name = L.selectPlayer,
+						name = L.target,
 						values = {
 							player = L.myself,
 							tank = L.indicatorType_Tank,
 							name = L.playerInYourGroup,
+							boss = L.boss,
+							enemy = L.enemy,
 						},
-						sorting = { "player", "tank", "name" },
+						sorting = { "player", "tank", "name", "boss", "enemy" },
+						arg = soundInfo,
 						width = 1,
 						order = 5,
-					},
-					playerName = {
-						type = "select",
-						name = L.playerInYourGroup,
-						values = PlayerNameValues,
-						hidden = PlayerNameHidden,
-						width = 1.6,
-						order = 6,
-					},
-					unitTarget = {
-						type = "description",
-						name = UnitTargetName,
-						hidden = UnitTargetHidden,
-						width = 1.2,
-						order = 7,
 					},
 					throttleSeconds = {
 						type = "range",
 						name = L.throttle,
 						desc = L.throttleDesc,
 						min = 0, max = 5, step = 0.1,
+						arg = soundInfo,
 						width = 2,
+						order = 6,
+					},
+					playerName = {
+						type = "select",
+						name = L.playerInYourGroup,
+						values = PlayerNameValues,
+						hidden = PlayerNameHidden,
+						arg = soundInfo,
+						width = 1.6,
+						order = 7,
+					},
+					unitDesc = {
+						type = "description",
+						name = UnitDescName,
+						hidden = UnitDescHidden,
+						arg = soundInfo,
+						width = "full",
 						order = 8,
 					},
 				},
@@ -479,9 +608,9 @@ end
 do
 	local function UpdateProfile()
 		ProfileUtils.ValidateMainSettings()
-		RemoveAllAuraSounds()
-		AddAllAuraSounds()
-		BigWigsLoader.CTimerAfter(0, function() BigWigsLoader:SendMessage("BigWigs_PluginOptionsUpdate", "Auras") end)
+		ProfileUtils.ValidateMediaSettings()
+		RefreshAuraSounds()
+		BigWigsLoader:SendMessage("BigWigs_PluginOptionsUpdate", "Auras")
 	end
 
 	local loginFrame = CreateFrame("Frame")
@@ -492,4 +621,5 @@ do
 		BigWigsLoader.RegisterMessage(loginFrame, "BigWigs_ProfileUpdate", UpdateProfile)
 	end)
 	loginFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+	ProfileUtils.ValidateMainSettings()
 end

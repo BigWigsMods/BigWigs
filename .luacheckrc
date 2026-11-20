@@ -273,6 +273,7 @@ files["Tools/AuraSounds.lua"].ignore = {
 	"113/GetNumGroupMembers",
 	"113/UnitGroupRolesAssigned",
 	"113/UnitInPartyIsAI",
+	"143/string",
 }
 files["Tools/AutoInvite.lua"].ignore = {
 	"113/C_BattleNet",
