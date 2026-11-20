@@ -217,6 +217,7 @@ local fakeZones = { -- Fake zones used as GUI menus
 }
 
 do
+	local forever = "BigWigs_Forever"
 	local c = "BigWigs_Classic"
 	local bc = "BigWigs_BurningCrusade"
 	local wotlk = "BigWigs_WrathOfTheLichKing"
@@ -229,6 +230,7 @@ do
 	local df = "BigWigs_Dragonflight"
 	local tww = "BigWigs_TheWarWithin"
 	local mn = "BigWigs_Midnight"
+	local lw_forever = "LittleWigs_Forever"
 	local lw_c = "LittleWigs_Classic"
 	local lw_bc = "LittleWigs_BurningCrusade"
 	local lw_wotlk = "LittleWigs_WrathOfTheLichKing"
@@ -246,10 +248,10 @@ do
 
 	if public.isForever then
 		public.currentExpansion = {
-			name = c,
+			name = forever,
 			bigWigsBundled = {},
-			littleWigsName = lw_c,
-			littleWigsDefault = lw_c,
+			littleWigsName = lw_forever,
+			littleWigsDefault = lw_forever,
 			littleWigsBundled = {},
 			currentSeason = {},
 			zones = {},
@@ -1427,6 +1429,7 @@ do
 		BigWigs_Core = true,
 		BigWigs_Plugins = true,
 		BigWigs_Options = true,
+		BigWigs_Forever = true,
 		BigWigs_Classic = true,
 		BigWigs_BurningCrusade = true,
 		BigWigs_WrathOfTheLichKing = true,
@@ -1439,6 +1442,7 @@ do
 		BigWigs_Dragonflight = true,
 		BigWigs_TheWarWithin = true,
 		LittleWigs = true,
+		LittleWigs_Forever = true,
 		LittleWigs_Classic = true,
 		LittleWigs_BurningCrusade = true,
 		LittleWigs_WrathOfTheLichKing = true,

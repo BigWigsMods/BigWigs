@@ -87,6 +87,7 @@ L.expansionNames = {
 	"地心之战", -- The War Within
 	"至暗之夜", -- Midnight
 }
+--L.forever = "Forever" -- WoW Forever
 L.littleWigsExtras = {
 	["LittleWigs_Delves"] = "地下堡",
 	["LittleWigs_CurrentSeason"] = "当前赛季",

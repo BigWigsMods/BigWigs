@@ -1921,7 +1921,15 @@ end
 
 do
 	local expansionHeader
-	if loader.isVanilla then
+	local expansionNames = L.expansionNames
+	if loader.isForever then
+		expansionHeader = {
+			"Forever",
+		}
+		expansionNames = {
+			L.forever,
+		}
+	elseif loader.isVanilla then
 		expansionHeader = {
 			"Classic",
 		}
@@ -2042,7 +2050,7 @@ do
 				missing:SetFullWidth(true)
 				container:AddChild(missing)
 
-				if disabled then
+				if disabled and addonState ~= "MISSING" then
 					local reload = AceGUI:Create("Button")
 					reload:SetText(L.enable)
 					reload:SetAutoWidth(true)
@@ -2144,7 +2152,7 @@ do
 				for i = 1, #expansionHeader do
 					local addonName = "BigWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
-						text = L.expansionNames[i],
+						text = expansionNames[i],
 						value = addonName,
 						enabled = true,
 					}
@@ -2158,7 +2166,7 @@ do
 				for i = 1, #expansionHeader do
 					local addonName = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
-						text = L.expansionNames[i],
+						text = expansionNames[i],
 						value = addonName,
 						enabled = true,
 					}
