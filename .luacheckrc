@@ -5,7 +5,6 @@ exclude_files = {
 	"**/Libs",
 }
 files["API.lua"].ignore = {
-	"113/C_AddOns",
 	"113/C_UIFileAsset",
 	"112/SlashCmdList",
 	"113/strlenutf8",
@@ -18,8 +17,6 @@ files["Locales/frFR_common.lua"].ignore = {
 	"113/UnitSex",
 }
 files["Loader.lua"].ignore = {
-	"113/EncounterTimeline", -- XXX temp
-
 	"113/date",
 	"113/geterrorhandler",
 
@@ -66,7 +63,6 @@ files["Loader.lua"].ignore = {
 	"11[23]/SlashCmdList",
 }
 files["Core/BossPrototype.lua"].ignore = {
-	"113/C_ChatInfo",
 	"113/C_ClassColor",
 	"113/C_Item",
 	"113/C_NamePlate",
@@ -87,7 +83,6 @@ files["Core/BossPrototype.lua"].ignore = {
 	"113/UnitSpellTargetName",
 }
 files["Core/BossPrototype_Classic.lua"].ignore = {
-	"113/C_ChatInfo",
 	"113/C_ClassColor",
 	"113/C_Item",
 	"113/C_NamePlate",
@@ -113,7 +108,6 @@ files["Core/Constants.lua"].ignore = {
 }
 files["Core/Core.lua"].ignore = {
 	"111/BigWigs",
-	"113/C_CVar",
 	"113/geterrorhandler",
 	"113/print",
 	"113/UnitIsCorpse",
@@ -138,10 +132,8 @@ files["Plugins/AutoReply.lua"].ignore = {
 	"113/BNIsSelf",
 	"113/C_BattleNet",
 	"113/C_FriendList",
+	"113/GetRealmName",
 	"113/IsGuildMember",
-}
-files["Plugins/Bars.lua"].ignore = {
-	"113/C_Spell",
 }
 files["Plugins/BattleRes.lua"].ignore = {
 	"113/C_ClassColor",
@@ -149,7 +141,6 @@ files["Plugins/BattleRes.lua"].ignore = {
 }
 files["Plugins/BossBlock.lua"].ignore = {
 	"113/AlertFrame",
-	"112/BigWigs",
 	"113/C_ContentTracking",
 	"113/C_CVar",
 	"113/C_EventToastManager",
@@ -157,7 +148,6 @@ files["Plugins/BossBlock.lua"].ignore = {
 	"113/C_TalkingHead",
 	"113/C_UIWidgetManager",
 	"113/DeadlyDebuffFrame",
-	"113/GetFramesRegisteredForEvent",
 	"113/GetAchievementCategory",
 	"113/GetAchievementInfo",
 	"113/GetCategoryInfo",
@@ -192,7 +182,6 @@ files["Plugins/Nameplates.lua"].ignore = {
 }
 files["Plugins/Proximity.lua"].ignore = {
 	"113/GetNumGroupMembers",
-	"113/GetRaidTargetIndex",
 	"113/GetServerExpansionLevel", -- Classic support
 	"113/UnitInPhase", -- Classic support
 }
@@ -200,7 +189,6 @@ files["Plugins/Pull.lua"].ignore = {
 	"113/C_ChallengeMode",
 	"113/C_ChatInfo",
 	"113/ClearOverrideBindings",
-	"113/GetPlayerInfoByGUID",
 	"113/SetOverrideBindingClick",
 	"113/UnitGroupRolesAssigned",
 }
@@ -215,14 +203,11 @@ files["Plugins/Statistics.lua"].ignore = {
 	"113/C_UIWidgetManager",
 }
 files["Plugins/Timeline.lua"].ignore = {
-	"113/C_ClassColor",
 	"113/C_UI",
 	"113/C_CVar",
-	"113/C_EncounterWarnings",
 	"113/CriticalEncounterWarnings",
 	"113/EncounterTimeline",
 	"113/Enum",
-	"113/GetPlayerInfoByGUID",
 	"113/MediumEncounterWarnings",
 	"113/MinorEncounterWarnings",
 }
@@ -230,8 +215,6 @@ files["Plugins/Victory.lua"].ignore = {
 	"113/BossBanner",
 }
 files["Plugins/*.lua"].ignore = {
-	"112/SlashCmdList",
-	"111/SLASH_.*", -- slash handlers
 	"113/StopSound",
 }
 files["Options/Options.lua"].ignore = {
@@ -284,6 +267,7 @@ files["Tools/AutoInvite.lua"].ignore = {
 	"113/BNGetFriendIndex",
 	"113/BNIsSelf",
 	"113/GetRealmID",
+	"113/GetRealmName",
 	"113/IsGuildMember",
 }
 files["Tools/AutoRole.lua"].ignore = {
@@ -309,6 +293,7 @@ files["Tools/Keystones.lua"].ignore = {
 	"113/ClearOverrideBindings",
 	"113/GameFontHighlightSmall",
 	"113/GetMaxPlayerLevel",
+	"113/GetRealmName",
 	"113/GetSpecializationInfoByID",
 	"113/PlaySound",
 	"113/SetOverrideBindingClick",
@@ -368,9 +353,6 @@ globals = {
 	-- framexml
 	"tContains",
 
-	-- Vanilla
-	"GetTalentTabInfo",
-
 	-- everything else
 	"BigWigs3DB",
 	"BigWigsAPI",
@@ -386,7 +368,6 @@ globals = {
 	"C_MerchantFrame", -- LittleWigs/Shadowlands/Tazavesh/Trash.lua
 	"C_Minimap", -- Legion/TombOfSargeras/Kiljaeden.lua
 	"C_ModifiedInstance", -- 3x Affixes.lua in BigWigs_Shadowlands
-	"C_RaidLocks",
 	"C_ScenarioInfo", -- LittleWigs
 	"C_Timer",
 	"CheckInteractDistance",
@@ -400,17 +381,14 @@ globals = {
 	"GameFontHighlight",
 	"GameFontNormal",
 	"GameTooltip",
-	"GameTooltip_Hide",
 	"GetDifficultyInfo",
 	"GetFramesRegisteredForEvent",
 	"GetInstanceInfo",
 	"GetLocale",
 	"GetPartyAssignment",
-	"GetPlayerFacing",
 	"GetProfessionInfo",
 	"GetProfessions",
 	"GetRaidRosterInfo", -- Classic/AQ40/Cthun.lua
-	"GetRealmName",
 	"GetRealZoneText",
 	"GetSubZoneText",
 	"GetTime",
@@ -418,8 +396,6 @@ globals = {
 	"hasanysecretvalues",
 	"issecretvalue",
 	"InCombatLockdown",
-	"IsAltKeyDown",
-	"IsControlKeyDown",
 	"IsInGroup",
 	"IsInRaid",
 	"IsMounted", -- Dragonflight/Amirdrassil/TindralSageswift.lua
