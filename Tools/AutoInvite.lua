@@ -10,7 +10,19 @@ end
 -- Locals
 --
 
-local ProfileUtils = {}
+local MAX_WORDS = 100
+local function IsValidWord(word)
+	return type(word) == "string" and word == word:lower() and word ~= "" and word == word:trim()
+end
+
+local function HasMatchingWord(wordList, lowerMessage)
+	for i = 1, #wordList do
+		if wordList[i] == lowerMessage then
+			return true
+		end
+	end
+	return false
+end
 
 --------------------------------------------------------------------------------
 -- Saved Settings
@@ -25,26 +37,42 @@ do
 
 	db = BigWigsLoader.db:RegisterNamespace("AutoInvite", {global = globalDefaults})
 
-	ProfileUtils.ValidateMainSettings = function()
-		for k, v in next, db do
-			local defaultType = type(globalDefaults[k])
-			if defaultType == "nil" then
-				db.global[k] = nil
-			elseif type(v) ~= defaultType then
-				db.global[k] = globalDefaults[k]
+	local function ValidateWordList(tbl)
+		if not next(tbl) then return end
+		local seen = {}
+		local valid = {}
+		local dirty = false
+		local count = 0
+		local maxIndex = 0
+		for entry, word in next, tbl do
+			if type(entry) ~= "number" or entry < 1 or entry > MAX_WORDS or entry ~= math.floor(entry) or not IsValidWord(word) or seen[word] then
+				dirty = true
+			else
+				seen[word] = true
+				count = count + 1
+				valid[count] = word
+				if entry > maxIndex then
+					maxIndex = entry
+				end
 			end
+		end
+		if dirty or maxIndex ~= count then
+			table.sort(valid)
+			return valid -- Return cleaned table
+		end
+		-- The table didn't need cleaned, but make sure its alphabetical
+		table.sort(tbl)
+	end
 
-			for entry, word in next, db.global.wordsFriendly do
-				if type(entry) ~= "number" or type(word) ~= "string" or word ~= word:lower() or word == "" or word:find("^ +$") then
-					db.global.wordsFriendly = {}
-					break
-				end
-			end
-			for entry, word in next, db.global.wordsOther do
-				if type(entry) ~= "number" or type(word) ~= "string" or word ~= word:lower() or word == "" or word:find("^ +$") then
-					db.global.wordsOther = {}
-					break
-				end
+	for k, v in next, db.global do
+		if not globalDefaults[k] then
+			db.global[k] = nil
+		elseif type(v) ~= "table" then
+			db.global[k] = {}
+		else
+			local cleaned = ValidateWordList(v)
+			if cleaned then
+				db.global[k] = cleaned
 			end
 		end
 	end
@@ -54,118 +82,163 @@ end
 -- Widgets & Events
 --
 
-local popupFrame = BigWigsLoader.isModern and CreateFrame("Frame", nil, UIParent, "PortraitFrameTexturedBaseTemplate") or CreateFrame("Frame")
+local popupFrame = BigWigsLoader.isModern and CreateFrame("Frame", nil, UIParent, "PortraitFrameTexturedBaseTemplate") or CreateFrame("Frame", nil, UIParent)
+local ResetState
 do
 	local delayedInvite = {}
 	local invitesBlocked = false
+	local throttle = {}
+	local activeTimer = nil
 	local SendChatMessage = BigWigsLoader.SendChatMessage
 	local SendBattleNetMessage = BigWigsLoader.SendBattleNetMessage
+	local InviteUnit = C_PartyInfo.InviteUnit
+	local InviteFriend = C_BattleNet.InviteFriend
+	local IsGUIDInGroup = C_PartyInfo.IsGUIDInGroup
+	local IsPartyFull = C_PartyInfo.IsPartyFull
+	local AllowedToDoPartyConversion = C_PartyInfo.AllowedToDoPartyConversion -- XXX [Mainline:✓ MoP:✗ Wrath:✗ Vanilla:✗]
+	local ConvertToRaid = C_PartyInfo.ConvertToRaid or ConvertToRaid -- XXX [Mainline:✓ MoP:✗ Wrath:✗ Vanilla:✗]
+	local InChatMessagingLockdown = C_ChatInfo.InChatMessagingLockdown
+
+	local function CancelActiveTimer()
+		if activeTimer then
+			activeTimer:Cancel()
+			activeTimer = nil
+		end
+	end
+
+	function ResetState()
+		CancelActiveTimer()
+		popupFrame:Hide()
+		invitesBlocked = false
+		throttle = {}
+		delayedInvite = {}
+	end
+
+	local function WhisperPlayerThatMyGroupIsFull(playerName, bnSenderID)
+		if bnSenderID then
+			SendBattleNetMessage(bnSenderID, L.whisperToPlayerMyGroupIsFull)
+		else
+			SendChatMessage(L.whisperToPlayerMyGroupIsFull, "WHISPER", nil, playerName)
+		end
+	end
+
+	local function InvitePlayer(guid, playerName, gameAccountID)
+		delayedInvite[guid] = nil
+		throttle[guid] = GetTime() + 2
+		BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(playerName))
+		if gameAccountID then
+			InviteFriend(gameAccountID)
+		else
+			InviteUnit(playerName)
+		end
+	end
+
 	do
-		local throttle = {}
-		local IsGUIDInGroup = C_PartyInfo.IsGUIDInGroup
 		local myClient = WOW_PROJECT_ID
+		local myGUID = BigWigsLoader.UnitGUID("player")
 		local issecretvalue = issecretvalue
-		popupFrame:SetScript("OnEvent", function(self, event, message, sender, _, _, _, flag, _, _, _, _, _, guid, bnSenderID)
+		local IsGameAccountOnSameRealm = C_BattleNet.IsGameAccountOnSameRealm -- XXX [Standard:✗ Forever:✓ MoP:✗ Wrath:✗ TBC:✗ Vanilla:✗]
+
+		local function IsSameRealm(gameAccountInfo)
+			if IsGameAccountOnSameRealm then
+				return IsGameAccountOnSameRealm(gameAccountInfo.gameAccountID)
+			end
+			return gameAccountInfo.realmID == GetRealmID()
+		end
+
+		local function QueueOrInvite(guid, playerName, bnSenderID, gameAccountID, suppressFullReply)
+			if IsPartyFull(1) then -- LE_PARTY_CATEGORY_HOME = 1
+				if IsInRaid(1) or (AllowedToDoPartyConversion and not AllowedToDoPartyConversion(true)) then
+					throttle[guid] = GetTime() + 10
+					if not suppressFullReply then
+						WhisperPlayerThatMyGroupIsFull(playerName, bnSenderID)
+					end
+					return true
+				elseif not invitesBlocked then
+					if not next(delayedInvite) and not activeTimer then
+						popupFrame:Show()
+					end
+					if bnSenderID then
+						delayedInvite[guid] = { name = playerName, bnSenderID = bnSenderID, gameAccountID = gameAccountID }
+					elseif not delayedInvite[guid] then
+						delayedInvite[guid] = { name = playerName, gameAccountID = gameAccountID }
+					end
+					throttle[guid] = GetTime() + 2
+				else
+					throttle[guid] = GetTime() + 5
+					if not suppressFullReply then
+						WhisperPlayerThatMyGroupIsFull(playerName, bnSenderID)
+					end
+					return true
+				end
+			else
+				InvitePlayer(guid, playerName, gameAccountID)
+			end
+			return false
+		end
+
+		popupFrame:SetScript("OnEvent", function(_, event, message, sender, _, _, _, flag, _, _, _, _, _, guid, bnSenderID)
 			if event == "GROUP_LEFT" then
-				if not IsInGroup() then
-					invitesBlocked = false
-					throttle = {}
+				if not IsInGroup(1) then -- LE_PARTY_CATEGORY_HOME = 1
+					ResetState()
+				end
+			elseif event == "GROUP_ROSTER_UPDATE" then
+				if not UnitIsGroupLeader("player", 1) or IsInRaid(1) or not IsPartyFull(1) then -- LE_PARTY_CATEGORY_HOME = 1
+					popupFrame:Hide()
 					delayedInvite = {}
 				end
 			else
-				if issecretvalue(message) or (IsInGroup() and not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player")) then -- C_PartyInfo.CanInvite is an alternative, but XXX [Mainline:✓ MoP:✗ Wrath:✗ Vanilla:✗]
+				if issecretvalue(message) or (IsInGroup(1) and not UnitIsGroupLeader("player", 1) and not UnitIsGroupAssistant("player", 1)) then
 					return -- Message is secret or we don't have invite permission
 				elseif event == "CHAT_MSG_WHISPER" then
-					if flag == "GM" or flag == "DEV" or guid == BigWigsLoader.UnitGUID("player") or IsGUIDInGroup(guid) then
-						return -- Player is GM/DEV or already in our group, return
+					if flag == "GM" or flag == "DEV" or not guid or guid == myGUID or IsGUIDInGroup(guid, 1) then
+						return -- Player is GM/DEV, missing GUID, self, or already in our group
 					elseif not throttle[guid] or GetTime() > throttle[guid] then
-						message = message:lower()
-						local dbToUse
-						if C_BattleNet.GetGameAccountInfoByGUID(guid) or IsGuildMember(guid) or C_FriendList.IsFriend(guid) then
-							dbToUse = db.global.wordsFriendly
+						local lowerMessage = message:lower()
+						local bnetInfo = C_BattleNet.GetGameAccountInfoByGUID(guid)
+						local isMatched
+						if bnetInfo or IsGuildMember(guid) or C_FriendList.IsFriend(guid) then
+							isMatched = HasMatchingWord(db.global.wordsFriendly, lowerMessage)
 						else
-							dbToUse = db.global.wordsOther
+							isMatched = HasMatchingWord(db.global.wordsOther, lowerMessage)
 						end
-						for i = 1, #dbToUse do
-							if dbToUse[i] == message then
-								if IsInRaid() then
-									if C_PartyInfo.IsPartyFull() then
-										throttle[guid] = GetTime() + 10
-										SendChatMessage(L.whisperToPlayerMyGroupIsFull, "WHISPER", nil, sender)
-									else
-										throttle[guid] = GetTime() + 2
-										BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(sender))
-										C_PartyInfo.InviteUnit(sender)
-									end
-								else
-									if C_PartyInfo.IsPartyFull() then
-										if not invitesBlocked then
-											if not next(delayedInvite) then
-												popupFrame:Show()
-											end
-											delayedInvite[sender] = true
-											throttle[guid] = GetTime() + 2
-										else
-											throttle[guid] = GetTime() + 5
-											SendChatMessage(L.whisperToPlayerMyGroupIsFull, "WHISPER", nil, sender)
-										end
-									else
-										throttle[guid] = GetTime() + 2
-										BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(sender))
-										C_PartyInfo.InviteUnit(sender)
-									end
-								end
-							end
+						if isMatched then
+							QueueOrInvite(guid, sender, nil, bnetInfo and bnetInfo.gameAccountID)
 						end
 					end
 				elseif event == "CHAT_MSG_BN_WHISPER" and not BNIsSelf(bnSenderID) then
+					local lowerMessage = message:lower()
+					if not HasMatchingWord(db.global.wordsFriendly, lowerMessage) then
+						return
+					end
 					local index = BNGetFriendIndex(bnSenderID)
+					if not index then
+						return
+					end
 					local gameAccs = C_BattleNet.GetFriendNumGameAccounts(index)
-					for i=1, gameAccs do
+					local repliedFull = false
+					for i = 1, gameAccs do
 						local gameAccountInfo = C_BattleNet.GetFriendGameAccountInfo(index, i)
-						if gameAccountInfo.clientProgram == "WoW" and gameAccountInfo.wowProjectID == myClient and gameAccountInfo.isInCurrentRegion and gameAccountInfo.realmID > 0
-						and (BigWigsLoader.isRetail or (gameAccountInfo.realmID == GetRealmID() and gameAccountInfo.factionName == UnitFactionGroup("player"))) then -- Classic is more restrictive than retail
-							guid = gameAccountInfo.playerGuid
-							if not guid or (throttle[guid] and GetTime() < throttle[guid]) then return end
-							local player = gameAccountInfo.characterName
-							local realmName = gameAccountInfo.realmName -- Short name "ServerOne"
-							local realmDisplayName = gameAccountInfo.realmDisplayName -- Full name "Server One"
-							if realmName and realmDisplayName and player then
-								if realmDisplayName ~= GetRealmName() then
-									player = player .. "-" .. realmName
-								end
-								if not IsGUIDInGroup(guid) then -- Player is not already in our group
-									message = message:lower()
-									for num = 1, #db.global.wordsFriendly do
-										if db.global.wordsFriendly[num] == message then
-											if IsInRaid() then
-												if C_PartyInfo.IsPartyFull() then
-													throttle[guid] = GetTime() + 10
-													SendBattleNetMessage(bnSenderID, L.whisperToPlayerMyGroupIsFull)
-												else
-													throttle[guid] = GetTime() + 2
-													BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(player))
-													C_PartyInfo.InviteUnit(player)
-												end
-											else
-												if C_PartyInfo.IsPartyFull() then
-													if not invitesBlocked then
-														if not next(delayedInvite) then
-															popupFrame:Show()
-														end
-														delayedInvite[player] = bnSenderID
-														throttle[guid] = GetTime() + 2
-													else
-														throttle[guid] = GetTime() + 5
-														SendBattleNetMessage(bnSenderID, L.whisperToPlayerMyGroupIsFull)
-													end
-												else
-													throttle[guid] = GetTime() + 2
-													BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(player))
-													C_PartyInfo.InviteUnit(player)
-												end
-											end
-										end
+						if gameAccountInfo and gameAccountInfo.clientProgram == "WoW" and gameAccountInfo.wowProjectID == myClient and gameAccountInfo.isInCurrentRegion then
+							local hasRealmInfo = gameAccountInfo.hasRealmInfo
+							if hasRealmInfo == nil then
+								hasRealmInfo = gameAccountInfo.realmID and gameAccountInfo.realmID > 0
+							end
+							local playerGuid = gameAccountInfo.playerGuid
+							local gameAccountID = gameAccountInfo.gameAccountID
+							if hasRealmInfo and playerGuid and gameAccountID
+							and (BigWigsLoader.isRetail or (IsSameRealm(gameAccountInfo) and gameAccountInfo.factionName == UnitFactionGroup("player"))) -- Classic & Forever are more restrictive than retail
+							and (not throttle[playerGuid] or GetTime() > throttle[playerGuid])
+							and not IsGUIDInGroup(playerGuid, 1) then -- Player is not already in our group
+								local player = gameAccountInfo.characterName
+								if player and player ~= "" then
+									local realmName = gameAccountInfo.realmName -- Short name "ServerOne"
+									local realmDisplayName = gameAccountInfo.realmDisplayName -- Full name "Server One"
+									if realmName and realmName ~= "" and realmDisplayName and realmDisplayName ~= "" and realmDisplayName ~= GetRealmName() then
+										player = player .. "-" .. realmName
+									end
+									if QueueOrInvite(playerGuid, player, bnSenderID, gameAccountID, repliedFull) then
+										repliedFull = true
 									end
 								end
 							end
@@ -180,8 +253,9 @@ do
 	popupFrame:SetFixedFrameStrata(true)
 	popupFrame:SetFrameLevel(305)
 	popupFrame:SetFixedFrameLevel(true)
-	popupFrame:SetSize(400, 110)
+	popupFrame:SetSize(400, BigWigsLoader.isModern and 130 or 110)
 	popupFrame:SetPoint("CENTER")
+	popupFrame:EnableMouse(true)
 
 	local text = popupFrame:CreateFontString(nil, nil, "GameFontGreenLarge")
 	text:SetSize(380, 0)
@@ -205,79 +279,167 @@ do
 		text:SetPoint("TOP", 0, -16)
 	end
 
+	local function InviteNext()
+		if not IsInRaid(1) or (not UnitIsGroupLeader("player", 1) and not UnitIsGroupAssistant("player", 1)) or IsPartyFull(1) then
+			CancelActiveTimer()
+			delayedInvite = {}
+			return false
+		end
+		local guid, info = next(delayedInvite)
+		while guid and IsGUIDInGroup(guid, 1) do
+			delayedInvite[guid] = nil
+			guid, info = next(delayedInvite)
+		end
+		if not guid then
+			CancelActiveTimer()
+			delayedInvite = {}
+			return false
+		end
+
+		InvitePlayer(guid, info.name, info.gameAccountID)
+		if not next(delayedInvite) then
+			CancelActiveTimer()
+			delayedInvite = {}
+			return false
+		end
+		return true
+	end
+
+	local function StartInviting()
+		activeTimer = nil
+		if InviteNext() then
+			activeTimer = BigWigsLoader.CTimerNewTicker(0.2, InviteNext) -- Throttle
+		end
+	end
+
 	local buttonYes = CreateFrame("Button", nil, popupFrame, BigWigsLoader.isModern and "SharedButtonTemplate" or "UIPanelButtonTemplate")
 	buttonYes:SetSize(128, 32)
 	buttonYes:SetPoint("RIGHT", popupFrame, "BOTTOM", -6, 28)
 	buttonYes:SetScript("OnClick", function(self)
 		self:GetParent():Hide()
 		invitesBlocked = false
-		if C_PartyInfo.ConvertToRaid then
-			C_PartyInfo.ConvertToRaid() -- XXX [Mainline:✓ MoP:✗ Wrath:✗ Vanilla:✗]
-		else
+		CancelActiveTimer()
+		if not IsInRaid(1) then
+			if not UnitIsGroupLeader("player", 1) or (AllowedToDoPartyConversion and not AllowedToDoPartyConversion(true)) then
+				delayedInvite = {}
+				return
+			end
 			ConvertToRaid()
+			activeTimer = BigWigsLoader.CTimerNewTimer(1.5, StartInviting) -- Hopefully long enough for the game to recognize you are now in a raid, before trying to invite others
+		else
+			StartInviting()
 		end
-		BigWigsLoader.CTimerAfter(1.5, function() -- Hopefully long enough for the game to recognize you are now in a raid, before trying to invite others
-			local timer = nil
-			timer = BigWigsLoader.CTimerNewTicker(0.2, function() -- Throttle
-				local playerName = next(delayedInvite)
-				if not playerName then
-					timer:Cancel()
-					timer = nil
-					delayedInvite = {}
-					return
-				end
-
-				delayedInvite[playerName] = nil
-				BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(playerName))
-				C_PartyInfo.InviteUnit(playerName)
-			end)
-		end)
 	end)
 	buttonYes:SetText(L.yes)
 	local buttonNo = CreateFrame("Button", nil, popupFrame, BigWigsLoader.isModern and "SharedButtonTemplate" or "UIPanelButtonTemplate")
 	buttonNo:SetSize(128, 32)
 	buttonNo:SetPoint("LEFT", buttonYes, "RIGHT", 12, 0)
-	local InChatMessagingLockdown = C_ChatInfo.InChatMessagingLockdown
 	buttonNo:SetScript("OnClick", function(self)
 		self:GetParent():Hide()
 		invitesBlocked = true
-		local timer = nil
-		timer = BigWigsLoader.CTimerNewTicker(0.5, function() -- Throttle
-			local playerName, isBnet = next(delayedInvite)
-			if not playerName or InChatMessagingLockdown() then
-				timer:Cancel()
-				timer = nil
-				delayedInvite = {}
-				return
+		CancelActiveTimer()
+		local toNotify = delayedInvite
+		delayedInvite = {}
+		local function NotifyNext()
+			if InChatMessagingLockdown() then
+				CancelActiveTimer()
+				return false
 			end
-
-			delayedInvite[playerName] = nil
-			if type(isBnet) == "number" then
-				SendBattleNetMessage(isBnet, L.whisperToPlayerMyGroupIsFull)
-			else
-				SendChatMessage(L.whisperToPlayerMyGroupIsFull, "WHISPER", nil, playerName)
+			local guid, info = next(toNotify)
+			if not guid then
+				CancelActiveTimer()
+				return false
 			end
-		end)
+			toNotify[guid] = nil
+			local now = GetTime()
+			throttle[guid] = now + 5
+			if info.bnSenderID then
+				for nextGuid, nextInfo in next, toNotify do
+					if nextInfo.bnSenderID == info.bnSenderID then
+						toNotify[nextGuid] = nil
+						throttle[nextGuid] = now + 5
+					end
+				end
+			end
+			WhisperPlayerThatMyGroupIsFull(info.name, info.bnSenderID)
+			if not next(toNotify) then
+				CancelActiveTimer()
+				return false
+			end
+			return true
+		end
+		if NotifyNext() then
+			activeTimer = BigWigsLoader.CTimerNewTicker(0.5, NotifyNext) -- Throttle
+		end
 	end)
 	buttonNo:SetText(L.no)
 
 	popupFrame:Hide()
+	popupFrame:SetScript("OnShow", function(self)
+		self:RegisterEvent("GROUP_ROSTER_UPDATE")
+	end)
+	popupFrame:SetScript("OnHide", function(self)
+		self:UnregisterEvent("GROUP_ROSTER_UPDATE")
+	end)
 end
 
 --------------------------------------------------------------------------------
 -- Options Table
 --
 
-local function UpdateWidgets()
-	if next(db.global.wordsFriendly) or next(db.global.wordsOther) then
+local function RegisterEvents()
+	local hasFriendly = next(db.global.wordsFriendly)
+	local hasOther = next(db.global.wordsOther)
+	if hasFriendly or hasOther then
 		popupFrame:RegisterEvent("CHAT_MSG_WHISPER")
-		popupFrame:RegisterEvent("CHAT_MSG_BN_WHISPER")
 		popupFrame:RegisterEvent("GROUP_LEFT")
+		if hasFriendly then
+			popupFrame:RegisterEvent("CHAT_MSG_BN_WHISPER")
+		else
+			popupFrame:UnregisterEvent("CHAT_MSG_BN_WHISPER")
+		end
 	else
 		popupFrame:UnregisterEvent("CHAT_MSG_WHISPER")
 		popupFrame:UnregisterEvent("CHAT_MSG_BN_WHISPER")
 		popupFrame:UnregisterEvent("GROUP_LEFT")
+		ResetState()
 	end
+end
+RegisterEvents()
+
+local function CreateWordListConfig(key)
+	return {
+		input = {
+			type = "input",
+			get = function() return "" end,
+			set = function(_, text)
+				table.insert(db.global[key], text)
+				table.sort(db.global[key])
+				RegisterEvents()
+			end,
+			name = L.addWords,
+			order = 1,
+			width = "full",
+			usage = L.invalidWordWarning,
+			disabled = function() return #db.global[key] >= MAX_WORDS end,
+			validate = function(_, text)
+				local words = db.global[key]
+				return #words < MAX_WORDS and IsValidWord(text) and not HasMatchingWord(words, text)
+			end,
+		},
+		remove = {
+			type = "select",
+			name = L.removeWords,
+			order = 2,
+			values = function() return db.global[key] end,
+			set = function(_, value)
+				table.remove(db.global[key], value)
+				RegisterEvents()
+			end,
+			width = "full",
+			disabled = function() return not next(db.global[key]) end,
+		},
+	}
 end
 
 BigWigsAPI.RegisterToolOptions("AutoInvite", function() return {
@@ -297,108 +459,13 @@ BigWigsAPI.RegisterToolOptions("AutoInvite", function() return {
 			name = L.guildAndFriends,
 			type = "group",
 			order = 1,
-			args = {
-				input = {
-					type = "input",
-					get = function() return "" end,
-					set = function(_, text)
-						table.insert(db.global.wordsFriendly, text)
-						table.sort(db.global.wordsFriendly)
-						UpdateWidgets()
-					end,
-					name = L.addWords,
-					order = 1,
-					width = "full",
-					usage = L.invalidWordWarning,
-					validate = function(_, text)
-						local lowerCaseText = text:lower()
-						if lowerCaseText ~= text or lowerCaseText == "" or lowerCaseText:find("^ +$") then
-							return false
-						end
-						for i = 1, #db.global.wordsFriendly do
-							if db.global.wordsFriendly[i] == text then
-								return false
-							end
-						end
-						return true
-					end,
-				},
-				remove = {
-					type = "select",
-					name = L.removeWords,
-					order = 2,
-					values = function() return db.global.wordsFriendly end,
-					set = function(_, value)
-						table.remove(db.global.wordsFriendly, value)
-						UpdateWidgets()
-					end,
-					width = "full",
-					disabled = function() return not next(db.global.wordsFriendly) end,
-				},
-			},
+			args = CreateWordListConfig("wordsFriendly"),
 		},
 		other = {
 			name = L.everyoneElse,
 			type = "group",
 			order = 2,
-			args = {
-				input = {
-					type = "input",
-					get = function() return "" end,
-					set = function(_, text)
-						table.insert(db.global.wordsOther, text)
-						table.sort(db.global.wordsOther)
-						UpdateWidgets()
-					end,
-					name = L.addWords,
-					order = 1,
-					width = "full",
-					usage = L.invalidWordWarning,
-					validate = function(_, text)
-						local lowerCaseText = text:lower()
-						if lowerCaseText ~= text or lowerCaseText == "" or lowerCaseText:find("^ +$") then
-							return false
-						end
-						for i = 1, #db.global.wordsOther do
-							if db.global.wordsOther[i] == text then
-								return false
-							end
-						end
-						return true
-					end,
-				},
-				remove = {
-					type = "select",
-					name = L.removeWords,
-					order = 2,
-					values = function() return db.global.wordsOther end,
-					set = function(_, value)
-						table.remove(db.global.wordsOther, value)
-						UpdateWidgets()
-					end,
-					width = "full",
-					disabled = function() return not next(db.global.wordsOther) end,
-				},
-			},
+			args = CreateWordListConfig("wordsOther"),
 		},
 	},
 } end)
-
---------------------------------------------------------------------------------
--- Login
---
-
-do
-	local function UpdateProfile()
-		ProfileUtils.ValidateMainSettings()
-		UpdateWidgets()
-	end
-	local loginFrame = CreateFrame("Frame")
-	loginFrame:SetScript("OnEvent", function(self, event)
-		self:UnregisterEvent(event)
-		self:SetScript("OnEvent", nil)
-		UpdateProfile()
-		BigWigsLoader.RegisterMessage(loginFrame, "BigWigs_ProfileUpdate", UpdateProfile)
-	end)
-	loginFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-end
