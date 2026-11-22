@@ -1682,16 +1682,6 @@ end
 -- DBM version collection & faking
 --
 
-local myNameForDBMSync -- Why does DBM still complicate its comms with useless data? Who knows.
-if public.isForever then
-	myNameForDBMSync = public.UnitName("player")
-else
-	local name = public.UnitName("player")
-	local realm = GetRealmName()
-	local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
-	myNameForDBMSync = name .."-".. normalizedPlayerRealm
-end
-
 do
 	local DBMdotRevision = "20261113062802" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
 	local DBMdotDisplayVersion = "12.1.23" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
@@ -1703,7 +1693,7 @@ do
 	local timer = nil
 	local function sendDBMMsg()
 		if IsInGroup() then
-			local msg = myNameForDBMSync.."\t"..protocol.."\t".. versionPrefix .."\t".. DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..myLocale.."\ttrue\t"..PForceDisable.."\t0\t0"
+			local msg = "\t"..protocol.."\t".. versionPrefix .."\t".. DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..myLocale.."\ttrue\t"..PForceDisable.."\t0\t0"
 			local result = SendAddonMessage(dbmPrefix, msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			if type(result) == "number" and result ~= 0 then
 				if result == 3 or result == 8 or result == 9 then -- AddonMessageThrottle, ChannelThrottle, GeneralError
@@ -1756,7 +1746,7 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 		sender = Ambiguate(sender, "none")
 		if subPrefix == "V" or subPrefix == "H" then
 			self:DBM_VersionCheck(subPrefix, sender, arg1, arg2, arg3)
-		elseif subPrefix == "U" or subPrefix == "PT" or subPrefix == "M" or subPrefix == "BT" then
+		elseif subPrefix == "U" or subPrefix == "M" or subPrefix == "BT" then
 			if subPrefix == "BT" then
 				loadAndEnableCore() -- Force enable the core when receiving a break timer.
 			end
@@ -2093,7 +2083,7 @@ do
 				sysprint("Failed to ask for versions. Error code: ".. result)
 				geterrorhandler()("BigWigs: Failed to ask for versions. Error code: ".. result)
 			end
-			local dbmResult = SendAddonMessage(dbmPrefix, myNameForDBMSync.."\t1\tH\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
+			local dbmResult = SendAddonMessage(dbmPrefix, "\t1\tH\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 			if type(dbmResult) == "number" and dbmResult ~= 0 and dbmResult ~= 11 then -- 0=Success, 11=AddOnMessageLockdown
 				sysprint("Failed to ask for _ versions. Error code: ".. dbmResult)
 				geterrorhandler()("BigWigs: Failed to ask for _ versions. Error code: ".. dbmResult)

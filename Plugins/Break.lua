@@ -186,10 +186,7 @@ BigWigsAPI.RegisterSlashCommand("/break", function(input)
 		plugin:Sync("Break", seconds)
 
 		if IsInGroup() then
-			local name = plugin:UnitName("player")
-			local realm = GetRealmName()
-			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
-			local result = SendAddonMessage(dbmPrefix, ("%s-%s\t1\tBT\t%d"):format(name, normalizedPlayerRealm, seconds), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
+			local result = SendAddonMessage(dbmPrefix, ("\t1\tBT\t%d"):format(seconds), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 			if type(result) == "number" and result ~= 0 then
 				BigWigs:Error("BigWigs: Failed to send break timer. Error code: ".. result)
 			end
