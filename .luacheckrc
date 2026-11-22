@@ -321,6 +321,9 @@ files["Tools/Keystones.lua"].ignore = {
 	"143/string",
 }
 files["Tools/LFGTimer.lua"].ignore = {
+	"113/C_CVar",
+	"113/C_DurationUtil",
+	"113/C_StringUtil",
 	"113/LFGDungeonReadyPopup",
 	"113/PlaySound",
 	"113/StopSound",

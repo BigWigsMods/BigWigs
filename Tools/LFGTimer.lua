@@ -14,14 +14,18 @@ do
 		useMaster = true
 	}
 	db = LoaderPublic.db:RegisterNamespace("LFGTimer", {profile = defaults})
-	for k, v in next, db do
-		local defaultType = type(defaults[k])
-		if defaultType == "nil" then
-			db.profile[k] = nil
-		elseif type(v) ~= defaultType then
-			db.profile[k] = defaults[k]
+	local function ValidateSettings()
+		for k, v in next, db.profile do
+			local defaultType = type(defaults[k])
+			if defaultType == "nil" then
+				db.profile[k] = nil
+			elseif type(v) ~= defaultType then
+				db.profile[k] = defaults[k]
+			end
 		end
 	end
+	ValidateSettings()
+	LoaderPublic.RegisterMessage({}, "BigWigs_ProfileUpdate", ValidateSettings)
 end
 
 local timerBar = CreateFrame("StatusBar", nil, LFGDungeonReadyPopup)
@@ -32,54 +36,83 @@ tex:SetTexture(137012) -- Interface\\TargetingFrame\\UI-StatusBar
 timerBar:SetStatusBarTexture(tex)
 timerBar:SetSize(190, 9)
 timerBar:SetStatusBarColor(1, 0.1, 0)
-timerBar:SetMinMaxValues(0, 40)
-timerBar:Show()
 
 local bg = timerBar:CreateTexture(nil, "BACKGROUND")
 bg:SetAllPoints(timerBar)
 bg:SetColorTexture(0, 0, 0, 0.7)
 
-local spark = timerBar:CreateTexture(nil, "OVERLAY")
+local spark = timerBar:CreateTexture(nil, "ARTWORK", nil, 1)
 spark:SetTexture(130877) -- Interface\\CastingBar\\UI-CastingBar-Spark
 spark:SetSize(32, 32)
 spark:SetBlendMode("ADD")
 spark:SetPoint("LEFT", tex, "RIGHT", -15, 0)
 
-local border = timerBar:CreateTexture(nil, "OVERLAY")
+local border = timerBar:CreateTexture(nil, "ARTWORK", nil, 2)
 border:SetTexture(130874) -- Interface\\CastingBar\\UI-CastingBar-Border
 border:SetSize(256, 64)
 border:SetPoint("TOP", timerBar, 0, 28)
 
 timerBar.text = timerBar:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 timerBar.text:SetPoint("CENTER", timerBar, "CENTER")
+timerBar.text:SetJustifyH("LEFT")
+timerBar.text:SetWordWrap(false)
+timerBar.text:SetWidth(timerBar.text:GetUnboundedStringWidthForText("BigWigs: 40.0") + 4)
 
-local prev
-timerBar:SetScript("OnEvent", function()
-	if not prev then
-		LoaderPublic:SendMessage("BigWigs_FrameCreated", timerBar, "QueueTimer")
-	end
+local durationObject = C_DurationUtil.CreateDuration()
+local durationBinding = C_DurationUtil.CreateDurationTextBinding()
+do
+	-- Enum.StatusBarInterpolation.Immediate = 0 | Enum.StatusBarTimerDirection.RemainingTime = 1
+	timerBar:SetTimerDuration(durationObject, 0, 1)
+	local formatter = C_StringUtil.CreateNumericRuleFormatter()
+	formatter:SetBreakpoints({
+		{ threshold = 0, format = "BigWigs: %.1f" },
+	})
+	durationBinding:SetFormatter(formatter)
+	durationBinding:SetFontString(timerBar.text)
+	durationBinding:SetDuration(durationObject)
+	durationBinding:SetExpiredText("BigWigs: 0.0")
+	durationBinding:SetZeroDurationText("BigWigs: 0.0")
+	durationBinding:SetEnabled(false)
+end
 
-	prev = GetTime() + 40
+local frameCreated
+timerBar:SetScript("OnEvent", function(self)
 	-- Play in Master for those that have SFX off or very low.
 	-- Using false as third arg to avoid the "only one of each sound at a time" throttle.
-	-- Only play via the "Master" channel if we have sounds turned on
 	if db.profile.useMaster then
 		local _, id = PlaySound(8960, "Master", false) -- SOUNDKIT.READY_CHECK
-		if id then
+		if id and C_CVar.GetCVarBool("Sound_EnableSFX") then -- The Blizz sound plays over SFX
 			StopSound(id-1) -- Should work most of the time to stop the blizz sound
 		end
 	end
 
+	if LFGDungeonReadyPopup:IsShown() then
+		if not frameCreated then
+			frameCreated = true
+			LoaderPublic:SendMessage("BigWigs_FrameCreated", self, "QueueTimer")
+		end
+
+		if self:IsShown() then
+			durationObject:SetTimeFromStart(GetTime(), 40)
+			if self:IsVisible() then
+				durationBinding:SetEnabled(true)
+				durationBinding:UpdateFontString()
+			end
+		end
+	end
 end)
 timerBar:RegisterEvent("LFG_PROPOSAL_SHOW")
 
-timerBar:SetScript("OnUpdate", function(f)
-	if prev then
-		local timeLeft = prev - GetTime()
-		if timeLeft > 0 then
-			f:SetValue(timeLeft)
-			f.text:SetFormattedText("BigWigs: %.1f", timeLeft)
-		end
+timerBar:SetScript("OnShow", function()
+	if durationObject:IsActive() then
+		durationBinding:SetEnabled(true)
+		durationBinding:UpdateFontString()
+	end
+end)
+timerBar:SetScript("OnHide", function()
+	durationBinding:SetEnabled(false)
+	if not LFGDungeonReadyPopup:IsShown() then
+		durationObject:Reset()
 	end
 end)
 
