@@ -482,9 +482,7 @@ L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_
 L.bossStagesTimer = "Таймер фаз босса"
 L.bossStagesTimerDesc = "Таймер, который сбрасывается при каждой смене фазы схватки с боссом, с подсказкой для просмотра истории фаз босса. Активен только на боссах с несколькими фазами."
 L.bossStagesTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tИстория фаз босса"
-L.instanceTimer = "Таймер подземелья/рейда"
-L.instanceTimerDesc = "Таймер, который показывает, как долго вы находитесь в подземелье, рейде и т.п., с подсказкой для просмотра истории подземелий и рейдов."
-L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tИстория подземелий/рейдов"
+L.stage = "Этап %s"
 
 L.backgroundColor = "Цвет фона"
 L.inactive = "Неактивно"

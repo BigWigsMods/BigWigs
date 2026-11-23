@@ -249,14 +249,12 @@ files["Media/Media.lua"].ignore = {
 	"113/GetBuildInfo",
 }
 files["Tools/AuraSounds.lua"].ignore = {
-	"113/C_ClassColor",
 	"113/C_RestrictedActions",
 	"113/C_Spell",
 	"113/C_UnitAuras",
 	"113/GetNumGroupMembers",
 	"113/UnitGroupRolesAssigned",
 	"113/UnitInPartyIsAI",
-	"143/string",
 }
 files["Tools/AutoInvite.lua"].ignore = {
 	"113/C_BattleNet",
@@ -276,7 +274,8 @@ files["Tools/AutoRole.lua"].ignore = {
 	"113/UnitSetRole",
 }
 files["Tools/CombatTimer.lua"].ignore = {
-	"113/date",
+	"113/C_DurationUtil",
+	"113/C_StringUtil",
 }
 files["Tools/Keystones.lua"].ignore = {
 	"113/C_ChallengeMode",

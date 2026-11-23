@@ -11,7 +11,6 @@ end
 --
 
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
-local SOUND = LibSharedMedia.MediaType and LibSharedMedia.MediaType.SOUND or "sound"
 local RefreshAuraSounds
 local GetUnitToken, IterateGroup
 local ProfileUtils = {}
@@ -34,19 +33,17 @@ do
 		enemy = true,
 	}
 
-	db = BigWigsLoader.db:RegisterNamespace("AuraSounds", {profile = defaults})
+	local validSoundKeys = {
+		enabled = true,
+		spellID = true,
+		trigger = true,
+		unit = true,
+		playerName = true,
+		sound = true,
+		throttleSeconds = true,
+	}
 
-	local function CopyTable(settingsTable)
-		local copy = {}
-		for key, value in next, settingsTable do
-			if type(value) == "table" then
-				copy[key] = CopyTable(value)
-			else
-				copy[key] = value
-			end
-		end
-		return copy
-	end
+	db = BigWigsLoader.db:RegisterNamespace("AuraSounds", {profile = defaults})
 
 	ProfileUtils.ValidateMainSettings = function()
 		for k, v in next, db.profile do
@@ -55,7 +52,7 @@ do
 				db.profile[k] = nil
 			elseif type(v) ~= defaultType then
 				if defaultType == "table" then
-					db.profile[k] = CopyTable(defaults[k])
+					db.profile[k] = {}
 				else
 					db.profile[k] = defaults[k]
 				end
@@ -75,6 +72,11 @@ do
 			if type(soundInfo) ~= "table" or type(soundInfo.spellID) ~= "number" or math.floor(soundInfo.spellID+0.5) ~= soundInfo.spellID or not C_Spell.DoesSpellExist(soundInfo.spellID) or not BigWigsLoader.GetSpellName(soundInfo.spellID) or soundInfo.voice or soundInfo.duration then
 				table.remove(db.profile.sounds, soundIndex)
 			else
+				for k in next, soundInfo do
+					if not validSoundKeys[k] then
+						soundInfo[k] = nil
+					end
+				end
 				if type(soundInfo.enabled) ~= "boolean" then
 					soundInfo.enabled = true
 				end
@@ -87,7 +89,7 @@ do
 				if soundInfo.unit ~= "name" or type(soundInfo.playerName) ~= "string" then
 					soundInfo.playerName = nil
 				else
-					local trimmed = string.trim(soundInfo.playerName)
+					local trimmed = soundInfo.playerName:trim()
 					soundInfo.playerName = trimmed ~= "" and trimmed or nil
 				end
 				if type(soundInfo.throttleSeconds) ~= "number" then
@@ -288,8 +290,8 @@ do
 					end
 				end
 
-				local soundFile = LibSharedMedia:Fetch("sound", info.sound, true)
-				if unit and soundFile then
+				if unit then
+					local soundFile = LibSharedMedia:Fetch("sound", info.sound)
 					if unit == "boss" then
 						for i = 1, #bossList do
 							RegisterAuraSound(info, bossList[i], soundFile)
@@ -339,13 +341,6 @@ end
 --
 
 do
-	local roleIcons = {
-		["TANK"] = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Tank:0|t",
-		["HEALER"] = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Healer:0|t",
-		["DAMAGER"] = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Damage:0|t",
-		["NONE"] = "",
-	}
-
 	local function GetSoundOptions()
 		local optionsTable = {
 			type = "group",
@@ -366,7 +361,7 @@ do
 			name = L.addAuraSpell,
 			get = false,
 			set = function(_, value)
-				value = string.trim(value) -- Trim leading/trailing spaces
+				value = value:trim() -- Trim leading/trailing spaces
 				local spellID = C_Spell.GetSpellIDForSpellIdentifier(value)
 				table.insert(db.profile.sounds, {
 					enabled = true,
@@ -379,7 +374,7 @@ do
 				BigWigsLoader:SendMessage("BigWigs_PluginOptionsUpdate", "Auras")
 			end,
 			validate = function(_, value)
-				value = string.trim(value) -- Trim leading/trailing spaces
+				value = value:trim() -- Trim leading/trailing spaces
 				local spellID = C_Spell.GetSpellIDForSpellIdentifier(value)
 				if not spellID or not C_Spell.DoesSpellExist(spellID) or not BigWigsLoader.GetSpellName(spellID) then
 					return ("%s: %s"):format(L.auras, L.invalidSpell)
@@ -388,6 +383,10 @@ do
 			end,
 			order = 2,
 		}
+
+		if #db.profile.sounds == 0 then
+			return optionsTable
+		end
 
 		local function FindSoundIndex(soundInfo)
 			for i = 1, #db.profile.sounds do
@@ -422,17 +421,25 @@ do
 			return L.confirmRemoveAuraSound:format(BigWigsLoader.GetSpellName(soundInfo.spellID), soundInfo.spellID)
 		end
 
+		local soundList = LibSharedMedia:List("sound")
 		local function GetSound(info)
 			local sound = info.arg.sound
-			for i, v in next, LibSharedMedia:List(SOUND) do
+			for i, v in next, soundList do
 				if v == sound then
 					return i
 				end
 			end
 		end
 		local function SetSound(info, value)
-			Set(info, LibSharedMedia:List(SOUND)[value])
+			Set(info, soundList[value])
 		end
+
+		local roleIcons = {
+			["TANK"] = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Tank:0|t",
+			["HEALER"] = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Healer:0|t",
+			["DAMAGER"] = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Damage:0|t",
+			["NONE"] = "",
+		}
 
 		local function PlayerNameValues(info)
 			local playerList = {}
@@ -465,9 +472,10 @@ do
 				if unit then
 					local unitName = BigWigsLoader.UnitName(unit)
 					if unitName then
+						local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
 						local _, class = UnitClass(unit)
-						local color = class and C_ClassColor.GetClassColor(class) or GRAY_FONT_COLOR
-						name = color:WrapTextInColorCode(unitName)
+						local tbl = class and colorTbl[class] or GRAY_FONT_COLOR
+						name = ("|cFF%02x%02x%02x%s|r"):format(tbl.r*255, tbl.g*255, tbl.b*255, unitName)
 					end
 				end
 				return L.auraSoundTankDesc:format(name)
@@ -492,6 +500,20 @@ do
 				end
 			end
 		end
+
+		local triggerValues = {
+			[0] = L.onApplied,
+			[1] = L.onDose,
+			[2] = L.onRemoved,
+		}
+		local unitValues = {
+			player = L.myself,
+			tank = L.indicatorType_Tank,
+			name = L.playerInYourGroup,
+			boss = L.boss,
+			enemy = L.enemy,
+		}
+		local unitSorting = { "player", "tank", "name", "boss", "enemy" }
 
 		local order = 0
 		for soundIndex = #db.profile.sounds, 1, -1 do
@@ -529,11 +551,7 @@ do
 					trigger = {
 						type = "select",
 						name = L.trigger,
-						values = {
-							[0] = L.onApplied,
-							[1] = L.onDose,
-							[2] = L.onRemoved,
-						},
+						values = triggerValues,
 						arg = soundInfo,
 						width = 1,
 						order = 3,
@@ -543,7 +561,7 @@ do
 						name = L.sound,
 						get = GetSound,
 						set = SetSound,
-						values = LibSharedMedia:List(SOUND),
+						values = soundList,
 						dialogControl = "BigWigsSharedDropdown",
 						itemControl = "DDI-Sound",
 						arg = soundInfo,
@@ -553,14 +571,8 @@ do
 					unit = {
 						type = "select",
 						name = L.target,
-						values = {
-							player = L.myself,
-							tank = L.indicatorType_Tank,
-							name = L.playerInYourGroup,
-							boss = L.boss,
-							enemy = L.enemy,
-						},
-						sorting = { "player", "tank", "name", "boss", "enemy" },
+						values = unitValues,
+						sorting = unitSorting,
 						arg = soundInfo,
 						width = 1,
 						order = 5,
@@ -618,8 +630,8 @@ do
 		self:UnregisterEvent(event)
 		self:SetScript("OnEvent", nil)
 		UpdateProfile()
-		BigWigsLoader.RegisterMessage(loginFrame, "BigWigs_ProfileUpdate", UpdateProfile)
+		BigWigsLoader.RegisterMessage({}, "BigWigs_ProfileUpdate", UpdateProfile)
 	end)
-	loginFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+	loginFrame:RegisterEvent("PLAYER_LOGIN")
 	ProfileUtils.ValidateMainSettings()
 end

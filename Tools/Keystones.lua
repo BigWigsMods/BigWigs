@@ -551,6 +551,7 @@ end
 --
 
 local cellsCurrentlyShowing = {}
+local guildCellsCurrentlyShowing = {}
 local cellsAvailable = {}
 local tab1, tab2
 
@@ -658,7 +659,6 @@ do
 	local GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
 	local GetRealmName = GetRealmName
 
-	local myKeyLevel, myKeyMap, myRating = 0, 0, 0
 	UpdateMyKeystone = function(self, event, id, isReloadingUi)
 		if event == "PLAYER_ENTERING_WORLD" then
 			if id or isReloadingUi then
@@ -676,9 +676,6 @@ do
 					end
 				end
 			end
-			if BigWigsLoader.UnitLevel("player") ~= GetMaxPlayerLevel() then
-				return
-			end
 		elseif event == "PLAYER_INTERACTION_MANAGER_FRAME_HIDE" and id ~= 3 and id ~= 49 then -- 3 = Gossip (key downgrade NPC), 49 = WeeklyRewards (vault)
 			return
 		end
@@ -692,6 +689,11 @@ do
 			BigWigs3DB.myKeystones = {}
 		end
 
+		if BigWigsLoader.UnitLevel("player") ~= GetMaxPlayerLevel() then
+			return
+		end
+
+		local myKeyLevel, myKeyMap, myRating = 0, 0, 0
 		local keyLevel = GetOwnedKeystoneLevel()
 		if type(keyLevel) == "number" then
 			myKeyLevel = keyLevel
@@ -765,6 +767,7 @@ local function WipeCells()
 	mainPanel.teleportBar:SetParent(mainPanel)
 	mainPanel.teleportBar:Hide()
 	cellsCurrentlyShowing = {}
+	guildCellsCurrentlyShowing = {}
 end
 local headersAvailable = {}
 local headersCurrentlyShowing = {}
@@ -782,6 +785,7 @@ local teleportButtons = {}
 mainPanel.CloseButton:SetScript("OnClick", function(self)
 	self:UnregisterAllEvents()
 	tab2:SetScript("OnUpdate", nil)
+	mainPanel.teleportBar.name = nil
 	WipeCells()
 	WipeHeaders()
 	mainPanel:Hide()
@@ -899,7 +903,7 @@ do
 				bwTooltip:AddLine(L.keystoneTeleportNotLearned:format(spellName))
 			else
 				local cd = BigWigsLoader.GetSpellCooldown(self.spellID)
-				if cd.startTime > 0 and cd.duration > 0 then
+				if cd.startTime > 0 and cd.duration > 2 then
 					local remainingSeconds = (cd.startTime + cd.duration) - GetTime()
 					local hours = math.floor(remainingSeconds / 3600)
 					remainingSeconds = remainingSeconds % 3600
@@ -940,9 +944,7 @@ do
 			text:SetSize(86, 44) -- Button size minus 4
 			text:SetJustifyH("CENTER")
 			text:SetText(button.text)
-			while text:IsTruncated() do -- For really long single words like "MOTHERLODE!!"
-				text:SetTextScale(text:GetTextScale() - 0.01)
-			end
+			button.textObj = text
 
 			local icon = button:CreateTexture()
 			icon:SetSize(48, 48)
@@ -984,8 +986,11 @@ end
 do
 	local function SelectTab(tab)
 		tab2:SetScript("OnUpdate", nil)
+		mainPanel.teleportBar.name = nil
 		WipeCells()
 		WipeHeaders()
+		scrollArea:SetVerticalScroll(0)
+		scrollChild:SetHeight(1)
 		for expansionIndex = 1, #teleportButtons do
 			local list = teleportButtons[expansionIndex]
 			for i = 1, #list do
@@ -1073,22 +1078,22 @@ do
 		end)
 	end
 	-- Tab 1 Click Handler
-	local PlayerIsTimerunning = PlayerIsTimerunning -- XXX temp Lemix
+	--local PlayerIsTimerunning = PlayerIsTimerunning -- XXX temp Lemix
 	tab1:SetScript("OnClick", function(self)
 		SelectTab(self)
 		DeselectTab(tab2)
 		DeselectTab(tab3)
 		DeselectTab(tab4)
 
-		if PlayerIsTimerunning and PlayerIsTimerunning() then -- XXX temp Lemix
-			PlayerIsTimerunning = nil
-			teleportList[1] = teleportList[0]
-			teleportButtons[1] = teleportButtons[0]
-			local newTotal = #teleportButtons[1]
-			local num = newTotal % 2 == 0 and newTotal - 1 or newTotal
-			teleportButtons[2][1]:ClearAllPoints()
-			teleportButtons[2][1]:SetPoint("TOP", teleportButtons[1][num], "BOTTOM", 0, -36)
-		end
+		--if PlayerIsTimerunning and PlayerIsTimerunning() then -- XXX temp Lemix
+		--	PlayerIsTimerunning = nil
+		--	teleportList[1] = teleportList[0]
+		--	teleportButtons[1] = teleportButtons[0]
+		--	local newTotal = #teleportButtons[1]
+		--	local num = newTotal % 2 == 0 and newTotal - 1 or newTotal
+		--	teleportButtons[2][1]:ClearAllPoints()
+		--	teleportButtons[2][1]:SetPoint("TOP", teleportButtons[1][num], "BOTTOM", 0, -36)
+		--end
 
 		if db.global.showViewerTeleportTip then
 			for _, teleportSpellID in next, teleportList[1] do
@@ -1134,19 +1139,28 @@ do
 			if event == "CHALLENGE_MODE_START" then
 				local keyLevel = GetActiveKeystoneInfo()
 				local challengeMapID = GetActiveChallengeMapID()
-				local challengeMapName, _, _, icon = GetMapUIInfo(challengeMapID)
+				local challengeMapName, _, _, icon
+				if challengeMapID then
+					challengeMapName, _, _, icon = GetMapUIInfo(challengeMapID)
+				end
 				BigWigsLoader:SendMessage("BigWigs_StartCountdown", self, nil, "mythicplus", 9, nil, db.profile.countVoice, 9, nil, db.profile.countBegin)
-				if keyLevel and keyLevel > 0 then
+				if keyLevel and keyLevel > 0 and challengeMapID then
 					local msg = L.keystoneStartBar:format(dungeonNamesTrimmed[challengeMapID] or challengeMapID, keyLevel)
 					BigWigsLoader:SendMessage("BigWigs_StartBar", nil, nil, msg, 9, icon)
 					BigWigsLoader:SendMessage("BigWigs_Timer", nil, nil, 9, 9, msg, 0, icon, false, true)
+					BigWigsLoader:SendMessage("BigWigs_Message", self, nil, BigWigsAPI:GetLocale("BigWigs: Common").custom_sec:format(msg, 9), "cyan", icon)
 				else
 					BigWigsLoader:SendMessage("BigWigs_StartBar", nil, nil, L.keystoneModuleName, 9, icon)
 					BigWigsLoader:SendMessage("BigWigs_Timer", nil, nil, 9, 9, L.keystoneModuleName, 0, icon, false, true)
+					BigWigsLoader:SendMessage("BigWigs_Message", self, nil, BigWigsAPI:GetLocale("BigWigs: Common").custom_sec:format(L.keystoneModuleName, 9), "cyan", icon)
 				end
 				BigWigsLoader.CTimerAfter(9, function()
-					BigWigsLoader:SendMessage("BigWigs_Message", self, nil, L.keystoneStartBar:format(challengeMapName, keyLevel), "cyan", icon)
-					BigWigsLoader.Print(L.keystoneStartMessage:format(challengeMapName, keyLevel))
+					if keyLevel and keyLevel > 0 and challengeMapName then
+						BigWigsLoader:SendMessage("BigWigs_Message", self, nil, L.keystoneStartBar:format(challengeMapName, keyLevel), "cyan", icon)
+						BigWigsLoader.Print(L.keystoneStartMessage:format(challengeMapName, keyLevel))
+					else
+						BigWigsLoader:SendMessage("BigWigs_Message", self, nil, L.keystoneModuleName, "cyan", icon)
+					end
 					local soundName = db.profile.countEndSound
 					if soundName ~= "None" then
 						local sound = LibSharedMedia:Fetch("sound", soundName, true)
@@ -1155,7 +1169,6 @@ do
 						end
 					end
 				end)
-				BigWigsLoader:SendMessage("BigWigs_Message", self, nil, BigWigsAPI:GetLocale("BigWigs: Common").custom_sec:format(L.keystoneStartBar:format(dungeonNamesTrimmed[challengeMapID] or challengeMapID, keyLevel), 9), "cyan", icon)
 				local soundName = db.profile.countStartSound
 				if soundName ~= "None" then
 					local sound = LibSharedMedia:Fetch("sound", soundName, true)
@@ -1181,32 +1194,24 @@ do
 		local UnitCastingInfo = UnitCastingInfo
 		local function OnUpdate()
 			local _, _, _, startTimeMs, endTimeMs, _, _, _, spellId = UnitCastingInfo("player")
-			if spellId then
-				for expansionIndex = 1, #teleportButtons do
-					local list = teleportButtons[expansionIndex]
-					for i = 1, #list do
-						local button = list[i]
-						if spellId == button.spellID then
-							local startTimeSec = startTimeMs / 1000
-							local endTimeSec = endTimeMs / 1000
-							local castDuration = endTimeSec - startTimeSec
-							if castDuration > 0 then
-								local percentage = (GetTime() - startTimeSec) / castDuration
-								if percentage > 1 then percentage = 1 elseif percentage < 0 then percentage = 0 end
-								button.cdbar:SetColorTexture(0, 0, 1, 0.6)
-								button.cdbar:Show()
-								button.cdbar:SetWidth(percentage * button:GetWidth())
-							else
-								button.cdbar:Hide()
-							end
+			for expansionIndex = 1, #teleportButtons do
+				local list = teleportButtons[expansionIndex]
+				for i = 1, #list do
+					local button = list[i]
+					if spellId == button.spellID then
+						local startTimeSec = startTimeMs / 1000
+						local endTimeSec = endTimeMs / 1000
+						local castDuration = endTimeSec - startTimeSec
+						if castDuration > 0 then
+							local percentage = (GetTime() - startTimeSec) / castDuration
+							if percentage > 1 then percentage = 1 elseif percentage < 0 then percentage = 0 end
+							button.cdbar:SetColorTexture(0, 0, 1, 0.6)
+							button.cdbar:Show()
+							button.cdbar:SetWidth(percentage * button:GetWidth())
+						else
+							button.cdbar:Hide()
 						end
-					end
-				end
-			else
-				for expansionIndex = 1, #teleportButtons do
-					local list = teleportButtons[expansionIndex]
-					for i = 1, #list do
-						local button = list[i]
+					else
 						local cd = BigWigsLoader.GetSpellCooldown(button.spellID)
 						if cd and cd.startTime > 0 and cd.duration > 2 and BigWigsLoader.IsSpellKnownOrInSpellBook(button.spellID) then
 							local remaining = (cd.startTime + cd.duration) - GetTime()
@@ -1248,6 +1253,11 @@ do
 					local button = list[i]
 					button:Show()
 					button.cdbar:Hide()
+					local scale = button.textObj:GetTextScale()
+					while button.textObj:IsTruncated() and scale > 0.5 do -- For really long single words like "MOTHERLODE!!"
+						scale = scale - 0.01
+						button.textObj:SetTextScale(scale)
+					end
 					if not BigWigsLoader.IsSpellKnownOrInSpellBook(button.spellID) then
 						button.icon:SetTexture(136813)
 					else
@@ -1551,14 +1561,13 @@ do
 				cellInTime.tooltip = (L.keystoneFailedTooltip):format(minutesTotal, secondsTotal, minutesTimeLimit, secondsTimeLimit)
 			end
 			prevDate, prevMapName, prevLevel, prevGainedScore, prevInTime = cellDate, cellMapName, cellLevel, cellGainedScore, cellInTime
-
-			if i == 1 then
-				-- Calculate scroll height
-				local contentsHeight = thisWeekHeader:GetTop() - prevMapName:GetBottom()
-				local newHeight = 10 + contentsHeight + 10 -- 10 top padding + content + 10 bottom padding
-				scrollChild:SetHeight(newHeight)
-			end
 		end
+
+		-- Calculate scroll height
+		local bottomElement = firstOldRun and prevMapName or cellRunsOlder
+		local contentsHeight = thisWeekHeader:GetTop() - bottomElement:GetBottom()
+		local newHeight = 10 + contentsHeight + 10 -- 10 top padding + content + 10 bottom padding
+		scrollChild:SetHeight(newHeight)
 	end)
 end
 
@@ -1571,7 +1580,7 @@ do
 				return L.keystoneClickToTeleportNotLearned
 			else
 				local cd = BigWigsLoader.GetSpellCooldown(spellID)
-				if cd.startTime > 0 and cd.duration > 0 then
+				if cd.startTime > 0 and cd.duration > 2 then
 					return L.keystoneClickToTeleportCooldown
 				else
 					return L.keystoneClickToTeleportNow
@@ -1613,8 +1622,10 @@ do
 						mainPanel.teleportBar:SetWidth(percentage * self:GetWidth())
 					end
 				end
-			elseif mainPanel.teleportBar:GetParent() == self then
+			elseif mainPanel.teleportBar:GetParent() == self and mainPanel.teleportBar:IsShown() then
 				mainPanel.teleportBar:Hide()
+				mainPanel.teleportBar.name = nil
+				self:SetScript("OnUpdate", nil)
 			end
 		end
 
@@ -1635,7 +1646,6 @@ do
 		end
 	end
 
-	local guildCellsCurrentlyShowing = {}
 	local tempLemixDungeonsDeleteMe = { -- XXX temp Lemix
 		[199] = true,
 		[210] = true,
@@ -1684,7 +1694,14 @@ do
 				}
 			end
 		end
-		if #sortedplayerList == 0 then return end -- The guild list can be empty
+		if #sortedplayerList == 0 then -- The guild list can be empty
+			if isGuildList then
+				local contentsHeight = headersCurrentlyShowing[1]:GetTop() - headersCurrentlyShowing[2]:GetBottom()
+				local newHeight = 10 + contentsHeight + 10 -- 10 top padding + content + 10 bottom padding
+				scrollChild:SetHeight(newHeight)
+			end
+			return
+		end
 
 		-- Sort list by level descending, or by name if equal level
 		table.sort(sortedplayerList, SortTableByLevelThenRatingThenName)
@@ -1763,6 +1780,7 @@ do
 			cellsCurrentlyShowing[cell] = nil
 			cellsAvailable[#cellsAvailable+1] = cell
 		end
+		guildCellsCurrentlyShowing = {}
 	end
 
 	local RequestGuildSpecializationThrottled
@@ -1920,7 +1938,7 @@ do
 						else
 							challengesTeleportButton:SetAttribute("spell", spellID)
 							local cd = BigWigsLoader.GetSpellCooldown(spellID)
-							if cd.startTime > 0 and cd.duration > 0 then
+							if cd.startTime > 0 and cd.duration > 2 then
 								local remainingSeconds = (cd.startTime + cd.duration) - GetTime()
 								local hours = math.floor(remainingSeconds / 3600)
 								remainingSeconds = remainingSeconds % 3600
@@ -1984,8 +2002,10 @@ do
 				-- Dungeon names as header text
 				hookedIcons[icon][2]:SetText(dungeonNamesTiny[icon.mapID] or icon.mapID)
 				hookedIcons[icon][2]:SetTextScale(1)
-				while hookedIcons[icon][2]:IsTruncated() do -- For really long single words like "MOTHERLODE!!"
-					hookedIcons[icon][2]:SetTextScale(hookedIcons[icon][2]:GetTextScale() - 0.01)
+				local scale = 1
+				while hookedIcons[icon][2]:IsTruncated() and scale > 0.5 do -- For really long single words like "MOTHERLODE!!"
+					scale = scale - 0.01
+					hookedIcons[icon][2]:SetTextScale(scale)
 				end
 				-- Highest score text, mimic Blizz code for the highest level text
 				local _, overAllScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(icon.mapID)
@@ -2126,6 +2146,51 @@ do
 		end
 	end
 	local currentInstanceID = nil
+	local function UpdatePartyList()
+		local sortedPlayerList = {}
+		for pName, pData in next, instanceKeysWidgets.nameList do
+			if UnitInParty(pName) then -- Safety check, in case we're forming a group inside a dungeon and people keep leaving
+				local _, _, _, _, _, playerMapInstanceID = GetMapUIInfo(pData[2])
+				local inCurrentDungeon = playerMapInstanceID == currentInstanceID
+				if inCurrentDungeon or db.profile.instanceKeysShowAllPlayers then
+					main:RegisterEvent("PLAYER_REGEN_DISABLED") -- Temporarily hide when you enter combat
+					main:Show()
+					sortedPlayerList[#sortedPlayerList+1] = {name = pName, decoratedName = pData[3], level = pData[1], inCurrentDungeon = inCurrentDungeon}
+				end
+			end
+		end
+
+		table.sort(sortedPlayerList, SortTableByLevelThenName)
+		local namesToShow, otherDungeons = {}, {false, false, false, false, false}
+		for i = 1, 5 do
+			local name = sortedPlayerList[i] and sortedPlayerList[i].decoratedName
+			if name then
+				namesToShow[#namesToShow+1] = name
+				if not sortedPlayerList[i].inCurrentDungeon then
+					otherDungeons[i] = true
+					if not instanceKeysWidgets.testing then
+						instanceKeysWidgets.playerListText[i]:SetTextColor(db.profile.instanceKeysOtherDungeonColor[1], db.profile.instanceKeysOtherDungeonColor[2], db.profile.instanceKeysOtherDungeonColor[3], db.profile.instanceKeysOtherDungeonColor[4])
+						instanceKeysWidgets.playerListText[i]:SetText(name)
+					end
+				elseif not instanceKeysWidgets.testing then
+					instanceKeysWidgets.playerListText[i]:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
+					instanceKeysWidgets.playerListText[i]:SetText(name)
+				end
+			elseif not instanceKeysWidgets.testing then
+				instanceKeysWidgets.playerListText[i]:SetText(" ")
+			end
+		end
+		if namesToShow[1] then
+			instanceKeysWidgets.namesToShow = namesToShow
+			instanceKeysWidgets.otherDungeons = otherDungeons
+		else
+			instanceKeysWidgets.namesToShow = nil
+			instanceKeysWidgets.otherDungeons = nil
+			if not instanceKeysWidgets.testing then
+				instanceKeysWidgets.main:Hide()
+			end
+		end
+	end
 	local function ReceivePartyData(keyLevel, keyMap, _, playerName, channel)
 		if channel == "PARTY" and (not instanceKeysWidgets.nameList[playerName] or instanceKeysWidgets.nameList[playerName][1] ~= keyLevel or instanceKeysWidgets.nameList[playerName][2] ~= keyMap) then
 			local _, classFile = UnitClass(playerName)
@@ -2138,53 +2203,7 @@ do
 				decoratedName = L.instanceKeysDisplay:format(color, playerName:gsub("%-.+", ""), keyLevel)
 			end
 			instanceKeysWidgets.nameList[playerName] = {keyLevel, keyMap, decoratedName}
-
-			local sortedPlayerList = {}
-			for pName, pData in next, instanceKeysWidgets.nameList do
-				if UnitInParty(pName) then -- Safety check, in case we're forming a group inside a dungeon and people keep leaving
-					local _, _, _, _, _, playerMapInstanceID = GetMapUIInfo(pData[2])
-					local inCurrentDungeon = playerMapInstanceID == currentInstanceID
-					if inCurrentDungeon or db.profile.instanceKeysShowAllPlayers then
-						main:RegisterEvent("PLAYER_LEAVING_WORLD") -- Hide when changing zone
-						main:RegisterEvent("CHALLENGE_MODE_START") -- Hide when starting Mythic+
-						main:RegisterEvent("ENCOUNTER_START") -- Hide when you enter combat with a boss
-						main:RegisterEvent("PLAYER_REGEN_DISABLED") -- Temporarily hide when you enter combat
-						main:Show()
-						sortedPlayerList[#sortedPlayerList+1] = {name = pName, decoratedName = pData[3], level = pData[1], inCurrentDungeon = inCurrentDungeon}
-					end
-				end
-			end
-
-			table.sort(sortedPlayerList, SortTableByLevelThenName)
-			local namesToShow, otherDungeons = {}, {false, false, false, false, false}
-			for i = 1, 5 do
-				local name = sortedPlayerList[i] and sortedPlayerList[i].decoratedName
-				if name then
-					namesToShow[#namesToShow+1] = name
-					if not sortedPlayerList[i].inCurrentDungeon then
-						otherDungeons[i] = true
-						if not instanceKeysWidgets.testing then
-							instanceKeysWidgets.playerListText[i]:SetTextColor(db.profile.instanceKeysOtherDungeonColor[1], db.profile.instanceKeysOtherDungeonColor[2], db.profile.instanceKeysOtherDungeonColor[3], db.profile.instanceKeysOtherDungeonColor[4])
-							instanceKeysWidgets.playerListText[i]:SetText(name)
-						end
-					elseif not instanceKeysWidgets.testing then
-						instanceKeysWidgets.playerListText[i]:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
-						instanceKeysWidgets.playerListText[i]:SetText(name)
-					end
-				elseif not instanceKeysWidgets.testing then
-					instanceKeysWidgets.playerListText[i]:SetText(" ")
-				end
-			end
-			if namesToShow[1] then
-				instanceKeysWidgets.namesToShow = namesToShow
-				instanceKeysWidgets.otherDungeons = otherDungeons
-			else
-				instanceKeysWidgets.namesToShow = nil
-				instanceKeysWidgets.otherDungeons = nil
-				if not instanceKeysWidgets.testing then
-					instanceKeysWidgets.main:Hide()
-				end
-			end
+			UpdatePartyList()
 		end
 	end
 	local whosKeyTable = {}
@@ -2207,7 +2226,11 @@ do
 		end
 		LibKeystoneRegister(whosKeyTable, ReceivePartyData)
 		LibKeystoneRequest("PARTY")
+		main:RegisterEvent("PLAYER_LEAVING_WORLD") -- Hide when changing zone
+		main:RegisterEvent("CHALLENGE_MODE_START") -- Hide when starting Mythic+
+		main:RegisterEvent("ENCOUNTER_START") -- Hide when you enter combat with a boss
 		main:RegisterEvent("UNIT_CONNECTION")
+		main:RegisterEvent("GROUP_ROSTER_UPDATE")
 	end
 	local function DelayStartOfDungeon() -- Difficulty info isn't accurate until 1 frame after PEW
 		local _, _, diffID, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
@@ -2224,7 +2247,7 @@ do
 	end
 	local combatHideCount, combatDelayTimer = 1, nil
 	main:SetScript("OnEvent", function(self, event, _, isConnected)
-		if instanceKeysWidgets.testing and event ~= "UNIT_CONNECTION" then
+		if instanceKeysWidgets.testing and event ~= "UNIT_CONNECTION" and event ~= "GROUP_ROSTER_UPDATE" then
 			instanceKeysWidgets.testing = false
 			instanceKeysWidgets.main:Hide()
 			instanceKeysWidgets.main:EnableMouse(false)
@@ -2242,6 +2265,8 @@ do
 			if isConnected then
 				BigWigsLoader.CTimerAfter(1, function() LibKeystoneRequest("PARTY") end)
 			end
+		elseif event == "GROUP_ROSTER_UPDATE" then
+			UpdatePartyList()
 		elseif event == "PLAYER_REGEN_DISABLED" and combatHideCount < 4 then -- You can enter combat thrice and it will re-show, kill it after that
 			combatHideCount = combatHideCount + 1
 			self:Hide()
@@ -2270,9 +2295,11 @@ do
 			instanceKeysWidgets.otherDungeons = nil
 			self:UnregisterEvent("PLAYER_LEAVING_WORLD")
 			self:UnregisterEvent("CHALLENGE_MODE_START")
+			self:UnregisterEvent("ENCOUNTER_START")
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 			self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 			self:UnregisterEvent("UNIT_CONNECTION")
+			self:UnregisterEvent("GROUP_ROSTER_UPDATE")
 		end
 	end)
 	main:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -2296,7 +2323,7 @@ do
 	local GetUnitCriteriaProgressValues = C_ScenarioInfo.GetUnitCriteriaProgressValues
 	do -- Tooltip: Add BigWigs progress
 		local function AddPercentLine(tooltip)
-			if db.profile.progressTooltip and NamePlatePercentUtils.isActive then
+			if db.profile.progressTooltip and NamePlatePercentUtils.isActive and tooltip == GameTooltip then
 				local value, _, percentString = GetUnitCriteriaProgressValues("mouseover")
 				if value then
 					tooltip:AddLine(L.progressPercentTooltipText[db.profile.progressTooltipFormat]:format(percentString, value, totalEnemyForcesRaw))
@@ -2358,7 +2385,8 @@ do
 				else
 					local fontString = frame:CreateFontString()
 					fontString:SetFont(LibSharedMedia:Fetch("font", db.profile.progressNameplateFontName), db.profile.progressNameplateFontSize, NamePlatePercentUtils.fontFlags)
-					fontString:SetSize(300, 20)
+					fontString:SetWidth(300)
+					fontString:SetWordWrap(false)
 					fontString:SetText(" ")
 					fontString:SetSmoothScaling(true)
 
@@ -2392,8 +2420,14 @@ do
 				end
 				NamePlatePercentUtils.fontFlags = progressNameplateFontFlags
 
+				local font = LibSharedMedia:Fetch("font", db.profile.progressNameplateFontName)
+				local fontSize = db.profile.progressNameplateFontSize
+				for i = 1, #storedTexts do
+					storedTexts[i].fontString:SetFont(font, fontSize, progressNameplateFontFlags)
+				end
+
 				for unit, text in next, activeTexts do
-					text.fontString:SetFont(LibSharedMedia:Fetch("font", db.profile.progressNameplateFontName), db.profile.progressNameplateFontSize, NamePlatePercentUtils.fontFlags)
+					text.fontString:SetFont(font, fontSize, progressNameplateFontFlags)
 					local value, _, percentString = GetUnitCriteriaProgressValues(unit)
 					if not percentString and NamePlatePercentUtils.testing then
 						local numString = unit:match("%d+")
@@ -2414,7 +2448,7 @@ do
 							if db.profile.progressNameplateFormat == 1 then
 								text:SetText(unit, "%s%%", percentString)
 							elseif db.profile.progressNameplateFormat == 3 then
-								text:SetText(unit, "%d/%d", value, 500)
+								text:SetText(unit, "%d/%d", value, NamePlatePercentUtils.testing and 500 or totalEnemyForcesRaw)
 							else
 								text:SetText(unit, "%d", value)
 							end
@@ -2432,7 +2466,7 @@ do
 				NamePlatePercentUtils.RemoveAll()
 				if NamePlatePercentUtils.testing then
 					BigWigsLoader.CTimerAfter(0.5, NamePlatePercentUtils.Test)
-					for i = 1, 20 do
+					for i = 1, 40 do
 						local unit = "nameplate" .. i
 						if UnitCanAttack("player", unit) then
 							local nameplateFrame = GetNamePlateForUnit(unit)
@@ -2464,7 +2498,7 @@ do
 			NamePlatePercentUtils.RestoreAll = function()
 				NamePlatePercentUtils.RemoveAll()
 				if db.profile.progressNameplate and NamePlatePercentUtils.isActive then
-					for i = 1, 20 do
+					for i = 1, 40 do
 						local unit = "nameplate" .. i
 						if UnitCanAttack("player", unit) then
 							local nameplateFrame = GetNamePlateForUnit(unit)
@@ -2501,11 +2535,13 @@ do
 			local GetCriteriaInfo = C_ScenarioInfo.GetCriteriaInfo
 			function UpdateTotal()
 				local _, _, stepCount = GetStepInfo()
-				for i = stepCount, 1, -1 do
-					local infoTable = GetCriteriaInfo(i)
-					if infoTable.totalQuantity and infoTable.isWeightedProgress then
-						totalEnemyForcesRaw = infoTable.totalQuantity
-						return
+				if stepCount then
+					for i = stepCount, 1, -1 do
+						local infoTable = GetCriteriaInfo(i)
+						if infoTable and infoTable.totalQuantity and infoTable.isWeightedProgress then
+							totalEnemyForcesRaw = infoTable.totalQuantity
+							return
+						end
 					end
 				end
 			end
@@ -2565,14 +2601,21 @@ do
 				self:UnregisterEvent("NAME_PLATE_UNIT_REMOVED")
 				self:UnregisterEvent("PLAYER_TARGET_CHANGED")
 				NamePlatePercentUtils.RemoveAll()
-			elseif event == "PLAYER_ENTERING_WORLD" then -- Only the first time it fires, to compensate for reloading UI in the middle of a M+
-				self:UnregisterEvent(event)
+			elseif event == "PLAYER_ENTERING_WORLD" then
 				local _, _, diffID = BigWigsLoader.GetInstanceInfo()
-				if diffID == 8 and db.profile.progressNameplate then -- Active M+
+				if diffID == 8 then -- Active M+
+					totalEnemyForcesRaw = 0
 					NamePlatePercentUtils.isActive = true
-					self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
-					self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
-					self:RegisterEvent("PLAYER_TARGET_CHANGED")
+					if NamePlatePercentUtils.testing then
+						NamePlatePercentUtils.testing = false
+						NamePlatePercentUtils.RemoveAll()
+					end
+					if db.profile.progressNameplate then
+						self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+						self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
+						self:RegisterEvent("PLAYER_TARGET_CHANGED")
+					end
+					UpdateTotal()
 				end
 			elseif event == "CHALLENGE_MODE_START" then
 				totalEnemyForcesRaw = 0
@@ -3204,6 +3247,7 @@ do
 								},
 								order = 3,
 								width = 1.5,
+								set = UpdateSettingsAndNameplates,
 								disabled = DisabledWhenNameplatePercentDisabled,
 							},
 							fontHeader = {

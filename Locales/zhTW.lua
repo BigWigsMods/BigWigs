@@ -482,9 +482,7 @@ L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_
 L.bossStagesTimer = "首領階段計時"
 L.bossStagesTimerDesc = "在具有多個階段的首領戰鬥中啟用，階段轉換時會自動重置，並在滑鼠指向時以浮動提示列出各個階段的時長。"
 L.bossStagesTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t首領階段時長"
-L.instanceTimer = "副本計時"
-L.instanceTimerDesc = "顯示你在當前副本（地城、團隊等）的停留時長，並在滑鼠指向時以浮動提示列出副本紀錄。" -- instance要副本還是地城?
-L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t副本紀錄"
+L.stage = "階段%s"
 
 L.backgroundColor = "背景顏色"
 L.inactive = "閒置" -- 戰鬥計時

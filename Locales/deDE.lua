@@ -482,9 +482,7 @@ L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_
 L.bossStagesTimer = "Phasen-Timer für Bosskämpfe"
 L.bossStagesTimerDesc = "Ein Timer, welcher bei jeder neuen Phase einer Bossbegegnung zurückgesetzt wird, mit einem Tooltip des Phasenverlaufs für Bosse. Nur bei Bossen mit mehreren Phasen aktiv."
 L.bossStagesTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tBoss Phasenverlauf"
-L.instanceTimer = "Instanz-Timer"
-L.instanceTimerDesc = "Ein Timer, welcher die Dauer einer Instanz anzeigt (Dungeon/Schlachtzug/etc), mit einem Tooltip des Instanzverlaufs."
-L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tInstanzverlauf"
+L.stage = "Phase %s"
 
 L.backgroundColor = "Hintergrundfarbe"
 L.inactive = "Inaktiv"

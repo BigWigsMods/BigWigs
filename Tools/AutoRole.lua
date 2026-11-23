@@ -1,41 +1,45 @@
 RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN") -- We don't need to participate in role polls
 
-local LibSpec = LibStub("LibSpecialization")
-
-local frame = CreateFrame("Frame")
-local IsInGroup, IsPartyLFG = IsInGroup, IsPartyLFG
-local InCombatLockdown, UnitAffectingCombat = InCombatLockdown, UnitAffectingCombat
-local UnitGroupRolesAssigned, UnitSetRole = UnitGroupRolesAssigned, UnitSetRole
-
-local UpdateMyRole
 do
-	local prevTime = 0
-	function UpdateMyRole()
-		local _, role = LibSpec.MySpecialization()
-		if IsInGroup() and not IsPartyLFG() and UnitGroupRolesAssigned("player") ~= role then
-			if InCombatLockdown() or UnitAffectingCombat("player") then
-				frame:RegisterEvent("PLAYER_REGEN_ENABLED")
-				return
-			end
-			local t = GetTime()
-			if t-prevTime > 1 then
-				prevTime = t
-				UnitSetRole("player", role)
+	local LibSpec = LibStub("LibSpecialization")
+	local IsInGroup, GetTime = IsInGroup, GetTime
+	local InCombatLockdown, UnitAffectingCombat = InCombatLockdown, UnitAffectingCombat
+	local UnitGroupRolesAssigned, UnitSetRole = UnitGroupRolesAssigned, UnitSetRole
+
+	local frame = CreateFrame("Frame")
+	local prevTime, prevRole = 0, nil
+	local function UpdateMyRole()
+		if IsInGroup(1) and not IsInGroup(2) then
+			local _, role = LibSpec.MySpecialization()
+			if role and UnitGroupRolesAssigned("player") ~= role then
+				if InCombatLockdown() or UnitAffectingCombat("player") then
+					frame:RegisterEvent("PLAYER_REGEN_ENABLED")
+					return
+				end
+				local t = GetTime()
+				if role ~= prevRole or t - prevTime > 1 then
+					if UnitSetRole("player", role) then
+						prevTime = t
+						prevRole = role
+					end
+				end
 			end
 		end
 	end
 	LibSpec.RegisterPlayerSpecChange({}, UpdateMyRole)
-end
 
-frame:SetScript("OnEvent", function(self, event)
-	if event == "GROUP_FORMED" then
+	frame:SetScript("OnEvent", function(self, event)
+		if event == "GROUP_FORMED" then
+			prevTime, prevRole = 0, nil
+		elseif event == "PLAYER_REGEN_ENABLED" then
+			self:UnregisterEvent(event)
+		end
 		UpdateMyRole()
-	else -- PLAYER_REGEN_ENABLED
-		self:UnregisterEvent(event)
-		UpdateMyRole()
-	end
-end)
-frame:RegisterEvent("GROUP_FORMED")
+	end)
+	frame:RegisterEvent("GROUP_FORMED")
+	-- Just in case we changed roles in an instance group, left, but still in a home group, do another check
+	frame:RegisterEvent("GROUP_LEFT")
+end
 
 local _, addonTbl = ...
 local L = addonTbl.API:GetLocale("BigWigs")

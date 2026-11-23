@@ -482,9 +482,7 @@ L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_
 L.bossStagesTimer = "Temporizador de fases del jefe"
 L.bossStagesTimerDesc = "Un temporizador que se reinicia cada vez que un jefe cambia de fase, con un tooltip para ver el historial de etapas. Solo está activo en jefes con múltiples etapas."
 L.bossStagesTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tHistorial de etapas del jefe"
-L.instanceTimer = "Temporizador de estancia"
-L.instanceTimerDesc = "Un temporizador que muestra cuánto tiempo has estado en una estancia (mazmorra/banda/etc.), con un tooltip para ver el historial de la estancia."
-L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tHistorial de estancias"
+L.stage = "Etapa %s"
 
 L.backgroundColor = "Color de fondo"
 L.inactive = "Inactivo"

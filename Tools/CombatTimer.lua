@@ -21,6 +21,21 @@ local ProfileUtils = {
 	MinimumFontSize = 10,
 }
 
+local function IsValidCustomText(value)
+	if not value:find("%s", nil, true) or value:find("%%[^s]") then -- Must contain %s and no other format characters
+		return false
+	else
+		local success, newValue = pcall(string.format, value, L.hide)
+		if not success then -- Must not produce errors
+			return false
+		elseif newValue:find("%s", nil, true) then -- Must not still contain %s after being formatted with text (shouldn't really happen)
+			return false
+		else
+			return true
+		end
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Saved Settings
 --
@@ -55,6 +70,7 @@ do
 		anyCombatBorderSize = 1,
 		anyCombatBorderOffset = 0,
 		anyCombatBorderName = "Solid",
+		anyCombatBackgroundName = "Solid",
 		anyCombatInactive = "NONE",
 		anyCombatTextFormat = 1,
 		anyCombatHistoryAmount = 10,
@@ -83,6 +99,7 @@ do
 		bossCombatBorderSize = 1,
 		bossCombatBorderOffset = 0,
 		bossCombatBorderName = "Solid",
+		bossCombatBackgroundName = "Solid",
 		bossCombatInactive = "NONE",
 		bossCombatTextFormat = 2,
 		bossCombatHistoryAmount = 10,
@@ -110,35 +127,11 @@ do
 		bossStagesBorderSize = 1,
 		bossStagesBorderOffset = 0,
 		bossStagesBorderName = "Solid",
+		bossStagesBackgroundName = "Solid",
 		bossStagesInactive = "NONE",
 		bossStagesTextFormat = 2,
 		bossStagesHistoryTimeFormat = 2,
 		bossStagesCustomText = "%s",
-
-		-- Instance Timer
-		--instanceTimerDisabled = true,
-		--instanceTimerLocked = false,
-		--instanceTimerWidth = 60,
-		--instanceTimerHeight = 24,
-		--instanceTimerPosition = {"CENTER", "CENTER", 615, -150, "UIParent"},
-		--instanceTimerFontName = fontName,
-		--instanceTimerFontSize = 16,
-		--instanceTimerMonochrome = false,
-		--instanceTimerOutline = "OUTLINE",
-		--instanceTimerAlign = "CENTER",
-		--instanceTimerColor = {1, 1, 1, 1},
-		--instanceTimerColorInactive = {1, 1, 1, 0.3},
-		--instanceTimerBackgroundColor = {0, 0, 0, 0.5},
-		--instanceTimerBackgroundColorInactive = {0, 0, 0, 0.3},
-		--instanceTimerBorderColor = {0, 0, 0, 1},
-		--instanceTimerBorderColorInactive = {0, 0, 0, 0.3},
-		--instanceTimerBorderSize = 1,
-		--instanceTimerBorderOffset = 0,
-		--instanceTimerBorderName = "Solid",
-		--instanceTimerInactive = "NONE",
-		--instanceTimerTextFormat = 1,
-		--instanceTimerHistoryAmount = 10,
-		--instanceTimerHistoryTimeFormat = 2,
 	}
 
 	db = BigWigsLoader.db:RegisterNamespace("CombatTimer", {profile = defaults})
@@ -174,3417 +167,1650 @@ do
 		end
 	end
 
+	local timerPrefixes = {"anyCombat", "bossCombat", "bossStages"}
+
 	ProfileUtils.ValidateMainSettings = function()
 		for k, v in next, db.profile do
 			local defaultType = type(defaults[k])
 			if defaultType == "nil" then
 				db.profile[k] = nil
 			elseif type(v) ~= defaultType then
-				db.profile[k] = defaults[k]
+				if defaultType == "table" then
+					db.profile[k] = CopyTable(defaults[k])
+				else
+					db.profile[k] = defaults[k]
+				end
 			end
 		end
 
-		if db.profile.anyCombatWidth < ProfileUtils.MinimumWidth or db.profile.anyCombatWidth > ProfileUtils.MaximumWidth or math.floor(db.profile.anyCombatWidth+0.5) ~= db.profile.anyCombatWidth then
-			db.profile.anyCombatWidth = defaults.anyCombatWidth
-		end
-		if db.profile.anyCombatHeight < ProfileUtils.MinimumHeight or db.profile.anyCombatHeight > ProfileUtils.MaximumHeight or math.floor(db.profile.anyCombatHeight+0.5) ~= db.profile.anyCombatHeight then
-			db.profile.anyCombatHeight = defaults.anyCombatHeight
-		end
-		if type(db.profile.anyCombatPosition[1]) ~= "string" or type(db.profile.anyCombatPosition[2]) ~= "string"
-		or type(db.profile.anyCombatPosition[3]) ~= "number" or type(db.profile.anyCombatPosition[4]) ~= "number"
-		or not BigWigsAPI.IsValidFramePoint(db.profile.anyCombatPosition[1]) or not BigWigsAPI.IsValidFramePoint(db.profile.anyCombatPosition[2]) then
-			db.profile.anyCombatPosition = CopyTable(defaults.anyCombatPosition)
-		else
-			local x = math.floor(db.profile.anyCombatPosition[3]+0.5)
-			if x ~= db.profile.anyCombatPosition[3] then
-				db.profile.anyCombatPosition[3] = x
-			end
-			local y = math.floor(db.profile.anyCombatPosition[4]+0.5)
-			if y ~= db.profile.anyCombatPosition[4] then
-				db.profile.anyCombatPosition[4] = y
-			end
-		end
-		if db.profile.anyCombatPosition[5] ~= defaults.anyCombatPosition[5] and not BigWigsAPI.IsValidFrame(db.profile.anyCombatPosition[5]) then
-			db.profile.anyCombatPosition = CopyTable(defaults.anyCombatPosition)
-		end
-		if db.profile.anyCombatFontSize < ProfileUtils.MinimumFontSize or db.profile.anyCombatFontSize > 200 or math.floor(db.profile.anyCombatFontSize+0.5) ~= db.profile.anyCombatFontSize then
-			db.profile.anyCombatFontSize = defaults.anyCombatFontSize
-		end
-		if db.profile.anyCombatOutline ~= "NONE" and db.profile.anyCombatOutline ~= "OUTLINE" and db.profile.anyCombatOutline ~= "THICKOUTLINE" then
-			db.profile.anyCombatOutline = defaults.anyCombatOutline
-		end
-		if db.profile.anyCombatAlign ~= "LEFT" and db.profile.anyCombatAlign ~= "CENTER" and db.profile.anyCombatAlign ~= "RIGHT" then
-			db.profile.anyCombatAlign = defaults.anyCombatAlign
-		end
-		if db.profile.anyCombatBorderSize < 1 or db.profile.anyCombatBorderSize > 32 or math.floor(db.profile.anyCombatBorderSize+0.5) ~= db.profile.anyCombatBorderSize then
-			db.profile.anyCombatBorderSize = defaults.anyCombatBorderSize
-		end
-		if db.profile.anyCombatBorderOffset < 0 or db.profile.anyCombatBorderOffset > 32 or math.floor(db.profile.anyCombatBorderOffset+0.5) ~= db.profile.anyCombatBorderOffset then
-			db.profile.anyCombatBorderOffset = defaults.anyCombatBorderOffset
-		end
-		if db.profile.anyCombatInactive ~= "NONE" and db.profile.anyCombatInactive ~= "HIDE" and db.profile.anyCombatInactive ~= "COLOR" then
-			db.profile.anyCombatInactive = defaults.anyCombatInactive
-		end
-		if db.profile.anyCombatTextFormat ~= 1 and db.profile.anyCombatTextFormat ~= 2 then
-			db.profile.anyCombatTextFormat = defaults.anyCombatTextFormat
-		end
-		if db.profile.anyCombatHistoryAmount < 5 or db.profile.anyCombatHistoryAmount > 30 or math.floor(db.profile.anyCombatHistoryAmount+0.5) ~= db.profile.anyCombatHistoryAmount then
-			db.profile.anyCombatHistoryAmount = defaults.anyCombatHistoryAmount
-		end
-		if db.profile.anyCombatHistoryResetConditions < 0 or db.profile.anyCombatHistoryResetConditions > 7 or math.floor(db.profile.anyCombatHistoryResetConditions+0.5) ~= db.profile.anyCombatHistoryResetConditions then
-			db.profile.anyCombatHistoryResetConditions = defaults.anyCombatHistoryResetConditions
-		end
-		if db.profile.anyCombatHistoryTimeFormat < 1 or db.profile.anyCombatHistoryTimeFormat > 2 or math.floor(db.profile.anyCombatHistoryTimeFormat+0.5) ~= db.profile.anyCombatHistoryTimeFormat then
-			db.profile.anyCombatHistoryTimeFormat = defaults.anyCombatHistoryTimeFormat
-		end
-		if not db.profile.anyCombatCustomText:find("%s", nil, true) or db.profile.anyCombatCustomText:find("%%[^s]") then
-			db.profile.anyCombatCustomText = defaults.anyCombatCustomText
-		else
-			local success, newValue = pcall(string.format, db.profile.anyCombatCustomText, L.hide)
-			if not success then -- Must not produce errors
-				db.profile.anyCombatCustomText = defaults.anyCombatCustomText
-			elseif newValue:find("%s", nil, true) then -- Must not still contain %s after being formatted with text (shouldn't really happen)
-				db.profile.anyCombatCustomText = defaults.anyCombatCustomText
-			end
-		end
+		for i = 1, #timerPrefixes do
+			local prefix = timerPrefixes[i]
 
-		ValidateColor(db.profile.anyCombatColor, defaults.anyCombatColor, 0.3)
-		ValidateColor(db.profile.anyCombatColorInactive, defaults.anyCombatColorInactive, 0.3)
-		ValidateColor(db.profile.anyCombatBackgroundColor, defaults.anyCombatBackgroundColor, 0)
-		ValidateColor(db.profile.anyCombatBackgroundColorInactive, defaults.anyCombatBackgroundColorInactive, 0)
-		ValidateColor(db.profile.anyCombatBorderColor, defaults.anyCombatBorderColor, 0)
-		ValidateColor(db.profile.anyCombatBorderColorInactive, defaults.anyCombatBorderColorInactive, 0)
-
-		if db.profile.bossCombatWidth < ProfileUtils.MinimumWidth or db.profile.bossCombatWidth > ProfileUtils.MaximumWidth or math.floor(db.profile.bossCombatWidth+0.5) ~= db.profile.bossCombatWidth then
-			db.profile.bossCombatWidth = defaults.bossCombatWidth
-		end
-		if db.profile.bossCombatHeight < ProfileUtils.MinimumHeight or db.profile.bossCombatHeight > ProfileUtils.MaximumHeight or math.floor(db.profile.bossCombatHeight+0.5) ~= db.profile.bossCombatHeight then
-			db.profile.bossCombatHeight = defaults.bossCombatHeight
-		end
-		if type(db.profile.bossCombatPosition[1]) ~= "string" or type(db.profile.bossCombatPosition[2]) ~= "string"
-		or type(db.profile.bossCombatPosition[3]) ~= "number" or type(db.profile.bossCombatPosition[4]) ~= "number"
-		or not BigWigsAPI.IsValidFramePoint(db.profile.bossCombatPosition[1]) or not BigWigsAPI.IsValidFramePoint(db.profile.bossCombatPosition[2]) then
-			db.profile.bossCombatPosition = CopyTable(defaults.bossCombatPosition)
-		else
-			local x = math.floor(db.profile.bossCombatPosition[3]+0.5)
-			if x ~= db.profile.bossCombatPosition[3] then
-				db.profile.bossCombatPosition[3] = x
+			local widthKey = prefix .. "Width"
+			local width = db.profile[widthKey]
+			if width < ProfileUtils.MinimumWidth or width > ProfileUtils.MaximumWidth or math.floor(width+0.5) ~= width then
+				db.profile[widthKey] = defaults[widthKey]
 			end
-			local y = math.floor(db.profile.bossCombatPosition[4]+0.5)
-			if y ~= db.profile.bossCombatPosition[4] then
-				db.profile.bossCombatPosition[4] = y
-			end
-		end
-		if db.profile.bossCombatPosition[5] ~= defaults.bossCombatPosition[5] and not BigWigsAPI.IsValidFrame(db.profile.bossCombatPosition[5]) then
-			db.profile.bossCombatPosition = CopyTable(defaults.bossCombatPosition)
-		end
-		if db.profile.bossCombatFontSize < ProfileUtils.MinimumFontSize or db.profile.bossCombatFontSize > 200 or math.floor(db.profile.bossCombatFontSize+0.5) ~= db.profile.bossCombatFontSize then
-			db.profile.bossCombatFontSize = defaults.bossCombatFontSize
-		end
-		if db.profile.bossCombatOutline ~= "NONE" and db.profile.bossCombatOutline ~= "OUTLINE" and db.profile.bossCombatOutline ~= "THICKOUTLINE" then
-			db.profile.bossCombatOutline = defaults.bossCombatOutline
-		end
-		if db.profile.bossCombatAlign ~= "LEFT" and db.profile.bossCombatAlign ~= "CENTER" and db.profile.bossCombatAlign ~= "RIGHT" then
-			db.profile.bossCombatAlign = defaults.bossCombatAlign
-		end
-		if db.profile.bossCombatBorderSize < 1 or db.profile.bossCombatBorderSize > 32 or math.floor(db.profile.bossCombatBorderSize+0.5) ~= db.profile.bossCombatBorderSize then
-			db.profile.bossCombatBorderSize = defaults.bossCombatBorderSize
-		end
-		if db.profile.bossCombatBorderOffset < 0 or db.profile.bossCombatBorderOffset > 32 or math.floor(db.profile.bossCombatBorderOffset+0.5) ~= db.profile.bossCombatBorderOffset then
-			db.profile.bossCombatBorderOffset = defaults.bossCombatBorderOffset
-		end
-		if db.profile.bossCombatInactive ~= "NONE" and db.profile.bossCombatInactive ~= "HIDE" and db.profile.bossCombatInactive ~= "COLOR" then
-			db.profile.bossCombatInactive = defaults.bossCombatInactive
-		end
-		if db.profile.bossCombatTextFormat ~= 1 and db.profile.bossCombatTextFormat ~= 2 then
-			db.profile.bossCombatTextFormat = defaults.bossCombatTextFormat
-		end
-		if db.profile.bossCombatHistoryAmount < 5 or db.profile.bossCombatHistoryAmount > 30 or math.floor(db.profile.bossCombatHistoryAmount+0.5) ~= db.profile.bossCombatHistoryAmount then
-			db.profile.bossCombatHistoryAmount = defaults.bossCombatHistoryAmount
-		end
-		if db.profile.bossCombatHistoryResetConditions < 0 or db.profile.bossCombatHistoryResetConditions > 7 or math.floor(db.profile.bossCombatHistoryResetConditions+0.5) ~= db.profile.bossCombatHistoryResetConditions then
-			db.profile.bossCombatHistoryResetConditions = defaults.bossCombatHistoryResetConditions
-		end
-		if db.profile.bossCombatHistoryTimeFormat < 1 or db.profile.bossCombatHistoryTimeFormat > 2 or math.floor(db.profile.bossCombatHistoryTimeFormat+0.5) ~= db.profile.bossCombatHistoryTimeFormat then
-			db.profile.bossCombatHistoryTimeFormat = defaults.bossCombatHistoryTimeFormat
-		end
-		if not db.profile.bossCombatCustomText:find("%s", nil, true) or db.profile.bossCombatCustomText:find("%%[^s]") then
-			db.profile.bossCombatCustomText = defaults.bossCombatCustomText
-		else
-			local success, newValue = pcall(string.format, db.profile.bossCombatCustomText, L.hide)
-			if not success then -- Must not produce errors
-				db.profile.bossCombatCustomText = defaults.bossCombatCustomText
-			elseif newValue:find("%s", nil, true) then -- Must not still contain %s after being formatted with text (shouldn't really happen)
-				db.profile.bossCombatCustomText = defaults.bossCombatCustomText
-			end
-		end
 
-		ValidateColor(db.profile.bossCombatColor, defaults.bossCombatColor, 0.3)
-		ValidateColor(db.profile.bossCombatColorInactive, defaults.bossCombatColorInactive, 0.3)
-		ValidateColor(db.profile.bossCombatBackgroundColor, defaults.bossCombatBackgroundColor, 0)
-		ValidateColor(db.profile.bossCombatBackgroundColorInactive, defaults.bossCombatBackgroundColorInactive, 0)
-		ValidateColor(db.profile.bossCombatBorderColor, defaults.bossCombatBorderColor, 0)
-		ValidateColor(db.profile.bossCombatBorderColorInactive, defaults.bossCombatBorderColorInactive, 0)
-
-		if db.profile.bossStagesWidth < ProfileUtils.MinimumWidth or db.profile.bossStagesWidth > ProfileUtils.MaximumWidth or math.floor(db.profile.bossStagesWidth+0.5) ~= db.profile.bossStagesWidth then
-			db.profile.bossStagesWidth = defaults.bossStagesWidth
-		end
-		if db.profile.bossStagesHeight < ProfileUtils.MinimumHeight or db.profile.bossStagesHeight > ProfileUtils.MaximumHeight or math.floor(db.profile.bossStagesHeight+0.5) ~= db.profile.bossStagesHeight then
-			db.profile.bossStagesHeight = defaults.bossStagesHeight
-		end
-		if type(db.profile.bossStagesPosition[1]) ~= "string" or type(db.profile.bossStagesPosition[2]) ~= "string"
-		or type(db.profile.bossStagesPosition[3]) ~= "number" or type(db.profile.bossStagesPosition[4]) ~= "number"
-		or not BigWigsAPI.IsValidFramePoint(db.profile.bossStagesPosition[1]) or not BigWigsAPI.IsValidFramePoint(db.profile.bossStagesPosition[2]) then
-			db.profile.bossStagesPosition = CopyTable(defaults.bossStagesPosition)
-		else
-			local x = math.floor(db.profile.bossStagesPosition[3]+0.5)
-			if x ~= db.profile.bossStagesPosition[3] then
-				db.profile.bossStagesPosition[3] = x
+			local heightKey = prefix .. "Height"
+			local height = db.profile[heightKey]
+			if height < ProfileUtils.MinimumHeight or height > ProfileUtils.MaximumHeight or math.floor(height+0.5) ~= height then
+				db.profile[heightKey] = defaults[heightKey]
 			end
-			local y = math.floor(db.profile.bossStagesPosition[4]+0.5)
-			if y ~= db.profile.bossStagesPosition[4] then
-				db.profile.bossStagesPosition[4] = y
+
+			local posKey = prefix .. "Position"
+			local pos = db.profile[posKey]
+			if type(pos[1]) ~= "string" or type(pos[2]) ~= "string"
+			or type(pos[3]) ~= "number" or type(pos[4]) ~= "number"
+			or type(pos[5]) ~= "string"
+			or pos[3] < -10000 or pos[3] > 10000
+			or pos[4] < -10000 or pos[4] > 10000
+			or not BigWigsAPI.IsValidFramePoint(pos[1]) or not BigWigsAPI.IsValidFramePoint(pos[2]) then
+				db.profile[posKey] = CopyTable(defaults[posKey])
+			else
+				local x = math.floor(pos[3]+0.5)
+				if x ~= pos[3] then
+					pos[3] = x
+				end
+				local y = math.floor(pos[4]+0.5)
+				if y ~= pos[4] then
+					pos[4] = y
+				end
 			end
-		end
-		if db.profile.bossStagesPosition[5] ~= defaults.bossStagesPosition[5] and not BigWigsAPI.IsValidFrame(db.profile.bossStagesPosition[5]) then
-			db.profile.bossStagesPosition = CopyTable(defaults.bossStagesPosition)
-		end
-		if db.profile.bossStagesFontSize < ProfileUtils.MinimumFontSize or db.profile.bossStagesFontSize > 200 or math.floor(db.profile.bossStagesFontSize+0.5) ~= db.profile.bossStagesFontSize then
-			db.profile.bossStagesFontSize = defaults.bossStagesFontSize
-		end
-		if db.profile.bossStagesOutline ~= "NONE" and db.profile.bossStagesOutline ~= "OUTLINE" and db.profile.bossStagesOutline ~= "THICKOUTLINE" then
-			db.profile.bossStagesOutline = defaults.bossStagesOutline
-		end
-		if db.profile.bossStagesAlign ~= "LEFT" and db.profile.bossStagesAlign ~= "CENTER" and db.profile.bossStagesAlign ~= "RIGHT" then
-			db.profile.bossStagesAlign = defaults.bossStagesAlign
-		end
-		if db.profile.bossStagesBorderSize < 1 or db.profile.bossStagesBorderSize > 32 or math.floor(db.profile.bossStagesBorderSize+0.5) ~= db.profile.bossStagesBorderSize then
-			db.profile.bossStagesBorderSize = defaults.bossStagesBorderSize
-		end
-		if db.profile.bossStagesBorderOffset < 0 or db.profile.bossStagesBorderOffset > 32 or math.floor(db.profile.bossStagesBorderOffset+0.5) ~= db.profile.bossStagesBorderOffset then
-			db.profile.bossStagesBorderOffset = defaults.bossStagesBorderOffset
-		end
-		if db.profile.bossStagesInactive ~= "NONE" and db.profile.bossStagesInactive ~= "HIDE" and db.profile.bossStagesInactive ~= "COLOR" then
-			db.profile.bossStagesInactive = defaults.bossStagesInactive
-		end
-		if db.profile.bossStagesTextFormat ~= 1 and db.profile.bossStagesTextFormat ~= 2 then
-			db.profile.bossStagesTextFormat = defaults.bossStagesTextFormat
-		end
-		if db.profile.bossStagesHistoryTimeFormat < 1 or db.profile.bossStagesHistoryTimeFormat > 2 or math.floor(db.profile.bossStagesHistoryTimeFormat+0.5) ~= db.profile.bossStagesHistoryTimeFormat then
-			db.profile.bossStagesHistoryTimeFormat = defaults.bossStagesHistoryTimeFormat
-		end
-		if not db.profile.bossStagesCustomText:find("%s", nil, true) or db.profile.bossStagesCustomText:find("%%[^s]") then
-			db.profile.bossStagesCustomText = defaults.bossStagesCustomText
-		else
-			local success, newValue = pcall(string.format, db.profile.bossStagesCustomText, L.hide)
-			if not success then -- Must not produce errors
-				db.profile.bossStagesCustomText = defaults.bossStagesCustomText
-			elseif newValue:find("%s", nil, true) then -- Must not still contain %s after being formatted with text (shouldn't really happen)
-				db.profile.bossStagesCustomText = defaults.bossStagesCustomText
+
+			local fontSizeKey = prefix .. "FontSize"
+			local fontSize = db.profile[fontSizeKey]
+			if fontSize < ProfileUtils.MinimumFontSize or fontSize > 200 or math.floor(fontSize+0.5) ~= fontSize then
+				db.profile[fontSizeKey] = defaults[fontSizeKey]
 			end
+
+			local outlineKey = prefix .. "Outline"
+			local outline = db.profile[outlineKey]
+			if outline ~= "NONE" and outline ~= "OUTLINE" and outline ~= "THICKOUTLINE" then
+				db.profile[outlineKey] = defaults[outlineKey]
+			end
+
+			local alignKey = prefix .. "Align"
+			local align = db.profile[alignKey]
+			if align ~= "LEFT" and align ~= "CENTER" and align ~= "RIGHT" then
+				db.profile[alignKey] = defaults[alignKey]
+			end
+
+			local borderSizeKey = prefix .. "BorderSize"
+			local borderSize = db.profile[borderSizeKey]
+			if borderSize < 1 or borderSize > 32 or math.floor(borderSize+0.5) ~= borderSize then
+				db.profile[borderSizeKey] = defaults[borderSizeKey]
+			end
+
+			local borderOffsetKey = prefix .. "BorderOffset"
+			local borderOffset = db.profile[borderOffsetKey]
+			if borderOffset < 0 or borderOffset > 32 or math.floor(borderOffset+0.5) ~= borderOffset then
+				db.profile[borderOffsetKey] = defaults[borderOffsetKey]
+			end
+
+			local inactiveKey = prefix .. "Inactive"
+			local inactive = db.profile[inactiveKey]
+			if inactive ~= "NONE" and inactive ~= "HIDE" and inactive ~= "COLOR" then
+				db.profile[inactiveKey] = defaults[inactiveKey]
+			end
+
+			local textFormatKey = prefix .. "TextFormat"
+			if db.profile[textFormatKey] ~= 1 and db.profile[textFormatKey] ~= 2 then
+				db.profile[textFormatKey] = defaults[textFormatKey]
+			end
+
+			if prefix ~= "bossStages" then
+				local historyAmountKey = prefix .. "HistoryAmount"
+				local historyAmount = db.profile[historyAmountKey]
+				if historyAmount < 5 or historyAmount > 30 or math.floor(historyAmount+0.5) ~= historyAmount then
+					db.profile[historyAmountKey] = defaults[historyAmountKey]
+				end
+
+				local historyResetKey = prefix .. "HistoryResetConditions"
+				local historyReset = db.profile[historyResetKey]
+				if historyReset < 0 or historyReset > 7 or math.floor(historyReset+0.5) ~= historyReset then
+					db.profile[historyResetKey] = defaults[historyResetKey]
+				end
+			end
+
+			local historyTimeFormatKey = prefix .. "HistoryTimeFormat"
+			if db.profile[historyTimeFormatKey] ~= 1 and db.profile[historyTimeFormatKey] ~= 2 then
+				db.profile[historyTimeFormatKey] = defaults[historyTimeFormatKey]
+			end
+
+			local customTextKey = prefix .. "CustomText"
+			if not IsValidCustomText(db.profile[customTextKey]) then
+				db.profile[customTextKey] = defaults[customTextKey]
+			end
+
+			ValidateColor(db.profile[prefix .. "Color"], defaults[prefix .. "Color"], 0.3)
+			ValidateColor(db.profile[prefix .. "ColorInactive"], defaults[prefix .. "ColorInactive"], 0.3)
+			ValidateColor(db.profile[prefix .. "BackgroundColor"], defaults[prefix .. "BackgroundColor"], 0)
+			ValidateColor(db.profile[prefix .. "BackgroundColorInactive"], defaults[prefix .. "BackgroundColorInactive"], 0)
+			ValidateColor(db.profile[prefix .. "BorderColor"], defaults[prefix .. "BorderColor"], 0)
+			ValidateColor(db.profile[prefix .. "BorderColorInactive"], defaults[prefix .. "BorderColorInactive"], 0)
 		end
-
-		ValidateColor(db.profile.bossStagesColor, defaults.bossStagesColor, 0.3)
-		ValidateColor(db.profile.bossStagesColorInactive, defaults.bossStagesColorInactive, 0.3)
-		ValidateColor(db.profile.bossStagesBackgroundColor, defaults.bossStagesBackgroundColor, 0)
-		ValidateColor(db.profile.bossStagesBackgroundColorInactive, defaults.bossStagesBackgroundColorInactive, 0)
-		ValidateColor(db.profile.bossStagesBorderColor, defaults.bossStagesBorderColor, 0)
-		ValidateColor(db.profile.bossStagesBorderColorInactive, defaults.bossStagesBorderColorInactive, 0)
-
-		--if db.profile.instanceTimerWidth < ProfileUtils.MinimumWidth or db.profile.instanceTimerWidth > ProfileUtils.MaximumWidth then
-		--	db.profile.instanceTimerWidth = defaults.instanceTimerWidth
-		--end
-		--if db.profile.instanceTimerHeight < ProfileUtils.MinimumHeight or db.profile.instanceTimerHeight > ProfileUtils.MaximumHeight then
-		--	db.profile.instanceTimerHeight = defaults.instanceTimerHeight
-		--end
-		--if type(db.profile.instanceTimerPosition[1]) ~= "string" or type(db.profile.instanceTimerPosition[2]) ~= "string"
-		--or type(db.profile.instanceTimerPosition[3]) ~= "number" or type(db.profile.instanceTimerPosition[4]) ~= "number"
-		--or not BigWigsAPI.IsValidFramePoint(db.profile.instanceTimerPosition[1]) or not BigWigsAPI.IsValidFramePoint(db.profile.instanceTimerPosition[2]) then
-		--	db.profile.instanceTimerPosition = CopyTable(defaults.instanceTimerPosition)
-		--else
-		--	local x = math.floor(db.profile.instanceTimerPosition[3]+0.5)
-		--	if x ~= db.profile.instanceTimerPosition[3] then
-		--		db.profile.instanceTimerPosition[3] = x
-		--	end
-		--	local y = math.floor(db.profile.instanceTimerPosition[4]+0.5)
-		--	if y ~= db.profile.instanceTimerPosition[4] then
-		--		db.profile.instanceTimerPosition[4] = y
-		--	end
-		--end
-		--if db.profile.instanceTimerPosition[5] ~= defaults.instanceTimerPosition[5] and not BigWigsAPI.IsValidFrame(db.profile.instanceTimerPosition[5]) then
-		--	db.profile.instanceTimerPosition = CopyTable(defaults.instanceTimerPosition)
-		--end
-		--if db.profile.instanceTimerFontSize < ProfileUtils.MinimumFontSize or db.profile.instanceTimerFontSize > 200 then
-		--	db.profile.instanceTimerFontSize = defaults.instanceTimerFontSize
-		--end
-		--if db.profile.instanceTimerOutline ~= "NONE" and db.profile.instanceTimerOutline ~= "OUTLINE" and db.profile.instanceTimerOutline ~= "THICKOUTLINE" then
-		--	db.profile.instanceTimerOutline = defaults.instanceTimerOutline
-		--end
-		--if db.profile.instanceTimerAlign ~= "LEFT" and db.profile.instanceTimerAlign ~= "CENTER" and db.profile.instanceTimerAlign ~= "RIGHT" then
-		--	db.profile.instanceTimerAlign = defaults.instanceTimerAlign
-		--end
-		--if db.profile.instanceTimerBorderSize < 1 or db.profile.instanceTimerBorderSize > 32 then
-		--	db.profile.instanceTimerBorderSize = defaults.instanceTimerBorderSize
-		--end
-		--if db.profile.instanceTimerBorderOffset < 0 or db.profile.instanceTimerBorderOffset > 32 then
-		--	db.profile.instanceTimerBorderOffset = defaults.instanceTimerBorderOffset
-		--end
-		--if db.profile.instanceTimerInactive ~= "NONE" and db.profile.instanceTimerInactive ~= "HIDE" and db.profile.instanceTimerInactive ~= "COLOR" then
-		--	db.profile.instanceTimerInactive = defaults.instanceTimerInactive
-		--end
-		--if db.profile.instanceTimerTextFormat ~= 1 and db.profile.instanceTimerTextFormat ~= 2 then
-		--	db.profile.instanceTimerTextFormat = defaults.instanceTimerTextFormat
-		--end
-		--if db.profile.instanceTimerHistoryAmount < 5 or db.profile.instanceTimerHistoryAmount > 30 or math.floor(db.profile.instanceTimerHistoryAmount+0.5) ~= db.profile.instanceTimerHistoryAmount then
-		--	db.profile.instanceTimerHistoryAmount = defaults.instanceTimerHistoryAmount
-		--end
-		--if db.profile.instanceTimerHistoryTimeFormat < 1 or db.profile.instanceTimerHistoryTimeFormat > 2 or math.floor(db.profile.instanceTimerHistoryTimeFormat+0.5) ~= db.profile.instanceTimerHistoryTimeFormat then
-		--	db.profile.instanceTimerHistoryTimeFormat = defaults.instanceTimerHistoryTimeFormat
-		--end
-
-		--ValidateColor(db.profile.instanceTimerColor, defaults.instanceTimerColor, 0.3)
-		--ValidateColor(db.profile.instanceTimerColorInactive, defaults.instanceTimerColorInactive, 0.3)
-		--ValidateColor(db.profile.instanceTimerBackgroundColor, defaults.instanceTimerBackgroundColor, 0)
-		--ValidateColor(db.profile.instanceTimerBackgroundColorInactive, defaults.instanceTimerBackgroundColorInactive, 0)
-		--ValidateColor(db.profile.instanceTimerBorderColor, defaults.instanceTimerBorderColor, 0)
-		--ValidateColor(db.profile.instanceTimerBorderColorInactive, defaults.instanceTimerBorderColorInactive, 0)
 	end
 	ProfileUtils.ValidateMediaSettings = function()
-		if not LibSharedMedia:IsValid("font", db.profile.anyCombatFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.profile.anyCombatFontName)) then
-			db.profile.anyCombatFontName = defaults.anyCombatFontName
+		for i = 1, #timerPrefixes do
+			local prefix = timerPrefixes[i]
+			local fontKey = prefix .. "FontName"
+			local fontPath = LibSharedMedia:IsValid("font", db.profile[fontKey]) and LibSharedMedia:Fetch("font", db.profile[fontKey])
+			if not fontPath or not BigWigsAPI.IsValidMediaPath(fontPath) then
+				db.profile[fontKey] = defaults[fontKey]
+			end
+			local borderKey = prefix .. "BorderName"
+			if db.profile[borderKey] ~= "None" then
+				local borderPath = LibSharedMedia:IsValid("border", db.profile[borderKey]) and LibSharedMedia:Fetch("border", db.profile[borderKey])
+				if not borderPath or not BigWigsAPI.IsValidMediaPath(borderPath) then
+					db.profile[borderKey] = defaults[borderKey]
+					db.profile[prefix .. "BorderSize"] = defaults[prefix .. "BorderSize"]
+					db.profile[prefix .. "BorderOffset"] = defaults[prefix .. "BorderOffset"]
+				end
+			end
+			local bgKey = prefix .. "BackgroundName"
+			if db.profile[bgKey] ~= "None" then
+				local bgPath = LibSharedMedia:IsValid("background", db.profile[bgKey]) and LibSharedMedia:Fetch("background", db.profile[bgKey])
+				if not bgPath or not BigWigsAPI.IsValidMediaPath(bgPath) then
+					db.profile[bgKey] = defaults[bgKey]
+				end
+			end
 		end
-		if not LibSharedMedia:IsValid("border", db.profile.anyCombatBorderName) or (db.profile.anyCombatBorderName ~= "None" and not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("border", db.profile.anyCombatBorderName))) then
-			db.profile.anyCombatBorderName = defaults.anyCombatBorderName
-			db.profile.anyCombatBorderSize = defaults.anyCombatBorderSize
-			db.profile.anyCombatBorderOffset = defaults.anyCombatBorderOffset
+	end
+	ProfileUtils.ValidateAnchorFrames = function()
+		for i = 1, #timerPrefixes do
+			local posKey = timerPrefixes[i] .. "Position"
+			if db.profile[posKey][5] ~= defaults[posKey][5] and not BigWigsAPI.IsValidFrame(db.profile[posKey][5]) then
+				db.profile[posKey] = CopyTable(defaults[posKey])
+			end
+		end
+	end
+
+	ProfileUtils.ResetTimer = function(prefix)
+		db.profile[prefix .. "Locked"] = defaults[prefix .. "Locked"]
+		ProfileUtils.ResetGeneral(prefix)
+		ProfileUtils.ResetAdvanced(prefix)
+		ProfileUtils.ResetPosition(prefix)
+	end
+	ProfileUtils.ResetGeneral = function(prefix)
+		db.profile[prefix .. "Width"] = defaults[prefix .. "Width"]
+		db.profile[prefix .. "Height"] = defaults[prefix .. "Height"]
+		db.profile[prefix .. "FontName"] = defaults[prefix .. "FontName"]
+		db.profile[prefix .. "Outline"] = defaults[prefix .. "Outline"]
+		db.profile[prefix .. "FontSize"] = defaults[prefix .. "FontSize"]
+		db.profile[prefix .. "Monochrome"] = defaults[prefix .. "Monochrome"]
+		db.profile[prefix .. "Align"] = defaults[prefix .. "Align"]
+		db.profile[prefix .. "BorderName"] = defaults[prefix .. "BorderName"]
+		db.profile[prefix .. "BackgroundName"] = defaults[prefix .. "BackgroundName"]
+		db.profile[prefix .. "BorderSize"] = defaults[prefix .. "BorderSize"]
+		db.profile[prefix .. "BorderOffset"] = defaults[prefix .. "BorderOffset"]
+	end
+	ProfileUtils.ResetAdvanced = function(prefix)
+		db.profile[prefix .. "Color"] = CopyTable(defaults[prefix .. "Color"])
+		db.profile[prefix .. "BackgroundColor"] = CopyTable(defaults[prefix .. "BackgroundColor"])
+		db.profile[prefix .. "BorderColor"] = CopyTable(defaults[prefix .. "BorderColor"])
+		ProfileUtils.ResetInactiveColors(prefix)
+		db.profile[prefix .. "Inactive"] = defaults[prefix .. "Inactive"]
+		db.profile[prefix .. "TextFormat"] = defaults[prefix .. "TextFormat"]
+		db.profile[prefix .. "HistoryTimeFormat"] = defaults[prefix .. "HistoryTimeFormat"]
+		db.profile[prefix .. "CustomText"] = defaults[prefix .. "CustomText"]
+		if prefix ~= "bossStages" then
+			db.profile[prefix .. "HistoryAmount"] = defaults[prefix .. "HistoryAmount"]
+			db.profile[prefix .. "HistoryResetConditions"] = defaults[prefix .. "HistoryResetConditions"]
+		end
+		if prefix == "anyCombat" then
+			db.profile.anyCombatHistoryHiddenInCombat = defaults.anyCombatHistoryHiddenInCombat
+		end
+	end
+	ProfileUtils.ResetInactiveColors = function(prefix)
+		db.profile[prefix .. "ColorInactive"] = CopyTable(defaults[prefix .. "ColorInactive"])
+		db.profile[prefix .. "BackgroundColorInactive"] = CopyTable(defaults[prefix .. "BackgroundColorInactive"])
+		db.profile[prefix .. "BorderColorInactive"] = CopyTable(defaults[prefix .. "BorderColorInactive"])
+	end
+	ProfileUtils.ResetPosition = function(prefix)
+		db.profile[prefix .. "Position"] = CopyTable(defaults[prefix .. "Position"])
+	end
+end
+
+--------------------------------------------------------------------------------
+-- Common Code
+--
+
+local CreateTimerWidget
+do
+	local MAX_DURATION = 86400 -- 24 hours
+	local pendingPropagateTimers = {}
+	local combatDeferFrame = CreateFrame("Frame")
+	combatDeferFrame:SetScript("OnEvent", function(self, event)
+		self:UnregisterEvent(event)
+		for timer, propagate in next, pendingPropagateTimers do
+			pendingPropagateTimers[timer] = nil
+			if timer.propagateClicks ~= propagate then
+				timer.propagateClicks = propagate
+				timer.frame:SetPropagateMouseClicks(propagate)
+			end
+		end
+	end)
+
+	local function OnDragStart(self)
+		if self:IsMovable() then
+			self:StartMoving()
+			if bwTooltip:IsOwned(self) then
+				bwTooltip:Hide()
+			end
+		end
+	end
+
+	local function OnLeave(self)
+		if bwTooltip:IsOwned(self) then
+			bwTooltip:Hide()
+		end
+	end
+
+	local timerProto = {}
+	local timerMeta = { __index = timerProto }
+
+	function timerProto:ApplyColors(isActive)
+		local prefix = self.prefix
+		local suffix = (not isActive and db.profile[prefix .. "Inactive"] == "COLOR") and "Inactive" or ""
+
+		local textColor = db.profile[prefix .. "Color" .. suffix]
+		self.text:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
+
+		if db.profile[prefix .. "BackgroundName"] ~= "None" then
+			local bgColor = db.profile[prefix .. "BackgroundColor" .. suffix]
+			self.backdrop:SetBackdropColor(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
 		end
 
-		if not LibSharedMedia:IsValid("font", db.profile.bossCombatFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.profile.bossCombatFontName)) then
-			db.profile.bossCombatFontName = defaults.bossCombatFontName
+		if db.profile[prefix .. "BorderName"] ~= "None" then
+			local borderColor = db.profile[prefix .. "BorderColor" .. suffix]
+			self.backdrop:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
 		end
-		if not LibSharedMedia:IsValid("border", db.profile.bossCombatBorderName) or (db.profile.bossCombatBorderName ~= "None" and not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("border", db.profile.bossCombatBorderName))) then
-			db.profile.bossCombatBorderName = defaults.bossCombatBorderName
-			db.profile.bossCombatBorderSize = defaults.bossCombatBorderSize
-			db.profile.bossCombatBorderOffset = defaults.bossCombatBorderOffset
+	end
+
+	function timerProto:UpdateFormat()
+		local prefix = self.prefix
+		local customText = db.profile[prefix .. "CustomText"]
+		local bp = self.breakpoints[1]
+
+		if db.profile[prefix .. "TextFormat"] == 2 then
+			bp.step = 0.1
+			bp.rounding = 0 -- Enum.NumericRuleFormatRounding.Nearest = 0
+			bp.format = customText:format("%d:%04.1f")
+			bp.components[2].step = nil
+		else
+			bp.step = 1
+			bp.rounding = 2 -- Enum.NumericRuleFormatRounding.Down = 2
+			bp.format = customText:format("%d:%02d")
+			bp.components[2].step = 1
 		end
 
-		if not LibSharedMedia:IsValid("font", db.profile.bossStagesFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.profile.bossStagesFontName)) then
-			db.profile.bossStagesFontName = defaults.bossStagesFontName
+		self.formatter:SetBreakpoints(self.breakpoints)
+		self.durationBinding:SetTextFormat("{}", self.formatComponents)
+		local zeroText = self.formatter:FormatNumber(0)
+		self.durationBinding:SetZeroDurationText(zeroText)
+
+		if self.active then
+			self.durationBinding:UpdateFontString()
+		else
+			local formatted = self.formatter:FormatNumber(self.lastElapsed)
+			self.text:SetText(formatted)
 		end
-		if not LibSharedMedia:IsValid("border", db.profile.bossStagesBorderName) or (db.profile.bossStagesBorderName ~= "None" and not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("border", db.profile.bossStagesBorderName))) then
-			db.profile.bossStagesBorderName = defaults.bossStagesBorderName
-			db.profile.bossStagesBorderSize = defaults.bossStagesBorderSize
-			db.profile.bossStagesBorderOffset = defaults.bossStagesBorderOffset
+	end
+
+	function timerProto:UpdateStyle()
+		local prefix = self.prefix
+		local frame = self.frame
+
+		frame:SetSize(db.profile[prefix .. "Width"], db.profile[prefix .. "Height"])
+		local pos = db.profile[prefix .. "Position"]
+		local movable = not db.profile[prefix .. "Locked"] and pos[5] == "UIParent"
+		if frame:IsDragging() then
+			frame:StopMovingOrSizing()
+		end
+		frame:ClearAllPoints()
+		frame:SetPoint(pos[1], pos[5], pos[2], pos[3], pos[4])
+		frame:SetMovable(movable)
+		local propagate = not movable
+		if self.propagateClicks ~= propagate then
+			if InCombatLockdown() then
+				pendingPropagateTimers[self] = propagate
+				combatDeferFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+			else
+				pendingPropagateTimers[self] = nil
+				self.propagateClicks = propagate
+				frame:SetPropagateMouseClicks(propagate)
+			end
+		elseif pendingPropagateTimers[self] ~= nil then
+			pendingPropagateTimers[self] = nil
 		end
 
-		--if not LibSharedMedia:IsValid("font", db.profile.instanceTimerFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.profile.instanceTimerFontName)) then
-		--	db.profile.instanceTimerFontName = defaults.instanceTimerFontName
-		--end
-		--if not LibSharedMedia:IsValid("border", db.profile.instanceTimerBorderName) or (db.profile.instanceTimerBorderName ~= "None" and not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("border", db.profile.instanceTimerBorderName))) then
-		--	db.profile.instanceTimerBorderName = defaults.instanceTimerBorderName
-		--	db.profile.instanceTimerBorderSize = defaults.instanceTimerBorderSize
-		--	db.profile.instanceTimerBorderOffset = defaults.instanceTimerBorderOffset
-		--end
+		local align = db.profile[prefix .. "Align"]
+		self.text:ClearAllPoints()
+		self.text:SetPoint(align, frame, align, align == "LEFT" and 1 or align == "RIGHT" and -1 or 0, 0)
+		self.text:SetJustifyH(align)
+		local monochrome = db.profile[prefix .. "Monochrome"]
+		local outline = db.profile[prefix .. "Outline"]
+		local flags = nil
+		if monochrome and outline ~= "NONE" then
+			flags = "MONOCHROME," .. outline
+		elseif monochrome then
+			flags = "MONOCHROME"
+		elseif outline ~= "NONE" then
+			flags = outline
+		end
+		self.text:SetFont(LibSharedMedia:Fetch("font", db.profile[prefix .. "FontName"]), db.profile[prefix .. "FontSize"], flags)
+		self:UpdateFormat()
+
+		local borderName = db.profile[prefix .. "BorderName"]
+		local backgroundName = db.profile[prefix .. "BackgroundName"]
+		local hasBorder = borderName ~= "None"
+		local hasBackground = backgroundName ~= "None"
+		if hasBorder or hasBackground then
+			local borderSize = hasBorder and db.profile[prefix .. "BorderSize"] or nil
+			local borderOffset = hasBorder and db.profile[prefix .. "BorderOffset"] or 0
+			local inset = hasBorder and math.floor(borderSize / 4) or 0
+			local backdropTable = {
+				bgFile = hasBackground and LibSharedMedia:Fetch("background", backgroundName) or nil,
+				edgeFile = hasBorder and LibSharedMedia:Fetch("border", borderName) or nil,
+				edgeSize = borderSize,
+				insets = { left = inset, right = inset, top = inset, bottom = inset },
+			}
+			self.backdrop:ClearAllPoints()
+			self.backdrop:SetPoint("TOPLEFT", frame, "TOPLEFT", -borderOffset, borderOffset)
+			self.backdrop:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", borderOffset, -borderOffset)
+			self.backdrop:SetBackdrop(backdropTable)
+		else
+			self.backdrop:ClearBackdrop()
+		end
+
+		self:ApplyColors(self.active)
+		if self.active or db.profile[prefix .. "Inactive"] ~= "HIDE" then
+			frame:Show()
+		else
+			frame:Hide()
+		end
 	end
 
-	ProfileUtils.ResetAnyCombat = function()
-		db.profile.anyCombatLocked = defaults.anyCombatLocked
-		db.profile.anyCombatWidth = defaults.anyCombatWidth
-		db.profile.anyCombatHeight = defaults.anyCombatHeight
-		db.profile.anyCombatPosition = CopyTable(defaults.anyCombatPosition)
-		db.profile.anyCombatFontName = defaults.anyCombatFontName
-		db.profile.anyCombatFontSize = defaults.anyCombatFontSize
-		db.profile.anyCombatMonochrome = defaults.anyCombatMonochrome
-		db.profile.anyCombatOutline = defaults.anyCombatOutline
-		db.profile.anyCombatAlign = defaults.anyCombatAlign
-		db.profile.anyCombatColor = CopyTable(defaults.anyCombatColor)
-		db.profile.anyCombatColorInactive = CopyTable(defaults.anyCombatColorInactive)
-		db.profile.anyCombatBackgroundColor = CopyTable(defaults.anyCombatBackgroundColor)
-		db.profile.anyCombatBackgroundColorInactive = CopyTable(defaults.anyCombatBackgroundColorInactive)
-		db.profile.anyCombatBorderColor = CopyTable(defaults.anyCombatBorderColor)
-		db.profile.anyCombatBorderColorInactive = CopyTable(defaults.anyCombatBorderColorInactive)
-		db.profile.anyCombatBorderSize = defaults.anyCombatBorderSize
-		db.profile.anyCombatBorderOffset = defaults.anyCombatBorderOffset
-		db.profile.anyCombatBorderName = defaults.anyCombatBorderName
-		db.profile.anyCombatInactive = defaults.anyCombatInactive
-		db.profile.anyCombatTextFormat = defaults.anyCombatTextFormat
-		db.profile.anyCombatHistoryAmount = defaults.anyCombatHistoryAmount
-		db.profile.anyCombatHistoryResetConditions = defaults.anyCombatHistoryResetConditions
-		db.profile.anyCombatHistoryTimeFormat = defaults.anyCombatHistoryTimeFormat
-		db.profile.anyCombatHistoryHiddenInCombat = defaults.anyCombatHistoryHiddenInCombat
-		db.profile.anyCombatCustomText = defaults.anyCombatCustomText
-	end
-	ProfileUtils.ResetAnyCombatBorder = function()
-		db.profile.anyCombatBorderColor = CopyTable(defaults.anyCombatBorderColor)
-		db.profile.anyCombatBorderColorInactive = CopyTable(defaults.anyCombatBorderColorInactive)
-		db.profile.anyCombatBorderSize = defaults.anyCombatBorderSize
-		db.profile.anyCombatBorderOffset = defaults.anyCombatBorderOffset
-	end
-	ProfileUtils.ResetAnyCombatInactiveColors = function()
-		db.profile.anyCombatColorInactive = CopyTable(defaults.anyCombatColorInactive)
-		db.profile.anyCombatBackgroundColorInactive = CopyTable(defaults.anyCombatBackgroundColorInactive)
-		db.profile.anyCombatBorderColorInactive = CopyTable(defaults.anyCombatBorderColorInactive)
-	end
-	ProfileUtils.ResetAnyCombatPosition = function()
-		db.profile.anyCombatPosition = CopyTable(defaults.anyCombatPosition)
+	function timerProto:Start(startTime)
+		self.durationObject:SetTimeFromStart(startTime, MAX_DURATION)
+		self:Resume()
 	end
 
-	ProfileUtils.ResetBossCombat = function()
-		db.profile.bossCombatLocked = defaults.bossCombatLocked
-		db.profile.bossCombatWidth = defaults.bossCombatWidth
-		db.profile.bossCombatHeight = defaults.bossCombatHeight
-		db.profile.bossCombatPosition = CopyTable(defaults.bossCombatPosition)
-		db.profile.bossCombatFontName = defaults.bossCombatFontName
-		db.profile.bossCombatFontSize = defaults.bossCombatFontSize
-		db.profile.bossCombatMonochrome = defaults.bossCombatMonochrome
-		db.profile.bossCombatOutline = defaults.bossCombatOutline
-		db.profile.bossCombatAlign = defaults.bossCombatAlign
-		db.profile.bossCombatColor = CopyTable(defaults.bossCombatColor)
-		db.profile.bossCombatColorInactive = CopyTable(defaults.bossCombatColorInactive)
-		db.profile.bossCombatBackgroundColor = CopyTable(defaults.bossCombatBackgroundColor)
-		db.profile.bossCombatBackgroundColorInactive = CopyTable(defaults.bossCombatBackgroundColorInactive)
-		db.profile.bossCombatBorderColor = CopyTable(defaults.bossCombatBorderColor)
-		db.profile.bossCombatBorderColorInactive = CopyTable(defaults.bossCombatBorderColorInactive)
-		db.profile.bossCombatBorderSize = defaults.bossCombatBorderSize
-		db.profile.bossCombatBorderOffset = defaults.bossCombatBorderOffset
-		db.profile.bossCombatBorderName = defaults.bossCombatBorderName
-		db.profile.bossCombatInactive = defaults.bossCombatInactive
-		db.profile.bossCombatTextFormat = defaults.bossCombatTextFormat
-		db.profile.bossCombatHistoryAmount = defaults.bossCombatHistoryAmount
-		db.profile.bossCombatHistoryResetConditions = defaults.bossCombatHistoryResetConditions
-		db.profile.bossCombatHistoryTimeFormat = defaults.bossCombatHistoryTimeFormat
-		db.profile.bossCombatCustomText = defaults.bossCombatCustomText
-	end
-	ProfileUtils.ResetBossCombatBorder = function()
-		db.profile.bossCombatBorderColor = CopyTable(defaults.bossCombatBorderColor)
-		db.profile.bossCombatBorderColorInactive = CopyTable(defaults.bossCombatBorderColorInactive)
-		db.profile.bossCombatBorderSize = defaults.bossCombatBorderSize
-		db.profile.bossCombatBorderOffset = defaults.bossCombatBorderOffset
-	end
-	ProfileUtils.ResetBossCombatInactiveColors = function()
-		db.profile.bossCombatColorInactive = CopyTable(defaults.bossCombatColorInactive)
-		db.profile.bossCombatBackgroundColorInactive = CopyTable(defaults.bossCombatBackgroundColorInactive)
-		db.profile.bossCombatBorderColorInactive = CopyTable(defaults.bossCombatBorderColorInactive)
-	end
-	ProfileUtils.ResetBossCombatPosition = function()
-		db.profile.bossCombatPosition = CopyTable(defaults.bossCombatPosition)
+	function timerProto:Resume()
+		self.active = true
+		local inactiveMode = db.profile[self.prefix .. "Inactive"]
+		if inactiveMode == "COLOR" then
+			self:ApplyColors(true)
+		end
+		if inactiveMode == "HIDE" and not self.frame:IsShown() then
+			self.frame:Show()
+		elseif self.frame:IsVisible() then
+			self.durationBinding:SetEnabled(true)
+			self.durationBinding:UpdateFontString()
+		end
 	end
 
-	ProfileUtils.ResetBossStages = function()
-		db.profile.bossStagesLocked = defaults.bossStagesLocked
-		db.profile.bossStagesWidth = defaults.bossStagesWidth
-		db.profile.bossStagesHeight = defaults.bossStagesHeight
-		db.profile.bossStagesPosition = CopyTable(defaults.bossStagesPosition)
-		db.profile.bossStagesFontName = defaults.bossStagesFontName
-		db.profile.bossStagesFontSize = defaults.bossStagesFontSize
-		db.profile.bossStagesMonochrome = defaults.bossStagesMonochrome
-		db.profile.bossStagesOutline = defaults.bossStagesOutline
-		db.profile.bossStagesAlign = defaults.bossStagesAlign
-		db.profile.bossStagesColor = CopyTable(defaults.bossStagesColor)
-		db.profile.bossStagesColorInactive = CopyTable(defaults.bossStagesColorInactive)
-		db.profile.bossStagesBackgroundColor = CopyTable(defaults.bossStagesBackgroundColor)
-		db.profile.bossStagesBackgroundColorInactive = CopyTable(defaults.bossStagesBackgroundColorInactive)
-		db.profile.bossStagesBorderColor = CopyTable(defaults.bossStagesBorderColor)
-		db.profile.bossStagesBorderColorInactive = CopyTable(defaults.bossStagesBorderColorInactive)
-		db.profile.bossStagesBorderSize = defaults.bossStagesBorderSize
-		db.profile.bossStagesBorderOffset = defaults.bossStagesBorderOffset
-		db.profile.bossStagesBorderName = defaults.bossStagesBorderName
-		db.profile.bossStagesInactive = defaults.bossStagesInactive
-		db.profile.bossStagesTextFormat = defaults.bossStagesTextFormat
-		db.profile.bossStagesHistoryTimeFormat = defaults.bossStagesHistoryTimeFormat
-		db.profile.bossStagesCustomText = defaults.bossStagesCustomText
-	end
-	ProfileUtils.ResetBossStagesBorder = function()
-		db.profile.bossStagesBorderColor = CopyTable(defaults.bossStagesBorderColor)
-		db.profile.bossStagesBorderColorInactive = CopyTable(defaults.bossStagesBorderColorInactive)
-		db.profile.bossStagesBorderSize = defaults.bossStagesBorderSize
-		db.profile.bossStagesBorderOffset = defaults.bossStagesBorderOffset
-	end
-	ProfileUtils.ResetBossStagesInactiveColors = function()
-		db.profile.bossStagesColorInactive = CopyTable(defaults.bossStagesColorInactive)
-		db.profile.bossStagesBackgroundColorInactive = CopyTable(defaults.bossStagesBackgroundColorInactive)
-		db.profile.bossStagesBorderColorInactive = CopyTable(defaults.bossStagesBorderColorInactive)
-	end
-	ProfileUtils.ResetBossStagesPosition = function()
-		db.profile.bossStagesPosition = CopyTable(defaults.bossStagesPosition)
+	function timerProto:Stop()
+		local elapsed = self.durationObject:GetElapsedDuration()
+		self.active = false
+		self.lastElapsed = elapsed
+		self.durationBinding:SetEnabled(false)
+		local formatted = self.formatter:FormatNumber(elapsed)
+		self.text:SetText(formatted)
+		local inactiveMode = db.profile[self.prefix .. "Inactive"]
+		if inactiveMode == "COLOR" then
+			self:ApplyColors(false)
+		elseif inactiveMode == "HIDE" then
+			self.frame:Hide()
+		end
+		return elapsed
 	end
 
-	--ProfileUtils.ResetInstanceTimer = function()
-	--	db.profile.instanceTimerLocked = defaults.instanceTimerLocked
-	--	db.profile.instanceTimerWidth = defaults.instanceTimerWidth
-	--	db.profile.instanceTimerHeight = defaults.instanceTimerHeight
-	--	db.profile.instanceTimerPosition = CopyTable(defaults.instanceTimerPosition)
-	--	db.profile.instanceTimerFontName = defaults.instanceTimerFontName
-	--	db.profile.instanceTimerFontSize = defaults.instanceTimerFontSize
-	--	db.profile.instanceTimerMonochrome = defaults.instanceTimerMonochrome
-	--	db.profile.instanceTimerOutline = defaults.instanceTimerOutline
-	--	db.profile.instanceTimerAlign = defaults.instanceTimerAlign
-	--	db.profile.instanceTimerColor = CopyTable(defaults.instanceTimerColor)
-	--	db.profile.instanceTimerColorInactive = CopyTable(defaults.instanceTimerColorInactive)
-	--	db.profile.instanceTimerBackgroundColor = CopyTable(defaults.instanceTimerBackgroundColor)
-	--	db.profile.instanceTimerBackgroundColorInactive = CopyTable(defaults.instanceTimerBackgroundColorInactive)
-	--	db.profile.instanceTimerBorderColor = CopyTable(defaults.instanceTimerBorderColor)
-	--	db.profile.instanceTimerBorderColorInactive = CopyTable(defaults.instanceTimerBorderColorInactive)
-	--	db.profile.instanceTimerBorderSize = defaults.instanceTimerBorderSize
-	--	db.profile.instanceTimerBorderOffset = defaults.instanceTimerBorderOffset
-	--	db.profile.instanceTimerBorderName = defaults.instanceTimerBorderName
-	--	db.profile.instanceTimerInactive = defaults.instanceTimerInactive
-	--	db.profile.instanceTimerTextFormat = defaults.instanceTimerTextFormat
-	--	db.profile.instanceTimerHistoryAmount = defaults.instanceTimerHistoryAmount
-	--	db.profile.instanceTimerHistoryTimeFormat = defaults.instanceTimerHistoryTimeFormat
-	--end
-	--ProfileUtils.ResetInstanceTimerBorder = function()
-	--	db.profile.instanceTimerBorderColor = CopyTable(defaults.instanceTimerBorderColor)
-	--	db.profile.instanceTimerBorderColorInactive = CopyTable(defaults.instanceTimerBorderColorInactive)
-	--	db.profile.instanceTimerBorderSize = defaults.instanceTimerBorderSize
-	--	db.profile.instanceTimerBorderOffset = defaults.instanceTimerBorderOffset
-	--end
-	--ProfileUtils.ResetInstanceTimerInactiveColors = function()
-	--	db.profile.instanceTimerColorInactive = CopyTable(defaults.instanceTimerColorInactive)
-	--	db.profile.instanceTimerBackgroundColorInactive = CopyTable(defaults.instanceTimerBackgroundColorInactive)
-	--	db.profile.instanceTimerBorderColorInactive = CopyTable(defaults.instanceTimerBorderColorInactive)
-	--end
-	--ProfileUtils.ResetInstanceTimerPosition = function()
-	--	db.profile.instanceTimerPosition = CopyTable(defaults.instanceTimerPosition)
-	--end
+	function timerProto:Reset()
+		local wasActive = self.active
+		self.active = false
+		self.lastElapsed = 0
+		self.durationBinding:SetEnabled(false)
+		self.durationObject:Reset()
+		local zeroText = self.formatter:FormatNumber(0)
+		self.text:SetText(zeroText)
+		if wasActive then
+			local inactiveMode = db.profile[self.prefix .. "Inactive"]
+			if inactiveMode == "COLOR" then
+				self:ApplyColors(false)
+			elseif inactiveMode == "HIDE" then
+				self.frame:Hide()
+			end
+		end
+	end
+
+	function timerProto:SetStartTime(startTime)
+		self.durationObject:SetTimeFromStart(startTime, MAX_DURATION)
+		if self.active and self.frame:IsVisible() then
+			self.durationBinding:UpdateFontString()
+		end
+	end
+
+	function CreateTimerWidget(prefix, frameLevel)
+		local main = CreateFrame("Frame", nil, UIParent)
+		main:Hide()
+		main:SetFrameStrata("MEDIUM")
+		main:SetFixedFrameStrata(true)
+		main:SetFrameLevel(frameLevel)
+		main:SetFixedFrameLevel(true)
+		main:SetClampedToScreen(true)
+		main:EnableMouse(true)
+		main:RegisterForDrag("LeftButton")
+		main:SetScript("OnDragStart", OnDragStart)
+		main:SetScript("OnDragStop", function(self)
+			self:StopMovingOrSizing()
+			local pos = db.profile[prefix .. "Position"]
+			if self:IsMovable() and pos[5] == "UIParent" then
+				local point, _, relPoint, x, y = self:GetPoint()
+				x = math.floor(x+0.5)
+				y = math.floor(y+0.5)
+				pos[1] = point
+				pos[2] = relPoint
+				pos[3] = x
+				pos[4] = y
+				local acr = LibStub("AceConfigRegistry-3.0", true)
+				if acr then
+					acr:NotifyChange("BigWigsTools")
+				end
+			end
+		end)
+		main:SetScript("OnLeave", OnLeave)
+
+		local backdrop = CreateFrame("Frame", nil, main, "BackdropTemplate")
+		backdrop:SetAllPoints(main)
+		backdrop:Show()
+
+		local text = backdrop:CreateFontString(nil, "OVERLAY")
+
+		local durationObject = C_DurationUtil.CreateDuration()
+		local formatter = C_StringUtil.CreateNumericRuleFormatter()
+		local breakpoints = {
+			{
+				threshold = 0,
+				step = 1,
+				rounding = 2, -- Enum.NumericRuleFormatRounding.Down = 2
+				format = "%d:%02d",
+				components = {
+					{ div = 60, step = 1, rounding = 2 },
+					{ mod = 60, step = 1, rounding = 2 },
+				},
+			},
+		}
+
+		local formatComponents = {
+			{ property = 2, formatter = formatter }, -- Enum.DurationTextBindingProperty.ElapsedDuration = 2
+		}
+
+		local durationBinding = C_DurationUtil.CreateDurationTextBinding()
+		durationBinding:SetFontString(text)
+		durationBinding:SetDuration(durationObject)
+		durationBinding:SetEnabled(false)
+
+		local timer = setmetatable({
+			prefix = prefix,
+			frame = main,
+			backdrop = backdrop,
+			text = text,
+			durationObject = durationObject,
+			formatter = formatter,
+			durationBinding = durationBinding,
+			formatComponents = formatComponents,
+			breakpoints = breakpoints,
+			active = false,
+			enabled = false,
+			propagateClicks = false,
+			lastElapsed = 0,
+			historyTime = {},
+			historyDuration = {},
+		}, timerMeta)
+
+		main:SetScript("OnShow", function()
+			if timer.active then
+				timer.durationBinding:SetEnabled(true)
+				timer.durationBinding:UpdateFontString()
+			end
+		end)
+		main:SetScript("OnHide", function(self)
+			timer.durationBinding:SetEnabled(false)
+			if self:IsDragging() then
+				self:StopMovingOrSizing()
+				local pos = db.profile[prefix .. "Position"]
+				self:ClearAllPoints()
+				self:SetPoint(pos[1], pos[5], pos[2], pos[3], pos[4])
+			end
+			if bwTooltip:IsOwned(self) then
+				bwTooltip:Hide()
+			end
+		end)
+
+		return timer
+	end
 end
 
 --------------------------------------------------------------------------------
 -- Widgets & Events
 --
 
-local widgets = {
-	anyCombatActive = false,
-	anyCombatHistoryTime = {},
-	anyCombatHistoryDuration = {},
-	anyCombatCustomText = "%d:%02d",
-
-	bossCombatActive = false,
-	bossCombatHistoryTime = {},
-	bossCombatHistoryDuration = {},
-	bossCombatCustomText = "%d:%02d",
-
-	bossStagesActive = false,
-	bossStagesHistoryTime = {},
-	bossStagesHistoryDuration = {},
-	bossStagesCustomText = "%d:%02d",
-
-	--instanceTimerActive = false,
-	--instanceTimerHistoryTime = {},
-	--instanceTimerHistoryDuration = {},
-}
+local widgets = {}
 
 -- Any Combat
 do
-	local main = CreateFrame("Frame", nil, UIParent)
-	main:Hide()
-	main:SetFrameStrata("MEDIUM")
-	main:SetFixedFrameStrata(true)
-	main:SetFrameLevel(5020)
-	main:SetFixedFrameLevel(true)
-	main:SetClampedToScreen(true)
-	main:EnableMouse(true)
-	main:RegisterForDrag("LeftButton")
-	main:SetScript("OnDragStart", function(self)
-		if self:IsMovable() then
-			self:StartMoving()
-		end
-	end)
-	main:SetScript("OnDragStop", function(self)
-		self:StopMovingOrSizing()
-		local point, _, relPoint, x, y = self:GetPoint()
-		x = math.floor(x+0.5)
-		y = math.floor(y+0.5)
-		db.profile.anyCombatPosition[1] = point
-		db.profile.anyCombatPosition[2] = relPoint
-		db.profile.anyCombatPosition[3] = x
-		db.profile.anyCombatPosition[4] = y
-		local acr = LibStub("AceConfigRegistry-3.0", true)
-		if acr then
-			acr:NotifyChange("BigWigsTools")
-		end
-	end)
-	main:SetScript("OnEnter", function(self)
+	local timer = CreateTimerWidget("anyCombat", 5020)
+	widgets.anyCombat = timer
+
+	timer.frame:SetScript("OnEnter", function(self)
 		if db.profile.anyCombatHistoryHiddenInCombat and InCombatLockdown() then return end
 		bwTooltip:SetOwner(self, "ANCHOR_TOP")
 		bwTooltip:AddLine(L.anyCombatTimerTooltip)
-		for i = 1, #widgets.anyCombatHistoryTime do
-			if i == 1 and widgets.anyCombatActive then
-				bwTooltip:AddDoubleLine(widgets.anyCombatHistoryTime[i], L.inProgress, 1, 1, 1, 0, 1, 0)
+		for i = 1, math.min(#timer.historyTime, db.profile.anyCombatHistoryAmount) do
+			if i == 1 and timer.active then
+				bwTooltip:AddDoubleLine(timer.historyTime[i], L.inProgress, 1, 1, 1, 0, 1, 0)
 			else
-				bwTooltip:AddDoubleLine(widgets.anyCombatHistoryTime[i], BigWigsAPI.SecondsToTime(widgets.anyCombatHistoryDuration[i], db.profile.anyCombatTextFormat == 1), 1, 1, 1, 0, 1, 0)
+				bwTooltip:AddDoubleLine(timer.historyTime[i], BigWigsAPI.SecondsToTime(timer.historyDuration[i], db.profile.anyCombatTextFormat == 1), 1, 1, 1, 0, 1, 0)
 			end
 		end
 		bwTooltip:Show()
 	end)
-	main:SetScript("OnLeave", function(self)
-		bwTooltip:Hide()
-	end)
-	widgets.anyCombat = main
 
-	local bg = main:CreateTexture()
-	bg:SetAllPoints(main)
-	bg:Show()
-	widgets.anyCombatBG = bg
+	local prevCombatEnd = nil
+	local prevInstanceID = nil
+	local function ResetHistory()
+		prevCombatEnd = nil
+		timer.historyTime = {}
+		timer.historyDuration = {}
+		timer:Reset()
+	end
 
-	local border = CreateFrame("Frame", nil, main, "BackdropTemplate")
-	border:Show()
-	widgets.anyCombatBorder = border
+	widgets.anyCombatInit = function()
+		local _, _, _, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
+		prevInstanceID = instanceID
+	end
 
-	local text = main:CreateFontString()
-	widgets.anyCombatText = text
+	widgets.anyCombatDisable = function()
+		prevInstanceID = nil
+		ResetHistory()
+	end
 
-	local current = 0
-	local increment = 1
-	local updater = main:CreateAnimationGroup()
-	updater:SetLooping("REPEAT")
-	updater:SetScript("OnLoop", function()
-		current = current + increment
-		widgets.anyCombatHistoryDuration[1] = current
-		local m = current/60
-		local s = current % 60
-		text:SetFormattedText(widgets.anyCombatCustomText, m, s)
-	end)
-	local anim = updater:CreateAnimation()
-	anim:SetDuration(1)
-	local prevCombatEnd = 0
-	main:SetScript("OnEvent", function(self, event)
+	timer.frame:SetScript("OnEvent", function(_, event)
 		if event == "PLAYER_ENTERING_WORLD" then
-			local _, instanceType = BigWigsLoader.GetInstanceInfo()
-			if (instanceType == "raid" and bit.band(db.profile.anyCombatHistoryResetConditions, 1) == 1) or (instanceType == "party" and bit.band(db.profile.anyCombatHistoryResetConditions, 2) == 2) then
-				self:GetScript("OnEvent")(self, "PLAYER_REGEN_ENABLED")
-				prevCombatEnd = 0
-				widgets.anyCombatHistoryTime = {}
-				widgets.anyCombatHistoryDuration = {}
-				text:SetFormattedText(widgets.anyCombatCustomText, 0, 0)
+			local _, instanceType, _, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
+			if instanceID ~= prevInstanceID then
+				prevInstanceID = instanceID
+				if (instanceType == "raid" and bit.band(db.profile.anyCombatHistoryResetConditions, 1) == 1) or (instanceType == "party" and bit.band(db.profile.anyCombatHistoryResetConditions, 2) == 2) then
+					ResetHistory()
+				end
 			end
 		elseif event == "CHALLENGE_MODE_START" then
 			if bit.band(db.profile.anyCombatHistoryResetConditions, 4) == 4 then
-				self:GetScript("OnEvent")(self, "PLAYER_REGEN_ENABLED")
-				prevCombatEnd = 0
-				widgets.anyCombatHistoryTime = {}
-				widgets.anyCombatHistoryDuration = {}
-				text:SetFormattedText(widgets.anyCombatCustomText, 0, 0)
+				ResetHistory()
 			end
 		elseif event == "PLAYER_REGEN_DISABLED" then
-			widgets.anyCombatActive = true
-			local t = GetTime()
-			local elapsed = t-prevCombatEnd
-			if elapsed <= 2 then -- If you re-enter combat within 2 sec then we don't consider it as ended
-				local secondsToAdd = 0
-				if db.profile.anyCombatTextFormat == 2 then
-					local roundedText = string.format("%.1f", elapsed)
-					local rounded = tonumber(roundedText)
-					if rounded then
-						secondsToAdd = rounded
-					end
+			if db.profile.anyCombatHistoryHiddenInCombat and bwTooltip:IsOwned(timer.frame) then
+				bwTooltip:Hide()
+			end
+			if not timer.active then
+				local t = GetTime()
+				if prevCombatEnd and (t - prevCombatEnd) <= 2 and not timer.durationObject:IsZero() then -- If you re-enter combat within 2 sec then we don't consider it as ended
+					timer:Resume()
 				else
-					local rounded = math.floor(elapsed+0.5)
-					secondsToAdd = rounded
+					local maxEntries = db.profile.anyCombatHistoryAmount
+					while #timer.historyTime >= maxEntries do
+						table.remove(timer.historyTime)
+						table.remove(timer.historyDuration)
+					end
+					local timeText = BigWigsLoader.date(db.profile.anyCombatHistoryTimeFormat == 1 and "[%I:%M:%S %p]" or "[%H:%M:%S]")
+					table.insert(timer.historyTime, 1, timeText)
+					table.insert(timer.historyDuration, 1, 0)
+					timer:Start(t)
 				end
-				current = current + secondsToAdd
-			else
-				current = 0
-				-- Limit to 10 entries
-				widgets.anyCombatHistoryTime[db.profile.anyCombatHistoryAmount] = nil
-				widgets.anyCombatHistoryDuration[db.profile.anyCombatHistoryAmount] = nil
-				table.insert(widgets.anyCombatHistoryTime, 1, date(db.profile.anyCombatHistoryTimeFormat == 1 and "[%I:%M:%S %p]" or "[%H:%M:%S]"))
-				table.insert(widgets.anyCombatHistoryDuration, 1, current)
-				text:SetFormattedText(widgets.anyCombatCustomText, 0, 0)
 			end
-			if db.profile.anyCombatTextFormat == 2 then
-				anim:SetDuration(0.1)
-				increment = 0.1
-			else
-				anim:SetDuration(1)
-				increment = 1
-			end
-			updater:Play()
-			if db.profile.anyCombatInactive == "COLOR" then
-				local textColor = db.profile.anyCombatColor
-				text:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-				local bgColor = db.profile.anyCombatBackgroundColor
-				bg:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-				local borderColor = db.profile.anyCombatBorderColor
-				border:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-			elseif db.profile.anyCombatInactive == "HIDE" then
-				self:Show()
-			end
-		elseif event == "PLAYER_REGEN_ENABLED" and widgets.anyCombatActive then
-			widgets.anyCombatActive = false
-			updater:Stop()
+		elseif event == "PLAYER_REGEN_ENABLED" and timer.active then
 			prevCombatEnd = GetTime()
-			if db.profile.anyCombatInactive == "COLOR" then
-				local textColor = db.profile.anyCombatColorInactive
-				text:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-				local bgColor = db.profile.anyCombatBackgroundColorInactive
-				bg:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-				local borderColor = db.profile.anyCombatBorderColorInactive
-				border:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-			elseif db.profile.anyCombatInactive == "HIDE" then
-				self:Hide()
-			end
+			timer.historyDuration[1] = timer:Stop()
 		end
 	end)
 end
 
 -- Boss Combat
 do
-	local main = CreateFrame("Frame", nil, UIParent)
-	main:Hide()
-	main:SetFrameStrata("MEDIUM")
-	main:SetFixedFrameStrata(true)
-	main:SetFrameLevel(5015)
-	main:SetFixedFrameLevel(true)
-	main:SetClampedToScreen(true)
-	main:EnableMouse(true)
-	main:RegisterForDrag("LeftButton")
-	main:SetScript("OnDragStart", function(self)
-		if self:IsMovable() then
-			self:StartMoving()
-		end
-	end)
-	main:SetScript("OnDragStop", function(self)
-		self:StopMovingOrSizing()
-		local point, _, relPoint, x, y = self:GetPoint()
-		x = math.floor(x+0.5)
-		y = math.floor(y+0.5)
-		db.profile.bossCombatPosition[1] = point
-		db.profile.bossCombatPosition[2] = relPoint
-		db.profile.bossCombatPosition[3] = x
-		db.profile.bossCombatPosition[4] = y
-		local acr = LibStub("AceConfigRegistry-3.0", true)
-		if acr then
-			acr:NotifyChange("BigWigsTools")
-		end
-	end)
+	local timer = CreateTimerWidget("bossCombat", 5015)
+	widgets.bossCombat = timer
+
 	local encounterStatusTexts = {
 		[0] = L.defeat,
 		[1] = L.victory,
 		[2] = L.inProgress,
 	}
-	main:SetScript("OnEnter", function(self)
+	timer.frame:SetScript("OnEnter", function(self)
 		bwTooltip:SetOwner(self, "ANCHOR_TOP")
 		bwTooltip:AddLine(L.bossCombatTimerTooltip)
-		for i = 1, #widgets.bossCombatHistoryTime do
+		local now = GetTime()
+		for i = 1, math.min(#timer.historyTime, db.profile.bossCombatHistoryAmount) do
+			local durationEntry = timer.historyDuration[i]
+			local duration = durationEntry[2] == 2 and (now - durationEntry[1]) or durationEntry[1]
 			bwTooltip:AddDoubleLine(
-				widgets.bossCombatHistoryTime[i][1],
-				("%s [%s]"):format(BigWigsAPI.SecondsToTime(widgets.bossCombatHistoryDuration[i][1], db.profile.bossCombatTextFormat == 1), encounterStatusTexts[widgets.bossCombatHistoryDuration[i][2]]),
+				timer.historyTime[i][1],
+				("%s [%s]"):format(BigWigsAPI.SecondsToTime(duration, db.profile.bossCombatTextFormat == 1), encounterStatusTexts[durationEntry[2]]),
 				1, 1, 1,
 				0, 1, 0
 			)
 		end
 		bwTooltip:Show()
 	end)
-	main:SetScript("OnLeave", function(self)
-		bwTooltip:Hide()
-	end)
-	widgets.bossCombat = main
 
-	local bg = main:CreateTexture()
-	bg:SetAllPoints(main)
-	bg:Show()
-	widgets.bossCombatBG = bg
+	local prevInstanceID = nil
+	local function ResetHistory()
+		timer.historyTime = {}
+		timer.historyDuration = {}
+		timer:Reset()
+	end
 
-	local border = CreateFrame("Frame", nil, main, "BackdropTemplate")
-	border:Show()
-	widgets.bossCombatBorder = border
+	widgets.bossCombatInit = function()
+		local _, _, _, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
+		prevInstanceID = instanceID
+	end
 
-	local text = main:CreateFontString()
-	widgets.bossCombatText = text
+	widgets.bossCombatDisable = function()
+		prevInstanceID = nil
+		ResetHistory()
+	end
 
-	local increment = 1
-	local updater = main:CreateAnimationGroup()
-	updater:SetLooping("REPEAT")
-	updater:SetScript("OnLoop", function()
-		for i = 1, #widgets.bossCombatHistoryDuration do
-			local tbl = widgets.bossCombatHistoryDuration[i]
-			if tbl[2] == 2 then
-				local current = tbl[1] + increment
-				tbl[1] = current
-				local m = current/60
-				local s = current % 60
-				text:SetFormattedText(widgets.bossCombatCustomText, m, s)
-			end
-		end
-	end)
-	local anim = updater:CreateAnimation()
-	anim:SetDuration(1)
-	main:SetScript("OnEvent", function(self, event, encounterID, encounterName, _, _, success)
+	timer.frame:SetScript("OnEvent", function(_, event, encounterID, encounterName, _, _, success)
 		if event == "PLAYER_ENTERING_WORLD" then
-			local _, instanceType = BigWigsLoader.GetInstanceInfo()
-			if (instanceType == "raid" and bit.band(db.profile.bossCombatHistoryResetConditions, 1) == 1) or (instanceType == "party" and bit.band(db.profile.bossCombatHistoryResetConditions, 2) == 2) then
-				self:GetScript("OnEvent")(self, "PLAYER_LEAVING_WORLD")
-				widgets.bossCombatHistoryTime = {}
-				widgets.bossCombatHistoryDuration = {}
-				text:SetFormattedText(widgets.bossCombatCustomText, 0, 0)
+			local _, instanceType, _, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
+			if instanceID ~= prevInstanceID then
+				prevInstanceID = instanceID
+				if (instanceType == "raid" and bit.band(db.profile.bossCombatHistoryResetConditions, 1) == 1) or (instanceType == "party" and bit.band(db.profile.bossCombatHistoryResetConditions, 2) == 2) then
+					ResetHistory()
+				end
 			end
 		elseif event == "CHALLENGE_MODE_START" then
 			if bit.band(db.profile.bossCombatHistoryResetConditions, 4) == 4 then
-				self:GetScript("OnEvent")(self, "PLAYER_LEAVING_WORLD")
-				widgets.bossCombatHistoryTime = {}
-				widgets.bossCombatHistoryDuration = {}
-				text:SetFormattedText(widgets.bossCombatCustomText, 0, 0)
+				ResetHistory()
 			end
 		elseif event == "ENCOUNTER_START" then
-			-- Limit to 10 entries
-			widgets.bossCombatHistoryTime[db.profile.bossCombatHistoryAmount] = nil
-			widgets.bossCombatHistoryDuration[db.profile.bossCombatHistoryAmount] = nil
-			local tooltipText = ("%s %s"):format(date(db.profile.bossCombatHistoryTimeFormat == 1 and "[%I:%M:%S %p]" or "[%H:%M:%S]"), encounterName)
-			table.insert(widgets.bossCombatHistoryTime, 1, {tooltipText, encounterID})
-			table.insert(widgets.bossCombatHistoryDuration, 1, {0, 2})
-			if not widgets.bossCombatActive then
-				widgets.bossCombatActive = true
-				if db.profile.bossCombatTextFormat == 2 then
-					anim:SetDuration(0.1)
-					increment = 0.1
-				else
-					anim:SetDuration(1)
-					increment = 1
-				end
-				text:SetFormattedText(widgets.bossCombatCustomText, 0, 0)
-				updater:Play()
-				if db.profile.bossCombatInactive == "COLOR" then
-					local textColor = db.profile.bossCombatColor
-					text:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-					local bgColor = db.profile.bossCombatBackgroundColor
-					bg:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-					local borderColor = db.profile.bossCombatBorderColor
-					border:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-				elseif db.profile.bossCombatInactive == "HIDE" then
-					self:Show()
+			local t = GetTime()
+			local closedStale = false
+			for i = 1, #timer.historyTime do
+				local tblTime = timer.historyTime[i]
+				local tblDuration = timer.historyDuration[i]
+				if tblTime[2] == encounterID and tblDuration[2] == 2 then -- Close stale duplicate if ENCOUNTER_END was somehow missed
+					tblDuration[1] = t - tblDuration[1]
+					tblDuration[2] = 0
+					closedStale = true
 				end
 			end
-		elseif event == "ENCOUNTER_END" and widgets.bossCombatActive then
-			for i = 1, #widgets.bossCombatHistoryTime do
-				local tblTime = widgets.bossCombatHistoryTime[i]
-				local tblDuration = widgets.bossCombatHistoryDuration[i]
+			local maxEntries = db.profile.bossCombatHistoryAmount
+			while #timer.historyTime >= maxEntries do
+				table.remove(timer.historyTime)
+				local removed = table.remove(timer.historyDuration)
+				if removed[2] == 2 then
+					closedStale = true
+				end
+			end
+			local tooltipText = ("%s %s"):format(BigWigsLoader.date(db.profile.bossCombatHistoryTimeFormat == 1 and "[%I:%M:%S %p]" or "[%H:%M:%S]"), encounterName)
+			table.insert(timer.historyTime, 1, {tooltipText, encounterID})
+			table.insert(timer.historyDuration, 1, {t, 2})
+			if not timer.active then
+				timer:Start(t)
+			elseif closedStale then
+				for i = #timer.historyDuration, 1, -1 do
+					local tblDuration = timer.historyDuration[i]
+					if tblDuration[2] == 2 then
+						timer:SetStartTime(tblDuration[1])
+						break
+					end
+				end
+			end
+		elseif event == "ENCOUNTER_END" and timer.active then
+			local t = GetTime()
+			for i = 1, #timer.historyTime do
+				local tblTime = timer.historyTime[i]
+				local tblDuration = timer.historyDuration[i]
 				if tblTime[2] == encounterID and tblDuration[2] == 2 then -- Find this encounter and change its status
-					tblDuration[2] = success
+					tblDuration[1] = t - tblDuration[1]
+					tblDuration[2] = success == 1 and 1 or 0
 					break
 				end
 			end
-			for i = 1, #widgets.bossCombatHistoryDuration do
-				if widgets.bossCombatHistoryDuration[i][2] == 2 then -- Another encounter is still in progress
+			for i = #timer.historyDuration, 1, -1 do
+				local tblDuration = timer.historyDuration[i]
+				if tblDuration[2] == 2 then -- Another encounter is still in progress
+					timer:SetStartTime(tblDuration[1])
 					return
 				end
 			end
-			widgets.bossCombatActive = false
-			updater:Stop()
-			if db.profile.bossCombatInactive == "COLOR" then
-				local textColor = db.profile.bossCombatColorInactive
-				text:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-				local bgColor = db.profile.bossCombatBackgroundColorInactive
-				bg:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-				local borderColor = db.profile.bossCombatBorderColorInactive
-				border:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-			elseif db.profile.bossCombatInactive == "HIDE" then
-				self:Hide()
-			end
-		elseif event == "PLAYER_LEAVING_WORLD" and widgets.bossCombatActive then
-			for i = 1, #widgets.bossCombatHistoryDuration do
-				local tbl = widgets.bossCombatHistoryDuration[i]
+			timer:Stop()
+		elseif event == "PLAYER_LEAVING_WORLD" and timer.active then
+			local t = GetTime()
+			for i = 1, #timer.historyDuration do
+				local tbl = timer.historyDuration[i]
 				if tbl[2] == 2 then -- In progress
+					tbl[1] = t - tbl[1]
 					tbl[2] = 0
 				end
 			end
-			widgets.bossCombatActive = false
-			updater:Stop()
-			if db.profile.bossCombatInactive == "COLOR" then
-				local textColor = db.profile.bossCombatColorInactive
-				text:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-				local bgColor = db.profile.bossCombatBackgroundColorInactive
-				bg:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-				local borderColor = db.profile.bossCombatBorderColorInactive
-				border:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-			elseif db.profile.bossCombatInactive == "HIDE" then
-				self:Hide()
-			end
+			timer:Stop()
 		end
 	end)
 end
 
 -- Boss Stages
 do
-	local main = CreateFrame("Frame", nil, UIParent)
-	main:Hide()
-	main:SetFrameStrata("MEDIUM")
-	main:SetFixedFrameStrata(true)
-	main:SetFrameLevel(5010)
-	main:SetFixedFrameLevel(true)
-	main:SetClampedToScreen(true)
-	main:EnableMouse(true)
-	main:RegisterForDrag("LeftButton")
-	main:SetScript("OnDragStart", function(self)
-		if self:IsMovable() then
-			self:StartMoving()
-		end
-	end)
-	main:SetScript("OnDragStop", function(self)
-		self:StopMovingOrSizing()
-		local point, _, relPoint, x, y = self:GetPoint()
-		x = math.floor(x+0.5)
-		y = math.floor(y+0.5)
-		db.profile.bossStagesPosition[1] = point
-		db.profile.bossStagesPosition[2] = relPoint
-		db.profile.bossStagesPosition[3] = x
-		db.profile.bossStagesPosition[4] = y
-		local acr = LibStub("AceConfigRegistry-3.0", true)
-		if acr then
-			acr:NotifyChange("BigWigsTools")
-		end
-	end)
-	main:SetScript("OnEnter", function(self)
+	local timer = CreateTimerWidget("bossStages", 5010)
+	widgets.bossStages = timer
+
+	timer.frame:SetScript("OnEnter", function(self)
 		bwTooltip:SetOwner(self, "ANCHOR_TOP")
 		bwTooltip:AddLine(L.bossStagesTimerTooltip)
-		for i = 1, #widgets.bossStagesHistoryTime do
-			if i == 1 and widgets.bossStagesActive then
-				bwTooltip:AddDoubleLine(widgets.bossStagesHistoryTime[i], L.inProgress, 1, 1, 1, 0, 1, 0)
+		for i = 1, #timer.historyTime do
+			if i == 1 and timer.active then
+				bwTooltip:AddDoubleLine(timer.historyTime[i], L.inProgress, 1, 1, 1, 0, 1, 0)
 			else
-				bwTooltip:AddDoubleLine(widgets.bossStagesHistoryTime[i], BigWigsAPI.SecondsToTime(widgets.bossStagesHistoryDuration[i], db.profile.bossStagesTextFormat == 1), 1, 1, 1, 0, 1, 0)
+				bwTooltip:AddDoubleLine(timer.historyTime[i], BigWigsAPI.SecondsToTime(timer.historyDuration[i], db.profile.bossStagesTextFormat == 1), 1, 1, 1, 0, 1, 0)
 			end
 		end
 		bwTooltip:Show()
 	end)
-	main:SetScript("OnLeave", function(self)
-		bwTooltip:Hide()
-	end)
-	widgets.bossStages = main
 
-	local bg = main:CreateTexture()
-	bg:SetAllPoints(main)
-	bg:Show()
-	widgets.bossStagesBG = bg
-
-	local border = CreateFrame("Frame", nil, main, "BackdropTemplate")
-	border:Show()
-	widgets.bossStagesBorder = border
-
-	local text = main:CreateFontString()
-	widgets.bossStagesText = text
-
-	local current = 0
-	local increment = 1
 	local currentModule = nil
-	local updater = main:CreateAnimationGroup()
-	updater:SetLooping("REPEAT")
-	updater:SetScript("OnLoop", function()
-		current = current + increment
-		widgets.bossStagesHistoryDuration[1] = current
-		local m = current/60
-		local s = current % 60
-		text:SetFormattedText(widgets.bossStagesCustomText, m, s)
-	end)
-	local anim = updater:CreateAnimation()
-	anim:SetDuration(1)
-
 	widgets.bossStagesOnEngage = function(_, module)
 		if module and module:GetStage() then
 			currentModule = module
-			widgets.bossStagesHistoryTime = {}
-			widgets.bossStagesHistoryDuration = {}
-			text:SetFormattedText(widgets.bossStagesCustomText, 0, 0)
+			timer.historyTime = {}
+			timer.historyDuration = {}
+			timer:Reset()
 		end
 	end
 
-	do
-		local stageText = BigWigsAPI:GetLocale("BigWigs: Common").stage:gsub("%%d", "%%s")
-		widgets.bossStagesOnStageChange = function(_, module, stage)
-			if module == currentModule then
-				updater:Stop()
-				widgets.bossStagesActive = true
-				current = 0
-				local tooltipText = ("%s %s"):format(date(db.profile.bossStagesHistoryTimeFormat == 1 and "[%I:%M:%S %p]" or "[%H:%M:%S]"), stageText:format(stage))
-				table.insert(widgets.bossStagesHistoryTime, 1, tooltipText)
-				table.insert(widgets.bossStagesHistoryDuration, 1, current)
-				if db.profile.bossStagesTextFormat == 2 then
-					anim:SetDuration(0.1)
-					increment = 0.1
-				else
-					anim:SetDuration(1)
-					increment = 1
-				end
-				text:SetFormattedText(widgets.bossStagesCustomText, 0, 0)
-				updater:Play()
-				if db.profile.bossStagesInactive == "COLOR" then
-					local textColor = db.profile.bossStagesColor
-					text:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-					local bgColor = db.profile.bossStagesBackgroundColor
-					bg:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-					local borderColor = db.profile.bossStagesBorderColor
-					border:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-				elseif db.profile.bossStagesInactive == "HIDE" then
-					main:Show()
-				end
+	widgets.bossStagesOnStageChange = function(_, module, stage)
+		if not module or module:IsWiping() then return end
+		if not currentModule then
+			currentModule = module
+			timer.historyTime = {}
+			timer.historyDuration = {}
+		end
+		if module == currentModule then
+			if timer.active then
+				timer.historyDuration[1] = timer.durationObject:GetElapsedDuration()
 			end
+			local timeText = BigWigsLoader.date(db.profile.bossStagesHistoryTimeFormat == 1 and "[%I:%M:%S %p]" or "[%H:%M:%S]")
+			local stageText = L.stage:format(stage)
+			local tooltipText = ("%s %s"):format(timeText, stageText)
+			table.insert(timer.historyTime, 1, tooltipText)
+			table.insert(timer.historyDuration, 1, 0)
+			local t = GetTime()
+			timer:Start(t)
 		end
 	end
 
 	widgets.bossStagesOnEnd = function(_, module)
-		if module == currentModule then
+		if module and module == currentModule then
 			currentModule = nil
-			widgets.bossStagesActive = false
-			updater:Stop()
-			if db.profile.bossStagesInactive == "COLOR" then
-				local textColor = db.profile.bossStagesColorInactive
-				text:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-				local bgColor = db.profile.bossStagesBackgroundColorInactive
-				bg:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-				local borderColor = db.profile.bossStagesBorderColorInactive
-				border:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-			elseif db.profile.bossStagesInactive == "HIDE" then
-				main:Hide()
+			if timer.active then
+				timer.historyDuration[1] = timer:Stop()
 			end
 		end
 	end
-end
 
--- Instance Timer
---[[
-do
-	local main = CreateFrame("Frame", nil, UIParent)
-	main:Hide()
-	main:SetFrameStrata("MEDIUM")
-	main:SetFixedFrameStrata(true)
-	main:SetFrameLevel(5005)
-	main:SetFixedFrameLevel(true)
-	main:SetClampedToScreen(true)
-	main:EnableMouse(true)
-	main:RegisterForDrag("LeftButton")
-	main:SetScript("OnDragStart", function(self)
-		if self:IsMovable() then
-			self:StartMoving()
-		end
-	end)
-	main:SetScript("OnDragStop", function(self)
-		self:StopMovingOrSizing()
-		local point, _, relPoint, x, y = self:GetPoint()
-		x = math.floor(x+0.5)
-		y = math.floor(y+0.5)
-		db.profile.instanceTimerPosition[1] = point
-		db.profile.instanceTimerPosition[2] = relPoint
-		db.profile.instanceTimerPosition[3] = x
-		db.profile.instanceTimerPosition[4] = y
-		local acr = LibStub("AceConfigRegistry-3.0", true)
-		if acr then
-			acr:NotifyChange("BigWigsTools")
-		end
-	end)
-	main:SetScript("OnEnter", function(self)
-		bwTooltip:SetOwner(self, "ANCHOR_TOP")
-		bwTooltip:AddLine(L.instanceTimerTooltip)
-		for i = 1, #widgets.instanceTimerHistoryTime do
-			if i == 1 and widgets.instanceTimerActive then
-				bwTooltip:AddDoubleLine(widgets.instanceTimerHistoryTime[i], L.inProgress, 1, 1, 1, 0, 1, 0)
-			else
-				bwTooltip:AddDoubleLine(widgets.instanceTimerHistoryTime[i], BigWigsAPI.SecondsToTime(widgets.instanceTimerHistoryDuration[i], db.profile.instanceTimerTextFormat == 1), 1, 1, 1, 0, 1, 0)
-			end
-		end
-		bwTooltip:Show()
-	end)
-	main:SetScript("OnLeave", function(self)
-		bwTooltip:Hide()
-	end)
-	widgets.instanceTimer = main
-
-	local bg = main:CreateTexture()
-	bg:SetAllPoints(main)
-	bg:Show()
-	widgets.instanceTimerBG = bg
-
-	local border = CreateFrame("Frame", nil, main, "BackdropTemplate")
-	border:Show()
-	widgets.instanceTimerBorder = border
-
-	local text = main:CreateFontString()
-	widgets.instanceTimerText = text
-
-	local increment = 1
-	local updater = main:CreateAnimationGroup()
-	updater:SetLooping("REPEAT")
-	updater:SetScript("OnLoop", function()
-		local current = widgets.instanceTimerHistoryDuration[1] + increment
-		widgets.instanceTimerHistoryDuration[1] = current
-		local m = current/60
-		local s = current % 60
-		text:SetFormattedText(db.profile.instanceTimerTextFormat == 2 and "%d:%04.1f" or "%d:%02d", m, s)
-	end)
-	local anim = updater:CreateAnimation()
-	anim:SetDuration(1)
-	widgets.instanceTimerEnterWorldFunc = function()
-		local _, instanceType, difficultyID, _, _, _, _, instanceID = BigWigsLoader.GetInstanceInfo()
-		if instanceType ~= "none" and not widgets.instanceTimerActive then
-			widgets.instanceTimerActive = true
-			local difficultyName = GetDifficultyInfo(difficultyID)
-			if not difficultyName then
-				difficultyName = instanceType
-			end
-			local zoneAndDifficulty = L.parentheses:format(GetRealZoneText(instanceID), difficultyName)
-			local tooltipText = ("%s %s"):format(date(db.profile.instanceTimerHistoryTimeFormat == 1 and "[%I:%M:%S %p]" or "[%H:%M:%S]"), zoneAndDifficulty)
-			-- Limit to 10 entries
-			widgets.instanceTimerHistoryTime[db.profile.instanceTimerHistoryAmount] = nil
-			widgets.instanceTimerHistoryDuration[db.profile.instanceTimerHistoryAmount] = nil
-			table.insert(widgets.instanceTimerHistoryTime, 1, tooltipText)
-			table.insert(widgets.instanceTimerHistoryDuration, 1, 0)
-			if db.profile.instanceTimerTextFormat == 2 then
-				anim:SetDuration(0.1)
-				increment = 0.1
-				text:SetText("0:00.0")
-			else
-				anim:SetDuration(1)
-				increment = 1
-				text:SetText("0:00")
-			end
-			updater:Play()
-			if db.profile.instanceTimerInactive == "COLOR" then
-				local textColor = db.profile.instanceTimerColor
-				text:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-				local bgColor = db.profile.instanceTimerBackgroundColor
-				bg:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-				local borderColor = db.profile.instanceTimerBorderColor
-				border:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-			elseif db.profile.instanceTimerInactive == "HIDE" then
-				main:Show()
-			end
-		end
+	widgets.bossStagesDisable = function()
+		currentModule = nil
+		timer.historyTime = {}
+		timer.historyDuration = {}
+		timer:Reset()
 	end
-	main:SetScript("OnEvent", function(self, event)
-		if event == "PLAYER_ENTERING_WORLD" then
-			BigWigsLoader.CTimerAfter(0, widgets.instanceTimerEnterWorldFunc) -- Difficulty info isn't accurate until 1 frame after PEW
-		elseif event == "PLAYER_LEAVING_WORLD" then
-			if widgets.instanceTimerActive then
-				widgets.instanceTimerActive = false
-				updater:Stop()
-				if db.profile.instanceTimerInactive == "COLOR" then
-					local textColor = db.profile.instanceTimerColorInactive
-					text:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-					local bgColor = db.profile.instanceTimerBackgroundColorInactive
-					bg:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-					local borderColor = db.profile.instanceTimerBorderColorInactive
-					border:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-				elseif db.profile.instanceTimerInactive == "HIDE" then
-					self:Hide()
-				end
-			end
-		end
-	end)
 end
-]]
+
 --------------------------------------------------------------------------------
 -- Options Table
 --
 
 local function UpdateAnyCombatWidget()
+	local timer = widgets.anyCombat
 	if not db.profile.anyCombatDisabled then
-		widgets.anyCombat:RegisterEvent("PLAYER_REGEN_DISABLED")
-		widgets.anyCombat:RegisterEvent("PLAYER_REGEN_ENABLED")
-		widgets.anyCombat:RegisterEvent("PLAYER_ENTERING_WORLD")
-		widgets.anyCombat:RegisterEvent("CHALLENGE_MODE_START")
-
-		widgets.anyCombat:SetSize(db.profile.anyCombatWidth, db.profile.anyCombatHeight)
-		local point, relPoint = db.profile.anyCombatPosition[1], db.profile.anyCombatPosition[2]
-		local x, y = db.profile.anyCombatPosition[3], db.profile.anyCombatPosition[4]
-		widgets.anyCombat:ClearAllPoints()
-		widgets.anyCombat:SetPoint(point, db.profile.anyCombatPosition[5], relPoint, x, y)
-		if db.profile.anyCombatLocked then
-			widgets.anyCombat:SetMovable(false)
-			widgets.anyCombat:SetPropagateMouseClicks(true)
-		else
-			widgets.anyCombat:SetMovable(true)
-			widgets.anyCombat:SetPropagateMouseClicks(false)
+		if not timer.enabled then
+			timer.enabled = true
+			widgets.anyCombatInit()
+			timer.frame:RegisterEvent("PLAYER_REGEN_DISABLED")
+			timer.frame:RegisterEvent("PLAYER_REGEN_ENABLED")
+			timer.frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+			timer.frame:RegisterEvent("CHALLENGE_MODE_START")
 		end
-
-		widgets.anyCombatText:ClearAllPoints()
-		widgets.anyCombatText:SetPoint(db.profile.anyCombatAlign, db.profile.anyCombatAlign == "LEFT" and 1 or db.profile.anyCombatAlign == "RIGHT" and -1 or 0, 0)
-		widgets.anyCombatText:SetJustifyH(db.profile.anyCombatAlign)
-		local flags = nil
-		if db.profile.anyCombatMonochrome and db.profile.anyCombatOutline ~= "NONE" then
-			flags = "MONOCHROME," .. db.profile.anyCombatOutline
-		elseif db.profile.anyCombatMonochrome then
-			flags = "MONOCHROME"
-		elseif db.profile.anyCombatOutline ~= "NONE" then
-			flags = db.profile.anyCombatOutline
-		end
-		widgets.anyCombatText:SetFont(LibSharedMedia:Fetch("font", db.profile.anyCombatFontName), db.profile.anyCombatFontSize, flags)
-		widgets.anyCombatCustomText = db.profile.anyCombatCustomText:format(db.profile.anyCombatTextFormat == 2 and "%d:%04.1f" or "%d:%02d")
-		widgets.anyCombatText:SetFormattedText(widgets.anyCombatCustomText, 0, 0)
-
-		local borderTable = {
-			edgeFile = LibSharedMedia:Fetch("border", db.profile.anyCombatBorderName),
-			edgeSize = db.profile.anyCombatBorderSize,
-		}
-
-		widgets.anyCombatBorder:SetBackdrop(borderTable)
-		widgets.anyCombatBorder:ClearAllPoints()
-		widgets.anyCombatBorder:SetPoint("TOPLEFT", widgets.anyCombat, "TOPLEFT", -db.profile.anyCombatBorderOffset, db.profile.anyCombatBorderOffset)
-		widgets.anyCombatBorder:SetPoint("BOTTOMRIGHT", widgets.anyCombat, "BOTTOMRIGHT", db.profile.anyCombatBorderOffset, -db.profile.anyCombatBorderOffset)
-
-		if widgets.anyCombatActive then
-				local textColor = db.profile.anyCombatColor
-				widgets.anyCombatText:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-				local bgColor = db.profile.anyCombatBackgroundColor
-				widgets.anyCombatBG:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-				local borderColor = db.profile.anyCombatBorderColor
-				widgets.anyCombatBorder:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-				widgets.anyCombat:Show()
-		else
-			if db.profile.anyCombatInactive == "COLOR" then
-				local textColor = db.profile.anyCombatColorInactive
-				widgets.anyCombatText:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-				local bgColor = db.profile.anyCombatBackgroundColorInactive
-				widgets.anyCombatBG:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-				local borderColor = db.profile.anyCombatBorderColorInactive
-				widgets.anyCombatBorder:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-				widgets.anyCombat:Show()
-			else
-				local textColor = db.profile.anyCombatColor
-				widgets.anyCombatText:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-				local bgColor = db.profile.anyCombatBackgroundColor
-				widgets.anyCombatBG:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-				local borderColor = db.profile.anyCombatBorderColor
-				widgets.anyCombatBorder:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-				if db.profile.anyCombatInactive == "HIDE" then
-					widgets.anyCombat:Hide()
-				else
-					widgets.anyCombat:Show()
-				end
-			end
-		end
-	else
-		widgets.anyCombat:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		widgets.anyCombat:UnregisterEvent("PLAYER_REGEN_ENABLED")
-		widgets.anyCombat:UnregisterEvent("PLAYER_ENTERING_WORLD")
-		widgets.anyCombat:UnregisterEvent("CHALLENGE_MODE_START")
-		widgets.anyCombat:Hide()
-		widgets.anyCombat:GetScript("OnEvent")(widgets.anyCombat, "PLAYER_REGEN_ENABLED")
+		timer:UpdateStyle()
+	elseif timer.enabled then
+		timer.enabled = false
+		timer.frame:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		timer.frame:UnregisterEvent("PLAYER_REGEN_ENABLED")
+		timer.frame:UnregisterEvent("PLAYER_ENTERING_WORLD")
+		timer.frame:UnregisterEvent("CHALLENGE_MODE_START")
+		widgets.anyCombatDisable()
+		timer.frame:Hide()
 	end
 end
 
 local function UpdateBossCombatWidget()
+	local timer = widgets.bossCombat
 	if not db.profile.bossCombatDisabled then
-		widgets.bossCombat:RegisterEvent("ENCOUNTER_START")
-		widgets.bossCombat:RegisterEvent("ENCOUNTER_END")
-		widgets.bossCombat:RegisterEvent("PLAYER_ENTERING_WORLD")
-		widgets.bossCombat:RegisterEvent("CHALLENGE_MODE_START")
-		widgets.bossCombat:RegisterEvent("PLAYER_LEAVING_WORLD")
-
-		widgets.bossCombat:SetSize(db.profile.bossCombatWidth, db.profile.bossCombatHeight)
-		local point, relPoint = db.profile.bossCombatPosition[1], db.profile.bossCombatPosition[2]
-		local x, y = db.profile.bossCombatPosition[3], db.profile.bossCombatPosition[4]
-		widgets.bossCombat:ClearAllPoints()
-		widgets.bossCombat:SetPoint(point, db.profile.bossCombatPosition[5], relPoint, x, y)
-		if db.profile.bossCombatLocked then
-			widgets.bossCombat:SetMovable(false)
-			widgets.bossCombat:SetPropagateMouseClicks(true)
-		else
-			widgets.bossCombat:SetMovable(true)
-			widgets.bossCombat:SetPropagateMouseClicks(false)
+		if not timer.enabled then
+			timer.enabled = true
+			widgets.bossCombatInit()
+			timer.frame:RegisterEvent("ENCOUNTER_START")
+			timer.frame:RegisterEvent("ENCOUNTER_END")
+			timer.frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+			timer.frame:RegisterEvent("CHALLENGE_MODE_START")
+			timer.frame:RegisterEvent("PLAYER_LEAVING_WORLD")
 		end
-
-		widgets.bossCombatText:ClearAllPoints()
-		widgets.bossCombatText:SetPoint(db.profile.bossCombatAlign, db.profile.bossCombatAlign == "LEFT" and 1 or db.profile.bossCombatAlign == "RIGHT" and -1 or 0, 0)
-		widgets.bossCombatText:SetJustifyH(db.profile.bossCombatAlign)
-		local flags = nil
-		if db.profile.bossCombatMonochrome and db.profile.bossCombatOutline ~= "NONE" then
-			flags = "MONOCHROME," .. db.profile.bossCombatOutline
-		elseif db.profile.bossCombatMonochrome then
-			flags = "MONOCHROME"
-		elseif db.profile.bossCombatOutline ~= "NONE" then
-			flags = db.profile.bossCombatOutline
-		end
-		widgets.bossCombatText:SetFont(LibSharedMedia:Fetch("font", db.profile.bossCombatFontName), db.profile.bossCombatFontSize, flags)
-		widgets.bossCombatCustomText = db.profile.bossCombatCustomText:format(db.profile.bossCombatTextFormat == 2 and "%d:%04.1f" or "%d:%02d")
-		widgets.bossCombatText:SetFormattedText(widgets.bossCombatCustomText, 0, 0)
-
-		local borderTable = {
-			edgeFile = LibSharedMedia:Fetch("border", db.profile.bossCombatBorderName),
-			edgeSize = db.profile.bossCombatBorderSize,
-		}
-
-		widgets.bossCombatBorder:SetBackdrop(borderTable)
-		widgets.bossCombatBorder:ClearAllPoints()
-		widgets.bossCombatBorder:SetPoint("TOPLEFT", widgets.bossCombat, "TOPLEFT", -db.profile.bossCombatBorderOffset, db.profile.bossCombatBorderOffset)
-		widgets.bossCombatBorder:SetPoint("BOTTOMRIGHT", widgets.bossCombat, "BOTTOMRIGHT", db.profile.bossCombatBorderOffset, -db.profile.bossCombatBorderOffset)
-
-		if widgets.bossCombatActive then
-				local textColor = db.profile.bossCombatColor
-				widgets.bossCombatText:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-				local bgColor = db.profile.bossCombatBackgroundColor
-				widgets.bossCombatBG:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-				local borderColor = db.profile.bossCombatBorderColor
-				widgets.bossCombatBorder:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-				widgets.bossCombat:Show()
-		else
-			if db.profile.bossCombatInactive == "COLOR" then
-				local textColor = db.profile.bossCombatColorInactive
-				widgets.bossCombatText:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-				local bgColor = db.profile.bossCombatBackgroundColorInactive
-				widgets.bossCombatBG:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-				local borderColor = db.profile.bossCombatBorderColorInactive
-				widgets.bossCombatBorder:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-				widgets.bossCombat:Show()
-			else
-				local textColor = db.profile.bossCombatColor
-				widgets.bossCombatText:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-				local bgColor = db.profile.bossCombatBackgroundColor
-				widgets.bossCombatBG:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-				local borderColor = db.profile.bossCombatBorderColor
-				widgets.bossCombatBorder:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-				if db.profile.bossCombatInactive == "HIDE" then
-					widgets.bossCombat:Hide()
-				else
-					widgets.bossCombat:Show()
-				end
-			end
-		end
-	else
-		widgets.bossCombat:UnregisterEvent("ENCOUNTER_START")
-		widgets.bossCombat:UnregisterEvent("ENCOUNTER_END")
-		widgets.bossCombat:UnregisterEvent("PLAYER_ENTERING_WORLD")
-		widgets.bossCombat:UnregisterEvent("CHALLENGE_MODE_START")
-		widgets.bossCombat:UnregisterEvent("PLAYER_LEAVING_WORLD")
-		widgets.bossCombat:Hide()
-		widgets.bossCombat:GetScript("OnEvent")(widgets.bossCombat, "PLAYER_LEAVING_WORLD")
+		timer:UpdateStyle()
+	elseif timer.enabled then
+		timer.enabled = false
+		timer.frame:UnregisterEvent("ENCOUNTER_START")
+		timer.frame:UnregisterEvent("ENCOUNTER_END")
+		timer.frame:UnregisterEvent("PLAYER_ENTERING_WORLD")
+		timer.frame:UnregisterEvent("CHALLENGE_MODE_START")
+		timer.frame:UnregisterEvent("PLAYER_LEAVING_WORLD")
+		widgets.bossCombatDisable()
+		timer.frame:Hide()
 	end
 end
 
 local function UpdateBossStagesWidget()
+	local timer = widgets.bossStages
 	if not db.profile.bossStagesDisabled then
-		BigWigsLoader.RegisterMessage(widgets.bossStages, "BigWigs_OnBossEngage", widgets.bossStagesOnEngage)
-		BigWigsLoader.RegisterMessage(widgets.bossStages, "BigWigs_SetStage", widgets.bossStagesOnStageChange)
-		BigWigsLoader.RegisterMessage(widgets.bossStages, "BigWigs_OnBossWin", widgets.bossStagesOnEnd)
-		BigWigsLoader.RegisterMessage(widgets.bossStages, "BigWigs_OnBossWipe", widgets.bossStagesOnEnd)
-		BigWigsLoader.RegisterMessage(widgets.bossStages, "BigWigs_OnBossDisable", widgets.bossStagesOnEnd)
-
-		widgets.bossStages:SetSize(db.profile.bossStagesWidth, db.profile.bossStagesHeight)
-		local point, relPoint = db.profile.bossStagesPosition[1], db.profile.bossStagesPosition[2]
-		local x, y = db.profile.bossStagesPosition[3], db.profile.bossStagesPosition[4]
-		widgets.bossStages:ClearAllPoints()
-		widgets.bossStages:SetPoint(point, db.profile.bossStagesPosition[5], relPoint, x, y)
-		if db.profile.bossStagesLocked then
-			widgets.bossStages:SetMovable(false)
-			widgets.bossStages:SetPropagateMouseClicks(true)
-		else
-			widgets.bossStages:SetMovable(true)
-			widgets.bossStages:SetPropagateMouseClicks(false)
+		if not timer.enabled then
+			timer.enabled = true
+			BigWigsLoader.RegisterMessage(timer.frame, "BigWigs_OnBossEngage", widgets.bossStagesOnEngage)
+			BigWigsLoader.RegisterMessage(timer.frame, "BigWigs_OnBossEngageMidEncounter", widgets.bossStagesOnEngage)
+			BigWigsLoader.RegisterMessage(timer.frame, "BigWigs_SetStage", widgets.bossStagesOnStageChange)
+			BigWigsLoader.RegisterMessage(timer.frame, "BigWigs_OnBossWin", widgets.bossStagesOnEnd)
+			BigWigsLoader.RegisterMessage(timer.frame, "BigWigs_OnBossWipe", widgets.bossStagesOnEnd)
+			BigWigsLoader.RegisterMessage(timer.frame, "BigWigs_OnBossDisable", widgets.bossStagesOnEnd)
+			BigWigsLoader.RegisterMessage(timer.frame, "BigWigs_EncounterEnd", widgets.bossStagesOnEnd)
 		end
-
-		widgets.bossStagesText:ClearAllPoints()
-		widgets.bossStagesText:SetPoint(db.profile.bossStagesAlign, db.profile.bossStagesAlign == "LEFT" and 1 or db.profile.bossStagesAlign == "RIGHT" and -1 or 0, 0)
-		widgets.bossStagesText:SetJustifyH(db.profile.bossStagesAlign)
-		local flags = nil
-		if db.profile.bossStagesMonochrome and db.profile.bossStagesOutline ~= "NONE" then
-			flags = "MONOCHROME," .. db.profile.bossStagesOutline
-		elseif db.profile.bossStagesMonochrome then
-			flags = "MONOCHROME"
-		elseif db.profile.bossStagesOutline ~= "NONE" then
-			flags = db.profile.bossStagesOutline
-		end
-		widgets.bossStagesText:SetFont(LibSharedMedia:Fetch("font", db.profile.bossStagesFontName), db.profile.bossStagesFontSize, flags)
-		widgets.bossStagesCustomText = db.profile.bossStagesCustomText:format(db.profile.bossStagesTextFormat == 2 and "%d:%04.1f" or "%d:%02d")
-		widgets.bossStagesText:SetFormattedText(widgets.bossStagesCustomText, 0, 0)
-
-		local borderTable = {
-			edgeFile = LibSharedMedia:Fetch("border", db.profile.bossStagesBorderName),
-			edgeSize = db.profile.bossStagesBorderSize,
-		}
-
-		widgets.bossStagesBorder:SetBackdrop(borderTable)
-		widgets.bossStagesBorder:ClearAllPoints()
-		widgets.bossStagesBorder:SetPoint("TOPLEFT", widgets.bossStages, "TOPLEFT", -db.profile.bossStagesBorderOffset, db.profile.bossStagesBorderOffset)
-		widgets.bossStagesBorder:SetPoint("BOTTOMRIGHT", widgets.bossStages, "BOTTOMRIGHT", db.profile.bossStagesBorderOffset, -db.profile.bossStagesBorderOffset)
-
-		if widgets.bossStagesActive then
-				local textColor = db.profile.bossStagesColor
-				widgets.bossStagesText:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-				local bgColor = db.profile.bossStagesBackgroundColor
-				widgets.bossStagesBG:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-				local borderColor = db.profile.bossStagesBorderColor
-				widgets.bossStagesBorder:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-				widgets.bossStages:Show()
-		else
-			if db.profile.bossStagesInactive == "COLOR" then
-				local textColor = db.profile.bossStagesColorInactive
-				widgets.bossStagesText:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-				local bgColor = db.profile.bossStagesBackgroundColorInactive
-				widgets.bossStagesBG:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-				local borderColor = db.profile.bossStagesBorderColorInactive
-				widgets.bossStagesBorder:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-				widgets.bossStages:Show()
-			else
-				local textColor = db.profile.bossStagesColor
-				widgets.bossStagesText:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-				local bgColor = db.profile.bossStagesBackgroundColor
-				widgets.bossStagesBG:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-				local borderColor = db.profile.bossStagesBorderColor
-				widgets.bossStagesBorder:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-				if db.profile.bossStagesInactive == "HIDE" then
-					widgets.bossStages:Hide()
-				else
-					widgets.bossStages:Show()
-				end
-			end
-		end
-	else
-		BigWigsLoader.UnregisterMessage(widgets.bossStages, "BigWigs_OnBossEngage")
-		BigWigsLoader.UnregisterMessage(widgets.bossStages, "BigWigs_SetStage")
-		BigWigsLoader.UnregisterMessage(widgets.bossStages, "BigWigs_OnBossWin")
-		BigWigsLoader.UnregisterMessage(widgets.bossStages, "BigWigs_OnBossWipe")
-		BigWigsLoader.UnregisterMessage(widgets.bossStages, "BigWigs_OnBossDisable")
-		widgets.bossStages:Hide()
+		timer:UpdateStyle()
+	elseif timer.enabled then
+		timer.enabled = false
+		BigWigsLoader.UnregisterMessage(timer.frame, "BigWigs_OnBossEngage")
+		BigWigsLoader.UnregisterMessage(timer.frame, "BigWigs_OnBossEngageMidEncounter")
+		BigWigsLoader.UnregisterMessage(timer.frame, "BigWigs_SetStage")
+		BigWigsLoader.UnregisterMessage(timer.frame, "BigWigs_OnBossWin")
+		BigWigsLoader.UnregisterMessage(timer.frame, "BigWigs_OnBossWipe")
+		BigWigsLoader.UnregisterMessage(timer.frame, "BigWigs_OnBossDisable")
+		BigWigsLoader.UnregisterMessage(timer.frame, "BigWigs_EncounterEnd")
+		widgets.bossStagesDisable()
+		timer.frame:Hide()
 	end
 end
 
---[[
-local function UpdateInstanceTimerWidget()
-	if not db.profile.instanceTimerDisabled then
-		widgets.instanceTimer:RegisterEvent("PLAYER_ENTERING_WORLD")
-		widgets.instanceTimer:RegisterEvent("PLAYER_LEAVING_WORLD")
+BigWigsAPI.RegisterToolOptions("CombatTimer", function()
+	local tabWidgets = {
+		all = widgets.anyCombat,
+		boss = widgets.bossCombat,
+		bossStages = widgets.bossStages,
+	}
 
-		widgets.instanceTimer:SetSize(db.profile.instanceTimerWidth, db.profile.instanceTimerHeight)
-		local point, relPoint = db.profile.instanceTimerPosition[1], db.profile.instanceTimerPosition[2]
-		local x, y = db.profile.instanceTimerPosition[3], db.profile.instanceTimerPosition[4]
-		widgets.instanceTimer:ClearAllPoints()
-		widgets.instanceTimer:SetPoint(point, db.profile.instanceTimerPosition[5], relPoint, x, y)
-		if db.profile.instanceTimerLocked then
-			widgets.instanceTimer:SetMovable(false)
-			widgets.instanceTimer:SetPropagateMouseClicks(true)
-		else
-			widgets.instanceTimer:SetMovable(true)
-			widgets.instanceTimer:SetPropagateMouseClicks(false)
-		end
+	local tabUpdateFuncs = {
+		all = UpdateAnyCombatWidget,
+		boss = UpdateBossCombatWidget,
+		bossStages = UpdateBossStagesWidget,
+	}
 
-		widgets.instanceTimerText:ClearAllPoints()
-		widgets.instanceTimerText:SetPoint(db.profile.instanceTimerAlign, db.profile.instanceTimerAlign == "LEFT" and 1 or db.profile.instanceTimerAlign == "RIGHT" and -1 or 0, 0)
-		widgets.instanceTimerText:SetJustifyH(db.profile.instanceTimerAlign)
-		local flags = nil
-		if db.profile.instanceTimerMonochrome and db.profile.instanceTimerOutline ~= "NONE" then
-			flags = "MONOCHROME," .. db.profile.instanceTimerOutline
-		elseif db.profile.instanceTimerMonochrome then
-			flags = "MONOCHROME"
-		elseif db.profile.instanceTimerOutline ~= "NONE" then
-			flags = db.profile.instanceTimerOutline
-		end
-		widgets.instanceTimerText:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceTimerFontName), db.profile.instanceTimerFontSize, flags)
-		widgets.instanceTimerText:SetText(db.profile.instanceTimerTextFormat == 2 and "0:00.0" or "0:00")
-
-		local borderTable = {
-			edgeFile = LibSharedMedia:Fetch("border", db.profile.instanceTimerBorderName),
-			edgeSize = db.profile.instanceTimerBorderSize,
-		}
-
-		widgets.instanceTimerBorder:SetBackdrop(borderTable)
-		widgets.instanceTimerBorder:ClearAllPoints()
-		widgets.instanceTimerBorder:SetPoint("TOPLEFT", widgets.instanceTimer, "TOPLEFT", -db.profile.instanceTimerBorderOffset, db.profile.instanceTimerBorderOffset)
-		widgets.instanceTimerBorder:SetPoint("BOTTOMRIGHT", widgets.instanceTimer, "BOTTOMRIGHT", db.profile.instanceTimerBorderOffset, -db.profile.instanceTimerBorderOffset)
-
-		if widgets.instanceTimerActive then
-				local textColor = db.profile.instanceTimerColor
-				widgets.instanceTimerText:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-				local bgColor = db.profile.instanceTimerBackgroundColor
-				widgets.instanceTimerBG:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-				local borderColor = db.profile.instanceTimerBorderColor
-				widgets.instanceTimerBorder:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-				widgets.instanceTimer:Show()
-		else
-			if db.profile.instanceTimerInactive == "COLOR" then
-				local textColor = db.profile.instanceTimerColorInactive
-				widgets.instanceTimerText:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-				local bgColor = db.profile.instanceTimerBackgroundColorInactive
-				widgets.instanceTimerBG:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-				local borderColor = db.profile.instanceTimerBorderColorInactive
-				widgets.instanceTimerBorder:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-				widgets.instanceTimer:Show()
-			else
-				local textColor = db.profile.instanceTimerColor
-				widgets.instanceTimerText:SetTextColor(textColor[1], textColor[2], textColor[3], textColor[4])
-				local bgColor = db.profile.instanceTimerBackgroundColor
-				widgets.instanceTimerBG:SetColorTexture(bgColor[1], bgColor[2], bgColor[3], bgColor[4])
-				local borderColor = db.profile.instanceTimerBorderColor
-				widgets.instanceTimerBorder:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3], borderColor[4])
-				if db.profile.instanceTimerInactive == "HIDE" then
-					widgets.instanceTimer:Hide()
-				else
-					widgets.instanceTimer:Show()
-				end
-			end
-		end
-	else
-		widgets.instanceTimer:UnregisterEvent("PLAYER_ENTERING_WORLD")
-		widgets.instanceTimer:UnregisterEvent("PLAYER_LEAVING_WORLD")
-		widgets.instanceTimer:Hide()
-		widgets.instanceTimer:GetScript("OnEvent")(widgets.instanceTimer, "PLAYER_LEAVING_WORLD")
+	local function GetTabTimer(info)
+		return tabWidgets[info[#info - 1]] or tabWidgets[info[#info - 2]] or tabWidgets[info[#info - 3]]
 	end
-end
-]]
-do
+
+	local function GetOption(info)
+		return db.profile[info[#info]]
+	end
+
+	local function SetOption(info, value)
+		db.profile[info[#info]] = value
+		local timer = GetTabTimer(info)
+		if timer.enabled then
+			timer:UpdateStyle()
+		end
+	end
+
+	local function SetTooltipOption(info, value)
+		db.profile[info[#info]] = value
+	end
+
+	local function SetDisabled(info, value)
+		local tab = info[#info - 1]
+		db.profile[info[#info]] = value
+		if value then
+			ProfileUtils.ResetTimer(tabWidgets[tab].prefix)
+		end
+		tabUpdateFuncs[tab]()
+	end
+
 	local function GetColor(info)
 		local colorTable = db.profile[info[#info]]
 		return colorTable[1], colorTable[2], colorTable[3], colorTable[4]
 	end
 
 	local function SetColor(info, r, g, b, a)
-		local key = info[#info]
-		db.profile[key] = {r, g, b, a}
-		UpdateAnyCombatWidget()
-		UpdateBossCombatWidget()
-		UpdateBossStagesWidget()
-		--UpdateInstanceTimerWidget()
+		local colorTable = db.profile[info[#info]]
+		colorTable[1] = r
+		colorTable[2] = g
+		colorTable[3] = b
+		colorTable[4] = a
+		local timer = GetTabTimer(info)
+		if timer.enabled then
+			timer:ApplyColors(timer.active)
+		end
 	end
 
 	local function SetColorRestrictedAlpha(info, r, g, b, a)
+		local colorTable = db.profile[info[#info]]
+		colorTable[1] = r
+		colorTable[2] = g
+		colorTable[3] = b
+		colorTable[4] = a < 0.3 and 0.3 or a
+		local timer = GetTabTimer(info)
+		if timer.enabled then
+			timer:ApplyColors(timer.active)
+		end
+	end
+
+	local function ValidateCustomText(_, value)
+		return IsValidCustomText(value)
+	end
+
+	local function ValidateFrameName(_, frameName)
+		return BigWigsAPI.IsValidFrame(frameName)
+	end
+
+	local fontList = LibSharedMedia:List("font")
+	local borderList = LibSharedMedia:List("border")
+	local backgroundList = LibSharedMedia:List("background")
+
+	local function GetFontName(info)
+		local fontName = db.profile[info[#info]]
+		for i, v in next, fontList do
+			if v == fontName then return i end
+		end
+	end
+
+	local function GetBorderName(info)
+		local borderName = db.profile[info[#info]]
+		for i, v in next, borderList do
+			if v == borderName then return i end
+		end
+	end
+
+	local function GetBackgroundName(info)
+		local bgName = db.profile[info[#info]]
+		for i, v in next, backgroundList do
+			if v == bgName then return i end
+		end
+	end
+
+	local function SetFontName(info, value)
+		db.profile[info[#info]] = fontList[value]
+		local timer = GetTabTimer(info)
+		if timer.enabled then
+			timer:UpdateStyle()
+		end
+	end
+
+	local function SetBorderName(info, value)
+		db.profile[info[#info]] = borderList[value]
+		local timer = GetTabTimer(info)
+		if timer.enabled then
+			timer:UpdateStyle()
+		end
+	end
+
+	local function SetBackgroundName(info, value)
+		db.profile[info[#info]] = backgroundList[value]
+		local timer = GetTabTimer(info)
+		if timer.enabled then
+			timer:UpdateStyle()
+		end
+	end
+
+	local function SetInactive(info, value)
+		db.profile[info[#info]] = value
+		local timer = GetTabTimer(info)
+		if value ~= "COLOR" then
+			ProfileUtils.ResetInactiveColors(timer.prefix)
+		end
+		if timer.enabled then
+			timer:UpdateStyle()
+		end
+	end
+
+	local function GetHistoryResetCondition(info, entry)
+		return bit.band(db.profile[info[#info]], entry) == entry
+	end
+
+	local function SetHistoryResetCondition(info, entry, value)
 		local key = info[#info]
-		db.profile[key] = {r, g, b, a < 0.3 and 0.3 or a}
-		UpdateAnyCombatWidget()
-		UpdateBossCombatWidget()
-		UpdateBossStagesWidget()
-		--UpdateInstanceTimerWidget()
+		if value then
+			db.profile[key] = bit.bor(db.profile[key], entry)
+		else
+			db.profile[key] = bit.band(db.profile[key], bit.bnot(entry))
+		end
 	end
 
-	local function AnyCombatDisabled()
-		return db.profile.anyCombatDisabled
+	local function GetPosX(info)
+		return db.profile[GetTabTimer(info).prefix .. "Position"][3]
 	end
 
-	local function BossCombatDisabled()
-		return db.profile.bossCombatDisabled
+	local function SetPosX(info, value)
+		local timer = GetTabTimer(info)
+		db.profile[timer.prefix .. "Position"][3] = value
+		if timer.enabled then
+			timer:UpdateStyle()
+		end
 	end
 
-	local function BossStagesDisabled()
-		return db.profile.bossStagesDisabled
+	local function GetPosY(info)
+		return db.profile[GetTabTimer(info).prefix .. "Position"][4]
 	end
 
-	--local function InstanceTimerDisabled()
-	--	return db.profile.instanceTimerDisabled
-	--end
-
-	local function AnyCombatDisabledOrNoSeparateInactiveColors()
-		return db.profile.anyCombatDisabled or db.profile.anyCombatInactive ~= "COLOR"
+	local function SetPosY(info, value)
+		local timer = GetTabTimer(info)
+		db.profile[timer.prefix .. "Position"][4] = value
+		if timer.enabled then
+			timer:UpdateStyle()
+		end
 	end
 
-	local function BossCombatDisabledOrNoSeparateInactiveColors()
-		return db.profile.bossCombatDisabled or db.profile.bossCombatInactive ~= "COLOR"
+	local function GetCustomAnchorPoint(info)
+		return db.profile[GetTabTimer(info).prefix .. "Position"][5]
 	end
 
-	local function BossStagesDisabledOrNoSeparateInactiveColors()
-		return db.profile.bossStagesDisabled or db.profile.bossStagesInactive ~= "COLOR"
+	local function SetCustomAnchorPoint(info, value)
+		local timer = GetTabTimer(info)
+		local prefix = timer.prefix
+		if value ~= "UIParent" then
+			local pos = db.profile[prefix .. "Position"]
+			pos[1] = "CENTER"
+			pos[2] = "CENTER"
+			pos[3] = 0
+			pos[4] = 0
+			pos[5] = value
+		else
+			ProfileUtils.ResetPosition(prefix)
+		end
+		if timer.enabled then
+			timer:UpdateStyle()
+		end
 	end
 
-	--local function InstanceTimerDisabledOrNoSeparateInactiveColors()
-	--	return db.profile.instanceTimerDisabled or db.profile.instanceTimerInactive ~= "COLOR"
-	--end
-
-	local function AnyCombatDisabledOrBorderSetToNone()
-		return db.profile.anyCombatDisabled or db.profile.anyCombatBorderName == "None"
+	local function GetCustomAnchorPointSource(info)
+		return db.profile[GetTabTimer(info).prefix .. "Position"][1]
 	end
 
-	local function BossCombatDisabledOrBorderSetToNone()
-		return db.profile.bossCombatDisabled or db.profile.bossCombatBorderName == "None"
+	local function SetCustomAnchorPointSource(info, value)
+		if BigWigsAPI.IsValidFramePoint(value) then
+			local timer = GetTabTimer(info)
+			db.profile[timer.prefix .. "Position"][1] = value
+			if timer.enabled then
+				timer:UpdateStyle()
+			end
+		end
 	end
 
-	local function BossStagesDisabledOrBorderSetToNone()
-		return db.profile.bossStagesDisabled or db.profile.bossStagesBorderName == "None"
+	local function GetCustomAnchorPointDestination(info)
+		return db.profile[GetTabTimer(info).prefix .. "Position"][2]
 	end
 
-	--local function InstanceTimerDisabledOrBorderSetToNone()
-	--	return db.profile.instanceTimerDisabled or db.profile.instanceTimerBorderName == "None"
-	--end
-
-	local function AnyCombatDisabledOrAnchorPointDefault()
-		return db.profile.anyCombatDisabled or db.profile.anyCombatPosition[5] == "UIParent"
+	local function SetCustomAnchorPointDestination(info, value)
+		if BigWigsAPI.IsValidFramePoint(value) then
+			local timer = GetTabTimer(info)
+			db.profile[timer.prefix .. "Position"][2] = value
+			if timer.enabled then
+				timer:UpdateStyle()
+			end
+		end
 	end
 
-	local function BossCombatDisabledOrAnchorPointDefault()
-		return db.profile.bossCombatDisabled or db.profile.bossCombatPosition[5] == "UIParent"
+	local function ResetGeneralFunc(info)
+		local timer = GetTabTimer(info)
+		ProfileUtils.ResetGeneral(timer.prefix)
+		if timer.enabled then
+			timer:UpdateStyle()
+		end
 	end
 
-	local function BossStagesDisabledOrAnchorPointDefault()
-		return db.profile.bossStagesDisabled or db.profile.bossStagesPosition[5] == "UIParent"
+	local function ResetTimerFunc(info)
+		local timer = GetTabTimer(info)
+		ProfileUtils.ResetTimer(timer.prefix)
+		if timer.enabled then
+			timer:UpdateStyle()
+		end
 	end
 
-	--local function InstanceTimerDisabledOrAnchorPointDefault()
-	--	return db.profile.instanceTimerDisabled or db.profile.instanceTimerPosition[5] == "UIParent"
-	--end
+	local function ResetAdvancedFunc(info)
+		local timer = GetTabTimer(info)
+		ProfileUtils.ResetAdvanced(timer.prefix)
+		if timer.enabled then
+			timer:UpdateStyle()
+		end
+	end
 
-	BigWigsAPI.RegisterToolOptions("CombatTimer", function() return {
+	local function ResetPositionFunc(info)
+		local timer = GetTabTimer(info)
+		ProfileUtils.ResetPosition(timer.prefix)
+		if timer.enabled then
+			timer:UpdateStyle()
+		end
+	end
+
+	local function IsTimerDisabled(info)
+		return db.profile[GetTabTimer(info).prefix .. "Disabled"]
+	end
+
+	local function IsInactiveColorDisabled(info)
+		local prefix = GetTabTimer(info).prefix
+		return db.profile[prefix .. "Disabled"] or db.profile[prefix .. "Inactive"] ~= "COLOR"
+	end
+
+	local function IsBorderDisabled(info)
+		local prefix = GetTabTimer(info).prefix
+		return db.profile[prefix .. "Disabled"] or db.profile[prefix .. "BorderName"] == "None"
+	end
+
+	local function IsBackgroundDisabled(info)
+		local prefix = GetTabTimer(info).prefix
+		return db.profile[prefix .. "Disabled"] or db.profile[prefix .. "BackgroundName"] == "None"
+	end
+
+	local function IsAnchorPointDefaultDisabled(info)
+		local prefix = GetTabTimer(info).prefix
+		return db.profile[prefix .. "Disabled"] or db.profile[prefix .. "Position"][5] == "UIParent"
+	end
+
+	local function IsLockDisabled(info)
+		local prefix = GetTabTimer(info).prefix
+		return db.profile[prefix .. "Disabled"] or db.profile[prefix .. "Position"][5] ~= "UIParent"
+	end
+
+	local function IsBackgroundInactiveDisabled(info)
+		local prefix = GetTabTimer(info).prefix
+		return db.profile[prefix .. "Disabled"] or db.profile[prefix .. "Inactive"] ~= "COLOR" or db.profile[prefix .. "BackgroundName"] == "None"
+	end
+
+	local function IsBorderInactiveDisabled(info)
+		local prefix = GetTabTimer(info).prefix
+		return db.profile[prefix .. "Disabled"] or db.profile[prefix .. "Inactive"] ~= "COLOR" or db.profile[prefix .. "BorderName"] == "None"
+	end
+
+	local framePointList = BigWigsAPI.GetFramePointList()
+	local outlineValues = {
+		NONE = L.none,
+		OUTLINE = L.thin,
+		THICKOUTLINE = L.thick,
+	}
+	local outlineSorting = {
+		"NONE",
+		"OUTLINE",
+		"THICKOUTLINE",
+	}
+	local alignValues = {
+		LEFT = L.LEFT,
+		CENTER = L.CENTER,
+		RIGHT = L.RIGHT,
+	}
+	local alignSorting = {
+		"LEFT",
+		"CENTER",
+		"RIGHT",
+	}
+	local inactiveValues = {
+		NONE = L.doNothing,
+		HIDE = L.hide,
+		COLOR = L.colorFade,
+	}
+	local inactiveSorting = {
+		"NONE",
+		"HIDE",
+		"COLOR",
+	}
+	local textFormatValues = {
+		"1:23",
+		"1:23.4",
+	}
+	local historyTimeFormatValues = {
+		L.twelveHour,
+		L.twentyFourHour,
+	}
+	local historyResetValues = {
+		[1] = L.enteringRaid,
+		[2] = L.enteringDungeon,
+		[4] = L.startingMythicKeystone,
+	}
+	local function CreateTimerOptions(prefix, name, desc, order, explainerKey)
+		local isBossStages = prefix == "bossStages"
+		local isAnyCombat = prefix == "anyCombat"
+
+		local advancedArgs = {
+			[prefix .. "Colors"] = {
+				type = "group",
+				name = L.colors,
+				inline = true,
+				order = 1,
+				args = {
+					[prefix .. "Color"] = {
+						type = "color",
+						name = L.fontColor,
+						width = 1,
+						get = GetColor,
+						set = SetColorRestrictedAlpha,
+						hasAlpha = true,
+						order = 1,
+						disabled = IsTimerDisabled,
+					},
+					[prefix .. "BackgroundColor"] = {
+						type = "color",
+						name = L.backgroundColor,
+						width = 1,
+						get = GetColor,
+						set = SetColor,
+						hasAlpha = true,
+						order = 2,
+						disabled = IsBackgroundDisabled,
+					},
+					[prefix .. "BorderColor"] = {
+						type = "color",
+						name = L.borderColor,
+						order = 3,
+						hasAlpha = true,
+						width = 1,
+						get = GetColor,
+						set = SetColor,
+						disabled = IsBorderDisabled,
+					},
+					[prefix .. "ColorInactive"] = {
+						type = "color",
+						name = L.parentheses:format(L.fontColor, L.inactive),
+						width = 1,
+						get = GetColor,
+						set = SetColorRestrictedAlpha,
+						hasAlpha = true,
+						order = 4,
+						disabled = IsInactiveColorDisabled,
+					},
+					[prefix .. "BackgroundColorInactive"] = {
+						type = "color",
+						name = L.parentheses:format(L.backgroundColor, L.inactive),
+						width = 1,
+						get = GetColor,
+						set = SetColor,
+						hasAlpha = true,
+						order = 5,
+						disabled = IsBackgroundInactiveDisabled,
+					},
+					[prefix .. "BorderColorInactive"] = {
+						type = "color",
+						name = L.parentheses:format(L.borderColor, L.inactive),
+						order = 6,
+						hasAlpha = true,
+						width = 1,
+						get = GetColor,
+						set = SetColor,
+						disabled = IsBorderInactiveDisabled,
+					},
+				},
+			},
+			[prefix .. "Inactive"] = {
+				type = "select",
+				name = L.whenInactive,
+				values = inactiveValues,
+				sorting = inactiveSorting,
+				style = "radio",
+				order = 2,
+				set = SetInactive,
+				disabled = IsTimerDisabled,
+			},
+			[prefix .. "TextFormat"] = {
+				type = "select",
+				name = L.textFormat,
+				width = isBossStages and 1.2 or nil,
+				values = textFormatValues,
+				order = 3,
+				disabled = IsTimerDisabled,
+			},
+			[prefix .. "HistoryTimeFormat"] = {
+				type = "select",
+				name = L.historyTimeFormat,
+				width = isBossStages and 1.2 or nil,
+				values = historyTimeFormatValues,
+				set = SetTooltipOption,
+				order = 4,
+				disabled = IsTimerDisabled,
+			},
+			[prefix .. "CustomText"] = {
+				type = "input",
+				validate = ValidateCustomText,
+				name = L.customText,
+				width = 1.2,
+				order = isBossStages and 5 or 7,
+				disabled = IsTimerDisabled,
+			},
+			resetHeader = {
+				type = "header",
+				name = "",
+				order = isBossStages and 6 or (isAnyCombat and 10 or 8),
+			},
+			reset = {
+				type = "execute",
+				name = L.reset,
+				desc = L.resetDesc,
+				func = ResetAdvancedFunc,
+				order = isBossStages and 7 or (isAnyCombat and 11 or 9),
+				disabled = IsTimerDisabled,
+			},
+		}
+
+		if not isBossStages then
+			advancedArgs[prefix .. "HistoryAmount"] = {
+				type = "range",
+				name = L.tooltipHistoryMaxLines,
+				desc = L.tooltipHistoryMaxLinesDesc,
+				order = 5,
+				min = 5,
+				max = 30,
+				step = 1,
+				set = SetTooltipOption,
+				disabled = IsTimerDisabled,
+			}
+			advancedArgs[prefix .. "HistoryResetConditions"] = {
+				type = "multiselect",
+				name = L.tooltipHistoryResetConditions,
+				desc = L.tooltipHistoryResetConditionsDesc,
+				order = 6,
+				values = historyResetValues,
+				get = GetHistoryResetCondition,
+				set = SetHistoryResetCondition,
+				disabled = IsTimerDisabled,
+			}
+		end
+
+		if isAnyCombat then
+			advancedArgs.anyCombatCustomTextSeparator = {
+				type = "description",
+				name = " ",
+				order = 8,
+				width = "full",
+			}
+			advancedArgs.anyCombatHistoryHiddenInCombat = {
+				type = "toggle",
+				name = L.hideTooltipInCombat,
+				width = 1.5,
+				set = SetTooltipOption,
+				order = 9,
+				disabled = IsTimerDisabled,
+			}
+		end
+
+		return {
+			name = name,
+			type = "group",
+			childGroups = "tab",
+			order = order,
+			args = {
+				[explainerKey] = {
+					type = "description",
+					name = desc,
+					order = 0,
+					width = "full",
+				},
+				[prefix .. "Disabled"] = {
+					type = "toggle",
+					name = L.disabled,
+					width = 1.5,
+					order = 1,
+					set = SetDisabled,
+				},
+				[prefix .. "Locked"] = {
+					type = "toggle",
+					name = L.lock,
+					desc = L.lockDesc,
+					width = 1.5,
+					order = 2,
+					disabled = IsLockDisabled,
+				},
+				[prefix .. "General"] = {
+					type = "group",
+					name = L.general,
+					order = 3,
+					args = {
+						[prefix .. "Width"] = {
+							type = "range",
+							name = L.width,
+							min = ProfileUtils.MinimumWidth,
+							max = ProfileUtils.MaximumWidth,
+							step = 1,
+							order = 1,
+							width = 1.5,
+							disabled = IsTimerDisabled,
+						},
+						[prefix .. "Height"] = {
+							type = "range",
+							name = L.height,
+							min = ProfileUtils.MinimumHeight,
+							max = ProfileUtils.MaximumHeight,
+							step = 1,
+							order = 2,
+							width = 1.5,
+							disabled = IsTimerDisabled,
+						},
+						[prefix .. "FontName"] = {
+							type = "select",
+							name = L.font,
+							order = 3,
+							values = fontList,
+							itemControl = "DDI-Font",
+							get = GetFontName,
+							set = SetFontName,
+							width = 2,
+							disabled = IsTimerDisabled,
+						},
+						[prefix .. "Outline"] = {
+							type = "select",
+							name = L.outline,
+							order = 4,
+							values = outlineValues,
+							sorting = outlineSorting,
+							disabled = IsTimerDisabled,
+						},
+						[prefix .. "FontSize"] = {
+							type = "range",
+							name = L.fontSize,
+							desc = L.fontSizeDesc,
+							order = 5,
+							width = 2,
+							softMax = 100, max = 200, min = ProfileUtils.MinimumFontSize, step = 1,
+							disabled = IsTimerDisabled,
+						},
+						[prefix .. "Monochrome"] = {
+							type = "toggle",
+							name = L.monochrome,
+							desc = L.monochromeDesc,
+							order = 6,
+							disabled = IsTimerDisabled,
+						},
+						[prefix .. "Align"] = {
+							type = "select",
+							name = L.align,
+							values = alignValues,
+							sorting = alignSorting,
+							style = "radio",
+							order = 7,
+							disabled = IsTimerDisabled,
+						},
+						[prefix .. "BorderName"] = {
+							type = "select",
+							name = L.borderName,
+							order = 8,
+							values = borderList,
+							get = GetBorderName,
+							set = SetBorderName,
+							width = 1.5,
+							disabled = IsTimerDisabled,
+						},
+						[prefix .. "BackgroundName"] = {
+							type = "select",
+							name = L.background,
+							order = 9,
+							values = backgroundList,
+							get = GetBackgroundName,
+							set = SetBackgroundName,
+							width = 1.5,
+							disabled = IsTimerDisabled,
+						},
+						[prefix .. "BorderSize"] = {
+							type = "range",
+							name = L.borderSize,
+							order = 10,
+							min = 1,
+							max = 32,
+							step = 1,
+							width = 1.5,
+							disabled = IsBorderDisabled,
+						},
+						[prefix .. "BorderOffset"] = {
+							type = "range",
+							name = L.borderOffset,
+							order = 11,
+							min = 0,
+							max = 32,
+							step = 1,
+							width = 1.5,
+							disabled = IsBorderDisabled,
+						},
+						resetHeader = {
+							type = "header",
+							name = "",
+							order = 12,
+						},
+						reset = {
+							type = "execute",
+							name = L.reset,
+							desc = L.resetDesc,
+							func = ResetGeneralFunc,
+							order = 13,
+							disabled = IsTimerDisabled,
+						},
+						resetAll = {
+							type = "execute",
+							name = L.resetAll,
+							desc = L.resetAllDesc:format(name),
+							func = ResetTimerFunc,
+							order = 14,
+							disabled = IsTimerDisabled,
+						},
+					},
+				},
+				[prefix .. "Advanced"] = {
+					type = "group",
+					name = L.advanced,
+					order = 4,
+					args = advancedArgs,
+				},
+				[prefix .. "ExactPositioning"] = {
+					type = "group",
+					name = L.positionExact,
+					order = 5,
+					args = {
+						posx = {
+							type = "range",
+							name = L.positionX,
+							desc = L.positionDesc,
+							min = -2048,
+							max = 2048,
+							step = 1,
+							order = 1,
+							width = 3,
+							get = GetPosX,
+							set = SetPosX,
+							disabled = IsTimerDisabled,
+						},
+						posy = {
+							type = "range",
+							name = L.positionY,
+							desc = L.positionDesc,
+							min = -2048,
+							max = 2048,
+							step = 1,
+							order = 2,
+							width = 3,
+							get = GetPosY,
+							set = SetPosY,
+							disabled = IsTimerDisabled,
+						},
+						customAnchorPoint = {
+							type = "input",
+							get = GetCustomAnchorPoint,
+							set = SetCustomAnchorPoint,
+							validate = ValidateFrameName,
+							name = L.customAnchorPoint,
+							order = 3,
+							width = 3,
+							disabled = IsTimerDisabled,
+						},
+						customAnchorPointSource = {
+							type = "select",
+							get = GetCustomAnchorPointSource,
+							set = SetCustomAnchorPointSource,
+							values = framePointList,
+							name = L.sourcePoint,
+							order = 4,
+							width = 1.5,
+							disabled = IsAnchorPointDefaultDisabled,
+						},
+						customAnchorPointDestination = {
+							type = "select",
+							get = GetCustomAnchorPointDestination,
+							set = SetCustomAnchorPointDestination,
+							values = framePointList,
+							name = L.destinationPoint,
+							order = 5,
+							width = 1.5,
+							disabled = IsAnchorPointDefaultDisabled,
+						},
+						resetHeader = {
+							type = "header",
+							name = "",
+							order = 6,
+						},
+						reset = {
+							type = "execute",
+							name = L.reset,
+							desc = L.resetDesc,
+							func = ResetPositionFunc,
+							order = 7,
+							disabled = IsTimerDisabled,
+						},
+					},
+				},
+			},
+		}
+	end
+
+	return {
 		type = "group",
 		childGroups = "tab",
 		name = L.combatTimerTitle,
 		order = 2,
-		get = function(info)
-			return db.profile[info[#info]]
-		end,
+		get = GetOption,
+		set = SetOption,
 		args = {
-			all = {
-				name = L.anyCombatTimer,
-				type = "group",
-				childGroups = "tab",
-				set = function(info, value)
-					local key = info[#info]
-					db.profile[key] = value
-					UpdateAnyCombatWidget()
-				end,
-				order = 1,
-				args = {
-					explainAnyCombat = {
-						type = "description",
-						name = L.anyCombatTimerDesc,
-						order = 0,
-						width = "full",
-					},
-					anyCombatDisabled = {
-						type = "toggle",
-						name = L.disabled,
-						width = 1.1,
-						order = 1,
-						set = function(info, value)
-							local key = info[#info]
-							db.profile[key] = value
-							if value then
-								ProfileUtils.ResetAnyCombat()
-							end
-							UpdateAnyCombatWidget()
-						end,
-					},
-					anyCombatLocked = {
-						type = "toggle",
-						name = L.lock,
-						desc = L.lockDesc,
-						width = 1.1,
-						order = 2,
-						disabled = AnyCombatDisabled,
-					},
-					anyCombatReset = {
-						type = "execute",
-						name = L.reset,
-						desc = L.resetDesc,
-						width = 1,
-						func = function()
-							ProfileUtils.ResetAnyCombat()
-							UpdateAnyCombatWidget()
-						end,
-						order = 3,
-						disabled = AnyCombatDisabled,
-					},
-					anyCombatGeneral = {
-						type = "group",
-						name = L.general,
-						order = 4,
-						args = {
-							anyCombatWidth = {
-								type = "range",
-								name = L.width,
-								desc = L.sizeDesc,
-								min = ProfileUtils.MinimumWidth,
-								max = ProfileUtils.MaximumWidth,
-								step = 1,
-								order = 1,
-								width = 1.5,
-								disabled = AnyCombatDisabled,
-							},
-							anyCombatHeight = {
-								type = "range",
-								name = L.height,
-								desc = L.sizeDesc,
-								min = ProfileUtils.MinimumHeight,
-								max = ProfileUtils.MaximumHeight,
-								step = 1,
-								order = 2,
-								width = 1.5,
-								disabled = AnyCombatDisabled,
-							},
-							anyCombatFontName = {
-								type = "select",
-								name = L.font,
-								order = 3,
-								values = LibSharedMedia:List("font"),
-								itemControl = "DDI-Font",
-								get = function()
-									for i, v in next, LibSharedMedia:List("font") do
-										if v == db.profile.anyCombatFontName then return i end
-									end
-								end,
-								set = function(_, value)
-									local list = LibSharedMedia:List("font")
-									db.profile.anyCombatFontName = list[value]
-									UpdateAnyCombatWidget()
-								end,
-								width = 2,
-								disabled = AnyCombatDisabled,
-							},
-							anyCombatOutline = {
-								type = "select",
-								name = L.outline,
-								order = 4,
-								values = {
-									NONE = L.none,
-									OUTLINE = L.thin,
-									THICKOUTLINE = L.thick,
-								},
-								sorting = {
-									"NONE",
-									"OUTLINE",
-									"THICKOUTLINE",
-								},
-								disabled = AnyCombatDisabled,
-							},
-							anyCombatFontSize = {
-								type = "range",
-								name = L.fontSize,
-								desc = L.fontSizeDesc,
-								order = 5,
-								width = 2,
-								softMax = 100, max = 200, min = ProfileUtils.MinimumFontSize, step = 1,
-								disabled = AnyCombatDisabled,
-							},
-							anyCombatMonochrome = {
-								type = "toggle",
-								name = L.monochrome,
-								desc = L.monochromeDesc,
-								order = 6,
-								disabled = AnyCombatDisabled,
-							},
-							anyCombatAlign = {
-								type = "select",
-								name = L.align,
-								values = {
-									LEFT = L.LEFT,
-									CENTER = L.CENTER,
-									RIGHT = L.RIGHT,
-								},
-								sorting = {
-									"LEFT",
-									"CENTER",
-									"RIGHT",
-								},
-								style = "radio",
-								order = 7,
-								disabled = AnyCombatDisabled,
-							},
-							anyCombatBorderName = {
-								type = "select",
-								name = L.borderName,
-								order = 8,
-								values = LibSharedMedia:List("border"),
-								get = function()
-									for i, v in next, LibSharedMedia:List("border") do
-										if v == db.profile.anyCombatBorderName then return i end
-									end
-								end,
-								set = function(_, value)
-									local list = LibSharedMedia:List("border")
-									db.profile.anyCombatBorderName = list[value]
-									if db.profile.anyCombatBorderName == "None" then
-										ProfileUtils.ResetAnyCombatBorder()
-									end
-									UpdateAnyCombatWidget()
-								end,
-								width = 1,
-								disabled = AnyCombatDisabled,
-							},
-							anyCombatBorderSize = {
-								type = "range",
-								name = L.borderSize,
-								order = 9,
-								min = 1,
-								max = 32,
-								step = 1,
-								width = 1,
-								disabled = AnyCombatDisabledOrBorderSetToNone,
-							},
-							anyCombatBorderOffset = {
-								type = "range",
-								name = L.borderOffset,
-								order = 10,
-								min = 0,
-								max = 32,
-								step = 1,
-								width = 1,
-								disabled = AnyCombatDisabledOrBorderSetToNone,
-							},
-						},
-					},
-					anyCombatAdvanced = {
-						type = "group",
-						name = L.advanced,
-						order = 5,
-						args = {
-							anyCombatColors = {
-								type = "group",
-								name = L.colors,
-								inline = true,
-								order = 1,
-								args = {
-									anyCombatColor = {
-										type = "color",
-										name = L.fontColor,
-										width = 1,
-										get = GetColor,
-										set = SetColorRestrictedAlpha,
-										hasAlpha = true,
-										order = 1,
-										disabled = AnyCombatDisabled,
-									},
-									anyCombatBackgroundColor = {
-										type = "color",
-										name = L.backgroundColor,
-										width = 1,
-										get = GetColor,
-										set = SetColor,
-										hasAlpha = true,
-										order = 2,
-										disabled = AnyCombatDisabled,
-									},
-									anyCombatBorderColor = {
-										type = "color",
-										name = L.borderColor,
-										order = 3,
-										hasAlpha = true,
-										width = 1,
-										get = GetColor,
-										set = SetColor,
-										disabled = function() return AnyCombatDisabled() or db.profile.anyCombatBorderName == "None" end,
-									},
-									anyCombatColorInactive = {
-										type = "color",
-										name = L.parentheses:format(L.fontColor, L.inactive),
-										width = 1,
-										get = GetColor,
-										set = SetColorRestrictedAlpha,
-										hasAlpha = true,
-										order = 4,
-										disabled = AnyCombatDisabledOrNoSeparateInactiveColors,
-									},
-									anyCombatBackgroundColorInactive = {
-										type = "color",
-										name = L.parentheses:format(L.backgroundColor, L.inactive),
-										width = 1,
-										get = GetColor,
-										set = SetColor,
-										hasAlpha = true,
-										order = 5,
-										disabled = AnyCombatDisabledOrNoSeparateInactiveColors,
-									},
-									anyCombatBorderColorInactive = {
-										type = "color",
-										name = L.parentheses:format(L.borderColor, L.inactive),
-										order = 6,
-										hasAlpha = true,
-										width = 1,
-										get = GetColor,
-										set = SetColor,
-										disabled = function() return AnyCombatDisabledOrNoSeparateInactiveColors() or db.profile.anyCombatBorderName == "None" end,
-									},
-								},
-							},
-							anyCombatInactive = {
-								type = "select",
-								name = L.whenInactive,
-								values = {
-									NONE = L.doNothing,
-									HIDE = L.hide,
-									COLOR = L.colorFade,
-								},
-								sorting = {
-									"NONE",
-									"HIDE",
-									"COLOR",
-								},
-								style = "radio",
-								order = 2,
-								set = function(info, value)
-									local key = info[#info]
-									db.profile[key] = value
-									if value ~= "COLOR" then
-										ProfileUtils.ResetAnyCombatInactiveColors()
-									end
-									UpdateAnyCombatWidget()
-								end,
-								disabled = AnyCombatDisabled,
-							},
-							anyCombatTextFormat = {
-								type = "select",
-								name = L.textFormat,
-								values = {
-									"1:23",
-									"1:23.4",
-								},
-								order = 3,
-								disabled = AnyCombatDisabled,
-							},
-							anyCombatHistoryTimeFormat = {
-								type = "select",
-								name = L.historyTimeFormat,
-								values = {
-									L.twelveHour,
-									L.twentyFourHour,
-								},
-								order = 4,
-								disabled = AnyCombatDisabled,
-							},
-							anyCombatHistoryAmount = {
-								type = "range",
-								name = L.tooltipHistoryMaxLines,
-								desc = L.tooltipHistoryMaxLinesDesc,
-								order = 5,
-								min = 5,
-								max = 30,
-								step = 1,
-								disabled = AnyCombatDisabled,
-							},
-							anyCombatHistoryResetConditions = {
-								type = "multiselect",
-								name = L.tooltipHistoryResetConditions,
-								desc = L.tooltipHistoryResetConditionsDesc,
-								order = 6,
-								values = {
-									[1] = L.enteringRaid,
-									[2] = L.enteringDungeon,
-									[4] = L.startingMythicKeystone,
-								},
-								get = function(info, entry)
-									return bit.band(db.profile[info[#info]], entry) == entry
-								end,
-								set = function(info, entry, value)
-									if value then
-										db.profile[info[#info]] = db.profile[info[#info]] + entry
-									else
-										db.profile[info[#info]] = db.profile[info[#info]] - entry
-									end
-								end,
-								hidden = AnyCombatDisabled,
-							},
-							anyCombatCustomText = {
-								type = "input",
-								validate = function(_, value)
-									if not value:find("%s", nil, true) or value:find("%%[^s]") then -- Must contain %s and no other format characters
-										return false
-									else
-										local success, newValue = pcall(string.format, value, L.hide)
-										if not success then -- Must not produce errors
-											return false
-										elseif newValue:find("%s", nil, true) then -- Must not still contain %s after being formatted with text (shouldn't really happen)
-											return false
-										else
-											return true
-										end
-									end
-								end,
-								name = L.customText,
-								width = 1.2,
-								order = 7,
-								disabled = AnyCombatDisabled,
-							},
-							anyCombatCustomTextSeparator = {
-								type = "description",
-								name = " ",
-								order = 8,
-								width = "full",
-							},
-							anyCombatHistoryHiddenInCombat = {
-								type = "toggle",
-								name = L.hideTooltipInCombat,
-								width = 1.5,
-								order = 9,
-								disabled = AnyCombatDisabled,
-							},
-						},
-					},
-					anyCombatExactPositioning = {
-						type = "group",
-						name = L.positionExact,
-						order = 6,
-						args = {
-							posx = {
-								type = "range",
-								name = L.positionX,
-								desc = L.positionDesc,
-								min = -2048,
-								max = 2048,
-								step = 1,
-								order = 1,
-								width = 3,
-								get = function()
-									return db.profile.anyCombatPosition[3]
-								end,
-								set = function(_, value)
-									db.profile.anyCombatPosition[3] = value
-									UpdateAnyCombatWidget()
-								end,
-								disabled = AnyCombatDisabled,
-							},
-							posy = {
-								type = "range",
-								name = L.positionY,
-								desc = L.positionDesc,
-								min = -2048,
-								max = 2048,
-								step = 1,
-								order = 2,
-								width = 3,
-								get = function()
-									return db.profile.anyCombatPosition[4]
-								end,
-								set = function(_, value)
-									db.profile.anyCombatPosition[4] = value
-									UpdateAnyCombatWidget()
-								end,
-								disabled = AnyCombatDisabled,
-							},
-							customAnchorPoint = {
-								type = "input",
-								get = function()
-									return db.profile.anyCombatPosition[5]
-								end,
-								set = function(_, value)
-									if value ~= "UIParent" then
-										db.profile.anyCombatPosition[1] = "CENTER"
-										db.profile.anyCombatPosition[2] = "CENTER"
-										db.profile.anyCombatPosition[3] = 0
-										db.profile.anyCombatPosition[4] = 0
-										db.profile.anyCombatPosition[5] = value
-									else
-										ProfileUtils.ResetAnyCombatPosition()
-									end
-									UpdateAnyCombatWidget()
-								end,
-								validate = function(_, frameName)
-									return BigWigsAPI.IsValidFrame(frameName)
-								end,
-								name = L.customAnchorPoint,
-								order = 3,
-								width = 3,
-								disabled = AnyCombatDisabled,
-							},
-							customAnchorPointSource = {
-								type = "select",
-								get = function()
-									return db.profile.anyCombatPosition[1]
-								end,
-								set = function(_, value)
-									if BigWigsAPI.IsValidFramePoint(value) then
-										db.profile.anyCombatPosition[1] = value
-										UpdateAnyCombatWidget()
-									end
-								end,
-								values = BigWigsAPI.GetFramePointList(),
-								name = L.sourcePoint,
-								order = 4,
-								width = 1.5,
-								disabled = AnyCombatDisabledOrAnchorPointDefault,
-							},
-							customAnchorPointDestination = {
-								type = "select",
-								get = function()
-									return db.profile.anyCombatPosition[2]
-								end,
-								set = function(_, value)
-									if BigWigsAPI.IsValidFramePoint(value) then
-										db.profile.anyCombatPosition[2] = value
-										UpdateAnyCombatWidget()
-									end
-								end,
-								values = BigWigsAPI.GetFramePointList(),
-								name = L.destinationPoint,
-								order = 5,
-								width = 1.5,
-								disabled = AnyCombatDisabledOrAnchorPointDefault,
-							},
-							anyCombatPositionResetHeader = {
-								type = "header",
-								name = "",
-								order = 6,
-							},
-							anyCombatPositionReset = {
-								type = "execute",
-								name = L.reset,
-								desc = L.resetDesc,
-								func = function()
-									ProfileUtils.ResetAnyCombatPosition()
-									UpdateAnyCombatWidget()
-								end,
-								order = 7,
-								disabled = AnyCombatDisabled,
-							},
-						},
-					},
-				},
-			},
-			boss = {
-				name = L.bossCombatTimer,
-				type = "group",
-				childGroups = "tab",
-				set = function(info, value)
-					local key = info[#info]
-					db.profile[key] = value
-					UpdateBossCombatWidget()
-				end,
-				order = 2,
-				args = {
-					explainBossCombat = {
-						type = "description",
-						name = L.bossCombatTimerDesc,
-						order = 0,
-						width = "full",
-					},
-					bossCombatDisabled = {
-						type = "toggle",
-						name = L.disabled,
-						width = 1.1,
-						order = 1,
-						set = function(info, value)
-							local key = info[#info]
-							db.profile[key] = value
-							if value then
-								ProfileUtils.ResetBossCombat()
-							end
-							UpdateBossCombatWidget()
-						end,
-					},
-					bossCombatLocked = {
-						type = "toggle",
-						name = L.lock,
-						desc = L.lockDesc,
-						width = 1.1,
-						order = 2,
-						disabled = BossCombatDisabled,
-					},
-					bossCombatReset = {
-						type = "execute",
-						name = L.reset,
-						desc = L.resetDesc,
-						width = 1,
-						func = function()
-							ProfileUtils.ResetBossCombat()
-							UpdateBossCombatWidget()
-						end,
-						order = 3,
-						disabled = BossCombatDisabled,
-					},
-					bossCombatGeneral = {
-						type = "group",
-						name = L.general,
-						order = 4,
-						args = {
-							bossCombatWidth = {
-								type = "range",
-								name = L.width,
-								desc = L.sizeDesc,
-								min = ProfileUtils.MinimumWidth,
-								max = ProfileUtils.MaximumWidth,
-								step = 1,
-								order = 1,
-								width = 1.5,
-								disabled = BossCombatDisabled,
-							},
-							bossCombatHeight = {
-								type = "range",
-								name = L.height,
-								desc = L.sizeDesc,
-								min = ProfileUtils.MinimumHeight,
-								max = ProfileUtils.MaximumHeight,
-								step = 1,
-								order = 2,
-								width = 1.5,
-								disabled = BossCombatDisabled,
-							},
-							bossCombatFontName = {
-								type = "select",
-								name = L.font,
-								order = 3,
-								values = LibSharedMedia:List("font"),
-								itemControl = "DDI-Font",
-								get = function()
-									for i, v in next, LibSharedMedia:List("font") do
-										if v == db.profile.bossCombatFontName then return i end
-									end
-								end,
-								set = function(_, value)
-									local list = LibSharedMedia:List("font")
-									db.profile.bossCombatFontName = list[value]
-									UpdateBossCombatWidget()
-								end,
-								width = 2,
-								disabled = BossCombatDisabled,
-							},
-							bossCombatOutline = {
-								type = "select",
-								name = L.outline,
-								order = 4,
-								values = {
-									NONE = L.none,
-									OUTLINE = L.thin,
-									THICKOUTLINE = L.thick,
-								},
-								sorting = {
-									"NONE",
-									"OUTLINE",
-									"THICKOUTLINE",
-								},
-								disabled = BossCombatDisabled,
-							},
-							bossCombatFontSize = {
-								type = "range",
-								name = L.fontSize,
-								desc = L.fontSizeDesc,
-								order = 5,
-								width = 2,
-								softMax = 100, max = 200, min = ProfileUtils.MinimumFontSize, step = 1,
-								disabled = BossCombatDisabled,
-							},
-							bossCombatMonochrome = {
-								type = "toggle",
-								name = L.monochrome,
-								desc = L.monochromeDesc,
-								order = 6,
-								disabled = BossCombatDisabled,
-							},
-							bossCombatAlign = {
-								type = "select",
-								name = L.align,
-								values = {
-									LEFT = L.LEFT,
-									CENTER = L.CENTER,
-									RIGHT = L.RIGHT,
-								},
-								sorting = {
-									"LEFT",
-									"CENTER",
-									"RIGHT",
-								},
-								style = "radio",
-								order = 7,
-								disabled = BossCombatDisabled,
-							},
-							bossCombatBorderName = {
-								type = "select",
-								name = L.borderName,
-								order = 8,
-								values = LibSharedMedia:List("border"),
-								get = function()
-									for i, v in next, LibSharedMedia:List("border") do
-										if v == db.profile.bossCombatBorderName then return i end
-									end
-								end,
-								set = function(_, value)
-									local list = LibSharedMedia:List("border")
-									db.profile.bossCombatBorderName = list[value]
-									if db.profile.bossCombatBorderName == "None" then
-										ProfileUtils.ResetBossCombatBorder()
-									end
-									UpdateBossCombatWidget()
-								end,
-								width = 1,
-								disabled = BossCombatDisabled,
-							},
-							bossCombatBorderSize = {
-								type = "range",
-								name = L.borderSize,
-								order = 9,
-								min = 1,
-								max = 32,
-								step = 1,
-								width = 1,
-								disabled = BossCombatDisabledOrBorderSetToNone,
-							},
-							bossCombatBorderOffset = {
-								type = "range",
-								name = L.borderOffset,
-								order = 10,
-								min = 0,
-								max = 32,
-								step = 1,
-								width = 1,
-								disabled = BossCombatDisabledOrBorderSetToNone,
-							},
-						},
-					},
-					bossCombatAdvanced = {
-						type = "group",
-						name = L.advanced,
-						order = 5,
-						args = {
-							bossCombatColors = {
-								type = "group",
-								name = L.colors,
-								inline = true,
-								order = 1,
-								args = {
-									bossCombatColor = {
-										type = "color",
-										name = L.fontColor,
-										width = 1,
-										get = GetColor,
-										set = SetColorRestrictedAlpha,
-										hasAlpha = true,
-										order = 1,
-										disabled = BossCombatDisabled,
-									},
-									bossCombatBackgroundColor = {
-										type = "color",
-										name = L.backgroundColor,
-										width = 1,
-										get = GetColor,
-										set = SetColor,
-										hasAlpha = true,
-										order = 2,
-										disabled = BossCombatDisabled,
-									},
-									bossCombatBorderColor = {
-										type = "color",
-										name = L.borderColor,
-										order = 3,
-										hasAlpha = true,
-										width = 1,
-										get = GetColor,
-										set = SetColor,
-										disabled = function() return BossCombatDisabled() or db.profile.bossCombatBorderName == "None" end,
-									},
-									bossCombatColorInactive = {
-										type = "color",
-										name = L.parentheses:format(L.fontColor, L.inactive),
-										width = 1,
-										get = GetColor,
-										set = SetColorRestrictedAlpha,
-										hasAlpha = true,
-										order = 4,
-										disabled = BossCombatDisabledOrNoSeparateInactiveColors,
-									},
-									bossCombatBackgroundColorInactive = {
-										type = "color",
-										name = L.parentheses:format(L.backgroundColor, L.inactive),
-										width = 1,
-										get = GetColor,
-										set = SetColor,
-										hasAlpha = true,
-										order = 5,
-										disabled = BossCombatDisabledOrNoSeparateInactiveColors,
-									},
-									bossCombatBorderColorInactive = {
-										type = "color",
-										name = L.parentheses:format(L.borderColor, L.inactive),
-										order = 6,
-										hasAlpha = true,
-										width = 1,
-										get = GetColor,
-										set = SetColor,
-										disabled = function() return BossCombatDisabledOrNoSeparateInactiveColors() or db.profile.bossCombatBorderName == "None" end,
-									},
-								},
-							},
-							bossCombatInactive = {
-								type = "select",
-								name = L.whenInactive,
-								values = {
-									NONE = L.doNothing,
-									HIDE = L.hide,
-									COLOR = L.colorFade,
-								},
-								sorting = {
-									"NONE",
-									"HIDE",
-									"COLOR",
-								},
-								style = "radio",
-								order = 2,
-								set = function(info, value)
-									local key = info[#info]
-									db.profile[key] = value
-									if value ~= "COLOR" then
-										ProfileUtils.ResetBossCombatInactiveColors()
-									end
-									UpdateBossCombatWidget()
-								end,
-								disabled = BossCombatDisabled,
-							},
-							bossCombatTextFormat = {
-								type = "select",
-								name = L.textFormat,
-								values = {
-									"1:23",
-									"1:23.4",
-								},
-								order = 3,
-								disabled = BossCombatDisabled,
-							},
-							bossCombatHistoryTimeFormat = {
-								type = "select",
-								name = L.historyTimeFormat,
-								values = {
-									L.twelveHour,
-									L.twentyFourHour,
-								},
-								order = 4,
-								disabled = BossCombatDisabled,
-							},
-							bossCombatHistoryAmount = {
-								type = "range",
-								name = L.tooltipHistoryMaxLines,
-								desc = L.tooltipHistoryMaxLinesDesc,
-								order = 5,
-								min = 5,
-								max = 30,
-								step = 1,
-								disabled = BossCombatDisabled,
-							},
-							bossCombatHistoryResetConditions = {
-								type = "multiselect",
-								name = L.tooltipHistoryResetConditions,
-								desc = L.tooltipHistoryResetConditionsDesc,
-								order = 6,
-								values = {
-									[1] = L.enteringRaid,
-									[2] = L.enteringDungeon,
-									[4] = L.startingMythicKeystone,
-								},
-								get = function(info, entry)
-									return bit.band(db.profile[info[#info]], entry) == entry
-								end,
-								set = function(info, entry, value)
-									if value then
-										db.profile[info[#info]] = db.profile[info[#info]] + entry
-									else
-										db.profile[info[#info]] = db.profile[info[#info]] - entry
-									end
-								end,
-								hidden = BossCombatDisabled,
-							},
-							bossCombatCustomText = {
-								type = "input",
-								validate = function(_, value)
-									if not value:find("%s", nil, true) or value:find("%%[^s]") then -- Must contain %s and no other format characters
-										return false
-									else
-										local success, newValue = pcall(string.format, value, L.hide)
-										if not success then -- Must not produce errors
-											return false
-										elseif newValue:find("%s", nil, true) then -- Must not still contain %s after being formatted with text (shouldn't really happen)
-											return false
-										else
-											return true
-										end
-									end
-								end,
-								name = L.customText,
-								width = 1.2,
-								order = 7,
-								disabled = BossCombatDisabled,
-							},
-						},
-					},
-					bossCombatExactPositioning = {
-						type = "group",
-						name = L.positionExact,
-						order = 6,
-						args = {
-							posx = {
-								type = "range",
-								name = L.positionX,
-								desc = L.positionDesc,
-								min = -2048,
-								max = 2048,
-								step = 1,
-								order = 1,
-								width = 3,
-								get = function()
-									return db.profile.bossCombatPosition[3]
-								end,
-								set = function(_, value)
-									db.profile.bossCombatPosition[3] = value
-									UpdateBossCombatWidget()
-								end,
-								disabled = BossCombatDisabled,
-							},
-							posy = {
-								type = "range",
-								name = L.positionY,
-								desc = L.positionDesc,
-								min = -2048,
-								max = 2048,
-								step = 1,
-								order = 2,
-								width = 3,
-								get = function()
-									return db.profile.bossCombatPosition[4]
-								end,
-								set = function(_, value)
-									db.profile.bossCombatPosition[4] = value
-									UpdateBossCombatWidget()
-								end,
-								disabled = BossCombatDisabled,
-							},
-							customAnchorPoint = {
-								type = "input",
-								get = function()
-									return db.profile.bossCombatPosition[5]
-								end,
-								set = function(_, value)
-									if value ~= "UIParent" then
-										db.profile.bossCombatPosition[1] = "CENTER"
-										db.profile.bossCombatPosition[2] = "CENTER"
-										db.profile.bossCombatPosition[3] = 0
-										db.profile.bossCombatPosition[4] = 0
-										db.profile.bossCombatPosition[5] = value
-									else
-										ProfileUtils.ResetBossCombatPosition()
-									end
-									UpdateBossCombatWidget()
-								end,
-								validate = function(_, frameName)
-									return BigWigsAPI.IsValidFrame(frameName)
-								end,
-								name = L.customAnchorPoint,
-								order = 3,
-								width = 3,
-								disabled = BossCombatDisabled,
-							},
-							customAnchorPointSource = {
-								type = "select",
-								get = function()
-									return db.profile.bossCombatPosition[1]
-								end,
-								set = function(_, value)
-									if BigWigsAPI.IsValidFramePoint(value) then
-										db.profile.bossCombatPosition[1] = value
-										UpdateBossCombatWidget()
-									end
-								end,
-								values = BigWigsAPI.GetFramePointList(),
-								name = L.sourcePoint,
-								order = 4,
-								width = 1.5,
-								disabled = BossCombatDisabledOrAnchorPointDefault,
-							},
-							customAnchorPointDestination = {
-								type = "select",
-								get = function()
-									return db.profile.bossCombatPosition[2]
-								end,
-								set = function(_, value)
-									if BigWigsAPI.IsValidFramePoint(value) then
-										db.profile.bossCombatPosition[2] = value
-										UpdateBossCombatWidget()
-									end
-								end,
-								values = BigWigsAPI.GetFramePointList(),
-								name = L.destinationPoint,
-								order = 5,
-								width = 1.5,
-								disabled = BossCombatDisabledOrAnchorPointDefault,
-							},
-							bossCombatPositionResetHeader = {
-								type = "header",
-								name = "",
-								order = 6,
-							},
-							bossCombatPositionReset = {
-								type = "execute",
-								name = L.reset,
-								desc = L.resetDesc,
-								func = function()
-									ProfileUtils.ResetBossCombatPosition()
-									UpdateBossCombatWidget()
-								end,
-								order = 7,
-								disabled = BossCombatDisabled,
-							},
-						},
-					},
-				},
-			},
-			bossStages = {
-				name = L.bossStagesTimer,
-				type = "group",
-				childGroups = "tab",
-				set = function(info, value)
-					local key = info[#info]
-					db.profile[key] = value
-					UpdateBossStagesWidget()
-				end,
-				order = 3,
-				args = {
-					explainBossStages = {
-						type = "description",
-						name = L.bossStagesTimerDesc,
-						order = 0,
-						width = "full",
-					},
-					bossStagesDisabled = {
-						type = "toggle",
-						name = L.disabled,
-						width = 1.1,
-						order = 1,
-						set = function(info, value)
-							local key = info[#info]
-							db.profile[key] = value
-							if value then
-								ProfileUtils.ResetBossStages()
-							end
-							UpdateBossStagesWidget()
-						end,
-					},
-					bossStagesLocked = {
-						type = "toggle",
-						name = L.lock,
-						desc = L.lockDesc,
-						width = 1.1,
-						order = 2,
-						disabled = BossStagesDisabled,
-					},
-					bossStagesReset = {
-						type = "execute",
-						name = L.reset,
-						desc = L.resetDesc,
-						width = 1,
-						func = function()
-							ProfileUtils.ResetBossStages()
-							UpdateBossStagesWidget()
-						end,
-						order = 3,
-						disabled = BossStagesDisabled,
-					},
-					bossStagesGeneral = {
-						type = "group",
-						name = L.general,
-						order = 4,
-						args = {
-							bossStagesWidth = {
-								type = "range",
-								name = L.width,
-								desc = L.sizeDesc,
-								min = ProfileUtils.MinimumWidth,
-								max = ProfileUtils.MaximumWidth,
-								step = 1,
-								order = 1,
-								width = 1.5,
-								disabled = BossStagesDisabled,
-							},
-							bossStagesHeight = {
-								type = "range",
-								name = L.height,
-								desc = L.sizeDesc,
-								min = ProfileUtils.MinimumHeight,
-								max = ProfileUtils.MaximumHeight,
-								step = 1,
-								order = 2,
-								width = 1.5,
-								disabled = BossStagesDisabled,
-							},
-							bossStagesFontName = {
-								type = "select",
-								name = L.font,
-								order = 3,
-								values = LibSharedMedia:List("font"),
-								itemControl = "DDI-Font",
-								get = function()
-									for i, v in next, LibSharedMedia:List("font") do
-										if v == db.profile.bossStagesFontName then return i end
-									end
-								end,
-								set = function(_, value)
-									local list = LibSharedMedia:List("font")
-									db.profile.bossStagesFontName = list[value]
-									UpdateBossStagesWidget()
-								end,
-								width = 2,
-								disabled = BossStagesDisabled,
-							},
-							bossStagesOutline = {
-								type = "select",
-								name = L.outline,
-								order = 4,
-								values = {
-									NONE = L.none,
-									OUTLINE = L.thin,
-									THICKOUTLINE = L.thick,
-								},
-								sorting = {
-									"NONE",
-									"OUTLINE",
-									"THICKOUTLINE",
-								},
-								disabled = BossStagesDisabled,
-							},
-							bossStagesFontSize = {
-								type = "range",
-								name = L.fontSize,
-								desc = L.fontSizeDesc,
-								order = 5,
-								width = 2,
-								softMax = 100, max = 200, min = ProfileUtils.MinimumFontSize, step = 1,
-								disabled = BossStagesDisabled,
-							},
-							bossStagesMonochrome = {
-								type = "toggle",
-								name = L.monochrome,
-								desc = L.monochromeDesc,
-								order = 6,
-								disabled = BossStagesDisabled,
-							},
-							bossStagesAlign = {
-								type = "select",
-								name = L.align,
-								values = {
-									LEFT = L.LEFT,
-									CENTER = L.CENTER,
-									RIGHT = L.RIGHT,
-								},
-								sorting = {
-									"LEFT",
-									"CENTER",
-									"RIGHT",
-								},
-								style = "radio",
-								order = 7,
-								disabled = BossStagesDisabled,
-							},
-							bossStagesBorderName = {
-								type = "select",
-								name = L.borderName,
-								order = 8,
-								values = LibSharedMedia:List("border"),
-								get = function()
-									for i, v in next, LibSharedMedia:List("border") do
-										if v == db.profile.bossStagesBorderName then return i end
-									end
-								end,
-								set = function(_, value)
-									local list = LibSharedMedia:List("border")
-									db.profile.bossStagesBorderName = list[value]
-									if db.profile.bossStagesBorderName == "None" then
-										ProfileUtils.ResetBossStagesBorder()
-									end
-									UpdateBossStagesWidget()
-								end,
-								width = 1,
-								disabled = BossStagesDisabled,
-							},
-							bossStagesBorderSize = {
-								type = "range",
-								name = L.borderSize,
-								order = 9,
-								min = 1,
-								max = 32,
-								step = 1,
-								width = 1,
-								disabled = BossStagesDisabledOrBorderSetToNone,
-							},
-							bossStagesBorderOffset = {
-								type = "range",
-								name = L.borderOffset,
-								order = 10,
-								min = 0,
-								max = 32,
-								step = 1,
-								width = 1,
-								disabled = BossStagesDisabledOrBorderSetToNone,
-							},
-						},
-					},
-					bossStagesAdvanced = {
-						type = "group",
-						name = L.advanced,
-						order = 5,
-						args = {
-							bossStagesColors = {
-								type = "group",
-								name = L.colors,
-								inline = true,
-								order = 1,
-								args = {
-									bossStagesColor = {
-										type = "color",
-										name = L.fontColor,
-										width = 1,
-										get = GetColor,
-										set = SetColorRestrictedAlpha,
-										hasAlpha = true,
-										order = 1,
-										disabled = BossStagesDisabled,
-									},
-									bossStagesBackgroundColor = {
-										type = "color",
-										name = L.backgroundColor,
-										width = 1,
-										get = GetColor,
-										set = SetColor,
-										hasAlpha = true,
-										order = 2,
-										disabled = BossStagesDisabled,
-									},
-									bossStagesBorderColor = {
-										type = "color",
-										name = L.borderColor,
-										order = 3,
-										hasAlpha = true,
-										width = 1,
-										get = GetColor,
-										set = SetColor,
-										disabled = function() return BossStagesDisabled() or db.profile.bossStagesBorderName == "None" end,
-									},
-									bossStagesColorInactive = {
-										type = "color",
-										name = L.parentheses:format(L.fontColor, L.inactive),
-										width = 1,
-										get = GetColor,
-										set = SetColorRestrictedAlpha,
-										hasAlpha = true,
-										order = 4,
-										disabled = BossStagesDisabledOrNoSeparateInactiveColors,
-									},
-									bossStagesBackgroundColorInactive = {
-										type = "color",
-										name = L.parentheses:format(L.backgroundColor, L.inactive),
-										width = 1,
-										get = GetColor,
-										set = SetColor,
-										hasAlpha = true,
-										order = 5,
-										disabled = BossStagesDisabledOrNoSeparateInactiveColors,
-									},
-									bossStagesBorderColorInactive = {
-										type = "color",
-										name = L.parentheses:format(L.borderColor, L.inactive),
-										order = 6,
-										hasAlpha = true,
-										width = 1,
-										get = GetColor,
-										set = SetColor,
-										disabled = function() return BossStagesDisabledOrNoSeparateInactiveColors() or db.profile.bossStagesBorderName == "None" end,
-									},
-								},
-							},
-							bossStagesInactive = {
-								type = "select",
-								name = L.whenInactive,
-								values = {
-									NONE = L.doNothing,
-									HIDE = L.hide,
-									COLOR = L.colorFade,
-								},
-								sorting = {
-									"NONE",
-									"HIDE",
-									"COLOR",
-								},
-								style = "radio",
-								order = 2,
-								set = function(info, value)
-									local key = info[#info]
-									db.profile[key] = value
-									if value ~= "COLOR" then
-										ProfileUtils.ResetBossStagesInactiveColors()
-									end
-									UpdateBossStagesWidget()
-								end,
-								disabled = BossStagesDisabled,
-							},
-							bossStagesTextFormat = {
-								type = "select",
-								name = L.textFormat,
-								width = 1.2,
-								values = {
-									"1:23",
-									"1:23.4",
-								},
-								order = 3,
-								disabled = BossStagesDisabled,
-							},
-							bossStagesHistoryTimeFormat = {
-								type = "select",
-								name = L.historyTimeFormat,
-								width = 1.2,
-								values = {
-									L.twelveHour,
-									L.twentyFourHour,
-								},
-								order = 4,
-								disabled = BossStagesDisabled,
-							},
-							bossStagesCustomText = {
-								type = "input",
-								validate = function(_, value)
-									if not value:find("%s", nil, true) or value:find("%%[^s]") then -- Must contain %s and no other format characters
-										return false
-									else
-										local success, newValue = pcall(string.format, value, L.hide)
-										if not success then -- Must not produce errors
-											return false
-										elseif newValue:find("%s", nil, true) then -- Must not still contain %s after being formatted with text (shouldn't really happen)
-											return false
-										else
-											return true
-										end
-									end
-								end,
-								name = L.customText,
-								width = 1.2,
-								order = 5,
-								disabled = BossStagesDisabled,
-							},
-						},
-					},
-					bossStagesExactPositioning = {
-						type = "group",
-						name = L.positionExact,
-						order = 6,
-						args = {
-							posx = {
-								type = "range",
-								name = L.positionX,
-								desc = L.positionDesc,
-								min = -2048,
-								max = 2048,
-								step = 1,
-								order = 1,
-								width = 3,
-								get = function()
-									return db.profile.bossStagesPosition[3]
-								end,
-								set = function(_, value)
-									db.profile.bossStagesPosition[3] = value
-									UpdateBossStagesWidget()
-								end,
-								disabled = BossStagesDisabled,
-							},
-							posy = {
-								type = "range",
-								name = L.positionY,
-								desc = L.positionDesc,
-								min = -2048,
-								max = 2048,
-								step = 1,
-								order = 2,
-								width = 3,
-								get = function()
-									return db.profile.bossStagesPosition[4]
-								end,
-								set = function(_, value)
-									db.profile.bossStagesPosition[4] = value
-									UpdateBossStagesWidget()
-								end,
-								disabled = BossStagesDisabled,
-							},
-							customAnchorPoint = {
-								type = "input",
-								get = function()
-									return db.profile.bossStagesPosition[5]
-								end,
-								set = function(_, value)
-									if value ~= "UIParent" then
-										db.profile.bossStagesPosition[1] = "CENTER"
-										db.profile.bossStagesPosition[2] = "CENTER"
-										db.profile.bossStagesPosition[3] = 0
-										db.profile.bossStagesPosition[4] = 0
-										db.profile.bossStagesPosition[5] = value
-									else
-										ProfileUtils.ResetBossStagesPosition()
-									end
-									UpdateBossStagesWidget()
-								end,
-								validate = function(_, frameName)
-									return BigWigsAPI.IsValidFrame(frameName)
-								end,
-								name = L.customAnchorPoint,
-								order = 3,
-								width = 3,
-								disabled = BossStagesDisabled,
-							},
-							customAnchorPointSource = {
-								type = "select",
-								get = function()
-									return db.profile.bossStagesPosition[1]
-								end,
-								set = function(_, value)
-									if BigWigsAPI.IsValidFramePoint(value) then
-										db.profile.bossStagesPosition[1] = value
-										UpdateBossStagesWidget()
-									end
-								end,
-								values = BigWigsAPI.GetFramePointList(),
-								name = L.sourcePoint,
-								order = 4,
-								width = 1.5,
-								disabled = BossStagesDisabledOrAnchorPointDefault,
-							},
-							customAnchorPointDestination = {
-								type = "select",
-								get = function()
-									return db.profile.bossStagesPosition[2]
-								end,
-								set = function(_, value)
-									if BigWigsAPI.IsValidFramePoint(value) then
-										db.profile.bossStagesPosition[2] = value
-										UpdateBossStagesWidget()
-									end
-								end,
-								values = BigWigsAPI.GetFramePointList(),
-								name = L.destinationPoint,
-								order = 5,
-								width = 1.5,
-								disabled = BossStagesDisabledOrAnchorPointDefault,
-							},
-							bossStagesPositionResetHeader = {
-								type = "header",
-								name = "",
-								order = 6,
-							},
-							bossStagesPositionReset = {
-								type = "execute",
-								name = L.reset,
-								desc = L.resetDesc,
-								func = function()
-									ProfileUtils.ResetBossStagesPosition()
-									UpdateBossStagesWidget()
-								end,
-								order = 7,
-								disabled = BossStagesDisabled,
-							},
-						},
-					},
-				},
-			},
-			--[[instance = {
-				name = L.instanceTimer,
-				type = "group",
-				childGroups = "tab",
-				set = function(info, value)
-					local key = info[#info]
-					db.profile[key] = value
-					UpdateInstanceTimerWidget()
-				end,
-				order = 4,
-				args = {
-					explainInstanceTimer = {
-						type = "description",
-						name = L.instanceTimerDesc,
-						order = 0,
-						width = "full",
-					},
-					instanceTimerDisabled = {
-						type = "toggle",
-						name = L.disabled,
-						width = 1.1,
-						order = 1,
-						set = function(info, value)
-							local key = info[#info]
-							db.profile[key] = value
-							if value then
-								ProfileUtils.ResetInstanceTimer()
-							end
-							UpdateInstanceTimerWidget()
-						end,
-					},
-					instanceTimerLocked = {
-						type = "toggle",
-						name = L.lock,
-						desc = L.lockDesc,
-						width = 1.1,
-						order = 2,
-						disabled = InstanceTimerDisabled,
-					},
-					instanceTimerReset = {
-						type = "execute",
-						name = L.reset,
-						desc = L.resetDesc,
-						width = 1,
-						func = function()
-							ProfileUtils.ResetInstanceTimer()
-							UpdateInstanceTimerWidget()
-						end,
-						order = 3,
-						disabled = InstanceTimerDisabled,
-					},
-					instanceTimerGeneral = {
-						type = "group",
-						name = L.general,
-						order = 4,
-						args = {
-							instanceTimerWidth = {
-								type = "range",
-								name = L.width,
-								desc = L.sizeDesc,
-								min = ProfileUtils.MinimumWidth,
-								max = ProfileUtils.MaximumWidth,
-								step = 1,
-								order = 1,
-								width = 1.5,
-								disabled = InstanceTimerDisabled,
-							},
-							instanceTimerHeight = {
-								type = "range",
-								name = L.height,
-								desc = L.sizeDesc,
-								min = ProfileUtils.MinimumHeight,
-								max = ProfileUtils.MaximumHeight,
-								step = 1,
-								order = 2,
-								width = 1.5,
-								disabled = InstanceTimerDisabled,
-							},
-							instanceTimerFontName = {
-								type = "select",
-								name = L.font,
-								order = 3,
-								values = LibSharedMedia:List("font"),
-								itemControl = "DDI-Font",
-								get = function()
-									for i, v in next, LibSharedMedia:List("font") do
-										if v == db.profile.instanceTimerFontName then return i end
-									end
-								end,
-								set = function(_, value)
-									local list = LibSharedMedia:List("font")
-									db.profile.instanceTimerFontName = list[value]
-									UpdateInstanceTimerWidget()
-								end,
-								width = 2,
-								disabled = InstanceTimerDisabled,
-							},
-							instanceTimerOutline = {
-								type = "select",
-								name = L.outline,
-								order = 4,
-								values = {
-									NONE = L.none,
-									OUTLINE = L.thin,
-									THICKOUTLINE = L.thick,
-								},
-								sorting = {
-									"NONE",
-									"OUTLINE",
-									"THICKOUTLINE",
-								},
-								disabled = InstanceTimerDisabled,
-							},
-							instanceTimerFontSize = {
-								type = "range",
-								name = L.fontSize,
-								desc = L.fontSizeDesc,
-								order = 5,
-								width = 2,
-								softMax = 100, max = 200, min = ProfileUtils.MinimumFontSize, step = 1,
-								disabled = InstanceTimerDisabled,
-							},
-							instanceTimerMonochrome = {
-								type = "toggle",
-								name = L.monochrome,
-								desc = L.monochromeDesc,
-								order = 6,
-								disabled = InstanceTimerDisabled,
-							},
-							instanceTimerAlign = {
-								type = "select",
-								name = L.align,
-								values = {
-									LEFT = L.LEFT,
-									CENTER = L.CENTER,
-									RIGHT = L.RIGHT,
-								},
-								sorting = {
-									"LEFT",
-									"CENTER",
-									"RIGHT",
-								},
-								style = "radio",
-								order = 7,
-								disabled = InstanceTimerDisabled,
-							},
-							instanceTimerBorderName = {
-								type = "select",
-								name = L.borderName,
-								order = 8,
-								values = LibSharedMedia:List("border"),
-								get = function()
-									for i, v in next, LibSharedMedia:List("border") do
-										if v == db.profile.instanceTimerBorderName then return i end
-									end
-								end,
-								set = function(_, value)
-									local list = LibSharedMedia:List("border")
-									db.profile.instanceTimerBorderName = list[value]
-									if db.profile.instanceTimerBorderName == "None" then
-										ProfileUtils.ResetInstanceTimerBorder()
-									end
-									UpdateInstanceTimerWidget()
-								end,
-								width = 1,
-								disabled = InstanceTimerDisabled,
-							},
-							instanceTimerBorderSize = {
-								type = "range",
-								name = L.borderSize,
-								order = 9,
-								min = 1,
-								max = 32,
-								step = 1,
-								width = 1,
-								disabled = InstanceTimerDisabledOrBorderSetToNone,
-							},
-							instanceTimerBorderOffset = {
-								type = "range",
-								name = L.borderOffset,
-								order = 10,
-								min = 0,
-								max = 32,
-								step = 1,
-								width = 1,
-								disabled = InstanceTimerDisabledOrBorderSetToNone,
-							},
-						},
-					},
-					instanceTimerAdvanced = {
-						type = "group",
-						name = L.advanced,
-						order = 5,
-						args = {
-							instanceTimerColors = {
-								type = "group",
-								name = L.colors,
-								inline = true,
-								order = 1,
-								args = {
-									instanceTimerColor = {
-										type = "color",
-										name = L.fontColor,
-										width = 1,
-										get = GetColor,
-										set = SetColorRestrictedAlpha,
-										hasAlpha = true,
-										order = 1,
-										disabled = InstanceTimerDisabled,
-									},
-									instanceTimerBackgroundColor = {
-										type = "color",
-										name = L.backgroundColor,
-										width = 1,
-										get = GetColor,
-										set = SetColor,
-										hasAlpha = true,
-										order = 2,
-										disabled = InstanceTimerDisabled,
-									},
-									instanceTimerBorderColor = {
-										type = "color",
-										name = L.borderColor,
-										order = 3,
-										hasAlpha = true,
-										width = 1,
-										get = GetColor,
-										set = SetColor,
-										disabled = function() return InstanceTimerDisabled() or db.profile.instanceTimerBorderName == "None" end,
-									},
-									instanceTimerColorInactive = {
-										type = "color",
-										name = L.parentheses:format(L.fontColor, L.inactive),
-										width = 1,
-										get = GetColor,
-										set = SetColorRestrictedAlpha,
-										hasAlpha = true,
-										order = 4,
-										disabled = InstanceTimerDisabledOrNoSeparateInactiveColors,
-									},
-									instanceTimerBackgroundColorInactive = {
-										type = "color",
-										name = L.parentheses:format(L.backgroundColor, L.inactive),
-										width = 1,
-										get = GetColor,
-										set = SetColor,
-										hasAlpha = true,
-										order = 5,
-										disabled = InstanceTimerDisabledOrNoSeparateInactiveColors,
-									},
-									instanceTimerBorderColorInactive = {
-										type = "color",
-										name = L.parentheses:format(L.borderColor, L.inactive),
-										order = 6,
-										hasAlpha = true,
-										width = 1,
-										get = GetColor,
-										set = SetColor,
-										disabled = function() return InstanceTimerDisabledOrNoSeparateInactiveColors() or db.profile.instanceTimerBorderName == "None" end,
-									},
-								},
-							},
-							instanceTimerInactive = {
-								type = "select",
-								name = L.whenInactive,
-								values = {
-									NONE = L.doNothing,
-									HIDE = L.hide,
-									COLOR = L.colorFade,
-								},
-								sorting = {
-									"NONE",
-									"HIDE",
-									"COLOR",
-								},
-								style = "radio",
-								order = 2,
-								set = function(info, value)
-									local key = info[#info]
-									db.profile[key] = value
-									if value ~= "COLOR" then
-										ProfileUtils.ResetInstanceTimerInactiveColors()
-									end
-									UpdateInstanceTimerWidget()
-								end,
-								disabled = InstanceTimerDisabled,
-							},
-							instanceTimerTextFormat = {
-								type = "select",
-								name = L.textFormat,
-								values = {
-									"1:23",
-									"1:23.4",
-								},
-								order = 3,
-								disabled = InstanceTimerDisabled,
-							},
-							instanceTimerHistoryTimeFormat = {
-								type = "select",
-								name = L.historyTimeFormat,
-								values = {
-									L.twelveHour,
-									L.twentyFourHour,
-								},
-								order = 4,
-								disabled = InstanceTimerDisabled,
-							},
-							instanceTimerHistoryAmount = {
-								type = "range",
-								name = L.tooltipHistoryMaxLines,
-								desc = L.tooltipHistoryMaxLinesDesc,
-								order = 5,
-								min = 5,
-								max = 30,
-								step = 1,
-								disabled = InstanceTimerDisabled,
-							},
-						},
-					},
-					instanceTimerExactPositioning = {
-						type = "group",
-						name = L.positionExact,
-						order = 6,
-						args = {
-							posx = {
-								type = "range",
-								name = L.positionX,
-								desc = L.positionDesc,
-								min = -2048,
-								max = 2048,
-								step = 1,
-								order = 1,
-								width = 3,
-								get = function()
-									return db.profile.instanceTimerPosition[3]
-								end,
-								set = function(_, value)
-									db.profile.instanceTimerPosition[3] = value
-									UpdateInstanceTimerWidget()
-								end,
-								disabled = InstanceTimerDisabled,
-							},
-							posy = {
-								type = "range",
-								name = L.positionY,
-								desc = L.positionDesc,
-								min = -2048,
-								max = 2048,
-								step = 1,
-								order = 2,
-								width = 3,
-								get = function()
-									return db.profile.instanceTimerPosition[4]
-								end,
-								set = function(_, value)
-									db.profile.instanceTimerPosition[4] = value
-									UpdateInstanceTimerWidget()
-								end,
-								disabled = InstanceTimerDisabled,
-							},
-							customAnchorPoint = {
-								type = "input",
-								get = function()
-									return db.profile.instanceTimerPosition[5]
-								end,
-								set = function(_, value)
-									if value ~= "UIParent" then
-										db.profile.instanceTimerPosition[1] = "CENTER"
-										db.profile.instanceTimerPosition[2] = "CENTER"
-										db.profile.instanceTimerPosition[3] = 0
-										db.profile.instanceTimerPosition[4] = 0
-										db.profile.instanceTimerPosition[5] = value
-									else
-										ProfileUtils.ResetInstanceTimerPosition()
-									end
-									UpdateInstanceTimerWidget()
-								end,
-								validate = function(_, frameName)
-									return BigWigsAPI.IsValidFrame(frameName)
-								end,
-								name = L.customAnchorPoint,
-								order = 3,
-								width = 3,
-								disabled = InstanceTimerDisabled,
-							},
-							customAnchorPointSource = {
-								type = "select",
-								get = function()
-									return db.profile.instanceTimerPosition[1]
-								end,
-								set = function(_, value)
-									if BigWigsAPI.IsValidFramePoint(value) then
-										db.profile.instanceTimerPosition[1] = value
-										UpdateInstanceTimerWidget()
-									end
-								end,
-								values = BigWigsAPI.GetFramePointList(),
-								name = L.sourcePoint,
-								order = 4,
-								width = 1.5,
-								disabled = InstanceTimerDisabledOrAnchorPointDefault,
-							},
-							customAnchorPointDestination = {
-								type = "select",
-								get = function()
-									return db.profile.instanceTimerPosition[2]
-								end,
-								set = function(_, value)
-									if BigWigsAPI.IsValidFramePoint(value) then
-										db.profile.instanceTimerPosition[2] = value
-										UpdateInstanceTimerWidget()
-									end
-								end,
-								values = BigWigsAPI.GetFramePointList(),
-								name = L.destinationPoint,
-								order = 5,
-								width = 1.5,
-								disabled = InstanceTimerDisabledOrAnchorPointDefault,
-							},
-							instanceTimerPositionResetHeader = {
-								type = "header",
-								name = "",
-								order = 6,
-							},
-							instanceTimerPositionReset = {
-								type = "execute",
-								name = L.reset,
-								desc = L.resetDesc,
-								func = function()
-									ProfileUtils.ResetInstanceTimerPosition()
-									UpdateInstanceTimerWidget()
-								end,
-								order = 7,
-								disabled = InstanceTimerDisabled,
-							},
-						},
-					},
-				},
-			},]]
+			all = CreateTimerOptions("anyCombat", L.anyCombatTimer, L.anyCombatTimerDesc, 1, "explainAnyCombat"),
+			boss = CreateTimerOptions("bossCombat", L.bossCombatTimer, L.bossCombatTimerDesc, 2, "explainBossCombat"),
+			bossStages = CreateTimerOptions("bossStages", L.bossStagesTimer, L.bossStagesTimerDesc, 3, "explainBossStages"),
 		},
-	} end)
-end
+	}
+end)
 
 --------------------------------------------------------------------------------
 -- Login
@@ -3594,32 +1820,18 @@ do
 	local function UpdateProfile()
 		ProfileUtils.ValidateMainSettings()
 		ProfileUtils.ValidateMediaSettings()
-		if not db.profile.anyCombatDisabled and not db.profile.anyCombatLocked then
-			db.profile.anyCombatLocked = true
-		end
-		if not db.profile.bossCombatDisabled and not db.profile.bossCombatLocked then
-			db.profile.bossCombatLocked = true
-		end
-		if not db.profile.bossStagesDisabled and not db.profile.bossStagesLocked then
-			db.profile.bossStagesLocked = true
-		end
-		--if not db.profile.instanceTimerDisabled and not db.profile.instanceTimerLocked then
-		--	db.profile.instanceTimerLocked = true
-		--end
+		ProfileUtils.ValidateAnchorFrames()
 		UpdateAnyCombatWidget()
 		UpdateBossCombatWidget()
 		UpdateBossStagesWidget()
-		--UpdateInstanceTimerWidget()
-		--if not db.profile.instanceTimerDisabled then
-		--	BigWigsLoader.CTimerAfter(0, widgets.instanceTimerEnterWorldFunc) -- Difficulty info isn't accurate until 1 frame after PEW
-		--end
 	end
 	local loginFrame = CreateFrame("Frame")
 	loginFrame:SetScript("OnEvent", function(self, event)
 		self:UnregisterEvent(event)
 		self:SetScript("OnEvent", nil)
 		UpdateProfile()
-		BigWigsLoader.RegisterMessage(loginFrame, "BigWigs_ProfileUpdate", UpdateProfile)
+		BigWigsLoader.RegisterMessage({}, "BigWigs_ProfileUpdate", UpdateProfile)
 	end)
-	loginFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+	loginFrame:RegisterEvent("PLAYER_ENTERING_WORLD") -- Using PEW instead of PLAYER_LOGIN as this module depends on instance IDs
+	ProfileUtils.ValidateMainSettings()
 end

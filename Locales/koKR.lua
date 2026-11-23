@@ -482,9 +482,7 @@ L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_
 L.bossStagesTimer = "보스 단계 타이머"
 L.bossStagesTimerDesc = "보스 전투가 단계가 바뀔 때마다 초기화되는 타이머로, 툴팁을 통해 보스 단계 이력을 확인할 수 있습니다. 여러 단계가 있는 보스에게만 활성화됩니다."
 L.bossStagesTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t보스 단계 기록"
-L.instanceTimer = "인스턴스 타이머"
-L.instanceTimerDesc = "인스턴스(던전/레이드 등)에 머무른 시간을 표시하는 타이머이며, 툴팁을 통해 인스턴스 기록을 확인할 수 있습니다."
-L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t인스턴스 기록"
+L.stage = "%s단계"
 
 L.backgroundColor = "배경색"
 L.inactive = "비활성화"

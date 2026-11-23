@@ -482,9 +482,7 @@ L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_
 L.bossStagesTimer = "Chrono de Phases de Boss"
 L.bossStagesTimerDesc = "Un chronomètre qui se réinitialise à chaque fois que le boss change de phase, avec une bulle d'aide pour voir l'historique des phases du boss. Seulement actif sur les boss ayant plusieurs phases."
 L.bossStagesTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tHistorique des Phases de Boss"
-L.instanceTimer = "Chrono d'instance"
-L.instanceTimerDesc = "Un chrono qui affiche depuis combien de temps vous êtes en instance (donjon / raid / etc), avec une bulle d'aide pour voir l'historique de l'instance."
-L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tHistorique d'instance"
+L.stage = "Phase %s"
 
 L.backgroundColor = "Couleur d'arrière-plan"
 L.inactive = "Inactif"

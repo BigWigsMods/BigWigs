@@ -482,9 +482,7 @@ L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_
 L.bossStagesTimer = "Cronômetro de Estágios de Chefe"
 L.bossStagesTimerDesc = "Um cronômetro que reinicia a cada vez que um encontro com chefe muda de estágio, com uma dica de interface para ver o histórico de estágios de chefe. Funciona apenas para chefes com múltiplos estágios."
 L.bossStagesTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tHistórico de Estágios de Chefe"
-L.instanceTimer = "Cronômetro de Instância"
-L.instanceTimerDesc = "Um cronômetro que mostra por quanto tempo você esteve em uma instância (masmorra/raide/etc), com uma dica de interface para ver o histórico de instância."
-L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|tHistórico de Instância"
+L.stage = "Estágio %s"
 
 L.backgroundColor = "Cor de Fundo"
 L.inactive = "Inativo"

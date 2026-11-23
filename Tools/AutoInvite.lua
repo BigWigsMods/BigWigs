@@ -106,9 +106,19 @@ do
 		end
 	end
 
+	local function ShowPopup()
+		popupFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+		popupFrame:Show()
+	end
+
+	local function HidePopup()
+		popupFrame:UnregisterEvent("GROUP_ROSTER_UPDATE")
+		popupFrame:Hide()
+	end
+
 	function ResetState()
 		CancelActiveTimer()
-		popupFrame:Hide()
+		HidePopup()
 		invitesBlocked = false
 		throttle = {}
 		delayedInvite = {}
@@ -125,7 +135,8 @@ do
 	local function InvitePlayer(guid, playerName, gameAccountID)
 		delayedInvite[guid] = nil
 		throttle[guid] = GetTime() + 2
-		BigWigsLoader.Print(L.keywordDetectedInvitingPlayer:format(playerName))
+		local msg = L.keywordDetectedInvitingPlayer:format(playerName)
+		BigWigsLoader.Print(msg)
 		if gameAccountID then
 			InviteFriend(gameAccountID)
 		else
@@ -156,7 +167,7 @@ do
 					return true
 				elseif not invitesBlocked then
 					if not next(delayedInvite) and not activeTimer then
-						popupFrame:Show()
+						ShowPopup()
 					end
 					if bnSenderID then
 						delayedInvite[guid] = { name = playerName, bnSenderID = bnSenderID, gameAccountID = gameAccountID }
@@ -184,7 +195,7 @@ do
 				end
 			elseif event == "GROUP_ROSTER_UPDATE" then
 				if not UnitIsGroupLeader("player", 1) or IsInRaid(1) or not IsPartyFull(1) then -- LE_PARTY_CATEGORY_HOME = 1
-					popupFrame:Hide()
+					HidePopup()
 					delayedInvite = {}
 				end
 			else
@@ -315,9 +326,8 @@ do
 	local buttonYes = CreateFrame("Button", nil, popupFrame, BigWigsLoader.isModern and "SharedButtonTemplate" or "UIPanelButtonTemplate")
 	buttonYes:SetSize(128, 32)
 	buttonYes:SetPoint("RIGHT", popupFrame, "BOTTOM", -6, 28)
-	buttonYes:SetScript("OnClick", function(self)
-		self:GetParent():Hide()
-		invitesBlocked = false
+	buttonYes:SetScript("OnClick", function()
+		HidePopup()
 		CancelActiveTimer()
 		if not IsInRaid(1) then
 			if not UnitIsGroupLeader("player", 1) or (AllowedToDoPartyConversion and not AllowedToDoPartyConversion(true)) then
@@ -334,8 +344,8 @@ do
 	local buttonNo = CreateFrame("Button", nil, popupFrame, BigWigsLoader.isModern and "SharedButtonTemplate" or "UIPanelButtonTemplate")
 	buttonNo:SetSize(128, 32)
 	buttonNo:SetPoint("LEFT", buttonYes, "RIGHT", 12, 0)
-	buttonNo:SetScript("OnClick", function(self)
-		self:GetParent():Hide()
+	buttonNo:SetScript("OnClick", function()
+		HidePopup()
 		invitesBlocked = true
 		CancelActiveTimer()
 		local toNotify = delayedInvite
@@ -375,12 +385,6 @@ do
 	buttonNo:SetText(L.no)
 
 	popupFrame:Hide()
-	popupFrame:SetScript("OnShow", function(self)
-		self:RegisterEvent("GROUP_ROSTER_UPDATE")
-	end)
-	popupFrame:SetScript("OnHide", function(self)
-		self:UnregisterEvent("GROUP_ROSTER_UPDATE")
-	end)
 end
 
 --------------------------------------------------------------------------------
@@ -407,65 +411,82 @@ local function RegisterEvents()
 end
 RegisterEvents()
 
-local function CreateWordListConfig(key)
+BigWigsAPI.RegisterToolOptions("AutoInvite", function()
+	local function SetAddWord(info, text)
+		local words = db.global[info.arg]
+		table.insert(words, text)
+		table.sort(words)
+		RegisterEvents()
+	end
+	local function IsAddWordDisabled(info)
+		return #db.global[info.arg] >= MAX_WORDS
+	end
+	local function ValidateAddWord(info, text)
+		local words = db.global[info.arg]
+		return #words < MAX_WORDS and IsValidWord(text) and not HasMatchingWord(words, text)
+	end
+	local function GetWordList(info)
+		return db.global[info.arg]
+	end
+	local function SetRemoveWord(info, value)
+		table.remove(db.global[info.arg], value)
+		RegisterEvents()
+	end
+	local function IsRemoveWordDisabled(info)
+		return not next(db.global[info.arg])
+	end
+	local function CreateWordListConfig(key)
+		return {
+			input = {
+				type = "input",
+				get = false,
+				set = SetAddWord,
+				name = L.addWords,
+				order = 1,
+				width = "full",
+				usage = L.invalidWordWarning,
+				disabled = IsAddWordDisabled,
+				validate = ValidateAddWord,
+				arg = key,
+			},
+			remove = {
+				type = "select",
+				name = L.removeWords,
+				order = 2,
+				get = false,
+				values = GetWordList,
+				set = SetRemoveWord,
+				width = "full",
+				disabled = IsRemoveWordDisabled,
+				arg = key,
+			},
+		}
+	end
 	return {
-		input = {
-			type = "input",
-			get = function() return "" end,
-			set = function(_, text)
-				table.insert(db.global[key], text)
-				table.sort(db.global[key])
-				RegisterEvents()
-			end,
-			name = L.addWords,
-			order = 1,
-			width = "full",
-			usage = L.invalidWordWarning,
-			disabled = function() return #db.global[key] >= MAX_WORDS end,
-			validate = function(_, text)
-				local words = db.global[key]
-				return #words < MAX_WORDS and IsValidWord(text) and not HasMatchingWord(words, text)
-			end,
-		},
-		remove = {
-			type = "select",
-			name = L.removeWords,
-			order = 2,
-			values = function() return db.global[key] end,
-			set = function(_, value)
-				table.remove(db.global[key], value)
-				RegisterEvents()
-			end,
-			width = "full",
-			disabled = function() return not next(db.global[key]) end,
+		type = "group",
+		childGroups = "tab",
+		order = 5,
+		name = L.autoInviteTitle,
+		args = {
+			explainer = {
+				type = "description",
+				name = L.autoInviteDesc,
+				order = 0,
+				width = "full",
+				fontSize = "large",
+			},
+			friendly = {
+				name = L.guildAndFriends,
+				type = "group",
+				order = 1,
+				args = CreateWordListConfig("wordsFriendly"),
+			},
+			other = {
+				name = L.everyoneElse,
+				type = "group",
+				order = 2,
+				args = CreateWordListConfig("wordsOther"),
+			},
 		},
 	}
-end
-
-BigWigsAPI.RegisterToolOptions("AutoInvite", function() return {
-	type = "group",
-	childGroups = "tab",
-	order = 5,
-	name = L.autoInviteTitle,
-	args = {
-		explainer = {
-			type = "description",
-			name = L.autoInviteDesc,
-			order = 0,
-			width = "full",
-			fontSize = "large",
-		},
-		friendly = {
-			name = L.guildAndFriends,
-			type = "group",
-			order = 1,
-			args = CreateWordListConfig("wordsFriendly"),
-		},
-		other = {
-			name = L.everyoneElse,
-			type = "group",
-			order = 2,
-			args = CreateWordListConfig("wordsOther"),
-		},
-	},
-} end)
+end)

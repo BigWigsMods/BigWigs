@@ -482,9 +482,7 @@ L.bossCombatTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_
 L.bossStagesTimer = "首领阶段计时"
 L.bossStagesTimerDesc = "进入新阶段时重置计时器。仅限多阶段首领，鼠标悬停查看阶段历史。"
 L.bossStagesTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t阶段历史"
-L.instanceTimer = "副本计时"
-L.instanceTimerDesc = "显示副本内计时（地下城/团队等）。鼠标悬停查看历史记录。"
-L.instanceTimerTooltip = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t副本历史"
+L.stage = "第%s阶段"
 
 L.backgroundColor = "背景颜色"
 L.inactive = "未激活"
