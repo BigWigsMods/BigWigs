@@ -11,6 +11,7 @@ mod:SetEncounterID(3513)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
 mod:UseCustomTimers(true)
+mod:SetBlockedUnitsForWipeHealthCheck({[268201] = true}) -- Mindstinger Egg
 
 --------------------------------------------------------------------------------
 -- Locals
