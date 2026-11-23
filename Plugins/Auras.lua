@@ -318,7 +318,7 @@ do
 				db[unitType].dispelTypeSize = plugin.defaultDB[unitType].dispelTypeSize
 			end
 
-			ValidateAnchor(unitType, "anchorPoint", "anchorRelativeTo", "anchorRelPoint", "anchorXOffset", "anchorYOffset", -2048, 2048)
+			ValidateAnchor(unitType, "anchorPoint", "anchorRelativeTo", "anchorRelPoint", "anchorXOffset", "anchorYOffset", -10000, 10000)
 			ValidateAnchor(unitType, "countTextAnchorPoint", nil, nil, "countTextAnchorXOffset", "countTextAnchorYOffset", -100, 100)
 			ValidateAnchor(unitType, "cooldownTextAnchorPoint", nil, nil, "cooldownTextAnchorXOffset", "cooldownTextAnchorYOffset", -100, 100)
 			ValidateAnchor(unitType, "dispelTypeAnchorPoint", nil, nil, "dispelTypeAnchorXOffset", "dispelTypeAnchorYOffset", -100, 100)
