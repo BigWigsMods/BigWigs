@@ -1,3 +1,5 @@
+local _, addonTbl = ...
+
 RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN") -- We don't need to participate in role polls
 
 do
@@ -5,11 +7,13 @@ do
 	local IsInGroup, GetTime = IsInGroup, GetTime
 	local InCombatLockdown, UnitAffectingCombat = InCombatLockdown, UnitAffectingCombat
 	local UnitGroupRolesAssigned, UnitSetRole = UnitGroupRolesAssigned, UnitSetRole
+	local isForever, UnitLevel = addonTbl.isForever, addonTbl.loaderPublic.UnitLevel
 
 	local frame = CreateFrame("Frame")
 	local prevTime, prevRole = 0, nil
 	local function UpdateMyRole()
 		if IsInGroup(1) and not IsInGroup(2) then
+			if isForever and UnitLevel("player") <= 30 then return end
 			local _, role = LibSpec.MySpecialization()
 			if role and UnitGroupRolesAssigned("player") ~= role then
 				if InCombatLockdown() or UnitAffectingCombat("player") then
@@ -41,7 +45,6 @@ do
 	frame:RegisterEvent("GROUP_LEFT")
 end
 
-local _, addonTbl = ...
 local L = addonTbl.API:GetLocale("BigWigs")
 addonTbl.API.RegisterToolOptions("AutoRole", function() return {
 	type = "group",
