@@ -17,8 +17,14 @@ do
 	local fontName = "Noto Sans Medium"
 	do
 		local locale = GetLocale()
-		if locale ~= "enUS" then
-			defaultVoice = ("%s: Default (Female)"):format(locale)
+		if locale ~= "enUS" and locale ~= "enGB" then
+			local voice = ("%s: Default (Female)"):format(locale)
+			if BigWigsAPI:HasCountdown(voice) then
+				defaultVoice = voice
+			else
+				local msg = ("BigWigs: Failed to find default countdown %q for locale %q."):format(voice, locale)
+				geterrorhandler()(msg)
+			end
 			if locale == "koKR" or locale == "zhCN" or locale == "zhTW" then
 				fontName = LibSharedMedia:GetDefault("font")
 			end
@@ -77,6 +83,17 @@ do
 	}
 	db = BigWigsLoader.db:RegisterNamespace("MythicPlus", {profile = defaults, global = globalDefaults})
 
+	local function CopyTable(settingsTable)
+		local copy = {}
+		for key, value in next, settingsTable do
+			if type(value) == "table" then
+				copy[key] = CopyTable(value)
+			else
+				copy[key] = value
+			end
+		end
+		return copy
+	end
 	local function ValidateColor(current, default, alphaLimit)
 		for i = 1, 3 do
 			local n = current[i]
@@ -103,7 +120,11 @@ do
 			if defaultType == "nil" then
 				db.profile[k] = nil
 			elseif type(v) ~= defaultType then
-				db.profile[k] = defaults[k]
+				if defaultType == "table" then
+					db.profile[k] = CopyTable(defaults[k])
+				else
+					db.profile[k] = defaults[k]
+				end
 			end
 		end
 		for k, v in next, db.global do
@@ -124,38 +145,38 @@ do
 		if db.profile.windowHeight < 320 or db.profile.windowHeight > 620 or math.floor(db.profile.windowHeight+0.5) ~= db.profile.windowHeight then
 			db.profile.windowHeight = defaults.windowHeight
 		end
-		if type(db.profile.viewerPosition[1]) ~= "string" or type(db.profile.viewerPosition[2]) ~= "string"
-		or type(db.profile.viewerPosition[3]) ~= "number" or type(db.profile.viewerPosition[4]) ~= "number"
-		or not BigWigsAPI.IsValidFramePoint(db.profile.viewerPosition[1]) or not BigWigsAPI.IsValidFramePoint(db.profile.viewerPosition[2]) then
-			db.profile.viewerPosition[1] = defaults.viewerPosition[1]
-			db.profile.viewerPosition[2] = defaults.viewerPosition[2]
-			db.profile.viewerPosition[3] = defaults.viewerPosition[3]
-			db.profile.viewerPosition[4] = defaults.viewerPosition[4]
+		local viewerPos = db.profile.viewerPosition
+		if type(viewerPos[1]) ~= "string" or type(viewerPos[2]) ~= "string"
+		or type(viewerPos[3]) ~= "number" or type(viewerPos[4]) ~= "number"
+		or viewerPos[3] < -10000 or viewerPos[3] > 10000
+		or viewerPos[4] < -10000 or viewerPos[4] > 10000
+		or not BigWigsAPI.IsValidFramePoint(viewerPos[1]) or not BigWigsAPI.IsValidFramePoint(viewerPos[2]) then
+			db.profile.viewerPosition = CopyTable(defaults.viewerPosition)
 		else
-			local x = math.floor(db.profile.viewerPosition[3]+0.5)
-			if x ~= db.profile.viewerPosition[3] then
-				db.profile.viewerPosition[3] = x
+			local x = math.floor(viewerPos[3]+0.5)
+			if x ~= viewerPos[3] then
+				viewerPos[3] = x
 			end
-			local y = math.floor(db.profile.viewerPosition[4]+0.5)
-			if y ~= db.profile.viewerPosition[4] then
-				db.profile.viewerPosition[4] = y
+			local y = math.floor(viewerPos[4]+0.5)
+			if y ~= viewerPos[4] then
+				viewerPos[4] = y
 			end
 		end
-		if type(db.profile.instanceKeysPosition[1]) ~= "string" or type(db.profile.instanceKeysPosition[2]) ~= "string"
-		or type(db.profile.instanceKeysPosition[3]) ~= "number" or type(db.profile.instanceKeysPosition[4]) ~= "number"
-		or not BigWigsAPI.IsValidFramePoint(db.profile.instanceKeysPosition[1]) or not BigWigsAPI.IsValidFramePoint(db.profile.instanceKeysPosition[2]) then
-			db.profile.instanceKeysPosition[1] = defaults.instanceKeysPosition[1]
-			db.profile.instanceKeysPosition[2] = defaults.instanceKeysPosition[2]
-			db.profile.instanceKeysPosition[3] = defaults.instanceKeysPosition[3]
-			db.profile.instanceKeysPosition[4] = defaults.instanceKeysPosition[4]
+		local instanceKeysPos = db.profile.instanceKeysPosition
+		if type(instanceKeysPos[1]) ~= "string" or type(instanceKeysPos[2]) ~= "string"
+		or type(instanceKeysPos[3]) ~= "number" or type(instanceKeysPos[4]) ~= "number"
+		or instanceKeysPos[3] < -10000 or instanceKeysPos[3] > 10000
+		or instanceKeysPos[4] < -10000 or instanceKeysPos[4] > 10000
+		or not BigWigsAPI.IsValidFramePoint(instanceKeysPos[1]) or not BigWigsAPI.IsValidFramePoint(instanceKeysPos[2]) then
+			db.profile.instanceKeysPosition = CopyTable(defaults.instanceKeysPosition)
 		else
-			local x = math.floor(db.profile.instanceKeysPosition[3]+0.5)
-			if x ~= db.profile.instanceKeysPosition[3] then
-				db.profile.instanceKeysPosition[3] = x
+			local x = math.floor(instanceKeysPos[3]+0.5)
+			if x ~= instanceKeysPos[3] then
+				instanceKeysPos[3] = x
 			end
-			local y = math.floor(db.profile.instanceKeysPosition[4]+0.5)
-			if y ~= db.profile.instanceKeysPosition[4] then
-				db.profile.instanceKeysPosition[4] = y
+			local y = math.floor(instanceKeysPos[4]+0.5)
+			if y ~= instanceKeysPos[4] then
+				instanceKeysPos[4] = y
 			end
 		end
 		if db.profile.instanceKeysFontSize < 14 or db.profile.instanceKeysFontSize > 200 or math.floor(db.profile.instanceKeysFontSize+0.5) ~= db.profile.instanceKeysFontSize then
@@ -213,25 +234,16 @@ do
 		if not LibSharedMedia:IsValid("sound", db.profile.countEndSound) then
 			db.profile.countEndSound = defaults.countEndSound
 		end
-		if not LibSharedMedia:IsValid("font", db.profile.instanceKeysFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName)) then
+		local instanceKeysFontPath = LibSharedMedia:IsValid("font", db.profile.instanceKeysFontName) and LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName)
+		if not instanceKeysFontPath or not BigWigsAPI.IsValidMediaPath(instanceKeysFontPath) then
 			db.profile.instanceKeysFontName = defaults.instanceKeysFontName
 		end
-		if not LibSharedMedia:IsValid("font", db.profile.progressNameplateFontName) or not BigWigsAPI.IsValidMediaPath(LibSharedMedia:Fetch("font", db.profile.progressNameplateFontName)) then
+		local progressNameplateFontPath = LibSharedMedia:IsValid("font", db.profile.progressNameplateFontName) and LibSharedMedia:Fetch("font", db.profile.progressNameplateFontName)
+		if not progressNameplateFontPath or not BigWigsAPI.IsValidMediaPath(progressNameplateFontPath) then
 			db.profile.progressNameplateFontName = defaults.progressNameplateFontName
 		end
 	end
 
-	local function CopyTable(settingsTable)
-		local copy = {}
-		for key, value in next, settingsTable do
-			if type(value) == "table" then
-				copy[key] = CopyTable(value)
-			else
-				copy[key] = value
-			end
-		end
-		return copy
-	end
 	ProfileUtils.ResetInstanceKeys = function()
 		db.profile.instanceKeysPosition = CopyTable(defaults.instanceKeysPosition)
 		db.profile.instanceKeysFontName = defaults.instanceKeysFontName
@@ -244,8 +256,10 @@ do
 		db.profile.instanceKeysOtherDungeonColor = CopyTable(defaults.instanceKeysOtherDungeonColor)
 		db.profile.instanceKeysShowAllPlayers = defaults.instanceKeysShowAllPlayers
 		db.profile.instanceKeysShowDungeonEnd = defaults.instanceKeysShowDungeonEnd
+		db.profile.instanceKeysHideTitle = defaults.instanceKeysHideTitle
 	end
 	ProfileUtils.ResetNameplates = function()
+		db.profile.progressNameplateFormat = defaults.progressNameplateFormat
 		db.profile.progressNameplateTargetOffsetX = defaults.progressNameplateTargetOffsetX
 		db.profile.progressNameplateTargetOffsetY = defaults.progressNameplateTargetOffsetY
 		db.profile.progressNameplateOtherOffsetX = defaults.progressNameplateOtherOffsetX
@@ -260,6 +274,8 @@ do
 		db.profile.progressNameplateTargetAlign = defaults.progressNameplateTargetAlign
 		db.profile.progressNameplateOtherAlign = defaults.progressNameplateOtherAlign
 	end
+
+	ProfileUtils.ValidateMainSettings()
 end
 
 --------------------------------------------------------------------------------
@@ -542,10 +558,6 @@ local WIDTH_NAME, WIDTH_LEVEL, WIDTH_MAP, WIDTH_RATING = 150, 24, 74, 42
 
 local GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 
-if db.profile.hideFromGuild then
-	LibKeystone.SetGuildHidden(true)
-end
-
 --------------------------------------------------------------------------------
 -- GUI Widgets
 --
@@ -587,20 +599,50 @@ mainPanel:SetScript("OnDragStop", function(self)
 	db.profile.viewerPosition[3] = x
 	db.profile.viewerPosition[4] = y
 end)
+mainPanel:SetScript("OnShow", function()
+	C_MythicPlus.RequestMapInfo() -- Force update the run history in case we decide to click the history tab
+end)
+mainPanel:SetScript("OnHide", function(self)
+	if self:IsDragging() or self.isResizing then
+		self.isResizing = false
+		self:StopMovingOrSizing()
+		local point, relPoint = db.profile.viewerPosition[1], db.profile.viewerPosition[2]
+		local x, y = db.profile.viewerPosition[3], db.profile.viewerPosition[4]
+		self:ClearAllPoints()
+		self:SetPoint(point, UIParent, relPoint, x, y)
+		self:SetSize(350, db.profile.windowHeight)
+	end
+end)
 mainPanel:SetResizable(true)
 mainPanel:SetResizeBounds(350, 320, 350, 620)
 do
-	local function OnMouseDown(self)
-		self:GetParent():StartSizing("BOTTOMRIGHT")
-		bwTooltip:Hide()
+	local function OnMouseDown(self, button)
+		if button == "LeftButton" then
+			local parent = self:GetParent()
+			parent.isResizing = true
+			parent:StartSizing("BOTTOMRIGHT")
+			bwTooltip:Hide()
+		end
 	end
-	local function OnMouseUp(self)
-		local parent = self:GetParent()
-		parent:StopMovingOrSizing()
-		local height = parent:GetHeight()
-		height = math.floor(height+0.5)
-		db.profile.windowHeight = height
-		parent:SetHeight(height)
+	local function OnMouseUp(self, button)
+		if button == "LeftButton" then
+			local parent = self:GetParent()
+			if parent.isResizing then
+				parent.isResizing = false
+				parent:StopMovingOrSizing()
+				local height = parent:GetHeight()
+				height = math.floor(height+0.5)
+				db.profile.windowHeight = height
+				parent:SetHeight(height)
+				local point, _, relPoint, x, y = parent:GetPoint()
+				x = math.floor(x+0.5)
+				y = math.floor(y+0.5)
+				db.profile.viewerPosition[1] = point
+				db.profile.viewerPosition[2] = relPoint
+				db.profile.viewerPosition[3] = x
+				db.profile.viewerPosition[4] = y
+			end
+		end
 	end
 
 	local drag = CreateFrame("Frame", nil, mainPanel)
@@ -898,13 +940,13 @@ do
 		if InCombatLockdown() then
 			bwTooltip:AddLine(L.keystoneTeleportInCombat)
 		else
-			local spellName = BigWigsLoader.GetSpellName(self.spellID)
+			local spellName = BigWigsLoader.GetSpellName(self.spellID) or "?"
 			if not BigWigsLoader.IsSpellKnownOrInSpellBook(self.spellID) then
 				bwTooltip:AddLine(L.keystoneTeleportNotLearned:format(spellName))
 			else
 				local cd = BigWigsLoader.GetSpellCooldown(self.spellID)
-				if cd.startTime > 0 and cd.duration > 2 then
-					local remainingSeconds = (cd.startTime + cd.duration) - GetTime()
+				local remainingSeconds = cd and cd.startTime > 0 and cd.duration > 2 and ((cd.startTime + cd.duration) - GetTime())
+				if remainingSeconds and remainingSeconds > 0 then
 					local hours = math.floor(remainingSeconds / 3600)
 					remainingSeconds = remainingSeconds % 3600
 					local minutes = math.floor(remainingSeconds / 60)
@@ -1047,6 +1089,7 @@ do
 		local HasSlottedKeystone, SlotKeystone = C_ChallengeMode.HasSlottedKeystone, C_ChallengeMode.SlotKeystone
 		local GetOwnedKeystoneMapID = C_MythicPlus.GetOwnedKeystoneMapID
 		local GetContainerNumSlots, GetContainerItemLink, PickupContainerItem = C_Container.GetContainerNumSlots, C_Container.GetContainerItemLink, C_Container.PickupContainerItem
+		local ClearCursor = ClearCursor
 		local text
 		tab1:SetScript("OnEvent", function()
 			if not text then
@@ -1067,9 +1110,11 @@ do
 								text:SetText(L.keystoneAutoSlotFrame)
 								BigWigsLoader.Print(L.keystoneAutoSlotMessage:format(itemLink))
 								if not HasSlottedKeystone() then
+									ClearCursor()
 									PickupContainerItem(currentBag, currentSlot)
 									SlotKeystone()
 								end
+								return
 							end
 						end
 					end
@@ -1135,6 +1180,7 @@ do
 	-- Tab 2 Event Handler (Used for handling the initial countdown)
 	do
 		local GetActiveKeystoneInfo, GetActiveChallengeMapID = C_ChallengeMode.GetActiveKeystoneInfo, C_ChallengeMode.GetActiveChallengeMapID
+		local countdownTimer = nil
 		tab2:SetScript("OnEvent", function(self, event)
 			if event == "CHALLENGE_MODE_START" then
 				local keyLevel = GetActiveKeystoneInfo()
@@ -1154,7 +1200,13 @@ do
 					BigWigsLoader:SendMessage("BigWigs_Timer", nil, nil, 9, 9, L.keystoneModuleName, 0, icon, false, true)
 					BigWigsLoader:SendMessage("BigWigs_Message", self, nil, BigWigsAPI:GetLocale("BigWigs: Common").custom_sec:format(L.keystoneModuleName, 9), "cyan", icon)
 				end
-				BigWigsLoader.CTimerAfter(9, function()
+				if countdownTimer then
+					countdownTimer:Cancel()
+				end
+				self:RegisterEvent("PLAYER_LEAVING_WORLD")
+				countdownTimer = BigWigsLoader.CTimerNewTimer(9, function()
+					countdownTimer = nil
+					self:UnregisterEvent("PLAYER_LEAVING_WORLD")
 					if keyLevel and keyLevel > 0 and challengeMapName then
 						BigWigsLoader:SendMessage("BigWigs_Message", self, nil, L.keystoneStartBar:format(challengeMapName, keyLevel), "cyan", icon)
 						BigWigsLoader.Print(L.keystoneStartMessage:format(challengeMapName, keyLevel))
@@ -1175,6 +1227,12 @@ do
 					if sound then
 						BigWigsLoader.PlaySoundFile(sound, "Master")
 					end
+				end
+			elseif event == "PLAYER_LEAVING_WORLD" then
+				self:UnregisterEvent(event)
+				if countdownTimer then
+					countdownTimer:Cancel()
+					countdownTimer = nil
 				end
 			else -- CHALLENGE_MODE_RESET
 				local _, _, diffID = BigWigsLoader.GetInstanceInfo()
@@ -1213,9 +1271,10 @@ do
 						end
 					else
 						local cd = BigWigsLoader.GetSpellCooldown(button.spellID)
-						if cd and cd.startTime > 0 and cd.duration > 2 and BigWigsLoader.IsSpellKnownOrInSpellBook(button.spellID) then
-							local remaining = (cd.startTime + cd.duration) - GetTime()
+						local remaining = cd and cd.startTime > 0 and cd.duration > 2 and BigWigsLoader.IsSpellKnownOrInSpellBook(button.spellID) and ((cd.startTime + cd.duration) - GetTime())
+						if remaining and remaining > 0 then
 							local percentage = remaining / cd.duration
+							if percentage > 1 then percentage = 1 end
 							button.cdbar:SetColorTexture(1, 0, 0, 0.6)
 							button.cdbar:Show()
 							button.cdbar:SetWidth(percentage * button:GetWidth())
@@ -1284,11 +1343,7 @@ do
 	tab3:RegisterEvent("CHALLENGE_MODE_COMPLETED")
 	-- Tab 3 Event Handler (Used for automatically showing the window when the dungeon ends)
 	do
-		local RequestMapInfo = C_MythicPlus.RequestMapInfo
 		local function Open()
-			-- Force update the run history in case we decide to click the history tab
-			RequestMapInfo()
-
 			if not db.profile.showViewerDungeonEnd or BigWigsLoader.isTestBuild then return end
 
 			if InCombatLockdown() then
@@ -1531,7 +1586,12 @@ do
 			cellGainedScore.text:SetFormattedText("+%d", runs[i].gained)
 			cellGainedScore.tooltip = L.keystoneScoreGainedTooltip:format(runs[i].gained, runs[i].runScore)
 			cellInTime:SetWidth(WIDTH_RATING+15)
-			if runs[i].completed then
+			local minutesTotal = math.floor(runs[i].durationSec / 60)
+			local secondsTotal = math.floor(runs[i].durationSec - (minutesTotal*60))
+			if not timeLimit then
+				cellInTime.text:SetText("-")
+				cellInTime.tooltip = (runs[i].completed and L.keystoneCompletedTooltip or L.keystoneFailedTooltip):format(minutesTotal, secondsTotal, 0, 0)
+			elseif runs[i].completed then
 				if runs[i].durationSec > timeLimit then -- Was the time limit changed in a hotfix?
 					cellInTime.text:SetFormattedText(L.keystoneTimeUnder, 0, 0)
 				else
@@ -1540,8 +1600,6 @@ do
 					local secondsUnder = math.floor(diff - (minutesUnder*60))
 					cellInTime.text:SetFormattedText(L.keystoneTimeUnder, minutesUnder, secondsUnder)
 				end
-				local minutesTotal = math.floor(runs[i].durationSec / 60)
-				local secondsTotal = math.floor(runs[i].durationSec - (minutesTotal*60))
 				local minutesTimeLimit = math.floor(timeLimit / 60)
 				local secondsTimeLimit = math.floor(timeLimit - (minutesTimeLimit*60))
 				cellInTime.tooltip = (L.keystoneCompletedTooltip):format(minutesTotal, secondsTotal, minutesTimeLimit, secondsTimeLimit)
@@ -1554,8 +1612,6 @@ do
 					local secondsOver = math.floor(diff - (minutesOver*60))
 					cellInTime.text:SetFormattedText(L.keystoneTimeOver, minutesOver, secondsOver)
 				end
-				local minutesTotal = math.floor(runs[i].durationSec / 60)
-				local secondsTotal = math.floor(runs[i].durationSec - (minutesTotal*60))
 				local minutesTimeLimit = math.floor(timeLimit / 60)
 				local secondsTimeLimit = math.floor(timeLimit - (minutesTimeLimit*60))
 				cellInTime.tooltip = (L.keystoneFailedTooltip):format(minutesTotal, secondsTotal, minutesTimeLimit, secondsTimeLimit)
@@ -1580,7 +1636,7 @@ do
 				return L.keystoneClickToTeleportNotLearned
 			else
 				local cd = BigWigsLoader.GetSpellCooldown(spellID)
-				if cd.startTime > 0 and cd.duration > 2 then
+				if cd and cd.startTime > 0 and cd.duration > 2 and ((cd.startTime + cd.duration) - GetTime()) > 0 then
 					return L.keystoneClickToTeleportCooldown
 				else
 					return L.keystoneClickToTeleportNow
@@ -1938,8 +1994,8 @@ do
 						else
 							challengesTeleportButton:SetAttribute("spell", spellID)
 							local cd = BigWigsLoader.GetSpellCooldown(spellID)
-							if cd.startTime > 0 and cd.duration > 2 then
-								local remainingSeconds = (cd.startTime + cd.duration) - GetTime()
+							local remainingSeconds = cd and cd.startTime > 0 and cd.duration > 2 and ((cd.startTime + cd.duration) - GetTime())
+							if remainingSeconds and remainingSeconds > 0 then
 								local hours = math.floor(remainingSeconds / 3600)
 								remainingSeconds = remainingSeconds % 3600
 								local minutes = math.floor(remainingSeconds / 60)
@@ -2054,11 +2110,6 @@ local instanceKeysWidgets = {testing = false, nameList = {}, playerListText = {}
 do
 	local main = CreateFrame("Frame", nil, UIParent)
 	main:SetSize(200, 40)
-	do
-		local point, relPoint = db.profile.instanceKeysPosition[1], db.profile.instanceKeysPosition[2]
-		local x, y = db.profile.instanceKeysPosition[3], db.profile.instanceKeysPosition[4]
-		main:SetPoint(point, UIParent, relPoint, x, y)
-	end
 	main:SetFrameStrata("MEDIUM")
 	main:SetFixedFrameStrata(true)
 	main:SetFrameLevel(9400)
@@ -2082,6 +2133,15 @@ do
 		db.profile.instanceKeysPosition[3] = x
 		db.profile.instanceKeysPosition[4] = y
 	end)
+	main:SetScript("OnHide", function(self)
+		if self:IsDragging() then
+			self:StopMovingOrSizing()
+			local point, relPoint = db.profile.instanceKeysPosition[1], db.profile.instanceKeysPosition[2]
+			local x, y = db.profile.instanceKeysPosition[3], db.profile.instanceKeysPosition[4]
+			self:ClearAllPoints()
+			self:SetPoint(point, UIParent, relPoint, x, y)
+		end
+	end)
 	instanceKeysWidgets.main = main
 
 	local bg = main:CreateTexture()
@@ -2091,46 +2151,10 @@ do
 	instanceKeysWidgets.bg = bg
 
 	local header = main:CreateFontString()
-	header:SetPoint(db.profile.instanceKeysAlign, 0, 0)
-	header:SetJustifyH(db.profile.instanceKeysAlign)
-
-	local flags = nil
-	if db.profile.instanceKeysMonochrome and db.profile.instanceKeysOutline ~= "NONE" then
-		flags = "MONOCHROME," .. db.profile.instanceKeysOutline
-	elseif db.profile.instanceKeysMonochrome then
-		flags = "MONOCHROME"
-	elseif db.profile.instanceKeysOutline ~= "NONE" then
-		flags = db.profile.instanceKeysOutline
-	end
-	header:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, flags)
-	header:SetFormattedText("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t%s", L.instanceKeysTitle)
-	header:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
-	if db.profile.instanceKeysHideTitle then
-		header:Hide()
-	else
-		header:Show()
-	end
 	instanceKeysWidgets.header = header
 
 	for i = 1, 5 do
 		local playerListText = main:CreateFontString()
-		if db.profile.instanceKeysGrowUpwards then
-			playerListText:SetJustifyV("BOTTOM")
-			playerListText:SetPoint(
-				db.profile.instanceKeysAlign == "LEFT" and "BOTTOMLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "BOTTOMRIGHT" or "BOTTOM", i == 1 and header or instanceKeysWidgets.playerListText[i-1],
-				db.profile.instanceKeysAlign == "LEFT" and "TOPLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "TOPRIGHT" or "TOP", 0, 6
-			)
-		else
-			playerListText:SetJustifyV("TOP")
-			playerListText:SetPoint(
-				db.profile.instanceKeysAlign == "LEFT" and "TOPLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "TOPRIGHT" or "TOP", i == 1 and header or instanceKeysWidgets.playerListText[i-1],
-				db.profile.instanceKeysAlign == "LEFT" and "BOTTOMLEFT" or db.profile.instanceKeysAlign == "RIGHT" and "BOTTOMRIGHT" or "BOTTOM", 0, -6
-			)
-		end
-		playerListText:SetJustifyH(db.profile.instanceKeysAlign)
-		playerListText:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
-		playerListText:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, flags)
-		playerListText:SetText(" ")
 		instanceKeysWidgets.playerListText[i] = playerListText
 	end
 
@@ -2337,6 +2361,22 @@ do
 		local activeTexts, storedTexts = {}, {}
 		local GetTextObject
 		local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
+		local eventFrame = CreateFrame("Frame")
+		eventFrame:RegisterEvent("PLAYER_LEAVING_WORLD")
+		eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+		eventFrame:RegisterEvent("CHALLENGE_MODE_START")
+		local prevUnit = nil
+		local function RegisterNameplateEvents()
+			eventFrame:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+			eventFrame:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
+			eventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+		end
+		local function UnregisterNameplateEvents()
+			prevUnit = nil
+			eventFrame:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
+			eventFrame:UnregisterEvent("NAME_PLATE_UNIT_REMOVED")
+			eventFrame:UnregisterEvent("PLAYER_TARGET_CHANGED")
+		end
 		do
 			local SetText, SetPoint
 			do
@@ -2398,6 +2438,7 @@ do
 
 		do
 			NamePlatePercentUtils.RemoveAll = function()
+				prevUnit = nil
 				for unit, text in next, activeTexts do
 					text:Hide(unit)
 				end
@@ -2462,38 +2503,54 @@ do
 			end
 
 			local UnitCanAttack = BigWigsLoader.UnitCanAttack
-			NamePlatePercentUtils.Test = function()
+			local testTicker = nil
+			local function UpdateTestNameplates()
+				if not NamePlatePercentUtils.testing then return end
 				NamePlatePercentUtils.RemoveAll()
-				if NamePlatePercentUtils.testing then
-					BigWigsLoader.CTimerAfter(0.5, NamePlatePercentUtils.Test)
-					for i = 1, 40 do
-						local unit = "nameplate" .. i
-						if UnitCanAttack("player", unit) then
-							local nameplateFrame = GetNamePlateForUnit(unit)
-							if nameplateFrame then
-								local value, _, percentString = GetUnitCriteriaProgressValues(unit)
-								if not percentString then
-									local decimal = i > 9 and (i / 100) or (i / 10)
-									local percent = 1 + decimal
-									percentString = tostring(percent)
-									value = i % 2 == 0 and 2 or 1
-								end
-								local text = GetTextObject()
-								if text:SetPoint(unit) then
-									if db.profile.progressNameplateFormat == 1 then
-										text:SetText(unit, "%s%%", percentString)
-									elseif db.profile.progressNameplateFormat == 3 then
-										text:SetText(unit, "%d/%d", value, 500)
-									else
-										text:SetText(unit, "%d", value)
-									end
+				for i = 1, 40 do
+					local unit = "nameplate" .. i
+					if UnitCanAttack("player", unit) then
+						local nameplateFrame = GetNamePlateForUnit(unit)
+						if nameplateFrame then
+							local value, _, percentString = GetUnitCriteriaProgressValues(unit)
+							if not percentString then
+								local decimal = i > 9 and (i / 100) or (i / 10)
+								local percent = 1 + decimal
+								percentString = tostring(percent)
+								value = i % 2 == 0 and 2 or 1
+							end
+							local text = GetTextObject()
+							if text:SetPoint(unit) then
+								if db.profile.progressNameplateFormat == 1 then
+									text:SetText(unit, "%s%%", percentString)
+								elseif db.profile.progressNameplateFormat == 3 then
+									text:SetText(unit, "%d/%d", value, 500)
 								else
-									text:Hide(unit)
+									text:SetText(unit, "%d", value)
 								end
+							else
+								text:Hide(unit)
 							end
 						end
 					end
 				end
+			end
+			NamePlatePercentUtils.StopTest = function()
+				NamePlatePercentUtils.testing = false
+				if testTicker then
+					testTicker:Cancel()
+					testTicker = nil
+				end
+				NamePlatePercentUtils.RemoveAll()
+			end
+			NamePlatePercentUtils.Test = function()
+				if testTicker then
+					testTicker:Cancel()
+					testTicker = nil
+				end
+				if not NamePlatePercentUtils.testing then return end
+				UpdateTestNameplates()
+				testTicker = BigWigsLoader.CTimerNewTicker(0.5, UpdateTestNameplates)
 			end
 			NamePlatePercentUtils.RestoreAll = function()
 				NamePlatePercentUtils.RemoveAll()
@@ -2523,12 +2580,26 @@ do
 					end
 				end
 			end
+			NamePlatePercentUtils.UpdateProfile = function()
+				if db.profile.progressNameplate then
+					NamePlatePercentUtils.UpdateAll()
+					if NamePlatePercentUtils.isActive then
+						local wasRegistered = eventFrame:IsEventRegistered("NAME_PLATE_UNIT_ADDED")
+						RegisterNameplateEvents()
+						if not wasRegistered then
+							NamePlatePercentUtils.RestoreAll()
+						end
+					else
+						UnregisterNameplateEvents()
+					end
+				else
+					UnregisterNameplateEvents()
+					NamePlatePercentUtils.StopTest()
+					NamePlatePercentUtils.UpdateAll()
+				end
+			end
 		end
 
-		local nameplateFrame = CreateFrame("Frame")
-		nameplateFrame:RegisterEvent("PLAYER_LEAVING_WORLD")
-		nameplateFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-		nameplateFrame:RegisterEvent("CHALLENGE_MODE_START")
 		local UpdateTotal
 		do
 			local GetStepInfo = C_Scenario.GetStepInfo
@@ -2546,7 +2617,6 @@ do
 				end
 			end
 		end
-		local prevUnit = nil
 		local function OnEvent(self, event, unit)
 			if event == "NAME_PLATE_UNIT_ADDED" then
 				local value, _, percentString = GetUnitCriteriaProgressValues(unit)
@@ -2595,11 +2665,8 @@ do
 					end
 				end
 			elseif event == "PLAYER_LEAVING_WORLD" then
-				prevUnit = nil
 				NamePlatePercentUtils.isActive = false
-				self:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
-				self:UnregisterEvent("NAME_PLATE_UNIT_REMOVED")
-				self:UnregisterEvent("PLAYER_TARGET_CHANGED")
+				UnregisterNameplateEvents()
 				NamePlatePercentUtils.RemoveAll()
 			elseif event == "PLAYER_ENTERING_WORLD" then
 				local _, _, diffID = BigWigsLoader.GetInstanceInfo()
@@ -2607,13 +2674,10 @@ do
 					totalEnemyForcesRaw = 0
 					NamePlatePercentUtils.isActive = true
 					if NamePlatePercentUtils.testing then
-						NamePlatePercentUtils.testing = false
-						NamePlatePercentUtils.RemoveAll()
+						NamePlatePercentUtils.StopTest()
 					end
 					if db.profile.progressNameplate then
-						self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
-						self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
-						self:RegisterEvent("PLAYER_TARGET_CHANGED")
+						RegisterNameplateEvents()
 					end
 					UpdateTotal()
 				end
@@ -2621,18 +2685,15 @@ do
 				totalEnemyForcesRaw = 0
 				NamePlatePercentUtils.isActive = true
 				if NamePlatePercentUtils.testing then
-					NamePlatePercentUtils.testing = false
-					NamePlatePercentUtils.RemoveAll()
+					NamePlatePercentUtils.StopTest()
 				end
 				if db.profile.progressNameplate then
-					self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
-					self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
-					self:RegisterEvent("PLAYER_TARGET_CHANGED")
+					RegisterNameplateEvents()
 				end
 				BigWigsLoader.CTimerAfter(7, UpdateTotal)
 			end
 		end
-		nameplateFrame:SetScript("OnEvent", OnEvent)
+		eventFrame:SetScript("OnEvent", OnEvent)
 	end
 end
 
@@ -2648,6 +2709,10 @@ do
 
 	function UpdateWidgets()
 		LibKeystone.SetGuildHidden(db.profile.hideFromGuild)
+		if mainPanel:IsDragging() or mainPanel.isResizing then
+			mainPanel.isResizing = false
+			mainPanel:StopMovingOrSizing()
+		end
 		mainPanel:ClearAllPoints()
 		do
 			local point, relPoint = db.profile.viewerPosition[1], db.profile.viewerPosition[2]
@@ -2669,6 +2734,7 @@ do
 		instanceKeysWidgets.header:ClearAllPoints()
 		instanceKeysWidgets.header:SetPoint(db.profile.instanceKeysAlign, 0, 0)
 		instanceKeysWidgets.header:SetFont(LibSharedMedia:Fetch("font", db.profile.instanceKeysFontName), db.profile.instanceKeysFontSize, fontFlags)
+		instanceKeysWidgets.header:SetFormattedText("|TInterface\\AddOns\\BigWigs\\Media\\Icons\\minimap_raid:0:0|t%s", L.instanceKeysTitle)
 		instanceKeysWidgets.header:SetTextColor(db.profile.instanceKeysColor[1], db.profile.instanceKeysColor[2], db.profile.instanceKeysColor[3], db.profile.instanceKeysColor[4])
 		for i = 1, 5 do
 			instanceKeysWidgets.playerListText[i]:SetJustifyH(db.profile.instanceKeysAlign)
@@ -2698,6 +2764,9 @@ do
 			instanceKeysWidgets.header:Show()
 		end
 
+		if instanceKeysWidgets.main:IsDragging() then
+			instanceKeysWidgets.main:StopMovingOrSizing()
+		end
 		instanceKeysWidgets.main:ClearAllPoints()
 		do
 			local point, relPoint = db.profile.instanceKeysPosition[1], db.profile.instanceKeysPosition[2]
@@ -2721,23 +2790,6 @@ do
 		else
 			viewerKeybindFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 		end
-
-		local progressNameplateFontFlags = nil
-		if db.profile.progressNameplateMonochrome and db.profile.progressNameplateOutline ~= "NONE" then
-			progressNameplateFontFlags = "MONOCHROME," .. db.profile.progressNameplateOutline
-		elseif db.profile.progressNameplateMonochrome then
-			progressNameplateFontFlags = "MONOCHROME"
-		elseif db.profile.progressNameplateOutline ~= "NONE" then
-			progressNameplateFontFlags = db.profile.progressNameplateOutline .. ""
-		end
-		if db.profile.progressNameplateSlugRendering then
-			if not progressNameplateFontFlags then
-				progressNameplateFontFlags = "SLUG"
-			else
-				progressNameplateFontFlags = progressNameplateFontFlags .. ",SLUG"
-			end
-		end
-		NamePlatePercentUtils.fontFlags = progressNameplateFontFlags
 	end
 
 	local function voiceSorting()
@@ -2784,9 +2836,6 @@ do
 	end
 
 	viewerKeybindFrame:SetScript("OnClick", ShowViewer)
-	if db.profile.viewerKeybind ~= "" then
-		SetOverrideBindingClick(viewerKeybindFrame, true, db.profile.viewerKeybind, "BWViewerKeybindFrame")
-	end
 	viewerKeybindFrame:SetScript("OnEvent", function(self, event)
 		self:UnregisterEvent(event)
 		ClearOverrideBindings(self)
@@ -2869,16 +2918,16 @@ do
 										return L.toggleAnchorsBtnShow
 									end
 								end,
-								desc = function()
-									if instanceKeysWidgets.testing then
-										return L.toggleAnchorsBtnHide_desc
-									else
-										return L.toggleMessagesAnchorsBtnShow_desc
-									end
-								end,
 								func = function()
 									if instanceKeysWidgets.testing then
 										instanceKeysWidgets.testing = false
+										if instanceKeysWidgets.main:IsDragging() then
+											instanceKeysWidgets.main:StopMovingOrSizing()
+											local point, relPoint = db.profile.instanceKeysPosition[1], db.profile.instanceKeysPosition[2]
+											local x, y = db.profile.instanceKeysPosition[3], db.profile.instanceKeysPosition[4]
+											instanceKeysWidgets.main:ClearAllPoints()
+											instanceKeysWidgets.main:SetPoint(point, UIParent, relPoint, x, y)
+										end
 										instanceKeysWidgets.main:EnableMouse(false)
 										instanceKeysWidgets.main:SetMovable(false)
 										instanceKeysWidgets.bg:Hide()
@@ -3207,12 +3256,7 @@ do
 								width = "full",
 								set = function(_, value)
 									db.profile.progressNameplate = value
-									if value then
-										NamePlatePercentUtils.RestoreAll()
-									else
-										NamePlatePercentUtils.RemoveAll()
-										NamePlatePercentUtils.testing = false
-									end
+									NamePlatePercentUtils.UpdateProfile()
 								end,
 							},
 							test = {
@@ -3226,8 +3270,7 @@ do
 								end,
 								func = function()
 									if NamePlatePercentUtils.testing then
-										NamePlatePercentUtils.testing = false
-										NamePlatePercentUtils.RestoreAll()
+										NamePlatePercentUtils.StopTest()
 									else
 										NamePlatePercentUtils.testing = true
 										NamePlatePercentUtils.Test()
@@ -3543,13 +3586,14 @@ do
 		ProfileUtils.ValidateMainSettings()
 		ProfileUtils.ValidateMediaSettings()
 		UpdateWidgets()
+		NamePlatePercentUtils.UpdateProfile()
 	end
 	local loginFrame = CreateFrame("Frame")
 	loginFrame:SetScript("OnEvent", function(self, event)
 		self:UnregisterEvent(event)
 		self:SetScript("OnEvent", nil)
 		UpdateProfile()
-		BigWigsLoader.RegisterMessage(loginFrame, "BigWigs_ProfileUpdate", UpdateProfile)
+		BigWigsLoader.RegisterMessage({}, "BigWigs_ProfileUpdate", UpdateProfile)
 	end)
-	loginFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+	loginFrame:RegisterEvent("PLAYER_LOGIN")
 end

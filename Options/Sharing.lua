@@ -274,6 +274,7 @@ local mythicPlusSettingsToExport = {
 	"instanceKeysShowDungeonEnd",
 	"instanceKeysHideTitle",
 	-- Progress %
+	--"progressTooltip", -- Not exporting tooltip on/off status
 	"progressTooltipFormat",
 	"progressNameplate",
 	"progressNameplateFormat",
