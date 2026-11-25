@@ -767,6 +767,25 @@ do
 			end
 		end
 	end
+	function plugin:OnPluginDisable()
+		for _, textTable in next, timers do
+			for _, countdownTable in next, textTable do
+				countdownTable[2] = true
+			end
+		end
+		timers = {}
+		for _, textTable in next, GUIDtimers do
+			for _, guidTable in next, textTable do
+				for _, countdownTable in next, guidTable do
+					countdownTable[2] = true
+				end
+			end
+		end
+		GUIDtimers = {}
+		if latestCountdown then
+			self:SetText("")
+		end
+	end
 end
 
 function plugin:TestCountdown()
