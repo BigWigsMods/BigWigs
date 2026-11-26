@@ -581,11 +581,14 @@ do
 	function API.IsValidFrame(frameName)
 		if type(frameName) ~= "string" then return false end
 		local frame = _G[frameName]
-		if type(frame) ~= "table" or type(frame.GetObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or type(frame.GetWidth) ~= "function" then
+		if type(frame) ~= "table" or type(frame.IsObjectType) ~= "function" or type(frame.IsForbidden) ~= "function" or type(frame.GetWidth) ~= "function" then
 			return false
 		else
 			local success, isForbidden = pcall(frame.IsForbidden, frame)
 			if not success or isForbidden then return false end
+
+			local isFrameSuccess, isFrame = pcall(frame.IsObjectType, frame, "Frame")
+			if not isFrameSuccess or not isFrame then return false end
 
 			local hasWidthResult, width = pcall(frame.GetWidth, frame)
 			if not hasWidthResult or type(width) ~= "number" then return false end

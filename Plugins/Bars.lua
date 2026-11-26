@@ -456,19 +456,26 @@ do
 				db.normalWidth = plugin.defaultDB.normalWidth
 			elseif db.normalCopyCustomAnchorWidth then
 				local frame = _G[db.normalPosition[5]]
-				activeFrameNormal = frame
 				if not hookedFrameNormal[frame] then
-					hookedFrameNormal[frame] = true
-					normalAnchor.HookScript(frame, "OnSizeChanged", HookScriptNormal)
+					local success = pcall(normalAnchor.HookScript, frame, "OnSizeChanged", HookScriptNormal)
+					if success then
+						hookedFrameNormal[frame] = true
+					else
+						db.normalCopyCustomAnchorWidth = plugin.defaultDB.normalCopyCustomAnchorWidth
+						db.normalWidth = plugin.defaultDB.normalWidth
+						frame = nil
+					end
 				end
-
-				local width = math.floor(frame:GetWidth()+0.5)
-				if width < minBarWidth then
-					width = minBarWidth
-				elseif width > maxBarWidth then
-					width = maxBarWidth
+				if frame then
+					activeFrameNormal = frame
+					local width = math.floor(frame:GetWidth()+0.5)
+					if width < minBarWidth then
+						width = minBarWidth
+					elseif width > maxBarWidth then
+						width = maxBarWidth
+					end
+					db.normalWidth = width
 				end
-				db.normalWidth = width
 			end
 		else
 			if db.normalCopyCustomAnchorWidth then
@@ -511,19 +518,26 @@ do
 				db.expWidth = plugin.defaultDB.expWidth
 			elseif db.expCopyCustomAnchorWidth then
 				local frame = _G[db.expPosition[5]]
-				activeFrameExp = frame
 				if not hookedFrameExp[frame] then
-					hookedFrameExp[frame] = true
-					emphasizeAnchor.HookScript(frame, "OnSizeChanged", HookScriptExp)
+					local success = pcall(emphasizeAnchor.HookScript, frame, "OnSizeChanged", HookScriptExp)
+					if success then
+						hookedFrameExp[frame] = true
+					else
+						db.expCopyCustomAnchorWidth = plugin.defaultDB.expCopyCustomAnchorWidth
+						db.expWidth = plugin.defaultDB.expWidth
+						frame = nil
+					end
 				end
-
-				local width = math.floor(frame:GetWidth()+0.5)
-				if width < minBarWidth then
-					width = minBarWidth
-				elseif width > maxBarWidth then
-					width = maxBarWidth
+				if frame then
+					activeFrameExp = frame
+					local width = math.floor(frame:GetWidth()+0.5)
+					if width < minBarWidth then
+						width = minBarWidth
+					elseif width > maxBarWidth then
+						width = maxBarWidth
+					end
+					db.expWidth = width
 				end
-				db.expWidth = width
 			end
 		else
 			if db.expCopyCustomAnchorWidth then
