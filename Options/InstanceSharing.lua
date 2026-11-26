@@ -150,7 +150,7 @@ local function getImportSettings(widget)
 					verifyImportString(value)
 					importSettings[i[#i]] = value
 				end,
-				control = "ImportStringMultiline",
+				setOnChange = true,
 			},
 			doFlags = {
 				type = "toggle",
@@ -260,8 +260,7 @@ local function getExportSettings()
 				width = "full",
 				order = 1,
 				get = function() return InstanceSharing:GetInstanceExportString() end,
-				set = function() end,
-				control = "NoAcceptMultiline",
+				set = false,
 			},
 			doFlags = {
 				type = "toggle",

@@ -234,7 +234,7 @@ do
 					discord = {
 						type = "input",
 						get = function() return "discord.gg/gtDxWKvXE8" end,
-						set = function() end,
+						set = false,
 						name = "Discord",
 						order = 52,
 						width = 0.9,
@@ -242,7 +242,7 @@ do
 					github = {
 						type = "input",
 						get = function() return "github.com/BigWigsMods" end,
-						set = function() end,
+						set = false,
 						name = "GitHub",
 						order = 53,
 						width = 0.95,
@@ -250,7 +250,7 @@ do
 					curseforge = {
 						type = "input",
 						get = function() return "curseforge.com/wow/addons/big-wigs" end,
-						set = function() end,
+						set = false,
 						name = "CurseForge",
 						order = 54,
 						width = 1.32,

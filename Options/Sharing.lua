@@ -1,55 +1,6 @@
 local sharingModule = {}
 
 -------------------------------------------------------------------------------
--- Libraries
---
-
-local AceGUI = LibStub("AceGUI-3.0")
-
--------------------------------------------------------------------------------
--- Custom Widgets
---
-
-do
-	local function OnEditFocusGainedHighlight(frame)
-		AceGUI:SetFocus(frame.obj)
-		frame.obj:Fire("OnEditFocusGained")
-		frame.obj.editBox.obj:HighlightText()
-	end
-
-	local Type, Version = "NoAcceptMultiline", 1
-	local function Constructor()
-		local multiLineEditBox = AceGUI:Create("MultiLineEditBox")
-		multiLineEditBox.type = Type
-		multiLineEditBox.button:Hide()
-		multiLineEditBox.button.Show = function() end -- Prevent the button from being shown again
-		multiLineEditBox.editBox:SetScript("OnEditFocusGained", OnEditFocusGainedHighlight)
-		return multiLineEditBox
-	end
-	AceGUI:RegisterWidgetType(Type, Constructor, Version)
-end
-
-do
-	local function OnTextChanged(self, userInput)
-		if userInput then
-			self = self.obj
-			self:Fire("OnEnterPressed", self.editBox:GetText())
-		end
-	end
-
-	local Type, Version = "ImportStringMultiline", 1
-	local function Constructor()
-		local multiLineEditBox = AceGUI:Create("MultiLineEditBox")
-		multiLineEditBox.type = Type
-		multiLineEditBox.editBox:SetScript("OnTextChanged", OnTextChanged)
-		multiLineEditBox.button:Hide()
-		multiLineEditBox.button.Show = function() end -- Prevent the button from being shown again
-		return multiLineEditBox
-	end
-	AceGUI:RegisterWidgetType(Type, Constructor, Version)
-end
-
--------------------------------------------------------------------------------
 -- Locals
 --
 
@@ -1420,7 +1371,7 @@ local sharingOptions = {
 					sharingImportOptionsSettings[i[#i]] = value
 				end,
 				get = function(i) return sharingImportOptionsSettings[i[#i]] end,
-				control = "ImportStringMultiline",
+				setOnChange = true,
 			},
 			importInfo = {
 				type = "description",
@@ -1837,8 +1788,7 @@ local sharingOptions = {
 				get = function()
 					return addonTable.GetExportString()
 				end,
-				set = function() end,
-				control = "NoAcceptMultiline",
+				set = false,
 			},
 		},
 	},
@@ -1907,8 +1857,7 @@ local sharingOptions = {
 				get = function()
 					return addonTable.GetSelectedEncounterExportString()
 				end,
-				set = function() end,
-				control = "NoAcceptMultiline",
+				set = false,
 			},
 		},
 	}
