@@ -1784,7 +1784,7 @@ do
 	function boss:GetTimelineBarTimeRemaining(barInfo)
 		if not barInfo.startTime then return 0 end
 
-		local duration = type(barInfo.duration) == "table" and barInfo.duration[2] or barInfo.duration
+		local duration = type(barInfo.duration) == "table" and barInfo.duration[1] or barInfo.duration
 		return math.max((barInfo.startTime + duration) - GetTime(), 0)
 	end
 
