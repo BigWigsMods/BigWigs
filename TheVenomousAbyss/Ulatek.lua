@@ -1568,7 +1568,7 @@ function mod:VirulentSpit(duration, count)
 		key = 1302982,
 		delay = delay,
 		count = count,
-		onFinishedDelayed = function(this)
+		[delay and "onFinishedDelayed" or "onFinished"] = function(this)
 			self:Message(1302982, "yellow", barText)
 			self:PlaySound(1302982, "alarm")
 			if this.count == 1 or this.count == 3 then
