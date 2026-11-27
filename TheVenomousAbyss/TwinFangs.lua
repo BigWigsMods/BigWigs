@@ -66,17 +66,19 @@ mod:SetRenames({
 -- Options
 --
 
-mod:SetAuraData({ -- TODO
+mod:SetAuraData({
 	{1290336, soundOnApplied = "none", soundOnAppliedDose = "none", header = CL.important}, -- Eternal Venom
 	{1290814, soundOnApplied = "none"}, -- Coiling Ichor
 	{1310096, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Feasted
+
 	{1289192, soundOnApplied = "none", header = CL.general}, -- Caustic Deluge
 	{1292552, 1306925, soundOnApplied = "none"}, -- Congealed Gore
 	{1293979, soundOnApplied = "none"}, -- Corrosive Spit
+	{1289092, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Stone Breaker
 	{1309471, soundOnApplied = "none"}, -- Noxious Slick
-	{1289092, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.tank_debuff}, -- Stone Breaker
 	{1292807, soundOnApplied = "none"}, -- Stir the Depths
 	{1294605, soundOnApplied = "none"}, -- Vile Flood
+
 	{1303230, 1303235, soundOnApplied = "none", difficulty = "mythic", header = CL.mythic}, -- Blood Torrent
 	{1310360, soundOnApplied = "none", soundOnAppliedDose = "none", difficulty = "mythic"}, -- Envenomed
 	{1310102, soundOnApplied = "none", difficulty = "mythic"}, -- Tainted Blood
@@ -164,7 +166,7 @@ function mod:MythicEvents(_, eventInfo)
 	elseif durationRounded == 6 then
 		countForDuration[durationRounded] = (countForDuration[durationRounded] or 0) + 1
 		if countForDuration[durationRounded] % 2 == 1 then-- Sanguine Storm > Flood
-			barInfo = self:Barrage()
+			barInfo = self:SanguineStorm()
 		else
 			barInfo = self:VileFlood()
 		end
@@ -241,7 +243,7 @@ function mod:OtherEvents(_, eventInfo)
 	elseif durationRounded == 6 then
 		countForDuration[durationRounded] = (countForDuration[durationRounded] or 0) + 1
 		if countForDuration[durationRounded] % 2 == 1 then-- Sanguine Storm > Flood
-			barInfo = self:Barrage()
+			barInfo = self:SanguineStorm()
 		else
 			barInfo = self:VileFlood()
 		end
@@ -477,7 +479,7 @@ function mod:StoneBreaker()
 	}
 end
 
-function mod:Barrage()
+function mod:SanguineStorm()
 	local barText = CL.count:format(self:GetRename(1306872), barrageCount)
 	barrageCount = barrageCount + 1
 	return {

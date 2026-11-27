@@ -64,10 +64,11 @@ mod:SetAuraData({
 	{1284590, soundOnApplied = "warning", soundOnAppliedDose = "none", header = CL.important}, -- Helical Toxins
 	{1296880, soundOnApplied = "warning", difficulty = "mythic"}, -- Shifting Protovenom
 	{1288260, soundOnApplied = "warning"}, -- Unstable Miasma
+
 	{1284471, soundOnApplied = "alarm", dispel = "magic", header = CL.general}, -- Blighted Blood -- DoT; Drops pool when removed
-	{1284210, soundOnApplied = "underyou"}, -- Blood Venom -- Standing in bad
 	{1284491, soundOnApplied = "none", soundOnAppliedDose = "none", note = CL.tank_debuff}, -- Bloodvenom Injection -- Tank stacks; Drops pool when expires
 	{1288297, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Clinging Murk -- Soaked Miasma; Drops pool when expires
+	{1284210, soundOnApplied = "underyou"}, -- Blood Venom -- Standing in bad
 	{1284947, soundOnApplied = "none"}, -- Cultivated Burst -- Fail DoT
 	{1284500, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Mark of Acid
 	{1284506, soundOnApplied = "none", soundOnAppliedDose = "none"}, -- Mark of Blood
@@ -151,7 +152,6 @@ end
 -- Timeline Event Handlers
 --
 
--- Mythic/Heroic/Normal were the same in testing
 function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 	if eventInfo.source ~= 0 or self:IsWiping() then return end
 	local barInfo = nil
@@ -163,9 +163,6 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 
 	if isIntermission then
 		-- local elapsed = GetTime() - nextStasis
-		self:Message(1284588, "green", self:GetRename(1284588, 2), false)
-		self:PlaySound(1284588, "long")
-
 		isIntermission = false
 		stage = stage + 1
 		self:SetStage(stage)
@@ -175,6 +172,9 @@ function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(_, eventInfo)
 		local stasisCD = 91
 		nextStasis = self.stageTime + stasisCD
 		if self:ShouldShowBars() then
+			self:Message(1284588, "green", self:GetRename(1284588, 2), false)
+			self:PlaySound(1284588, "long")
+
 			self:Bar(1284588, stasisCD, CL.count:format(self:GetRename(1284588), stage)) -- Vitriolic Stasis
 
 			if self:Mythic() then
@@ -323,7 +323,7 @@ function mod:BerserkEvent()
 		icon = 26662,
 		key = "berserk",
 		onFinished = function()
-			self:StopBlizzMessages(2)
+			self:StopBlizzMessages(2) -- Blood of Ula'tek goes into a berserk rage!
 			self:Message("berserk", "red", self:GetRename("berserk", 2), 26662)
 			self:PlaySound("berserk", "alarm")
 		end,

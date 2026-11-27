@@ -983,7 +983,7 @@ do
 	local sawMalice = false
 
 	local function isWardenInRange(unit)
-		if mod:UnitLevel(unit) ~= 92 then  -- Doomscale Warden only
+		if mod:UnitLevel(unit) ~= 92 then -- Doomscale Warden only
 			return false
 		end
 		if unit == "target" or unit == "focus" then -- Always assume this is on your side.
