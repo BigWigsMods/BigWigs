@@ -47,8 +47,8 @@ local protovenomCount = 1
 mod:SetRenames({
 	["berserk"] = {26662, CL.custom_end:format(mod.displayName, mod:SpellName(26662)), notes = {CL.timerNote, CL.messageNote}}, -- Berserk
 	[1284588] = {CL.intermission, CL.over:format(CL.intermission), original = {1284588, CL.over:format(mod:SpellName(1284588))}}, -- Vitriolic Stasis
-	[1296878] = {1296878, CL.soon:format(mod:SpellName(1296878)), original = false}, -- Shifting Protovenom
-	[1284251] = {CL.add, CL.add_spawning, original = false}, -- Venom Coagulation
+	[1296878] = {1296878, CL.soon:format(mod:SpellName(1296878)), original = {1296878, CL.soon:format(mod:SpellName(1296878))}}, -- Shifting Protovenom
+	[1284251] = {CL.add, CL.add_spawning, original = {1284251, false}}, -- Venom Coagulation
 	[1284434] = {1284434}, -- Toxic Droplets
 	[1284458] = {1284458}, -- Empowering Slam
 	[1284483] = {CL.dispels}, -- Blighted Blood
