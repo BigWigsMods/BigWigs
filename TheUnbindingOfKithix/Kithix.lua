@@ -88,7 +88,7 @@ function mod:GetOptions()
 		-- Stage One: Darkness' Domain
 		1301511, -- Voidswarm
 		1304424, -- Extinguish
-		1304508, -- Light's Embrace
+		{1304508, "EMPHASIZE"}, -- Light's Embrace
 		{1304045, "ME_ONLY_EMPHASIZE"}, -- Unspeakable Horrors
 		1303681, -- Twisted Appendage
 		{1304930, "CASTBAR"}, -- Dark Devastation
@@ -616,8 +616,13 @@ function mod:Extinguish(duration)
 	local barText = CL.count:format(self:GetRename(1304424), count)
 	extinguishCount = extinguishCount + 1
 
+	local orbTimer
 	if self:ShouldShowBars() then
 		self:Bar(1304508, duration + 2, CL.count:format(self:GetRename(1304508), count)) -- Light's Embrace
+		orbTimer = self:ScheduleTimer(function()
+			self:Message(1304508, "green", CL.count:format(self:GetRename(1304508), count))
+			self:PlaySound(1304508, "warning")
+		end, duration + 2)
 	end
 
 	return {
@@ -625,12 +630,17 @@ function mod:Extinguish(duration)
 		key = 1304424,
 		delay = self:Mythic() and 7 or 8, -- show timer to the damage
 		count = count,
+		orbMessageTimer = orbTimer,
 		onFinished = function()
 			self:StopBlizzMessages(1)
 			self:Message(1304424, "red", CL.casting:format(barText))
 			self:PlaySound(1304424, "alarm")
 		end,
 		onCanceled = function(this)
+			if this.orbMessageTimer then
+				self:CancelTimer(this.orbMessageTimer)
+				this.orbMessageTimer = nil
+			end
 			self:StopBar(CL.count:format(self:GetRename(1304508), this.count)) -- Light's Embrace
 		end,
 	}
